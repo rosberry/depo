@@ -9,7 +9,7 @@
 import Foundation
 import Commandant
 
-let commands = CommandRegistry<CommandantError<Void>>()
-commands.register(BuildPodsCommand())
+let commands = CommandRegistry<Error>()
+commands.register(BuildPodsCommand(projectURL: AppConfiguration.initialDirectoryURL, configFileName: AppConfiguration.configFileName))
 
 print(commands.run(command: "build", arguments: []))
