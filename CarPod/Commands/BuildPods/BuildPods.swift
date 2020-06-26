@@ -9,6 +9,7 @@ struct BuildPods: ParsableCommand {
 
     enum CustomError: LocalizedError {
         case badCarPodFileURL(path: String)
+        case badPodInit
         case badPodInstall
         case badPodfile(path: String)
         case badPodBuild(pods: [Pod])
@@ -19,16 +20,18 @@ struct BuildPods: ParsableCommand {
     @Option(name: .shortAndLong, default: AppConfiguration.initialDirectoryPath, help: "Directory with CarPodfile")
     var projectPath: String
 
-
     @Option(name: .shortAndLong, default: AppConfiguration.buildPodShellScriptFilePath, help: "Path to build_pod shell script")
     var buildPodShellScriptPath: String
 
     func run() throws {
         let pods = try readPods(configFilePath: projectPath + "/\(AppConfiguration.configFileName)")
-        podInitIfNeeded(from: FileManager.default.currentDirectoryPath, at: projectPath)
-        try createPodfile(with: pods, platformVersion: 13.1)
+        let podFilePath = projectPath + "/Podfile"
+        let podsProjectPath = projectPath + "/Pods"
+
+        try podInitIfNeeded(podFilePath: podFilePath, from: FileManager.default.currentDirectoryPath, at: projectPath)
+        try createPodfile(at: podFilePath, with: pods, platformVersion: 13.1)
         try podInstall(from: FileManager.default.currentDirectoryPath, at: projectPath)
-        try build(pods: pods, from: FileManager.default.currentDirectoryPath, at: projectPath + "/Pods")
+        try build(pods: pods, from: FileManager.default.currentDirectoryPath, at: podsProjectPath)
     }
 
     private func readPods(configFilePath: String) throws -> [Pod] {
@@ -38,21 +41,22 @@ struct BuildPods: ParsableCommand {
         return try JSONDecoder().decode([Pod].self, from: data)
     }
 
-    private func podInitIfNeeded(from currentPath: String, at path: String) {
-        let podFilePath = projectPath + "/Podfile"
+    private func podInitIfNeeded(podFilePath: String, from currentPath: String, at path: String) throws {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return
         }
         FileManager.default.changeCurrentDirectoryPath(path)
-        shell("pod", "init")
+        let status = shell("pod", "init")
         FileManager.default.changeCurrentDirectoryPath(currentPath)
+        if status != 0 {
+            throw CustomError.badPodInit
+        }
     }
 
-    private func createPodfile(with pods: [Pod], platformVersion: Double) throws {
+    private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
         let content = PodFile(pods: pods, platformVersion: platformVersion).description.data(using: .utf8)
-        let path = projectPath + "/Podfile"
-        if !FileManager.default.createFile(atPath: path, contents: content) {
-            throw CustomError.badPodfile(path: path)
+        if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
+            throw CustomError.badPodfile(path: podFilePath)
         }
     }
 
