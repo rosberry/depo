@@ -10,7 +10,7 @@ struct PodFile: CustomStringConvertible {
 
     init(pods: [Pod], platformVersion: Double) {
         let podsSection = pods.map { pod in
-            "    pod '\(pod.name)'"
+            "    pod '\(pod.name)'\(Self.podVersion(pod))"
         }.joined(separator: "\n")
         self.description = """
                            install! 'cocoapods', integrate_targets: false
@@ -24,5 +24,19 @@ struct PodFile: CustomStringConvertible {
                            end
 
                            """
+    }
+
+    private static func podVersion(_ pod: Pod) -> String {
+        if let version = pod.version {
+            if pod.isOptimistic {
+                return ", '~> \(version)'"
+            }
+            else {
+                return ", '\(version)'"
+            }
+        }
+        else {
+            return ""
+        }
     }
 }
