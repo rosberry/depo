@@ -78,3 +78,4 @@ fastlane/report.xml
 fastlane/screenshots
 .idea/*
 .emacs_saves
+.build

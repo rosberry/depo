@@ -15,19 +15,11 @@ func shell(_ args: String...) -> Int32 {
 }
 
 @discardableResult
-func shell(filePath: String, arguments: [String] = []) -> String? {
+func shell(filePath: String, arguments: [String] = []) -> Int32 {
     let process = Process()
     process.executableURL = URL(fileURLWithPath: filePath)
     process.arguments = arguments
-    let outputPipe = Pipe()
-    process.standardOutput = outputPipe
-    do {
-        try process.run()
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(decoding: outputData, as: UTF8.self)
-        return output
-    }
-    catch {
-        return nil
-    }
+    process.launch()
+    process.waitUntilExit()
+    return process.terminationStatus
 }

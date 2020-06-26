@@ -7,11 +7,15 @@
 //
 
 import Foundation
-import Commandant
+import ArgumentParser
 
-let commands = CommandRegistry<Error>()
-commands.register(BuildPodsCommand(projectURL: AppConfiguration.initialDirectoryURL,
-                                   configFileName: AppConfiguration.configFileName,
-                                   buildPodShellScriptURL: AppConfiguration.buildPodShellScriptFile))
+struct CarPod: ParsableCommand {
+     static let configuration: CommandConfiguration = .init(abstract: "Dooooooo",
+                                                            version: "0.0",
+                                                            subcommands: [BuildPods.self],
+                                                            defaultSubcommand: BuildPods.self)
+}
 
-print(commands.run(command: "build", arguments: []))
+print(BuildPods._commandName)
+
+CarPod.main(["build-pods"])
