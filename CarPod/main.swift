@@ -16,6 +16,4 @@ struct CarPod: ParsableCommand {
                                                             defaultSubcommand: BuildPods.self)
 }
 
-print(BuildPods._commandName)
-
 CarPod.main(["build-pods"])
