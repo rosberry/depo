@@ -16,4 +16,5 @@ struct CarPod: ParsableCommand {
                                                             defaultSubcommand: BuildPods.self)
 }
 
+FileManager.default.changeCurrentDirectoryPath(AppConfiguration.initialDirectoryPath)
 CarPod.main(["build-pods"])
