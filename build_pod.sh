@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Set bash script to exit immediately if any commands fail.
 set -e
 

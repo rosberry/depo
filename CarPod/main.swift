@@ -10,6 +10,8 @@ import Foundation
 import Commandant
 
 let commands = CommandRegistry<Error>()
-commands.register(BuildPodsCommand(projectURL: AppConfiguration.initialDirectoryURL, configFileName: AppConfiguration.configFileName))
+commands.register(BuildPodsCommand(projectURL: AppConfiguration.initialDirectoryURL,
+                                   configFileName: AppConfiguration.configFileName,
+                                   buildPodShellScriptURL: AppConfiguration.buildPodShellScriptFile))
 
 print(commands.run(command: "build", arguments: []))

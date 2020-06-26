@@ -5,6 +5,7 @@
 import Foundation
 
 enum AppConfiguration {
-    static let initialDirectoryURL: URL = URL(string: "/Users/vladislavzavoronkov/Desktop/Test")!
+    static let initialDirectoryURL: URL = URL(string: "/Users/vladislavzavoronkov/Developer/Test2")!
     static let configFileName: String = "CarPodfile"
+    static let buildPodShellScriptFile: URL = URL(string: "/Users/vladislavzavoronkov/Developer/CarPod/build_pod.sh")!
 }

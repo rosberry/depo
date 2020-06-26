@@ -16,11 +16,13 @@ struct BuildPodsCommand: CommandProtocol {
     let projectURL: URL
     let configFileURL: URL
     let podFileURL: URL
+    let buildPodShellScriptURL: URL
 
-    init(projectURL: URL, configFileName: String) {
+    init(projectURL: URL, configFileName: String, buildPodShellScriptURL: URL) {
         self.projectURL = projectURL
         self.configFileURL = projectURL.appendingPathComponent(configFileName)
         self.podFileURL = projectURL.appendingPathComponent("Podfile")
+        self.buildPodShellScriptURL = buildPodShellScriptURL
     }
 
     func run(_ options: NoOptions<Error>) -> Result<(), Error> {
@@ -29,10 +31,11 @@ struct BuildPodsCommand: CommandProtocol {
                 throw CustomError.badCarPodFileURL
             }
             podInitIfNeeded(from: FileManager.default.currentDirectoryPath, at: projectURL.absoluteString)
-            let value = try JSONDecoder().decode([Pod].self, from: data)
-            let podFile = PodFile(pods: value, platformVersion: 13.1)
+            let pods = try JSONDecoder().decode([Pod].self, from: data)
+            let podFile = PodFile(pods: pods, platformVersion: 13.1)
             try podFile.description.write(to: URL(string: "file://" + podFileURL.absoluteString)!, atomically: false, encoding: .utf8)
             podInstall(from: FileManager.default.currentDirectoryPath, at: projectURL.absoluteString)
+            build(pods: pods, from: FileManager.default.currentDirectoryPath, at: projectURL.appendingPathComponent("Pods").absoluteString)
         }
     }
 
@@ -48,6 +51,14 @@ struct BuildPodsCommand: CommandProtocol {
     private func podInstall(from currentPath: String, at path: String) {
         FileManager.default.changeCurrentDirectoryPath(path)
         shell("pod", "install")
+        FileManager.default.changeCurrentDirectoryPath(currentPath)
+    }
+
+    private func build(pods: [Pod], from currentPath: String, at path: String) {
+        FileManager.default.changeCurrentDirectoryPath(path)
+        pods.forEach { (pod: Pod) -> Void in
+            print(shell(filePath: buildPodShellScriptURL.absoluteString, arguments: [pod.name]))
+        }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
     }
 }
