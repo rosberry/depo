@@ -27,6 +27,7 @@ struct InstallPods: ParsableCommand {
 
     init(pods: [Pod]) {
         self.pods = pods
+        self.buildPodShellScriptPath = AppConfiguration.buildPodShellScriptFilePath
     }
 
     func run() throws {
