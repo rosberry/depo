@@ -28,11 +28,11 @@ struct PodFile: CustomStringConvertible {
 
     private static func podVersion(_ pod: Pod) -> String {
         if let version = pod.version {
-            if pod.isOptimistic {
-                return ", '~> \(version)'"
+            if version.isOptimistic {
+                return ", '~> \(version.value)'"
             }
             else {
-                return ", '\(version)'"
+                return ", '\(version.value)'"
             }
         }
         else {

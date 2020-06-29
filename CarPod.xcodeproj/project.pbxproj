@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1771D0E5B07348384275AEF3 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D81817D60FF4A0D72C50 /* Version.swift */; };
+		1771D1AF33D378D545A29888 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5305E9931F685E12BE5 /* CarthageItem.swift */; };
 		1771D2229E1A4A23673FBE68 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DB3FAA4E3CD2C4D11C69 /* Shell.swift */; };
-		1771D30048A56D8B89939C40 /* BuildPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD105104358BCB5C38F6 /* BuildPods.swift */; };
-		1771D72425F0C3718ABC4655 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D3B5821428554E2BE4D9 /* PodFile.swift */; };
+		1771D30048A56D8B89939C40 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD105104358BCB5C38F6 /* InstallPods.swift */; };
+		1771D5E53C0E972ED78F60AD /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D9D9DA600A4C285600E2 /* InstallCarthageItems.swift */; };
 		1771D7AE1AD56C8839E750E0 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DB195133F3F4F35A8008 /* Pod.swift */; };
+		1771D8A662A463D7E7E3E2E5 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCA963DA761D2F5890FC /* PodFile.swift */; };
 		1771D908AE27A418438ED797 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D78C70708FF7B247C411 /* main.swift */; };
+		1771D97D553D894A01233831 /* CarPodfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D08E4B2B52A95308BEFF /* CarPodfile.swift */; };
+		1771DD1D971BF2F6015BE0D0 /* Cartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D08B88E2E6573A9704FD /* Cartfile.swift */; };
 		1771DD2C1B9E39A6DE157829 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DFCAFBEF11FB5828DC19 /* AppConfiguration.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,12 +33,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1771D3B5821428554E2BE4D9 /* PodFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
+		1771D08B88E2E6573A9704FD /* Cartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
+		1771D08E4B2B52A95308BEFF /* CarPodfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarPodfile.swift; sourceTree = "<group>"; };
+		1771D5305E9931F685E12BE5 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771D78C70708FF7B247C411 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		1771D81817D60FF4A0D72C50 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		1771D9D9DA600A4C285600E2 /* InstallCarthageItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallCarthageItems.swift; sourceTree = "<group>"; };
 		1771DB195133F3F4F35A8008 /* Pod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
 		1771DB3FAA4E3CD2C4D11C69 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		1771DB967D308A01E69229CD /* CarPod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CarPod; sourceTree = BUILT_PRODUCTS_DIR; };
-		1771DD105104358BCB5C38F6 /* BuildPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildPods.swift; sourceTree = "<group>"; };
+		1771DCA963DA761D2F5890FC /* PodFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
+		1771DD105104358BCB5C38F6 /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771DF9FED477E9D77E21118 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 		1771DFCAFBEF11FB5828DC19 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,8 +70,8 @@
 		1771D1F3BD8EC9BCF5C6B7BD /* BuildPods */ = {
 			isa = PBXGroup;
 			children = (
-				1771DD105104358BCB5C38F6 /* BuildPods.swift */,
-				1771D3B5821428554E2BE4D9 /* PodFile.swift */,
+				1771DD105104358BCB5C38F6 /* InstallPods.swift */,
+				1771D9D9DA600A4C285600E2 /* InstallCarthageItems.swift */,
 			);
 			path = BuildPods;
 			sourceTree = "<group>";
@@ -70,6 +80,11 @@
 			isa = PBXGroup;
 			children = (
 				1771DB195133F3F4F35A8008 /* Pod.swift */,
+				1771D5305E9931F685E12BE5 /* CarthageItem.swift */,
+				1771D81817D60FF4A0D72C50 /* Version.swift */,
+				1771D08E4B2B52A95308BEFF /* CarPodfile.swift */,
+				1771DCA963DA761D2F5890FC /* PodFile.swift */,
+				1771D08B88E2E6573A9704FD /* Cartfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -180,8 +195,13 @@
 				1771D7AE1AD56C8839E750E0 /* Pod.swift in Sources */,
 				1771D2229E1A4A23673FBE68 /* Shell.swift in Sources */,
 				1771DD2C1B9E39A6DE157829 /* AppConfiguration.swift in Sources */,
-				1771D30048A56D8B89939C40 /* BuildPods.swift in Sources */,
-				1771D72425F0C3718ABC4655 /* PodFile.swift in Sources */,
+				1771D30048A56D8B89939C40 /* InstallPods.swift in Sources */,
+				1771D1AF33D378D545A29888 /* CarthageItem.swift in Sources */,
+				1771D0E5B07348384275AEF3 /* Version.swift in Sources */,
+				1771D97D553D894A01233831 /* CarPodfile.swift in Sources */,
+				1771D5E53C0E972ED78F60AD /* InstallCarthageItems.swift in Sources */,
+				1771D8A662A463D7E7E3E2E5 /* PodFile.swift in Sources */,
+				1771DD1D971BF2F6015BE0D0 /* Cartfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,10 +5,9 @@
 import Foundation
 import ArgumentParser
 
-struct BuildPods: ParsableCommand {
+struct InstallPods: ParsableCommand {
 
     enum CustomError: LocalizedError {
-        case badCarPodFileURL(path: String)
         case badPodInit
         case badPodInstall
         case badPodfile(path: String)
@@ -17,12 +16,22 @@ struct BuildPods: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
-    @Option(name: .shortAndLong, default: AppConfiguration.buildPodShellScriptFilePath, help: "Path to build_pod shell script")
-    var buildPodShellScriptPath: String
+    @Option(name: .shortAndLong, help: "Path to build_pod shell script")
+    var buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
+
+    let pods: [Pod]?
+
+    init() {
+        self.pods = nil
+    }
+
+    init(pods: [Pod]) {
+        self.pods = pods
+    }
 
     func run() throws {
+        let pods = try self.pods ?? CarPodfile().pods
         let path = FileManager.default.currentDirectoryPath
-        let pods = try readPods(configFilePath: path + "/\(AppConfiguration.configFileName)")
         let podFilePath = path + "/Podfile"
         let podsProjectPath = path + "/Pods"
 
@@ -30,13 +39,6 @@ struct BuildPods: ParsableCommand {
         try createPodfile(at: podFilePath, with: pods, platformVersion: 13.1)
         try podInstall()
         try build(pods: pods, at: podsProjectPath)
-    }
-
-    private func readPods(configFilePath: String) throws -> [Pod] {
-        guard let data = NSData(contentsOfFile: configFilePath) as Data? else {
-            throw CustomError.badCarPodFileURL(path: configFilePath)
-        }
-        return try JSONDecoder().decode([Pod].self, from: data)
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {

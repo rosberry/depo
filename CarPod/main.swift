@@ -10,11 +10,11 @@ import Foundation
 import ArgumentParser
 
 struct CarPod: ParsableCommand {
-     static let configuration: CommandConfiguration = .init(abstract: "Dooooooo",
+     static let configuration: CommandConfiguration = .init(abstract: "Main",
                                                             version: "0.0",
-                                                            subcommands: [BuildPods.self],
-                                                            defaultSubcommand: BuildPods.self)
+                                                            subcommands: [InstallPods.self, InstallCarthageItems.self],
+                                                            defaultSubcommand: InstallPods.self)
 }
 
 FileManager.default.changeCurrentDirectoryPath(AppConfiguration.initialDirectoryPath)
-CarPod.main(["build-pods"])
+CarPod.main(["install-carthage-items"])
