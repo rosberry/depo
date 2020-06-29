@@ -11,6 +11,7 @@
 		1771D1AF33D378D545A29888 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5305E9931F685E12BE5 /* CarthageItem.swift */; };
 		1771D2229E1A4A23673FBE68 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DB3FAA4E3CD2C4D11C69 /* Shell.swift */; };
 		1771D30048A56D8B89939C40 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD105104358BCB5C38F6 /* InstallPods.swift */; };
+		1771D3C86D5E12CC84F64AF6 /* Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCDE4D60151412057DA7 /* Install.swift */; };
 		1771D5E53C0E972ED78F60AD /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D9D9DA600A4C285600E2 /* InstallCarthageItems.swift */; };
 		1771D7AE1AD56C8839E750E0 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DB195133F3F4F35A8008 /* Pod.swift */; };
 		1771D8A662A463D7E7E3E2E5 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCA963DA761D2F5890FC /* PodFile.swift */; };
@@ -43,6 +44,7 @@
 		1771DB3FAA4E3CD2C4D11C69 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		1771DB967D308A01E69229CD /* CarPod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CarPod; sourceTree = BUILT_PRODUCTS_DIR; };
 		1771DCA963DA761D2F5890FC /* PodFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
+		1771DCDE4D60151412057DA7 /* Install.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Install.swift; sourceTree = "<group>"; };
 		1771DD105104358BCB5C38F6 /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771DF9FED477E9D77E21118 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 		1771DFCAFBEF11FB5828DC19 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			children = (
 				1771DD105104358BCB5C38F6 /* InstallPods.swift */,
 				1771D9D9DA600A4C285600E2 /* InstallCarthageItems.swift */,
+				1771DCDE4D60151412057DA7 /* Install.swift */,
 			);
 			path = BuildPods;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				1771D5E53C0E972ED78F60AD /* InstallCarthageItems.swift in Sources */,
 				1771D8A662A463D7E7E3E2E5 /* PodFile.swift in Sources */,
 				1771DD1D971BF2F6015BE0D0 /* Cartfile.swift in Sources */,
+				1771D3C86D5E12CC84F64AF6 /* Install.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

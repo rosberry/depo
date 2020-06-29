@@ -12,9 +12,9 @@ import ArgumentParser
 struct CarPod: ParsableCommand {
      static let configuration: CommandConfiguration = .init(abstract: "Main",
                                                             version: "0.0",
-                                                            subcommands: [InstallPods.self, InstallCarthageItems.self],
+                                                            subcommands: [Install.self, InstallPods.self, InstallCarthageItems.self],
                                                             defaultSubcommand: InstallPods.self)
 }
 
 FileManager.default.changeCurrentDirectoryPath(AppConfiguration.initialDirectoryPath)
-CarPod.main(["install-carthage-items"])
+CarPod.main(["install"])

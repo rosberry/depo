@@ -19,7 +19,7 @@ struct Cartfile: CustomStringConvertible {
                 return " ~> \(version.value)"
             }
             else {
-                return " \(version.value)"
+                return " \"\(version.value)\""
             }
         }
         else {

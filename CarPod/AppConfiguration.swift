@@ -5,7 +5,7 @@
 import Foundation
 
 enum AppConfiguration {
-    static let initialDirectoryPath: String = "/Users/vladislavzavoronkov/Developer/Test2"
+    static let initialDirectoryPath: String = "/Users/vladislavzavoronkov/Developer/Test3"
     static let configFileName: String = "CarPodfile"
     static let buildPodShellScriptFilePath: String = "/Users/vladislavzavoronkov/Developer/CarPod/build_pod.sh"
 }
