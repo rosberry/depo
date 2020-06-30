@@ -13,6 +13,7 @@ struct InstallCarthageItems: ParsableCommand {
     }
 
     let carthageItems: [CarthageItem]?
+    private let shell: Shell = .init()
 
     init() {
         self.carthageItems = nil

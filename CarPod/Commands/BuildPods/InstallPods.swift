@@ -20,6 +20,7 @@ struct InstallPods: ParsableCommand {
     var buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
 
     let pods: [Pod]?
+    private let shell: Shell = .init()
 
     init() {
         self.pods = nil
@@ -46,8 +47,7 @@ struct InstallPods: ParsableCommand {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return
         }
-        let status = shell("pod", "init")
-        if status != 0 {
+        if shell("pod", "init") != 0 {
             throw CustomError.badPodInit
         }
     }
