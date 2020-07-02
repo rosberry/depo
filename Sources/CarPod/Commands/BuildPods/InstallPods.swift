@@ -16,8 +16,7 @@ struct InstallPods: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
-    @Option(name: .shortAndLong, help: "Path to build_pod shell script")
-    var buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
+    let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
 
     let pods: [Pod]?
     private let shell: Shell = .init()
@@ -28,7 +27,6 @@ struct InstallPods: ParsableCommand {
 
     init(pods: [Pod]) {
         self.pods = pods
-        self.buildPodShellScriptPath = AppConfiguration.buildPodShellScriptFilePath
     }
 
     func run() throws {
