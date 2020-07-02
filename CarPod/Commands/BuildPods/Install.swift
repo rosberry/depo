@@ -7,28 +7,59 @@ import ArgumentParser
 
 struct Install: ParsableCommand {
 
+    enum CustomErrors: LocalizedError {
+        case composition(errors: [Error])
+    }
+
+    @Flag(name: .shortAndLong, help: "Run pods and carthage installation in parallel.")
+    var isParallel: Bool = false
+
     func run() throws {
         let carPodfile = try CarPodfile()
         let installPods = InstallPods(pods: carPodfile.pods)
         let installCarthageItems = InstallCarthageItems(carthageItems: carPodfile.carts)
-        DispatchQueue.global(qos: .default).async {
-            do {
-                try installPods.run()
-                print("pods")
-            }
-            catch {
-                print(error)
+        if isParallel {
+            try runParallel(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
+        }
+        else {
+            try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
+        }
+    }
+
+    private func runSynchronously(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
+        try installPodsCommand.run()
+        try installCarthageItemsCommand.run()
+    }
+
+    private func runParallel(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
+        let group = DispatchGroup()
+        let syncQueue: DispatchQueue = .init(label: "sync")
+        var errors: [Error] = []
+
+        func run(task: @escaping () throws -> Void) {
+            let queue = DispatchQueue.global(qos: .userInitiated)
+            queue.async(group: group) {
+                do {
+                    try task()
+                }
+                catch {
+                    syncQueue.sync {
+                        errors.append(error)
+                    }
+                }
             }
         }
-        DispatchQueue.global(qos: .default).async {
-            do {
-                try installCarthageItems.run()
-                print("carthage")
-            }
-            catch {
-                print(error)
-            }
+
+        run {
+            try installPodsCommand.run()
         }
-        RunLoop.main.run()
+
+        run {
+            try installPodsCommand.run()
+        }
+        group.wait()
+        if !errors.isEmpty {
+            throw CustomErrors.composition(errors: errors)
+        }
     }
 }

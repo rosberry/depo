@@ -13,7 +13,7 @@ struct CarPod: ParsableCommand {
      static let configuration: CommandConfiguration = .init(abstract: "Main",
                                                             version: "0.0",
                                                             subcommands: [Install.self, InstallPods.self, InstallCarthageItems.self],
-                                                            defaultSubcommand: InstallPods.self)
+                                                            defaultSubcommand: Install.self)
 }
 
 FileManager.default.changeCurrentDirectoryPath(AppConfiguration.initialDirectoryPath)
