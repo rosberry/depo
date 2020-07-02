@@ -11,19 +11,11 @@ struct Install: ParsableCommand {
         case composition(errors: [Error])
     }
 
-    @Flag(name: .shortAndLong, help: "Run pods and carthage installation in parallel.")
-    var isParallel: Bool = false
-
     func run() throws {
         let carPodfile = try CarPodfile()
         let installPods = InstallPods(pods: carPodfile.pods)
         let installCarthageItems = InstallCarthageItems(carthageItems: carPodfile.carts)
-        if isParallel {
-            try runParallel(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
-        }
-        else {
-            try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
-        }
+        try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
     }
 
     private func runSynchronously(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
