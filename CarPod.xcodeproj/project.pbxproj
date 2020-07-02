@@ -16,6 +16,7 @@
 		1771D57AC920121000C3AAC9 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */; };
 		1771D7A0638DBA1529E9EA34 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1771D4718AD853AFB5CD0243 /* README.md */; };
 		1771D80CCA800C5DC7BCDB56 /* Cartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D8E0B5B9F69D475561D9 /* Cartfile.swift */; };
+		1771D8E6B3EBD6FD77F0D23B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD22D5BE772D09F878A7 /* Makefile */; };
 		1771DC0A3AAADD173AA90AC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5C780DE3585E815BCCF /* main.swift */; };
 		1771DC2A3741AE701330236B /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D06F9073B970D1A6CAA9 /* InstallCarthageItems.swift */; };
 		1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC521BE242229F7D7F95 /* Shell.swift */; };
@@ -51,6 +52,7 @@
 		1771DC604CFBBF25A0F50938 /* Pod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
 		1771DC9402C595A9B4A121E3 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771DCC777FBC955739581BC /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
+		1771DD22D5BE772D09F878A7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		1771DF9FED477E9D77E21118 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,7 @@
 				1771DBCE8C4B57ECA67772D3 /* Tests */,
 				1771D4718AD853AFB5CD0243 /* README.md */,
 				1771D684EF3145CBD2302BD6 /* Package.swift */,
+				1771DD22D5BE772D09F878A7 /* Makefile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -238,6 +241,7 @@
 				1771D57AC920121000C3AAC9 /* AppConfiguration.swift in Sources */,
 				1771D7A0638DBA1529E9EA34 /* README.md in Sources */,
 				1771D1EF0192B1BA541CDD73 /* Package.swift in Sources */,
+				1771D8E6B3EBD6FD77F0D23B /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,5 +16,4 @@ struct CarPod: ParsableCommand {
                                                             defaultSubcommand: Install.self)
 }
 
-FileManager.default.changeCurrentDirectoryPath(AppConfiguration.initialDirectoryPath)
-CarPod.main(["install"])
+CarPod.main()
