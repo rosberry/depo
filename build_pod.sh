@@ -28,7 +28,7 @@ cp -a "../build/Release-iphoneos/${FRAMEWORK_NAME}/${FRAMEWORK_NAME}.framework/.
 # Replace the framework executable within the framework with
 # a new version created by merging the device and simulator
 # frameworks' executables with lipo.
-lipo -create -output "${OUTPUT_PATH}/${FRAMEWORK_NAME}" "../build/Release-iphoneos/${FRAMEWORK_NAME}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "../build/Release-iphonesimulator/${FRAMEWORK_NAME}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}"
+xcrun lipo -create -output "${OUTPUT_PATH}/${FRAMEWORK_NAME}" "../build/Release-iphoneos/${FRAMEWORK_NAME}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "../build/Release-iphonesimulator/${FRAMEWORK_NAME}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}"
 
 # Copy the Swift module mappings for the simulator into the
 # framework.  The device mappings already exist from step 6.
