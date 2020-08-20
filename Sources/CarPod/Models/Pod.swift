@@ -4,15 +4,18 @@
 
 import Foundation
 
-struct Pod: Codable {
+struct Pod {
+
+    let name: String
+    let version: Version?
+}
+
+extension Pod: Codable {
 
     private enum CodingKeys: String, CodingKey {
         case name = "name"
         case version
     }
-
-    let name: String
-    let version: Version?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

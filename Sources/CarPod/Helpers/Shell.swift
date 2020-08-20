@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Shell: Codable {
+final class Shell: Codable {
 
     struct Output {
         let stdOut: String

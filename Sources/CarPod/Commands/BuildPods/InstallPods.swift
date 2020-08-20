@@ -12,12 +12,13 @@ struct InstallPods: ParsableCommand {
         case badPodInstall
         case badPodfile(path: String)
         case badPodBuild(pods: [Pod])
+        case badPodMerge(pods: [Pod])
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
-    let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
-    let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
+    private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
+    private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
 
     let pods: [Pod]?
     private let shell: Shell = .init()
@@ -36,10 +37,11 @@ struct InstallPods: ParsableCommand {
         let podFilePath = path + "/Podfile"
         let podsProjectPath = path + "/Pods"
 
-        try podInitIfNeeded(podFilePath: podFilePath)
+        /*try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, platformVersion: 13.1)
         try podInstall()
-        try build(pods: pods, at: podsProjectPath)
+        try build(pods: pods, at: podsProjectPath)*/
+        try mergeAllPods(at: podsProjectPath)
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {
@@ -68,8 +70,7 @@ struct InstallPods: ParsableCommand {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            if shell(filePath: buildPodShellScriptPath, arguments: [pod.name]) != 0 ||
-               shell(filePath: mergePodShellScriptPath, arguments: [pod.name]) != 0 {
+            if shell(filePath: buildPodShellScriptPath, arguments: [pod.name]) != 0 {
                 return result + [pod]
             }
             else {
@@ -79,6 +80,33 @@ struct InstallPods: ParsableCommand {
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
             throw CustomError.badPodBuild(pods: failedPods)
+        }
+    }
+
+    private func mergeAllPods(at path: String) throws {
+        let currentPath = FileManager.default.currentDirectoryPath
+        FileManager.default.changeCurrentDirectoryPath(path)
+        let failedPods = try allSchemes().reduce([Pod]()) { (result, schema) in
+            let (pod, settings) = schema
+            let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
+            print(pod.name, status)
+            if status != 0 {
+                return result + [pod]
+            }
+            else {
+                return result
+            }
+        }
+        print(#function, failedPods)
+        FileManager.default.changeCurrentDirectoryPath(currentPath)
+        if !failedPods.isEmpty {
+            throw CustomError.badPodMerge(pods: failedPods)
+        }
+    }
+
+    private func allSchemes() throws -> [(Pod, BuildSettings)] {
+        try (try XcodeProject(shell: shell).targets).map { targetName in
+            (Pod(name: targetName, version: nil), try BuildSettings(targetName: targetName, shell: shell))
         }
     }
 }
