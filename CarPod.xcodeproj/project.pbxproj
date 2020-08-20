@@ -38,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		1771D06F9073B970D1A6CAA9 /* InstallCarthageItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallCarthageItems.swift; sourceTree = "<group>"; };
+		1771D1383D0CDC5AE42C0B04 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 		1771D4718AD853AFB5CD0243 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1771D51C2660840C52B57053 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		1771D5C780DE3585E815BCCF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 		1771D684EF3145CBD2302BD6 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		1771D8E0B5B9F69D475561D9 /* Cartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
+		1771D9AC04FA77C0F58033B1 /* merge_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = merge_pod.sh; sourceTree = "<group>"; };
 		1771DB967D308A01E69229CD /* CarPod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CarPod; sourceTree = BUILT_PRODUCTS_DIR; };
 		1771DC2F948196881BEE2092 /* PodFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
 		1771DC521BE242229F7D7F95 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
@@ -53,7 +55,6 @@
 		1771DC9402C595A9B4A121E3 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771DCC777FBC955739581BC /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771DD22D5BE772D09F878A7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		1771DF9FED477E9D77E21118 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,13 +139,22 @@
 			children = (
 				1771DCE6CBE8E4BC64A22B8C /* Products */,
 				99CCF66724A21E5D00353C0E /* Frameworks */,
-				1771DF9FED477E9D77E21118 /* build_pod.sh */,
 				1771DE79154E1537210E3ADE /* Sources */,
 				1771DBCE8C4B57ECA67772D3 /* Tests */,
 				1771D4718AD853AFB5CD0243 /* README.md */,
 				1771D684EF3145CBD2302BD6 /* Package.swift */,
 				1771DD22D5BE772D09F878A7 /* Makefile */,
+				1771DCE2D4C4043FFDE758BC /* Shell */,
 			);
+			sourceTree = "<group>";
+		};
+		1771DCE2D4C4043FFDE758BC /* Shell */ = {
+			isa = PBXGroup;
+			children = (
+				1771D9AC04FA77C0F58033B1 /* merge_pod.sh */,
+				1771D1383D0CDC5AE42C0B04 /* build_pod.sh */,
+			);
+			path = Shell;
 			sourceTree = "<group>";
 		};
 		1771DCE6CBE8E4BC64A22B8C /* Products */ = {

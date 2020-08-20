@@ -17,6 +17,7 @@ struct InstallPods: ParsableCommand {
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
     let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
+    let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
 
     let pods: [Pod]?
     private let shell: Shell = .init()
@@ -67,7 +68,8 @@ struct InstallPods: ParsableCommand {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            if shell(filePath: buildPodShellScriptPath, arguments: [pod.name]) != 0 {
+            if shell(filePath: buildPodShellScriptPath, arguments: [pod.name]) != 0 ||
+               shell(filePath: mergePodShellScriptPath, arguments: [pod.name]) != 0 {
                 return result + [pod]
             }
             else {

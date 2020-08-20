@@ -7,4 +7,5 @@ import Foundation
 enum AppConfiguration {
     static let configFileName: String = "CarPodfile"
     static let buildPodShellScriptFilePath: String = "/usr/local/bin/build_pod.sh"
+    static let mergePodShellScriptFilePath: String = "/usr/local/bin/merge_pod.sh"
 }
