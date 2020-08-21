@@ -29,8 +29,6 @@ if [ -f $SWIFTMODULE_PATH ]; then
   cp -r "${SWIFTMODULE_PATH}" "${OUTPUT_PATH}/Modules/${SCHEMA_NAME}.swiftmodule"
 fi
 
-exit 0
-
 # Delete the most recent build.
 if [ -d "../build" ]; then
   rm -rf "../build"
