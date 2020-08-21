@@ -17,6 +17,7 @@ struct InstallPods: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
+    private let podsPrefix: String = "Pods"
     private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
 
@@ -37,10 +38,10 @@ struct InstallPods: ParsableCommand {
         let podFilePath = path + "/Podfile"
         let podsProjectPath = path + "/Pods"
 
-        /*try podInitIfNeeded(podFilePath: podFilePath)
+        try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, platformVersion: 13.1)
         try podInstall()
-        try build(pods: pods, at: podsProjectPath)*/
+        try build(pods: pods, at: podsProjectPath)
         try mergeAllPods(at: podsProjectPath)
     }
 
@@ -89,7 +90,6 @@ struct InstallPods: ParsableCommand {
         let failedPods = try allSchemes().reduce([Pod]()) { (result, schema) in
             let (pod, settings) = schema
             let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
-            print(pod.name, status)
             if status != 0 {
                 return result + [pod]
             }
@@ -97,7 +97,6 @@ struct InstallPods: ParsableCommand {
                 return result
             }
         }
-        print(#function, failedPods)
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
             throw CustomError.badPodMerge(pods: failedPods)
@@ -105,8 +104,12 @@ struct InstallPods: ParsableCommand {
     }
 
     private func allSchemes() throws -> [(Pod, BuildSettings)] {
-        try (try XcodeProject(shell: shell).targets).map { targetName in
-            (Pod(name: targetName, version: nil), try BuildSettings(targetName: targetName, shell: shell))
+        try (try XcodeProject(shell: shell).targets).compactMap { targetName in
+            guard !targetName.starts(with: podsPrefix) else {
+                return nil
+            }
+            return (Pod(name: targetName, version: nil),
+                    try BuildSettings(targetName: targetName, shell: shell))
         }
     }
 }
