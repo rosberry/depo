@@ -28,9 +28,3 @@ SWIFTMODULE_PATH="../build/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME
 if [ -f $SWIFTMODULE_PATH ]; then
   cp -r "${SWIFTMODULE_PATH}" "${OUTPUT_PATH}/Modules/${SCHEMA_NAME}.swiftmodule"
 fi
-
-# Delete the most recent build.
-if [ -d "../build" ]; then
-  rm -rf "../build"
-fi
-
