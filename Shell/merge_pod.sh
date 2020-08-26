@@ -3,7 +3,7 @@
 SCHEMA_NAME=$1
 PRODUCT_NAME=$2
 
-OUTPUT_PATH="./Build/${SCHEMA_NAME}/${PRODUCT_NAME}.framework"
+OUTPUT_PATH="./Build/${PRODUCT_NAME}.framework"
 
 set -e
 
