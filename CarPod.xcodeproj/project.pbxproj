@@ -24,6 +24,8 @@
 		1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC521BE242229F7D7F95 /* Shell.swift */; };
 		1771DDD9D1D3DFF1A2D0621C /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC604CFBBF25A0F50938 /* Pod.swift */; };
 		1771DFBAF7D791D23E43A502 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCC777FBC955739581BC /* InstallPods.swift */; };
+		99B57D9125011C9F00352F47 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 9997C27924A5F4F4004422E5 /* ArgumentParser */; };
+		99B57D9425011D5000352F47 /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 99B57D9325011D5000352F47 /* Yams */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99B57D9425011D5000352F47 /* Yams in Frameworks */,
+				99B57D9125011C9F00352F47 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +207,8 @@
 			);
 			name = CarPod;
 			packageProductDependencies = (
-				9997C27924A5F4F4004422E5,
+				9997C27924A5F4F4004422E5 /* ArgumentParser */,
+				99B57D9325011D5000352F47 /* Yams */,
 			);
 			productName = CarPod;
 			productReference = 1771DB967D308A01E69229CD /* CarPod */;
@@ -227,7 +232,8 @@
 			);
 			mainGroup = 1771DBF1EE32DC8D03117519;
 			packageReferences = (
-				9997C27824A5F4F4004422E5,
+				9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */,
 			);
 			productRefGroup = 1771DCE6CBE8E4BC64A22B8C /* Products */;
 			projectDirPath = "";
@@ -429,7 +435,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9997C27824A5F4F4004422E5 = {
+		9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser";
 			requirement = {
@@ -437,13 +443,26 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9997C27924A5F4F4004422E5 = {
+		9997C27924A5F4F4004422E5 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9997C27824A5F4F4004422E5;
+			package = 9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
+		};
+		99B57D9325011D5000352F47 /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
