@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1771D01A25A73940593C20D8 /* Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5ECE7622748FA054357 /* Install.swift */; };
 		1771D0CE16D2DE2ADB60BB92 /* XcodeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCACAAA8186931819FFA /* XcodeProject.swift */; };
 		1771D1E46FDA8F6B5FBB2B22 /* CarPodfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC5B707D73B13C4D3B70 /* CarPodfile.swift */; };
 		1771D205A80AA22A3FF6AD80 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC9402C595A9B4A121E3 /* CarthageItem.swift */; };
 		1771D3026084AC560FBE8ED1 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC2F948196881BEE2092 /* PodFile.swift */; };
+		1771D490618E46F930C7AF03 /* Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D26F21637EFBC490C98D /* Install.swift */; };
 		1771D4DA6019E3D9DB333A49 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D51C2660840C52B57053 /* Version.swift */; };
 		1771D57AC920121000C3AAC9 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */; };
+		1771D69B647ECC87ECFE0A5E /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D8BBF19A01A20A101431 /* InstallCarthageItems.swift */; };
 		1771D7A0638DBA1529E9EA34 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1771D4718AD853AFB5CD0243 /* README.md */; };
 		1771D80CCA800C5DC7BCDB56 /* Cartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D8E0B5B9F69D475561D9 /* Cartfile.swift */; };
+		1771D86042E19A3165CB6D89 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D246D1A419A2B1632272 /* Options.swift */; };
 		1771D8E6B3EBD6FD77F0D23B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD22D5BE772D09F878A7 /* Makefile */; };
 		1771D8FB56AD7C6C279D021D /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D22116DF312D09BB92FA /* BuildSettings.swift */; };
+		1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */; };
 		1771DC0A3AAADD173AA90AC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5C780DE3585E815BCCF /* main.swift */; };
-		1771DC2A3741AE701330236B /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D06F9073B970D1A6CAA9 /* InstallCarthageItems.swift */; };
 		1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC521BE242229F7D7F95 /* Shell.swift */; };
+		1771DC858EFC8F56B96F7193 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */; };
 		1771DDD9D1D3DFF1A2D0621C /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC604CFBBF25A0F50938 /* Pod.swift */; };
-		1771DFBAF7D791D23E43A502 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DCC777FBC955739581BC /* InstallPods.swift */; };
-		99F21343250259C4001FE03C /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 9997C27924A5F4F4004422E5 /* ArgumentParser */; };
-		99F21344250259C4001FE03C /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 99B57D9325011D5000352F47 /* Yams */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,15 +40,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1771D06F9073B970D1A6CAA9 /* InstallCarthageItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallCarthageItems.swift; sourceTree = "<group>"; };
 		1771D1383D0CDC5AE42C0B04 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 		1771D22116DF312D09BB92FA /* BuildSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
+		1771D246D1A419A2B1632272 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		1771D26F21637EFBC490C98D /* Install.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Install.swift; sourceTree = "<group>"; };
+		1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771D4718AD853AFB5CD0243 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1771D51C2660840C52B57053 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		1771D5C780DE3585E815BCCF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		1771D5ECE7622748FA054357 /* Install.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Install.swift; sourceTree = "<group>"; };
+		1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		1771D684EF3145CBD2302BD6 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		1771D8BBF19A01A20A101431 /* InstallCarthageItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallCarthageItems.swift; sourceTree = "<group>"; };
 		1771D8E0B5B9F69D475561D9 /* Cartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
 		1771D9AC04FA77C0F58033B1 /* merge_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = merge_pod.sh; sourceTree = "<group>"; };
 		1771DB967D308A01E69229CD /* CarPod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CarPod; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,7 +61,6 @@
 		1771DC604CFBBF25A0F50938 /* Pod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
 		1771DC9402C595A9B4A121E3 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771DCACAAA8186931819FFA /* XcodeProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
-		1771DCC777FBC955739581BC /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771DD22D5BE772D09F878A7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,24 +69,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99F21344250259C4001FE03C /* Yams in Frameworks */,
-				99F21343250259C4001FE03C /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1771D1CA9D2F718B287FB57A /* BuildPods */ = {
-			isa = PBXGroup;
-			children = (
-				1771D5ECE7622748FA054357 /* Install.swift */,
-				1771DCC777FBC955739581BC /* InstallPods.swift */,
-				1771D06F9073B970D1A6CAA9 /* InstallCarthageItems.swift */,
-			);
-			path = BuildPods;
-			sourceTree = "<group>";
-		};
 		1771D53B66851B2910E972C7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +86,7 @@
 				1771DC9402C595A9B4A121E3 /* CarthageItem.swift */,
 				1771D22116DF312D09BB92FA /* BuildSettings.swift */,
 				1771DCACAAA8186931819FFA /* XcodeProject.swift */,
+				1771D246D1A419A2B1632272 /* Options.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,7 +101,9 @@
 		1771D9A28B13F4FB2CE9806E /* Commands */ = {
 			isa = PBXGroup;
 			children = (
-				1771D1CA9D2F718B287FB57A /* BuildPods */,
+				1771D26F21637EFBC490C98D /* Install.swift */,
+				1771D8BBF19A01A20A101431 /* InstallCarthageItems.swift */,
+				1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -131,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				1771DC521BE242229F7D7F95 /* Shell.swift */,
+				1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -206,8 +200,8 @@
 			);
 			name = CarPod;
 			packageProductDependencies = (
-				9997C27924A5F4F4004422E5 /* ArgumentParser */,
-				99B57D9325011D5000352F47 /* Yams */,
+				9997C27924A5F4F4004422E5,
+				99B57D9325011D5000352F47,
 			);
 			productName = CarPod;
 			productReference = 1771DB967D308A01E69229CD /* CarPod */;
@@ -231,8 +225,8 @@
 			);
 			mainGroup = 1771DBF1EE32DC8D03117519;
 			packageReferences = (
-				9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
-				99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */,
+				9997C27824A5F4F4004422E5,
+				99B57D9225011D5000352F47,
 			);
 			productRefGroup = 1771DCE6CBE8E4BC64A22B8C /* Products */;
 			projectDirPath = "";
@@ -255,15 +249,17 @@
 				1771D1E46FDA8F6B5FBB2B22 /* CarPodfile.swift in Sources */,
 				1771D205A80AA22A3FF6AD80 /* CarthageItem.swift in Sources */,
 				1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */,
-				1771D01A25A73940593C20D8 /* Install.swift in Sources */,
-				1771DFBAF7D791D23E43A502 /* InstallPods.swift in Sources */,
-				1771DC2A3741AE701330236B /* InstallCarthageItems.swift in Sources */,
 				1771DC0A3AAADD173AA90AC9 /* main.swift in Sources */,
 				1771D57AC920121000C3AAC9 /* AppConfiguration.swift in Sources */,
 				1771D7A0638DBA1529E9EA34 /* README.md in Sources */,
 				1771D8E6B3EBD6FD77F0D23B /* Makefile in Sources */,
 				1771D8FB56AD7C6C279D021D /* BuildSettings.swift in Sources */,
 				1771D0CE16D2DE2ADB60BB92 /* XcodeProject.swift in Sources */,
+				1771D490618E46F930C7AF03 /* Install.swift in Sources */,
+				1771D69B647ECC87ECFE0A5E /* InstallCarthageItems.swift in Sources */,
+				1771DC858EFC8F56B96F7193 /* InstallPods.swift in Sources */,
+				1771D86042E19A3165CB6D89 /* Options.swift in Sources */,
+				1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +273,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -403,7 +399,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -433,7 +429,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		9997C27824A5F4F4004422E5 = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser";
 			requirement = {
@@ -441,7 +437,7 @@
 				minimumVersion = 0.2.0;
 			};
 		};
-		99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */ = {
+		99B57D9225011D5000352F47 = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jpsim/Yams";
 			requirement = {
@@ -452,14 +448,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9997C27924A5F4F4004422E5 /* ArgumentParser */ = {
+		9997C27924A5F4F4004422E5 = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9997C27824A5F4F4004422E5 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			package = 9997C27824A5F4F4004422E5;
 			productName = ArgumentParser;
 		};
-		99B57D9325011D5000352F47 /* Yams */ = {
+		99B57D9325011D5000352F47 = {
 			isa = XCSwiftPackageProductDependency;
-			package = 99B57D9225011D5000352F47 /* XCRemoteSwiftPackageReference "Yams" */;
+			package = 99B57D9225011D5000352F47;
 			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */

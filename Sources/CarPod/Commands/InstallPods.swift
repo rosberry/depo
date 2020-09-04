@@ -4,6 +4,7 @@
 
 import Foundation
 import ArgumentParser
+import Yams
 
 struct InstallPods: ParsableCommand {
 
@@ -17,11 +18,14 @@ struct InstallPods: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
 
+    @OptionGroup()
+    private(set) var options: Options
+
     private let podsPrefix: String = "Pods"
     private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
 
-    let pods: [Pod]?
+    private let pods: [Pod]?
     private let shell: Shell = .init()
 
     init() {
@@ -33,7 +37,7 @@ struct InstallPods: ParsableCommand {
     }
 
     func run() throws {
-        let pods = try self.pods ?? CarPodfile().pods
+        let pods = try self.pods ?? CarPodfile(decoder: options.carpodFileType.decoder).pods
         let path = FileManager.default.currentDirectoryPath
         let podFilePath = path + "/Podfile"
         let podsProjectPath = path + "/Pods"

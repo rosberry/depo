@@ -11,8 +11,11 @@ struct Install: ParsableCommand {
         case composition(errors: [Error])
     }
 
+    @OptionGroup()
+    private(set) var options: Options
+
     func run() throws {
-        let carPodfile = try CarPodfile()
+        let carPodfile = try CarPodfile(decoder: options.carpodFileType.decoder)
         let installPods = InstallPods(pods: carPodfile.pods)
         let installCarthageItems = InstallCarthageItems(carthageItems: carPodfile.carts)
         try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
