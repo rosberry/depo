@@ -12,10 +12,10 @@ struct CarPodfile: Codable {
 
     let pods: [Pod]
     let carts: [CarthageItem]
-    private static let defaultPath: String = FileManager.default.currentDirectoryPath + "/\(AppConfiguration.configFileName)"
+    private static let defaultPath: String = "./\(AppConfiguration.configFileName)"
 
-    init<D: TopLevelDecoder>(path: String = defaultPath, decoder: D) throws where D.Input == Data {
-        guard let data = NSData(contentsOfFile: path) as Data? else {
+    init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {
+        guard let data = fileManager.contents(atPath: path) else {
             throw CustomError.badCarPodFileURL(path: path)
         }
         self = try decoder.decode(CarPodfile.self, from: data)

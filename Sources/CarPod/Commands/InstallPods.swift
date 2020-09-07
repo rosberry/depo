@@ -24,6 +24,8 @@ struct InstallPods: ParsableCommand {
     private let podsPrefix: String = "Pods"
     private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
+    private let podFileName: String = AppConfiguration.podFileName
+    private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
 
     private let pods: [Pod]?
     private let shell: Shell = .init()
@@ -38,9 +40,8 @@ struct InstallPods: ParsableCommand {
 
     func run() throws {
         let pods = try self.pods ?? CarPodfile(decoder: options.carpodFileType.decoder).pods
-        let path = FileManager.default.currentDirectoryPath
-        let podFilePath = path + "/Podfile"
-        let podsProjectPath = path + "/Pods"
+        let podFilePath = "./\(podFileName)"
+        let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)

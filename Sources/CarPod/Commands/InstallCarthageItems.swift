@@ -14,6 +14,7 @@ struct InstallCarthageItems: ParsableCommand {
 
     @OptionGroup()
     private(set) var options: Options
+    private let cartFileName: String = AppConfiguration.cartFileName
 
     let carthageItems: [CarthageItem]?
     private let shell: Shell = .init()
@@ -28,10 +29,7 @@ struct InstallCarthageItems: ParsableCommand {
 
     func run() throws {
         let carthageItems = try self.carthageItems ?? CarPodfile(decoder: options.carpodFileType.decoder).carts
-        let path = FileManager.default.currentDirectoryPath
-        let cartfilePath = path + "/Cartfile"
-
-        try createCartfile(at: cartfilePath, with: carthageItems)
+        try createCartfile(at: "./\(cartFileName)", with: carthageItems)
         try carthageUpdate()
     }
 
