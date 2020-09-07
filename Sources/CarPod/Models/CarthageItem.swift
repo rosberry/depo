@@ -31,7 +31,7 @@ struct CarthageItem: Codable {
                 return ""
             }
         }
-        static let defaultValue: Operator = .branchOrTagOrCommit
+        static let defaultValue: Operator = .equal
     }
 
     let kind: Kind
