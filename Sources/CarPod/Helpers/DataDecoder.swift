@@ -9,7 +9,7 @@ import ArgumentParser
 struct DataDecoder: TopLevelDecoder {
     typealias Input = Data
 
-    enum Kind: String, Codable, ExpressibleByArgument {
+    enum Kind: String, Codable, EnumerableFlag, CaseIterable {
         case json
         case yaml
 

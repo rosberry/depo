@@ -7,5 +7,5 @@ import ArgumentParser
 
 struct Options: ParsableArguments {
 
-    @Option(name: .shortAndLong, help: "CarPodfile's extension") var carpodFileType: DataDecoder.Kind = .yaml
+    @Flag(help: "CarPodfile's extension") var carpodFileType: DataDecoder.Kind = .yaml
 }
