@@ -14,16 +14,13 @@ struct Cartfile: CustomStringConvertible {
     }
 
     private static func carthageItemVersion(_ item: CarthageItem) -> String {
-        if let version = item.version {
-            if version.isOptimistic {
-                return " ~> \(version.value)"
-            }
-            else {
+        item.version.map { version in
+            switch version.operation {
+            case .branchOrTagOrCommit:
                 return " \"\(version.value)\""
+            default:
+                return " \(version.operation.symbol) \(version.value)"
             }
-        }
-        else {
-            return ""
-        }
+        } ?? ""
     }
 }

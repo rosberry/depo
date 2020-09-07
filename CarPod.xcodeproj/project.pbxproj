@@ -21,6 +21,7 @@
 		1771D8E6B3EBD6FD77F0D23B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD22D5BE772D09F878A7 /* Makefile */; };
 		1771D8FB56AD7C6C279D021D /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D22116DF312D09BB92FA /* BuildSettings.swift */; };
 		1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */; };
+		1771DBEF3971E4C2568E0BD3 /* HasDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC7248FCF5D536D1256F /* HasDefault.swift */; };
 		1771DC0A3AAADD173AA90AC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D5C780DE3585E815BCCF /* main.swift */; };
 		1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC521BE242229F7D7F95 /* Shell.swift */; };
 		1771DC858EFC8F56B96F7193 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */; };
@@ -59,6 +60,7 @@
 		1771DC521BE242229F7D7F95 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		1771DC5B707D73B13C4D3B70 /* CarPodfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarPodfile.swift; sourceTree = "<group>"; };
 		1771DC604CFBBF25A0F50938 /* Pod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
+		1771DC7248FCF5D536D1256F /* HasDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasDefault.swift; sourceTree = "<group>"; };
 		1771DC9402C595A9B4A121E3 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771DCACAAA8186931819FFA /* XcodeProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
 		1771DD22D5BE772D09F878A7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				1771DC521BE242229F7D7F95 /* Shell.swift */,
 				1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */,
+				1771DC7248FCF5D536D1256F /* HasDefault.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				1771DC858EFC8F56B96F7193 /* InstallPods.swift in Sources */,
 				1771D86042E19A3165CB6D89 /* Options.swift in Sources */,
 				1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */,
+				1771DBEF3971E4C2568E0BD3 /* HasDefault.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

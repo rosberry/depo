@@ -1,20 +1,21 @@
 //
-// Copyright (c) 2020 ___FULLUSERNAME___. All rights reserved.
+// Copyright © 2020 ___FULLUSERNAME___. All rights reserved.
 //
 
 import Foundation
 
-struct Version: Codable {
-
+struct Version<Operator: Codable & HasDefault>: Codable {
     private enum CodingKeys: String, CodingKey {
         case value
-        case _isOptimistic = "isOptimistic"
+        case operation
     }
 
     let value: String
-    var isOptimistic: Bool {
-        _isOptimistic ?? false
-    }
+    let operation: Operator
 
-    private let _isOptimistic: Bool?
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        value = try container.decode(String.self, forKey: .value)
+        operation = try container.decodeIfPresent(Operator.self, forKey: .operation) ?? Operator.defaultValue
+    }
 }
