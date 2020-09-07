@@ -43,7 +43,7 @@ struct InstallPods: ParsableCommand {
         let podsProjectPath = path + "/Pods"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        try createPodfile(at: podFilePath, with: pods, platformVersion: 13.1)
+        try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
         try podInstall()
         try build(pods: pods, at: podsProjectPath)
         try mergeAllPods(at: podsProjectPath)
