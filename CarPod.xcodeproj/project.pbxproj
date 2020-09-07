@@ -26,6 +26,7 @@
 		1771DC7A5359B9D180D2F236 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC521BE242229F7D7F95 /* Shell.swift */; };
 		1771DC858EFC8F56B96F7193 /* InstallPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */; };
 		1771DDD9D1D3DFF1A2D0621C /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC604CFBBF25A0F50938 /* Pod.swift */; };
+		1771DFF8FDDF8143B64F5050 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D55529D6F94FB2009B9A /* Decoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,7 @@
 		1771D3EE6D13C6AE451D5E0B /* InstallPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallPods.swift; sourceTree = "<group>"; };
 		1771D4718AD853AFB5CD0243 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1771D51C2660840C52B57053 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		1771D55529D6F94FB2009B9A /* Decoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		1771D5C780DE3585E815BCCF /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		1771D684EF3145CBD2302BD6 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				1771DC521BE242229F7D7F95 /* Shell.swift */,
 				1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */,
 				1771DC7248FCF5D536D1256F /* HasDefault.swift */,
+				1771D55529D6F94FB2009B9A /* Decoder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				1771D86042E19A3165CB6D89 /* Options.swift in Sources */,
 				1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */,
 				1771DBEF3971E4C2568E0BD3 /* HasDefault.swift in Sources */,
+				1771DFF8FDDF8143B64F5050 /* Decoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
