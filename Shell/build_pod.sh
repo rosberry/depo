@@ -5,11 +5,6 @@ set -e
 
 FRAMEWORK_NAME=$1
 
-# If remnants from a previous build exist, delete them.
-if [ -d "../build" ]; then
-  rm -rf "../build"
-fi
-
 # Build the framework for device and for simulator (using
 # all needed architectures).
 xcodebuild -target "${FRAMEWORK_NAME}" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk "iphoneos" archive

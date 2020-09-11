@@ -7,11 +7,6 @@ OUTPUT_PATH="./Build/iOS/${PRODUCT_NAME}.framework"
 
 set -e
 
-# Remove .framework file if exists on Desktop from previous run.
-if [ -d "${OUTPUT_PATH}" ]; then
-  rm -rf "${OUTPUT_PATH}"
-fi
-
 # Copy the device version of framework to OUTPUT_PATH.
 mkdir -p "${OUTPUT_PATH}"
 cp -a "../build/Release-iphoneos/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/." "${OUTPUT_PATH}"
