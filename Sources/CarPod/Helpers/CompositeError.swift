@@ -30,6 +30,7 @@ struct CompositeError: Error {
         throw self
     }
 
+    @discardableResult
     init?(@ErrorsBuilder build: () -> [Error]) throws {
         try self.init(errors: build())
     }
