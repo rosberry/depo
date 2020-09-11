@@ -16,6 +16,9 @@ struct BuildSettings: Codable {
     var wrapperName: String {
         buildSettings["WRAPPER_NAME", default: ""]
     }
+    var codesigningFolderPath: URL? {
+        URL(string: buildSettings["CODESIGNING_FOLDER_PATH", default: ""])
+    }
     private let buildSettings: [String: String]
 
     init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {

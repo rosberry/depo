@@ -55,8 +55,6 @@ struct Install: ParsableCommand {
             try installPodsCommand.run()
         }
         group.wait()
-        if !errors.isEmpty {
-            throw CustomErrors.composition(errors: errors)
-        }
+        try CompositeError(errors: errors)
     }
 }

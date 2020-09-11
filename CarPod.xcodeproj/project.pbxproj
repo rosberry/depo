@@ -43,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1771D10FF671F048BBE1E761 /* move_built_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = move_built_pod.sh; sourceTree = "<group>"; };
 		1771D1383D0CDC5AE42C0B04 /* build_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_pod.sh; sourceTree = "<group>"; };
 		1771D22116DF312D09BB92FA /* BuildSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		1771D246D1A419A2B1632272 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 			children = (
 				1771D9AC04FA77C0F58033B1 /* merge_pod.sh */,
 				1771D1383D0CDC5AE42C0B04 /* build_pod.sh */,
+				1771D10FF671F048BBE1E761 /* move_built_pod.sh */,
 			);
 			path = Shell;
 			sourceTree = "<group>";

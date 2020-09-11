@@ -24,6 +24,7 @@ struct InstallPods: ParsableCommand {
     private let podsPrefix: String = "Pods"
     private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
+    private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
 
@@ -47,7 +48,7 @@ struct InstallPods: ParsableCommand {
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
         try podInstall()
         try build(pods: pods, at: podsProjectPath)
-        try mergeAllPods(at: podsProjectPath)
+        try proceedAllPods(at: podsProjectPath)
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {
@@ -89,22 +90,39 @@ struct InstallPods: ParsableCommand {
         }
     }
 
-    private func mergeAllPods(at path: String) throws {
+    private func proceedAllPods(at path: String) throws {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = try allSchemes().reduce([Pod]()) { (result, schema) in
             let (pod, settings) = schema
-            let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
-            if status != 0 {
-                return result + [pod]
-            }
-            else {
+            do {
+                try proceed(pod: pod, with: settings)
                 return result
+            }
+            catch {
+                return result + [pod]
             }
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
             throw CustomError.badPodMerge(pods: failedPods)
+        }
+    }
+
+    private func proceed(pod: Pod, with settings: BuildSettings) throws {
+        switch kind(for: pod, with: settings) {
+        case .common:
+            let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
+            if status != 0 {
+                throw CustomError.badPodMerge(pods: [pod])
+            }
+        case .builtFramework:
+            let status: Int32 = shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name, settings.productName])
+            if status != 0 {
+                throw CustomError.badPodMerge(pods: [pod])
+            }
+        case .unknown:
+            break
         }
     }
 
@@ -115,6 +133,15 @@ struct InstallPods: ParsableCommand {
             }
             return (Pod(name: targetName, version: nil),
                     try BuildSettings(targetName: targetName, shell: shell))
+        }
+    }
+
+    private func kind(for pod: Pod, with buildSettings: BuildSettings) -> Pod.Kind {
+        if buildSettings.codesigningFolderPath?.lastPathComponent.contains(".framework") == false {
+            return .builtFramework
+        }
+        else {
+            return .common
         }
     }
 }

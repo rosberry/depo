@@ -7,6 +7,12 @@ import ArgumentParser
 
 struct Pod {
 
+    enum Kind {
+        case common
+        case builtFramework
+        case unknown
+    }
+
     enum Operator: String, Codable, HasDefault {
         case equal
         case greater
