@@ -41,11 +41,6 @@ struct Pod {
 
 extension Pod: Codable {
 
-    private enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case version
-    }
-
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let slashCharacter = Character("/")
