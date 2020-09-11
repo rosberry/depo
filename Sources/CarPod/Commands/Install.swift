@@ -22,8 +22,10 @@ struct Install: ParsableCommand {
     }
 
     private func runSynchronously(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
-        try installPodsCommand.run()
-        try installCarthageItemsCommand.run()
+        try CompositeError {
+            installPodsCommand.run
+            installCarthageItemsCommand.run
+        }
     }
 
     private func runParallel(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {

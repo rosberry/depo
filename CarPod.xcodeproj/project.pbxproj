@@ -13,6 +13,7 @@
 		1771D3026084AC560FBE8ED1 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DC2F948196881BEE2092 /* PodFile.swift */; };
 		1771D490618E46F930C7AF03 /* Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D26F21637EFBC490C98D /* Install.swift */; };
 		1771D4DA6019E3D9DB333A49 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D51C2660840C52B57053 /* Version.swift */; };
+		1771D539D0D47A9E6E164BF0 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771DD37C3068731598EBBFC /* CompositeError.swift */; };
 		1771D57AC920121000C3AAC9 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */; };
 		1771D69B647ECC87ECFE0A5E /* InstallCarthageItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1771D8BBF19A01A20A101431 /* InstallCarthageItems.swift */; };
 		1771D7A0638DBA1529E9EA34 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1771D4718AD853AFB5CD0243 /* README.md */; };
@@ -66,6 +67,7 @@
 		1771DC9402C595A9B4A121E3 /* CarthageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
 		1771DCACAAA8186931819FFA /* XcodeProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
 		1771DD22D5BE772D09F878A7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		1771DD37C3068731598EBBFC /* CompositeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				1771D6153BCEC7BDD9C9A767 /* DataDecoder.swift */,
 				1771DC7248FCF5D536D1256F /* HasDefault.swift */,
 				1771D55529D6F94FB2009B9A /* Decoder.swift */,
+				1771DD37C3068731598EBBFC /* CompositeError.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				1771DA707F422D4E6C8742AA /* DataDecoder.swift in Sources */,
 				1771DBEF3971E4C2568E0BD3 /* HasDefault.swift in Sources */,
 				1771DFF8FDDF8143B64F5050 /* Decoder.swift in Sources */,
+				1771D539D0D47A9E6E164BF0 /* CompositeError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
