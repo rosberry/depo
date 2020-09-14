@@ -7,6 +7,9 @@ build_pod_path=Shell/build_pod.sh
 merge_pod_path=Shell/merge_pod.sh
 move_built_pod_path=Shell/move_built_pod.sh
 
+xcode:
+	swift package generate-xcodeproj
+
 build:
 	swift build -c release --disable-sandbox
 
