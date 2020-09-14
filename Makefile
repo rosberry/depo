@@ -1,7 +1,7 @@
 prefix=/usr/local
 bindir=$(prefix)/bin
-binary=carpod
-release_binary=.build/release/CarPod
+binary=depo
+release_binary=.build/release/Depo
 executable_path=$(bindir)/$(binary)
 build_pod_path=Shell/build_pod.sh
 merge_pod_path=Shell/merge_pod.sh

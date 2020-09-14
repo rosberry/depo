@@ -59,7 +59,7 @@
 		1771D8BBF19A01A20A101431 /* InstallCarthageItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallCarthageItems.swift; sourceTree = "<group>"; };
 		1771D8E0B5B9F69D475561D9 /* Cartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
 		1771D9AC04FA77C0F58033B1 /* merge_pod.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = merge_pod.sh; sourceTree = "<group>"; };
-		1771DB967D308A01E69229CD /* CarPod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CarPod; sourceTree = BUILT_PRODUCTS_DIR; };
+		1771DB967D308A01E69229CD /* Depo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		1771DC2F948196881BEE2092 /* PodFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
 		1771DC521BE242229F7D7F95 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		1771DC5B707D73B13C4D3B70 /* CarPodfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarPodfile.swift; sourceTree = "<group>"; };
@@ -98,11 +98,11 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		1771D894BF9C2F9374960348 /* CarPodTests */ = {
+		1771D53C095963F777EF55F1 /* DepoTests */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = CarPodTests;
+			path = DepoTests;
 			sourceTree = "<group>";
 		};
 		1771D9A28B13F4FB2CE9806E /* Commands */ = {
@@ -115,7 +115,7 @@
 			path = Commands;
 			sourceTree = "<group>";
 		};
-		1771DAE6F97F6231ED563668 /* CarPod */ = {
+		1771DAE6F97F6231ED563668 /* Depo */ = {
 			isa = PBXGroup;
 			children = (
 				1771D53B66851B2910E972C7 /* Models */,
@@ -124,7 +124,7 @@
 				1771D5C780DE3585E815BCCF /* main.swift */,
 				1771D691105ECDC8EB0832E8 /* AppConfiguration.swift */,
 			);
-			path = CarPod;
+			path = Depo;
 			sourceTree = "<group>";
 		};
 		1771DBBF503990B86ADC891C /* Helpers */ = {
@@ -142,7 +142,7 @@
 		1771DBCE8C4B57ECA67772D3 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				1771D894BF9C2F9374960348 /* CarPodTests */,
+				1771D53C095963F777EF55F1 /* DepoTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -174,7 +174,7 @@
 		1771DCE6CBE8E4BC64A22B8C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1771DB967D308A01E69229CD /* CarPod */,
+				1771DB967D308A01E69229CD /* Depo */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,7 +182,7 @@
 		1771DE79154E1537210E3ADE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1771DAE6F97F6231ED563668 /* CarPod */,
+				1771DAE6F97F6231ED563668 /* Depo */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -197,9 +197,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1771D7687C02C4CB3AD89E61 /* CarPod */ = {
+		1771D7687C02C4CB3AD89E61 /* Depo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1771D0C4382B55F9EC95F0C3 /* Build configuration list for PBXNativeTarget "CarPod" */;
+			buildConfigurationList = 1771D0C4382B55F9EC95F0C3 /* Build configuration list for PBXNativeTarget "Depo" */;
 			buildPhases = (
 				1771DF4EBE9B11D8D7C516CC /* Sources */,
 				1771D2085EBB328C80C01F0C /* Frameworks */,
@@ -209,13 +209,13 @@
 			);
 			dependencies = (
 			);
-			name = CarPod;
+			name = Depo;
 			packageProductDependencies = (
 				9997C27924A5F4F4004422E5,
 				99B57D9325011D5000352F47,
 			);
 			productName = CarPod;
-			productReference = 1771DB967D308A01E69229CD /* CarPod */;
+			productReference = 1771DB967D308A01E69229CD /* Depo */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +226,7 @@
 			attributes = {
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 			};
-			buildConfigurationList = 1771D10C7FC0C9274E947308 /* Build configuration list for PBXProject "CarPod" */;
+			buildConfigurationList = 1771D10C7FC0C9274E947308 /* Build configuration list for PBXProject "Depo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -243,7 +243,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1771D7687C02C4CB3AD89E61 /* CarPod */,
+				1771D7687C02C4CB3AD89E61 /* Depo */,
 			);
 		};
 /* End PBXProject section */
@@ -422,7 +422,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1771D0C4382B55F9EC95F0C3 /* Build configuration list for PBXNativeTarget "CarPod" */ = {
+		1771D0C4382B55F9EC95F0C3 /* Build configuration list for PBXNativeTarget "Depo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1771D22B492FA50BE52CB418 /* Debug */,
@@ -431,7 +431,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1771D10C7FC0C9274E947308 /* Build configuration list for PBXProject "CarPod" */ = {
+		1771D10C7FC0C9274E947308 /* Build configuration list for PBXProject "Depo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1771D37227DA64AFA1F21B4C /* Debug */,

@@ -16,7 +16,7 @@ final class InstallPods: ParsableCommand {
         case badPodMerge(pods: [Pod])
     }
 
-    static let configuration: CommandConfiguration = .init(abstract: "Install and build pods")
+    static let configuration: CommandConfiguration = .init(commandName: "pod-install")
 
     @OptionGroup()
     private(set) var options: Options

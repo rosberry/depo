@@ -22,6 +22,7 @@ struct CompositeError: Error {
 
     let errors: [Error]
 
+    @discardableResult
     init?(errors: [Error]) throws {
         guard !errors.isEmpty else {
             return nil

@@ -12,6 +12,8 @@ final class InstallCarthageItems: ParsableCommand {
         case badCarthageUpdate
     }
 
+    static var configuration: CommandConfiguration = .init(commandName: "carthage-install")
+
     @OptionGroup()
     private(set) var options: Options
     private let cartFileName: String = AppConfiguration.cartFileName
