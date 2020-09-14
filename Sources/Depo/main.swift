@@ -1,9 +1,5 @@
 //
-//  main.swift
-//  CarPod
-//
-//  Created by Владислав Жаворонков on 6/23/20.
-//  Copyright © 2020 Владислав Жаворонков. All rights reserved.
+// Copyright © 2020 Rosberry. All rights reserved.
 //
 
 import Foundation

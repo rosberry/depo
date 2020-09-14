@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 ___FULLUSERNAME___. All rights reserved.
+// Copyright © 2020 Rosberry. All rights reserved.
 //
 
 import Foundation
