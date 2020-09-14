@@ -1,3 +1,3 @@
-# Depo
+# Depo :station:
 
 Universal dependency manager
