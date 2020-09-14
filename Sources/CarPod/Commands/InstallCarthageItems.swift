@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-struct InstallCarthageItems: ParsableCommand {
+final class InstallCarthageItems: ParsableCommand {
 
     enum CustomError: LocalizedError {
         case badCartfile(path: String)

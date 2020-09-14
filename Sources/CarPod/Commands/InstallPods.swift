@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Yams
 
-struct InstallPods: ParsableCommand {
+final class InstallPods: ParsableCommand {
 
     enum CustomError: LocalizedError {
         case badPodInit

@@ -5,11 +5,7 @@
 import Foundation
 import ArgumentParser
 
-struct Install: ParsableCommand {
-
-    enum CustomErrors: LocalizedError {
-        case composition(errors: [Error])
-    }
+final class Install: ParsableCommand {
 
     @OptionGroup()
     private(set) var options: Options
