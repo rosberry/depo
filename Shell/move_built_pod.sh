@@ -3,9 +3,10 @@
 set -e
 
 SCHEMA_NAME=$1
-PRODUCT_NAME=$2
 
-OUTPUT_PATH="./Build/iOS/${PRODUCT_NAME}.framework"
+OUTPUT_PATH="./Build/iOS/"
 
-echo "nothing there"
-exit 1
+FRAMEWORK_DIR="${SCHEMA_NAME}/"
+
+cp -r $(find $FRAMEWORK_DIR -type d -name "*.framework") $OUTPUT_PATH
+cp -r $(find $FRAMEWORK_DIR -type d -name "*.bundle") $OUTPUT_PATH

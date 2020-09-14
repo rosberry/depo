@@ -117,7 +117,7 @@ struct InstallPods: ParsableCommand {
                 throw CustomError.badPodMerge(pods: [pod])
             }
         case .builtFramework:
-            let status: Int32 = shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name, settings.productName])
+            let status: Int32 = shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name])
             if status != 0 {
                 throw CustomError.badPodMerge(pods: [pod])
             }

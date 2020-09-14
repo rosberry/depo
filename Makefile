@@ -5,6 +5,7 @@ release_binary=.build/release/CarPod
 executable_path=$(bindir)/$(binary)
 build_pod_path=Shell/build_pod.sh
 merge_pod_path=Shell/merge_pod.sh
+move_built_pod_path=Shell/move_built_pod.sh
 
 build:
 	swift build -c release --disable-sandbox
@@ -17,7 +18,11 @@ install_merge_pod:
 	cp $(merge_pod_path) $(bindir)/merge_pod.sh
 	chmod +x $(bindir)/merge_pod.sh
 
-install: build install_build_pod install_merge_pod
+install_built_pod_path:
+	cp $(move_built_pod_path) $(bindir)/move_built_pod.sh
+	chmod +x $(bindir)/move_built_pod.sh
+
+install: build install_build_pod install_merge_pod install_built_pod_path
 	cp $(release_binary) $(executable_path)
 
 uninstall:
