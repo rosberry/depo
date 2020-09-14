@@ -1,3 +1,3 @@
-# CarPod
+# Depo
 
-A description of this package.
+Universal dependency manager
