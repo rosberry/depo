@@ -1,3 +1,3 @@
 # Depo :station:
 
-Universal dependency manager
+Dependency managers wrapper
