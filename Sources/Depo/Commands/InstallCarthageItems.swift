@@ -43,7 +43,7 @@ final class InstallCarthageItems: ParsableCommand {
     }
 
     private func carthageUpdate() throws {
-        if shell("carthage", "update", "--platform", "ios") != 0 {
+        if !shell("carthage", "update", "--platform", "ios") {
             throw CustomError.badCarthageUpdate
         }
     }

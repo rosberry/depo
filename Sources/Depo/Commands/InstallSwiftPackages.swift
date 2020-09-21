@@ -9,6 +9,7 @@ final class InstallSwiftPackages: ParsableCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
+        case badSwiftPackageUpdate
     }
 
     static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
@@ -29,7 +30,12 @@ final class InstallSwiftPackages: ParsableCommand {
 
     func run() throws {
         let packages = try self.packages ?? CarPodfile(decoder: options.carpodFileType.decoder).swiftPackages
-        try createPackageSwiftFile(at: "./Package.swift", with: packages)
+        let packageSwiftFileName = AppConfiguration.packageSwiftFileName
+        let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
+
+        try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
+        try swiftPackageUpdate()
+        try build(packages: packages, at: packageSwiftDirName)
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
@@ -38,6 +44,17 @@ final class InstallSwiftPackages: ParsableCommand {
         if !FileManager.default.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
         }
+    }
+    
+    private func swiftPackageUpdate() throws {
+        if !shell("swift", "package", "update") {
+            throw CustomError.badSwiftPackageUpdate
+        }
+    }
 
+    private func build(packages: [SwiftPackage], at path: String) throws {
+        /*let failedPackages = packages.reduce([SwiftPackage]()) { result, package in
+
+        }*/
     }
 }

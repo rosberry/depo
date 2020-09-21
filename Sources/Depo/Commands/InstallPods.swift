@@ -55,7 +55,7 @@ final class InstallPods: ParsableCommand {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return
         }
-        if shell("pod", "init") != 0 {
+        if !shell("pod", "init") {
             throw CustomError.badPodInit
         }
     }
@@ -68,7 +68,7 @@ final class InstallPods: ParsableCommand {
     }
 
     private func podInstall() throws {
-        if shell("pod", "install") != 0 {
+        if !shell("pod", "install") {
             throw CustomError.badPodInstall
         }
     }
@@ -77,7 +77,7 @@ final class InstallPods: ParsableCommand {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            if shell(filePath: buildFrameworkShellScriptPath, arguments: [pod.name]) != 0 {
+            if !shell(filePath: buildFrameworkShellScriptPath, arguments: [pod.name]) {
                 return result + [pod]
             }
             else {
@@ -112,13 +112,11 @@ final class InstallPods: ParsableCommand {
     private func proceed(pod: Pod, with settings: BuildSettings) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
-            if status != 0 {
+            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName]) {
                 throw CustomError.badPodMerge(pods: [pod])
             }
         case .builtFramework:
-            let status: Int32 = shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name])
-            if status != 0 {
+            if !shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name]) {
                 throw CustomError.badPodMerge(pods: [pod])
             }
         case .unknown:

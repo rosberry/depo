@@ -21,22 +21,22 @@ final class Shell: Codable {
         }
     }
 
-    func callAsFunction(_ args: [String]) -> Int32 {
+    func callAsFunction(_ args: [String]) -> Bool {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
-        return terminationStatus(of: process)
+        return terminationStatus(of: process) == 0
     }
 
-    func callAsFunction(_ args: String...) -> Int32 {
+    func callAsFunction(_ args: String...) -> Bool {
         callAsFunction(args)
     }
 
-    func callAsFunction(filePath: String, arguments: [String] = []) -> Int32 {
+    func callAsFunction(filePath: String, arguments: [String] = []) -> Bool {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments
-        return terminationStatus(of: process)
+        return terminationStatus(of: process) == 0
     }
 
     func callAsFunction(_ args: [String]) throws -> Output {
