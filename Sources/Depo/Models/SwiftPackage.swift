@@ -5,5 +5,10 @@
 import Foundation
 
 struct SwiftPackage {
+    let url: String
+    let exactVersion: String
+}
+
+extension SwiftPackage: Codable {
 
 }

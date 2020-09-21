@@ -6,10 +6,13 @@ import Foundation
 import ArgumentParser
 
 final class Depo: ParsableCommand {
-     static let configuration: CommandConfiguration = .init(abstract: "Main",
-                                                            version: "0.0",
-                                                            subcommands: [Install.self, InstallPods.self, InstallCarthageItems.self],
-                                                            defaultSubcommand: Install.self)
+    static let configuration: CommandConfiguration = .init(abstract: "Main",
+                                                           version: "0.0",
+                                                           subcommands: [Install.self,
+                                                                         InstallPods.self,
+                                                                         InstallCarthageItems.self,
+                                                                         InstallSwiftPackages.self],
+                                                           defaultSubcommand: Install.self)
 }
 
 Depo.main()

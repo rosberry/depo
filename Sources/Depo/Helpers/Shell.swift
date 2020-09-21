@@ -21,11 +21,15 @@ final class Shell: Codable {
         }
     }
 
-    func callAsFunction(_ args: String...) -> Int32 {
+    func callAsFunction(_ args: [String]) -> Int32 {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
         return terminationStatus(of: process)
+    }
+
+    func callAsFunction(_ args: String...) -> Int32 {
+        callAsFunction(args)
     }
 
     func callAsFunction(filePath: String, arguments: [String] = []) -> Int32 {
@@ -35,11 +39,15 @@ final class Shell: Codable {
         return terminationStatus(of: process)
     }
 
-    func callAsFunction(_ args: String...) throws -> Output {
+    func callAsFunction(_ args: [String]) throws -> Output {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
         return try output(of: process)
+    }
+
+    func callAsFunction(_ args: String...) throws -> Output {
+        try callAsFunction(args)
     }
 
     func callAsFunction(filePath: String, arguments: [String] = []) throws -> Output {
