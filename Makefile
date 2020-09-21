@@ -4,7 +4,7 @@ binary=depo
 release_binary=.build/release/Depo
 executable_path=$(bindir)/$(binary)
 
-SCRIPTS := build_framework.sh merge_pod.sh move_built_pod.sh
+SCRIPTS = build_swift_package.sh build_pod.sh merge_pod.sh move_built_pod.sh
 
 define SCRIPT_INSTALL
 cp Shell/$(1) $(bindir)/$(1);

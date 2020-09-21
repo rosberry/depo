@@ -12,6 +12,7 @@ struct CarPodfile: Codable {
 
     let pods: [Pod]
     let carts: [CarthageItem]
+    let swiftPackages: [SwiftPackage]
     private static let defaultPath: String = "./\(AppConfiguration.configFileName)"
 
     init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {

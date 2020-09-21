@@ -3,7 +3,6 @@
 set -e
 
 FRAMEWORK_NAME=$1
-DEVELOPMENT_TEAM=$2
 
 xcodebuild \
 -target "${FRAMEWORK_NAME}" \
@@ -13,7 +12,6 @@ xcodebuild \
 -arch armv7s \
 only_active_arch=no defines_module=yes \
 -sdk "iphoneos" archive \
-DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
 
 xcodebuild \
 -target "${FRAMEWORK_NAME}" \
@@ -23,5 +21,3 @@ xcodebuild \
 only_active_arch=no \
 defines_module=yes \
 -sdk "iphonesimulator" archive \
-DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
-
