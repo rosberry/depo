@@ -10,12 +10,15 @@ final class InstallSwiftPackages: ParsableCommand {
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
         case badSwiftPackageUpdate
+        case badSwiftPackageBuild(packages: [SwiftPackage])
     }
 
     static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
 
     @OptionGroup()
     private(set) var options: Options
+
+    private let buildSwiftPackageScriptPath: String = AppConfiguration.buildSPShellScriptFilePath
 
     private let packages: [SwiftPackage]?
     private let shell: Shell = .init()
@@ -36,6 +39,7 @@ final class InstallSwiftPackages: ParsableCommand {
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
         try swiftPackageUpdate()
         try build(packages: packages, at: packageSwiftDirName)
+
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
@@ -53,8 +57,17 @@ final class InstallSwiftPackages: ParsableCommand {
     }
 
     private func build(packages: [SwiftPackage], at path: String) throws {
-        /*let failedPackages = packages.reduce([SwiftPackage]()) { result, package in
-
-        }*/
+        let failedPackages = packages.reduce([SwiftPackage]()) { result, package in
+            if shell("cd", package.name),
+               shell(filePath: buildSwiftPackageScriptPath, arguments: ["GPVA8JVMU3"]) {
+                return result
+            }
+            else {
+                return result + [package]
+            }
+        }
+        if !failedPackages.isEmpty {
+            throw CustomError.badSwiftPackageBuild(packages: failedPackages)
+        }
     }
 }

@@ -5,8 +5,12 @@
 import Foundation
 
 struct SwiftPackage {
-    let url: String
+    let url: URL
     let exactVersion: String
+
+    var name: String {
+        String(url.lastPathComponent.dropLast(".git".count))
+    }
 }
 
 extension SwiftPackage: Codable {
