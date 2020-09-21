@@ -22,7 +22,7 @@ final class InstallPods: ParsableCommand {
     private(set) var options: Options
 
     private let podsPrefix: String = "Pods"
-    private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
+    private let buildPodShellScriptPath: String = AppConfiguration.buildFrameworkShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName

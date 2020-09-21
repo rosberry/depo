@@ -21,7 +21,12 @@ fi
 # a new version created by merging the device and simulator
 # frameworks' executables with lipo.
 
-xcrun lipo -create -output "${OUTPUT_PATH}/${PRODUCT_NAME}" "../build/Release-iphoneos/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}" "../build/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}"
+
+xcrun lipo -create
+-output
+"${OUTPUT_PATH}/${PRODUCT_NAME}"
+"../build/Release-iphoneos/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}"
+"../build/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}"
 
 # Copy the Swift module mappings for the simulator into the
 # framework.  The device mappings already exist from step 6.

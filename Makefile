@@ -3,9 +3,15 @@ bindir=$(prefix)/bin
 binary=depo
 release_binary=.build/release/Depo
 executable_path=$(bindir)/$(binary)
-build_pod_path=Shell/build_pod.sh
-merge_pod_path=Shell/merge_pod.sh
-move_built_pod_path=Shell/move_built_pod.sh
+
+SCRIPTS := build_framework.sh merge_pod.sh move_built_pod.sh
+
+define SCRIPT_INSTALL
+cp Shell/$(1) $(bindir)/$(1);
+chmod +x $(bindir)/$(1);
+endef
+
+.PHONY: build install uninstall clean install_scripts
 
 xcode:
 	swift package generate-xcodeproj
@@ -13,19 +19,10 @@ xcode:
 build:
 	swift build -c release --disable-sandbox
 
-install_build_pod:
-	cp $(build_pod_path) $(bindir)/build_pod.sh
-	chmod +x $(bindir)/build_pod.sh
+install_scripts:
+	$(foreach script,$(SCRIPTS),$(call SCRIPT_INSTALL,$(script)))
 
-install_merge_pod:
-	cp $(merge_pod_path) $(bindir)/merge_pod.sh
-	chmod +x $(bindir)/merge_pod.sh
-
-install_built_pod_path:
-	cp $(move_built_pod_path) $(bindir)/move_built_pod.sh
-	chmod +x $(bindir)/move_built_pod.sh
-
-install: build install_build_pod install_merge_pod install_built_pod_path
+install: build install_scripts
 	cp $(release_binary) $(executable_path)
 
 uninstall:
@@ -34,4 +31,3 @@ uninstall:
 clean:
 	rm -rf .build
 
-.PHONY: build install uninstall clean
