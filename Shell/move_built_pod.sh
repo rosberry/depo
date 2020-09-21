@@ -3,8 +3,9 @@
 set -e
 
 SCHEMA_NAME=$1
+BUILD_DIR={$2:="."}
 
-OUTPUT_PATH="./Build/iOS/"
+OUTPUT_PATH="${BUILD_DIR}/Build/iOS/"
 
 FRAMEWORK_DIR="${SCHEMA_NAME}/"
 

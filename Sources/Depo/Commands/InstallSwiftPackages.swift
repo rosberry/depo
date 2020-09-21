@@ -11,6 +11,7 @@ final class InstallSwiftPackages: ParsableCommand {
         case badPackageSwiftFile(path: String)
         case badSwiftPackageUpdate
         case badSwiftPackageBuild(packages: [SwiftPackage])
+        case badSwiftPackageProceed(packages: [SwiftPackage])
     }
 
     static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
@@ -57,17 +58,35 @@ final class InstallSwiftPackages: ParsableCommand {
     }
 
     private func build(packages: [SwiftPackage], at path: String) throws {
-        let failedPackages = packages.reduce([SwiftPackage]()) { result, package in
-            if shell("cd", package.name),
-               shell(filePath: buildSwiftPackageScriptPath, arguments: ["GPVA8JVMU3"]) {
-                return result
-            }
-            else {
-                return result + [package]
-            }
+        let currentPath = FileManager.default.currentDirectoryPath
+        FileManager.default.changeCurrentDirectoryPath(path)
+        let failedPackages = packages.filter { package in
+            !shell(filePath: buildSwiftPackageScriptPath, arguments: [package.name, "GPVA8JVMU3"])
         }
+        FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPackages.isEmpty {
             throw CustomError.badSwiftPackageBuild(packages: failedPackages)
+        }
+    }
+
+    private func proceed(packages: [SwiftPackage], at path: String) throws {
+        let currentPath = FileManager.default.currentDirectoryPath
+        FileManager.default.changeCurrentDirectoryPath(path)
+        let buildSettings: [BuildSettings] = try packages.map { package in
+            defer {
+                FileManager.default.changeCurrentDirectoryPath("..")
+            }
+            FileManager.default.changeCurrentDirectoryPath("./\(package.name)")
+            return try BuildSettings(targetName: nil, shell: shell)
+        }
+        FileManager.default.changeCurrentDirectoryPath("./build")
+        let failedPackages: [SwiftPackage] = zip(packages, buildSettings).compactMap { (package, settings) in
+            !shell(filePath: AppConfiguration.mergePodShellScriptFilePath, arguments: [settings.productName, settings.productName])
+            return package
+        }
+        FileManager.default.changeCurrentDirectoryPath(currentPath)
+        if !failedPackages.isEmpty {
+            throw CustomError.badSwiftPackageProceed(packages: failedPackages)
         }
     }
 }
