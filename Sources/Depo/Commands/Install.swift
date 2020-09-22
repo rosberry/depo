@@ -11,9 +11,9 @@ final class Install: ParsableCommand {
     private(set) var options: Options
 
     func run() throws {
-        let carPodfile = try CarPodfile(decoder: options.carpodFileType.decoder)
-        let installPods = InstallPods(pods: carPodfile.pods)
-        let installCarthageItems = InstallCarthageItems(carthageItems: carPodfile.carts)
+        let depofile = try Depofile(decoder: options.depoFileType.decoder)
+        let installPods = InstallPods(pods: depofile.pods)
+        let installCarthageItems = InstallCarthageItems(carthageItems: depofile.carts)
         try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
     }
 
@@ -22,35 +22,5 @@ final class Install: ParsableCommand {
             installPodsCommand.run
             installCarthageItemsCommand.run
         }
-    }
-
-    private func runParallel(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
-        let group = DispatchGroup()
-        let syncQueue: DispatchQueue = .init(label: "sync")
-        var errors: [Error] = []
-
-        func run(task: @escaping () throws -> Void) {
-            let queue = DispatchQueue.global(qos: .userInitiated)
-            queue.async(group: group) {
-                do {
-                    try task()
-                }
-                catch {
-                    syncQueue.sync {
-                        errors.append(error)
-                    }
-                }
-            }
-        }
-
-        run {
-            try installPodsCommand.run()
-        }
-
-        run {
-            try installPodsCommand.run()
-        }
-        group.wait()
-        try CompositeError(errors: errors)
     }
 }

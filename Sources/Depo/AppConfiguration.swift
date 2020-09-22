@@ -5,7 +5,7 @@
 import Foundation
 
 enum AppConfiguration {
-    static let configFileName: String = "CarPodfile"
+    static let configFileName: String = "Depofile"
     static let cartFileName: String = "Cartfile"
     static let podFileName: String = "Podfile"
     static let packageSwiftFileName: String = "Package.swift"

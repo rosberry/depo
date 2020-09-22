@@ -33,7 +33,7 @@ final class InstallSwiftPackages: ParsableCommand {
     }
 
     func run() throws {
-        let packages = try self.packages ?? CarPodfile(decoder: options.carpodFileType.decoder).swiftPackages
+        let packages = try self.packages ?? Depofile(decoder: options.depoFileType.decoder).swiftPackages
         let packageSwiftFileName = AppConfiguration.packageSwiftFileName
         let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
 
