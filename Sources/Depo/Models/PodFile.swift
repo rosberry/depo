@@ -16,7 +16,7 @@ struct PodFile: CustomStringConvertible {
                            install! 'cocoapods', integrate_targets: false
                            platform :ios, '\(platformVersion)'
 
-                           target 'CarPod' do
+                           target 'Depo' do
                                use_frameworks!
 
                            \(podsSection)
