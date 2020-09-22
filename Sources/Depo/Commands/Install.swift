@@ -11,9 +11,9 @@ final class Install: ParsableCommand {
     private(set) var options: Options
 
     func run() throws {
-        let carPodfile = try CarPodfile(decoder: options.carpodFileType.decoder)
-        let installPods = InstallPods(pods: carPodfile.pods)
-        let installCarthageItems = InstallCarthageItems(carthageItems: carPodfile.carts)
+        let depofile = try Depofile(decoder: options.depoFileType.decoder)
+        let installPods = InstallPods(pods: depofile.pods)
+        let installCarthageItems = InstallCarthageItems(carthageItems: depofile.carts)
         try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
     }
 

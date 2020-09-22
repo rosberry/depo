@@ -40,7 +40,7 @@ final class InstallPods: ParsableCommand {
     }
 
     func run() throws {
-        let pods = try self.pods ?? CarPodfile(decoder: options.carpodFileType.decoder).pods
+        let pods = try self.pods ?? Depofile(decoder: options.depoFileType.decoder).pods
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 

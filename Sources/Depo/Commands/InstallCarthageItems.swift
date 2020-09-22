@@ -30,7 +30,7 @@ final class InstallCarthageItems: ParsableCommand {
     }
 
     func run() throws {
-        let carthageItems = try self.carthageItems ?? CarPodfile(decoder: options.carpodFileType.decoder).carts
+        let carthageItems = try self.carthageItems ?? Depofile(decoder: options.depoFileType.decoder).carts
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
         try carthageUpdate()
     }

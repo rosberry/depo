@@ -4,10 +4,10 @@
 
 import Foundation
 
-struct CarPodfile: Codable {
+struct Depofile: Codable {
 
     enum CustomError: LocalizedError {
-        case badCarPodFileURL(path: String)
+        case badDepoFileURL(path: String)
     }
 
     let pods: [Pod]
@@ -16,8 +16,8 @@ struct CarPodfile: Codable {
 
     init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {
         guard let data = fileManager.contents(atPath: path) else {
-            throw CustomError.badCarPodFileURL(path: path)
+            throw CustomError.badDepoFileURL(path: path)
         }
-        self = try decoder.decode(CarPodfile.self, from: data)
+        self = try decoder.decode(Depofile.self, from: data)
     }
 }
