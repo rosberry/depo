@@ -112,7 +112,7 @@ final class InstallPods: ParsableCommand {
     private func proceed(pod: Pod, with settings: BuildSettings) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName, ".", ".."]) {
+            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName, ".", "../build"]) {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:

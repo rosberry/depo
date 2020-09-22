@@ -25,8 +25,8 @@ defines_module=yes \
 -sdk "iphonesimulator" archive \
 DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
 
-IPHONE_DIR="../build/Release-iphoneos/${PACKAGE_NAME}"
-SIMULATOR_DIR="../build/Release-iphonesimulator/${PACKAGE_NAME}"
+IPHONE_DIR="../build/${PACKAGE_NAME}/Release-iphoneos"
+SIMULATOR_DIR="../build/${PACKAGE_NAME}/Release-iphonesimulator"
 mkdir -p $IPHONE_DIR $SIMULATOR_DIR
 cp -r build/Release-iphoneos/* $IPHONE_DIR
 cp -r build/Release-iphonesimulator/* $SIMULATOR_DIR
