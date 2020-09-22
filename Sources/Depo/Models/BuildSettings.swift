@@ -26,6 +26,6 @@ struct BuildSettings: Codable {
         guard let data = output.stdOut.data(using: .utf8) else {
             throw CustomError.badOutput
         }
-        self.buildSettings = (try decoder.decode([BuildSettings].self, from: data)).first?.buildSettings ?? [:]
+        buildSettings = (try decoder.decode([BuildSettings].self, from: data)).first?.buildSettings ?? [:]
     }
 }

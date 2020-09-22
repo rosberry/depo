@@ -8,7 +8,7 @@ import Yams
 
 final class InstallPods: ParsableCommand {
 
-    enum CustomError: LocalizedError {
+    enum Error: LocalizedError {
         case badPodInit
         case badPodInstall
         case badPodfile(path: String)
@@ -56,20 +56,20 @@ final class InstallPods: ParsableCommand {
             return
         }
         if shell("pod", "init") != 0 {
-            throw CustomError.badPodInit
+            throw Error.badPodInit
         }
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
         let content = PodFile(pods: pods, platformVersion: platformVersion).description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
-            throw CustomError.badPodfile(path: podFilePath)
+            throw Error.badPodfile(path: podFilePath)
         }
     }
 
     private func podInstall() throws {
         if shell("pod", "install") != 0 {
-            throw CustomError.badPodInstall
+            throw Error.badPodInstall
         }
     }
 
@@ -86,7 +86,7 @@ final class InstallPods: ParsableCommand {
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
-            throw CustomError.badPodBuild(pods: failedPods)
+            throw Error.badPodBuild(pods: failedPods)
         }
     }
 
@@ -105,7 +105,7 @@ final class InstallPods: ParsableCommand {
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
-            throw CustomError.badPodMerge(pods: failedPods)
+            throw Error.badPodMerge(pods: failedPods)
         }
     }
 
@@ -114,12 +114,12 @@ final class InstallPods: ParsableCommand {
         case .common:
             let status: Int32 = shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName])
             if status != 0 {
-                throw CustomError.badPodMerge(pods: [pod])
+                throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:
             let status: Int32 = shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name])
             if status != 0 {
-                throw CustomError.badPodMerge(pods: [pod])
+                throw Error.badPodMerge(pods: [pod])
             }
         case .unknown:
             break

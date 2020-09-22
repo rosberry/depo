@@ -7,7 +7,7 @@ import ArgumentParser
 
 final class InstallCarthageItems: ParsableCommand {
 
-    enum CustomError: LocalizedError {
+    enum Error: LocalizedError {
         case badCartfile(path: String)
         case badCarthageUpdate
     }
@@ -38,13 +38,13 @@ final class InstallCarthageItems: ParsableCommand {
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
         let content = Cartfile(items: items).description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
-            throw CustomError.badCartfile(path: cartfilePath)
+            throw Error.badCartfile(path: cartfilePath)
         }
     }
 
     private func carthageUpdate() throws {
         if shell("carthage", "update", "--platform", "ios") != 0 {
-            throw CustomError.badCarthageUpdate
+            throw Error.badCarthageUpdate
         }
     }
 }
