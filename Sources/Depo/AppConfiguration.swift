@@ -16,6 +16,6 @@ enum AppConfiguration {
     static let packageSwiftOutputDirectoryName: String = "SPM/Build/iOS"
     static let buildPodShellScriptFilePath: String = "/usr/local/bin/build_pod.sh"
     static let buildSPShellScriptFilePath: String = "/usr/local/bin/build_swift_package.sh"
-    static let mergePodShellScriptFilePath: String = "/usr/local/bin/merge_pod.sh"
+    static let mergePackageShellScriptFilePath: String = "/usr/local/bin/merge_package.sh"
     static let moveBuiltPodShellFilePath: String = "/usr/local/bin/move_built_pod.sh"
 }

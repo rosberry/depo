@@ -94,7 +94,7 @@ final class InstallSwiftPackages: ParsableCommand {
             }
             let failedFrameworks: [String] = fmg.operate(in: "./\(buildPath)/\(package.name)") {
                 frameworks.filter { framework in
-                    !shell(filePath: AppConfiguration.mergePodShellScriptFilePath,
+                    !shell(filePath: AppConfiguration.mergePackageShellScriptFilePath,
                            arguments: [framework, ".", "\(projectPath)/\(outputPath)"])
                 }
             }

@@ -23,7 +23,7 @@ final class InstallPods: ParsableCommand {
 
     private let podsPrefix: String = "Pods"
     private let buildFrameworkShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
-    private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
+    private let mergePackageShellScriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
@@ -113,7 +113,7 @@ final class InstallPods: ParsableCommand {
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName, outputPath, "../build"]) {
+            if !shell(filePath: mergePackageShellScriptPath, arguments: [pod.name, settings.productName, outputPath, "../build"]) {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:
