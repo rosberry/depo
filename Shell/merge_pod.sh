@@ -13,7 +13,7 @@ IPHONEOS_FRAMEWORK_DIR="${BUILD_DIR}/Release-iphoneos/${SCHEMA_NAME}/${PRODUCT_N
 SIMULATOR_FRAMEWORK_DIR="${BUILD_DIR}/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME}.framework"
 if [ -d $IPHONEOS_FRAMEWORK_DIR ]; then
   mkdir -p "${OUTPUT_PATH}"
-  cp -a $IPHONEOS_FRAMEWORK_DIR "${OUTPUT_PATH}"
+  cp -a $IPHONEOS_FRAMEWORK_DIR/ "${OUTPUT_PATH}"
 else
   echo $PWD $IPHONEOS_FRAMEWORK_DIR
   echo $PWD $SIMULATOR_FRAMEWORK_DIR
@@ -27,8 +27,8 @@ xcrun lipo -create \
 $IPHONEOS_FRAMEWORK_DIR/$PRODUCT_NAME \
 $SIMULATOR_FRAMEWORK_DIR/$PRODUCT_NAME
 
-SWIFTMODULE_PATH="${BUILD_DIR}/build/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/Modules/${SCHEMA_NAME}.swiftmodule/"
-if [ -f $SWIFTMODULE_PATH ]; then
-  cp -r "${SWIFTMODULE_PATH}" "${OUTPUT_PATH}/Modules/${SCHEMA_NAME}.swiftmodule"
+SWIFTMODULE_PATH="${BUILD_DIR}/Release-iphonesimulator/${SCHEMA_NAME}/${PRODUCT_NAME}.framework/Modules/${PRODUCT_NAME}.swiftmodule/"
+if [ -d $SWIFTMODULE_PATH ]; then
+  cp -r "${SWIFTMODULE_PATH}" "${OUTPUT_PATH}/Modules/${PRODUCT_NAME}.swiftmodule"
 fi
 
