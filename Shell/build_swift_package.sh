@@ -3,9 +3,8 @@
 set -e
 
 DEVELOPMENT_TEAM=$1
-PACKAGE_NAME=${2:-$(basename "$PWD")}
-
-cd ${2:-"."}
+BUILD_DIR=$2
+PACKAGE_NAME=${3:-$(basename "$PWD")}
 
 xcodebuild \
 -configuration Release \
@@ -25,8 +24,8 @@ defines_module=yes \
 -sdk "iphonesimulator" archive \
 DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
 
-IPHONE_DIR="../build/${PACKAGE_NAME}/Release-iphoneos"
-SIMULATOR_DIR="../build/${PACKAGE_NAME}/Release-iphonesimulator"
+IPHONE_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphoneos"
+SIMULATOR_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphonesimulator"
 mkdir -p $IPHONE_DIR $SIMULATOR_DIR
 cp -r build/Release-iphoneos/* $IPHONE_DIR
 cp -r build/Release-iphonesimulator/* $SIMULATOR_DIR

@@ -27,6 +27,7 @@ final class InstallPods: ParsableCommand {
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
+    private let podsOutputDirectoryName: String = AppConfiguration.podsOutputDirectoryName
 
     private let pods: [Pod]?
     private let shell: Shell = .init()
@@ -48,7 +49,7 @@ final class InstallPods: ParsableCommand {
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
         try podInstall()
         try build(pods: pods, at: podsProjectPath)
-        try proceedAllPods(at: podsProjectPath)
+        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {
@@ -90,29 +91,29 @@ final class InstallPods: ParsableCommand {
         }
     }
 
-    private func proceedAllPods(at path: String) throws {
-        let currentPath = FileManager.default.currentDirectoryPath
+    private func proceedAllPods(at path: String, to outputPath: String) throws {
+        let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = try allSchemes().reduce([Pod]()) { (result, schema) in
             let (pod, settings) = schema
             do {
-                try proceed(pod: pod, with: settings)
+                try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")
                 return result
             }
             catch {
                 return result + [pod]
             }
         }
-        FileManager.default.changeCurrentDirectoryPath(currentPath)
+        FileManager.default.changeCurrentDirectoryPath(projectPath)
         if !failedPods.isEmpty {
             throw Error.badPodMerge(pods: failedPods)
         }
     }
 
-    private func proceed(pod: Pod, with settings: BuildSettings) throws {
+    private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName, ".", "../build"]) {
+            if !shell(filePath: mergePodShellScriptPath, arguments: [pod.name, settings.productName, outputPath, "../build"]) {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:

@@ -39,11 +39,14 @@ final class InstallSwiftPackages: ParsableCommand {
         let packages = try self.packages ?? Depofile(decoder: options.depoFileType.decoder).swiftPackages
         let packageSwiftFileName = AppConfiguration.packageSwiftFileName
         let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
+        let packageSwiftBuildsDirName = AppConfiguration.packageSwiftBuildsDirectoryName
+        let outputDirName = AppConfiguration.packageSwiftOutputDirectoryName
 
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
         try swiftPackageUpdate()
-        try build(packages: packages, at: packageSwiftDirName)
-        try proceed(packages: packages, at: packageSwiftDirName)
+        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
+        let settings = try buildSettings(packages: packages, at: packageSwiftDirName)
+        try proceed(packageContexts: zip(packages, settings), at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
@@ -53,46 +56,50 @@ final class InstallSwiftPackages: ParsableCommand {
             throw CustomError.badPackageSwiftFile(path: filePath)
         }
     }
-    
+
     private func swiftPackageUpdate() throws {
         if !shell("swift", "package", "update") {
             throw CustomError.badSwiftPackageUpdate
         }
     }
 
-    private func build(packages: [SwiftPackage], at path: String) throws {
-        let currentPath = fmg.currentDirectoryPath
-        fmg.changeCurrentDirectoryPath(path)
+    private func build(packages: [SwiftPackage], at packagesSourcesPath: String, to buildPath: String) throws {
+        let projectPath = fmg.currentDirectoryPath
         let failedPackages = packages.filter { package in
-            !shell(filePath: buildSwiftPackageScriptPath, arguments: ["GPVA8JVMU3", package.name])
+            fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
+                !shell(filePath: buildSwiftPackageScriptPath, arguments: ["GPVA8JVMU3", "\(projectPath)/\(buildPath)"])
+            }
         }
-        fmg.changeCurrentDirectoryPath(currentPath)
         if !failedPackages.isEmpty {
             throw CustomError.badSwiftPackageBuild(packages: failedPackages)
         }
     }
 
-    private func proceed(packages: [SwiftPackage], at path: String) throws {
-        let currentPath = fmg.currentDirectoryPath
-        fmg.changeCurrentDirectoryPath(path)
-        let buildSettings: [BuildSettings] = try packages.map { package in
-            try fmg.operate(in: "./\(package.name)") {
-                try BuildSettings(targetName: nil, shell: shell)
+    private func buildSettings(packages: [SwiftPackage], at packagesSourcesPath: String) throws -> [BuildSettings] {
+        try packages.map { package in
+            try fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
+                return try BuildSettings(targetName: nil, shell: shell)
             }
         }
-        fmg.changeCurrentDirectoryPath("./build")
-        let failedPackages: [SwiftPackage] = try zip(packages, buildSettings).compactMap { (package, settings) in
-            let frameworks: [String] = (try Folder(path: "./\(package.name)/Release-iphoneos")).subfolders.compactMap { dir in
+    }
+
+    private func proceed(packageContexts: Zip2Sequence<[SwiftPackage], [BuildSettings]>,
+                         at buildPath: String,
+                         to outputPath: String) throws {
+        let projectPath = fmg.currentDirectoryPath
+        let failedPackages: [SwiftPackage] = try packageContexts.compactMap { (package, settings) in
+            let deviceBuildDir = "./\(buildPath)/\(package.name)/Release-iphoneos"
+            let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
                 dir.extension == "framework" ? dir.nameExcludingExtension : nil
             }
-            let failedFrameworks: [String] = fmg.operate(in: "./\(package.name)") {
+            let failedFrameworks: [String] = fmg.operate(in: "./\(buildPath)/\(package.name)") {
                 frameworks.filter { framework in
-                    !shell(filePath: AppConfiguration.mergePodShellScriptFilePath, arguments: [".", framework, "../../../../SPM/", "."])
+                    !shell(filePath: AppConfiguration.mergePodShellScriptFilePath,
+                           arguments: [framework, ".", "\(projectPath)/\(outputPath)"])
                 }
             }
             return failedFrameworks.isEmpty ? nil : package
         }
-        fmg.changeCurrentDirectoryPath(currentPath)
         if !failedPackages.isEmpty {
             throw CustomError.badSwiftPackageProceed(packages: failedPackages)
         }
