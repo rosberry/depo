@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Version<Operator: Codable & HasDefault>: Codable {
+struct Version<Operator: Codable & HasDefaultValue>: Codable {
     private enum CodingKeys: String, CodingKey {
         case value
         case operation

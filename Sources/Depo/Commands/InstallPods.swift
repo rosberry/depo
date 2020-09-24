@@ -21,7 +21,7 @@ final class InstallPods: ParsableCommand {
     @OptionGroup()
     private(set) var options: Options
 
-    private let podsPrefix: String = "Pods"
+    private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
@@ -128,7 +128,7 @@ final class InstallPods: ParsableCommand {
 
     private func allSchemes() throws -> [(Pod, BuildSettings)] {
         try (try XcodeProject(shell: shell).targets).compactMap { targetName in
-            guard !targetName.starts(with: podsPrefix) else {
+            guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil
             }
             return (Pod(name: targetName, version: nil),

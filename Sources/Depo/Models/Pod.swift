@@ -13,7 +13,7 @@ struct Pod {
         case unknown
     }
 
-    enum Operator: String, Codable, HasDefault {
+    enum Operator: String, Codable, HasDefaultValue {
         case equal
         case greater
         case greaterOrEqual
