@@ -9,21 +9,26 @@ struct PodFile: CustomStringConvertible {
     let description: String
 
     init(pods: [Pod], platformVersion: Double) {
-        let podsSection = pods.map { pod in
-            "    pod '\(pod.name)'\(Self.podVersion(pod))"
-        }.joined(separator: "\n")
-        self.description = """
-                           install! 'cocoapods', integrate_targets: false
-                           platform :ios, '\(platformVersion)'
+        self.description = Self.makeDescription(platformVersion: platformVersion,
+                                                targetName: "Depo",
+                                                podsSection: pods.reduce("") { result, pod in
+                                                    result + "    pod '\(pod.name)'\(Self.podVersion(pod))\n"
+                                                })
+    }
 
-                           target 'Depo' do
-                               use_frameworks!
+    private static func makeDescription(platformVersion: Double, targetName: String, podsSection: String) -> String {
+        """
+        install! 'cocoapods', integrate_targets: false
+        platform :ios, '\(platformVersion)'
 
-                           \(podsSection)
+        target '\(targetName)' do
+            use_frameworks!
 
-                           end
+        \(podsSection)
 
-                           """
+        end
+
+        """
     }
 
     private static func podVersion(_ pod: Pod) -> String {

@@ -8,9 +8,9 @@ struct Cartfile: CustomStringConvertible {
     let description: String
 
     init(items: [CarthageItem]) {
-        description = items.map { item in
-            "\(item.kind.rawValue) \"\(item.identifier)\"\(Self.carthageItemVersion(item))"
-        }.joined(separator: "\n")
+        description = items.reduce("") { result, item in
+            result + "\(item.kind.rawValue) \"\(item.identifier)\"\(Self.carthageItemVersion(item))\n"
+        }
     }
 
     private static func carthageItemVersion(_ item: CarthageItem) -> String {

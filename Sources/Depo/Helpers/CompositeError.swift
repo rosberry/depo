@@ -4,7 +4,8 @@
 
 import Foundation
 
-@_functionBuilder struct ErrorsBuilder {
+@_functionBuilder
+struct ErrorsBuilder {
     static func buildBlock(_ partialResults: () throws -> Void...) -> [Error] {
         partialResults.compactMap { closure in
             do {

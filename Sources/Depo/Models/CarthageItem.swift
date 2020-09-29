@@ -13,7 +13,7 @@ struct CarthageItem: Codable {
         case git
     }
 
-    enum Operator: String, Codable, HasDefault {
+    enum Operator: String, Codable, HasDefaultValue {
         case equal
         case compatible
         case greaterOrEqual

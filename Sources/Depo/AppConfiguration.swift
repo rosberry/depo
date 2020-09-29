@@ -10,6 +10,7 @@ enum AppConfiguration {
     static let podFileName: String = "Podfile"
     static let packageSwiftFileName: String = "Package.swift"
     static let podsOutputDirectoryName: String = "Pods/Build/iOS"
+    static let podsInternalTargetsPrefix: String = "Pods"
     static let podsDirectoryName: String = "Pods"
     static let packageSwiftDirectoryName: String = ".build/checkouts"
     static let packageSwiftBuildsDirectoryName: String = ".build/builds"
