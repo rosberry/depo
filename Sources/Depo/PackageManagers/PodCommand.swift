@@ -49,6 +49,17 @@ final class PodCommand {
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
+    func update() throws {
+        let podFilePath = "./\(podFileName)"
+        let podsProjectPath = "./\(podsDirectoryName)"
+
+        try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
+        try podShellCommand.update()
+        try build(pods: pods, at: podsProjectPath)
+        #warning("proceeding all pods seems redundant")
+        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
+    }
+
     private func podInitIfNeeded(podFilePath: String) throws {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return

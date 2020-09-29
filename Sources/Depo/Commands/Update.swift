@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-final class Install: ParsableCommand {
+final class Update: ParsableCommand {
 
     @OptionGroup()
     private var options: Options
@@ -13,8 +13,8 @@ final class Install: ParsableCommand {
     func run() throws {
         let depofile = try Depofile(decoder: options.depoFileType.decoder)
         try CompositeError {
-            PodCommand(pods: depofile.pods).install
-            CarthageCommand(carthageItems: depofile.carts).bootstrap
+            PodCommand(pods: depofile.pods).update
+            CarthageCommand(carthageItems: depofile.carts).update
         }
     }
 }

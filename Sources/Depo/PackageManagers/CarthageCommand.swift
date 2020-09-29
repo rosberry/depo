@@ -30,7 +30,12 @@ final class CarthageCommand {
 
     func update() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
-        try carthageUpdate()
+        try carthageShellCommand.update(arguments: [.platformIOS])
+    }
+
+    func bootstrap() throws {
+        try createCartfile(at: "./\(cartFileName)", with: carthageItems)
+        try carthageShellCommand.bootstrap(arguments: [.platformIOS])
     }
 
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
@@ -38,9 +43,5 @@ final class CarthageCommand {
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)
         }
-    }
-
-    private func carthageUpdate() throws {
-        try carthageShellCommand.update(arguments: [.platformIOS])
     }
 }
