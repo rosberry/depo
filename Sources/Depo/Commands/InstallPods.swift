@@ -25,7 +25,6 @@ final class InstallPods: ParsableCommand {
     private(set) var options: Options
 
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
-    private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
     private let podsOutputDirectoryName: String = AppConfiguration.podsOutputDirectoryName
@@ -35,6 +34,7 @@ final class InstallPods: ParsableCommand {
     private lazy var podCommand: PodCommand = .init(shell: shell)
     private lazy var buildPodCommand: BuildPodCommand = .init(shell: shell)
     private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
+    private lazy var moveBuiltPodCommand: MoveBuiltPodCommand = .init(shell: shell)
 
     init() {
         self.pods = nil
@@ -103,7 +103,7 @@ final class InstallPods: ParsableCommand {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:
-            if !shell(filePath: moveBuiltPodShellScriptPath, arguments: [pod.name]) {
+            if !moveBuiltPodCommand(pod: pod) {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .unknown:
