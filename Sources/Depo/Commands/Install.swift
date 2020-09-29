@@ -12,15 +12,15 @@ final class Install: ParsableCommand {
 
     func run() throws {
         let depofile = try Depofile(decoder: options.depoFileType.decoder)
-        let installPods = InstallPods(pods: depofile.pods)
-        let installCarthageItems = InstallCarthageItems(carthageItems: depofile.carts)
-        try runSynchronously(installPodsCommand: installPods, installCarthageItemsCommand: installCarthageItems)
+        let podCommand = PodCommand(pods: depofile.pods)
+        let carthageCommand = CarthageCommand(carthageItems: depofile.carts)
+        try runSynchronously(installPodsCommand: podCommand, installCarthageItemsCommand: carthageCommand)
     }
 
-    private func runSynchronously(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
+    private func runSynchronously(installPodsCommand: PodCommand, installCarthageItemsCommand: CarthageCommand) throws {
         try CompositeError {
-            installPodsCommand.run
-            installCarthageItemsCommand.run
+            installPodsCommand.install
+            installCarthageItemsCommand.update
         }
     }
 }

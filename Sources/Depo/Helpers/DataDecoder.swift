@@ -9,13 +9,15 @@ import ArgumentParser
 struct DataDecoder: TopLevelDecoder {
     typealias Input = Data
 
-    enum Kind: String, Codable, EnumerableFlag, CaseIterable {
+    enum Kind: String, Codable, EnumerableFlag, CaseIterable, HasDefaultValue {
         case json
         case yaml
 
         var decoder: DataDecoder {
             .init(kind: self)
         }
+
+        static let defaultValue: Kind = .yaml
     }
 
     private let kind: Kind

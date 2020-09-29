@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Yams
 
-final class InstallPods: ParsableCommand {
+final class PodCommand {
 
     enum Error: LocalizedError {
         case badPodfile(path: String)
@@ -21,31 +21,24 @@ final class InstallPods: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(commandName: "pod-install")
 
-    @OptionGroup()
-    private(set) var options: Options
-
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
     private let podsOutputDirectoryName: String = AppConfiguration.podsOutputDirectoryName
 
-    private let pods: [Pod]?
+    private let pods: [Pod]
+
     private let shell: Shell = .init()
     private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
 
-    init() {
-        self.pods = nil
-    }
-
     init(pods: [Pod]) {
         self.pods = pods
     }
 
-    func run() throws {
-        let pods = try self.pods ?? Depofile(decoder: options.depoFileType.decoder).pods
+    func install() throws {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
@@ -74,7 +67,7 @@ final class InstallPods: ParsableCommand {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            !buildPodCommand(pod: pod) ? result + [pod] : result
+            !buildPodScript(pod: pod) ? result + [pod] : result
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
@@ -99,11 +92,11 @@ final class InstallPods: ParsableCommand {
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !mergePackageCommand(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build") {
+            if !mergePackageScript(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build") {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:
-            if !moveBuiltPodCommand(pod: pod) {
+            if !moveBuiltPodScript(pod: pod) {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .unknown:

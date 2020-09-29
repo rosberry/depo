@@ -8,10 +8,7 @@ import ArgumentParser
 final class Depo: ParsableCommand {
     static let configuration: CommandConfiguration = .init(abstract: "Main",
                                                            version: "0.0",
-                                                           subcommands: [Install.self,
-                                                                         InstallPods.self,
-                                                                         InstallCarthageItems.self,
-                                                                         InstallSwiftPackages.self],
+                                                           subcommands: [Install.self],
                                                            defaultSubcommand: Install.self)
 }
 

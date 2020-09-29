@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Files
 
-final class InstallSwiftPackages: ParsableCommand {
+final class SwiftPackageCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -21,10 +21,7 @@ final class InstallSwiftPackages: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
 
-    @OptionGroup()
-    private(set) var options: Options
-
-    private let packages: [SwiftPackage]?
+    private let packages: [SwiftPackage]
     private let shell: Shell = .init()
     private let fmg: FileManager = .default
 
@@ -32,16 +29,11 @@ final class InstallSwiftPackages: ParsableCommand {
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
 
-    init() {
-        self.packages = nil
-    }
-
     init(packages: [SwiftPackage]) {
         self.packages = packages
     }
 
-    func run() throws {
-        let packages = try self.packages ?? Depofile(decoder: options.depoFileType.decoder).swiftPackages
+    func update() throws {
         let packageSwiftFileName = AppConfiguration.packageSwiftFileName
         let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
         let packageSwiftBuildsDirName = AppConfiguration.packageSwiftBuildsDirectoryName
@@ -65,7 +57,7 @@ final class InstallSwiftPackages: ParsableCommand {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages = packages.filter { package in
             fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
-                !buildSwiftPackageCommand(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")
+                !buildSwiftPackageScript(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")
             }
         }
         if !failedPackages.isEmpty {
@@ -82,7 +74,7 @@ final class InstallSwiftPackages: ParsableCommand {
             }
             let failedFrameworks: [String] = fmg.operate(in: "./\(buildPath)/\(package.name)") {
                 frameworks.filter { framework in
-                    !mergePackageCommand(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
+                    !mergePackageScript(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
                 }
             }
             return failedFrameworks.isEmpty ? nil : package

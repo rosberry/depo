@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-final class InstallCarthageItems: ParsableCommand {
+final class CarthageCommand {
 
     enum Error: LocalizedError {
         case badCartfile(path: String)
@@ -18,24 +18,17 @@ final class InstallCarthageItems: ParsableCommand {
 
     static var configuration: CommandConfiguration = .init(commandName: "carthage-install")
 
-    @OptionGroup()
-    private(set) var options: Options
     private let cartFileName: String = AppConfiguration.cartFileName
 
-    let carthageItems: [CarthageItem]?
+    private let carthageItems: [CarthageItem]
     private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
-
-    init() {
-        self.carthageItems = nil
-    }
 
     init(carthageItems: [CarthageItem]) {
         self.carthageItems = carthageItems
     }
 
-    func run() throws {
-        let carthageItems = try self.carthageItems ?? Depofile(decoder: options.depoFileType.decoder).carts
+    func update() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
         try carthageUpdate()
     }
