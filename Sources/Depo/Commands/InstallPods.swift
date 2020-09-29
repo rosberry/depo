@@ -25,7 +25,6 @@ final class InstallPods: ParsableCommand {
     private(set) var options: Options
 
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
-    private let mergePackageShellScriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
@@ -35,6 +34,7 @@ final class InstallPods: ParsableCommand {
     private let shell: Shell = .init()
     private lazy var podCommand: PodCommand = .init(shell: shell)
     private lazy var buildPodCommand: BuildPodCommand = .init(shell: shell)
+    private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
 
     init() {
         self.pods = nil
@@ -85,15 +85,10 @@ final class InstallPods: ParsableCommand {
     private func proceedAllPods(at path: String, to outputPath: String) throws {
         let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let failedPods = try allSchemes().reduce([Pod]()) { (result, schema) in
+        let failedPods: [Pod] = try allSchemes().compactMap { schema in
             let (pod, settings) = schema
-            do {
-                try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")
-                return result
-            }
-            catch {
-                return result + [pod]
-            }
+            let ifProceedFailed = (try? proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")) == nil
+            return ifProceedFailed ? pod : nil
         }
         FileManager.default.changeCurrentDirectoryPath(projectPath)
         if !failedPods.isEmpty {
@@ -104,7 +99,7 @@ final class InstallPods: ParsableCommand {
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !shell(filePath: mergePackageShellScriptPath, arguments: [pod.name, settings.productName, outputPath, "../build"]) {
+            if !mergePackageCommand(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build") {
                 throw Error.badPodMerge(pods: [pod])
             }
         case .builtFramework:

@@ -28,8 +28,9 @@ final class InstallSwiftPackages: ParsableCommand {
 
     private let packages: [SwiftPackage]?
     private let shell: Shell = .init()
-    private lazy var swiftPackageCommand: SwiftPackageCommand = .init(shell: shell)
     private let fmg: FileManager = .default
+    private lazy var swiftPackageCommand: SwiftPackageCommand = .init(shell: shell)
+    private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
 
     init() {
         self.packages = nil
@@ -92,8 +93,7 @@ final class InstallSwiftPackages: ParsableCommand {
             }
             let failedFrameworks: [String] = fmg.operate(in: "./\(buildPath)/\(package.name)") {
                 frameworks.filter { framework in
-                    !shell(filePath: AppConfiguration.mergePackageShellScriptFilePath,
-                           arguments: [framework, ".", "\(projectPath)/\(outputPath)"])
+                    !mergePackageCommand(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
                 }
             }
             return failedFrameworks.isEmpty ? nil : package
