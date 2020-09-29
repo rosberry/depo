@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class SwiftPackageCommand: ShellCommand {
+final class SwiftPackageShellCommand: ShellCommand {
 
     enum Error: LocalizedError {
         case badUpdate

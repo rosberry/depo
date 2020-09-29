@@ -31,10 +31,10 @@ final class InstallPods: ParsableCommand {
 
     private let pods: [Pod]?
     private let shell: Shell = .init()
-    private lazy var podCommand: PodCommand = .init(shell: shell)
-    private lazy var buildPodCommand: BuildPodCommand = .init(shell: shell)
-    private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
-    private lazy var moveBuiltPodCommand: MoveBuiltPodCommand = .init(shell: shell)
+    private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
+    private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
+    private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
+    private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
 
     init() {
         self.pods = nil
@@ -51,7 +51,7 @@ final class InstallPods: ParsableCommand {
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
-        try podCommand.install()
+        try podShellCommand.install()
         try build(pods: pods, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
@@ -60,7 +60,7 @@ final class InstallPods: ParsableCommand {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return
         }
-        try podCommand.initialize()
+        try podShellCommand.initialize()
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {

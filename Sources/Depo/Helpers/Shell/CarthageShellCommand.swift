@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class CarthageCommand: ShellCommand {
+final class CarthageShellCommand: ShellCommand {
 
     enum Error: LocalizedError {
         case badUpdate

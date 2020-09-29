@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class PodCommand: ShellCommand {
+final class PodShellCommand: ShellCommand {
 
     enum Error: LocalizedError {
         case badInit

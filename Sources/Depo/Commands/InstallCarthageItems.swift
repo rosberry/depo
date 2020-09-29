@@ -24,7 +24,7 @@ final class InstallCarthageItems: ParsableCommand {
 
     let carthageItems: [CarthageItem]?
     private let shell: Shell = .init()
-    private lazy var carthageCommand: CarthageCommand = .init(shell: shell)
+    private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
 
     init() {
         self.carthageItems = nil
@@ -48,6 +48,6 @@ final class InstallCarthageItems: ParsableCommand {
     }
 
     private func carthageUpdate() throws {
-        try carthageCommand.update(arguments: [.platformIOS])
+        try carthageShellCommand.update(arguments: [.platformIOS])
     }
 }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class BuildSwiftPackageCommand: ShellCommand {
+final class BuildSwiftPackageScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.buildSPShellScriptFilePath
 

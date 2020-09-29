@@ -27,9 +27,10 @@ final class InstallSwiftPackages: ParsableCommand {
     private let packages: [SwiftPackage]?
     private let shell: Shell = .init()
     private let fmg: FileManager = .default
-    private lazy var swiftPackageCommand: SwiftPackageCommand = .init(shell: shell)
-    private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
-    private lazy var buildSwiftPackageCommand: BuildSwiftPackageCommand = .init(shell: shell)
+    
+    private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
+    private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
+    private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
 
     init() {
         self.packages = nil

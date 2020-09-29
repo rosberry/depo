@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class MergePackageCommand: ShellCommand {
+final class MergePackageScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
 

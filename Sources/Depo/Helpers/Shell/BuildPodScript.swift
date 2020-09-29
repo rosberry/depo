@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class BuildPodCommand: ShellCommand {
+final class BuildPodScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.buildPodShellScriptFilePath
 
