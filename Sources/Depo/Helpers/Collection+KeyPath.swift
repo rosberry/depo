@@ -115,6 +115,7 @@ extension Collection {
     }
 
     /// Returns sorted collection by comparator, using the given keyPath to get comparable property
+    // swiftlint:disable:next identifier_name
     func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, using comparator: (T, T) -> Bool = { f, s in f < s }) -> [Element] {
         sorted { first, second in
             comparator(first[keyPath: keyPath], second[keyPath: keyPath])
@@ -124,6 +125,7 @@ extension Collection {
     /// Returns sorted collection by comparator, using the given keyPath to get comparable property
     func sorted<T: Comparable>(by keyPath: KeyPath<Element, T?>,
                                defaultValue: T,
+                               // swiftlint:disable:next identifier_name
                                using comparator: (T, T) -> Bool = { f, s in f < s }) -> [Element] {
         sorted { first, second in
             comparator((first[keyPath: keyPath] ?? defaultValue), (second[keyPath: keyPath] ?? defaultValue))
@@ -133,6 +135,7 @@ extension Collection {
 
 extension MutableCollection where Self: RandomAccessCollection {
     /// Sort the collection by comparator, using the given keyPath to get comparable property
+    // swiftlint:disable:next identifier_name
     mutating func sort<T: Comparable>(by keyPath: KeyPath<Element, T>, using comparator: (T, T) -> Bool = { f, s in f < s }) {
         sort { first, second in
             comparator(first[keyPath: keyPath], second[keyPath: keyPath])
@@ -142,6 +145,7 @@ extension MutableCollection where Self: RandomAccessCollection {
     /// Sort the collection by comparator, using the given keyPath to get comparable property
     mutating func sort<T: Comparable>(by keyPath: KeyPath<Element, T?>,
                                       defaultValue: T,
+                                      // swiftlint:disable:next identifier_name
                                       using comparator: (T, T) -> Bool = { f, s in f < s }) {
         sort { first, second in
             comparator((first[keyPath: keyPath] ?? defaultValue), (second[keyPath: keyPath] ?? defaultValue))
