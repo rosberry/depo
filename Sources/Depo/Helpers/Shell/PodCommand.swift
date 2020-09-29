@@ -4,28 +4,22 @@
 
 import Foundation
 
-final class PodCommand: Codable {
+final class PodCommand: ShellCommand {
 
     enum Error: LocalizedError {
-        case badPodInit
-        case badPodInstal
-    }
-
-    private let shell: Shell
-
-    init(shell: Shell = .init()) {
-        self.shell = shell
+        case badInit
+        case badInstall
     }
 
     func initialize() throws {
         if !shell("pod", "init") {
-            throw Error.badPodInit
+            throw Error.badInit
         }
     }
 
     func install() throws {
         if !shell("pod", "install") {
-            throw Error.badPodInit
+            throw Error.badInstall
         }
     }
 }

@@ -6,15 +6,17 @@ import Foundation
 import ArgumentParser
 import Files
 
-fileprivate let fmg: FileManager = .default
-
 final class InstallSwiftPackages: ParsableCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
-        case badSwiftPackageUpdate
         case badSwiftPackageBuild(packages: [SwiftPackage])
         case badSwiftPackageProceed(packages: [SwiftPackage])
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case options
+        case packages
     }
 
     static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
@@ -26,6 +28,8 @@ final class InstallSwiftPackages: ParsableCommand {
 
     private let packages: [SwiftPackage]?
     private let shell: Shell = .init()
+    private lazy var swiftPackageCommand: SwiftPackageCommand = .init(shell: shell)
+    private let fmg: FileManager = .default
 
     init() {
         self.packages = nil
@@ -43,7 +47,7 @@ final class InstallSwiftPackages: ParsableCommand {
         let outputDirName = AppConfiguration.packageSwiftOutputDirectoryName
 
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
-        try swiftPackageUpdate()
+        try swiftPackageCommand.update()
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
         let settings = try buildSettings(packages: packages, at: packageSwiftDirName)
         try proceed(packageContexts: zip(packages, settings), at: packageSwiftBuildsDirName, to: outputDirName)
@@ -54,12 +58,6 @@ final class InstallSwiftPackages: ParsableCommand {
         let content = PackageSwift(projectBuildSettings: buildSettings, items: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
-        }
-    }
-
-    private func swiftPackageUpdate() throws {
-        if !shell("swift", "package", "update") {
-            throw CustomError.badSwiftPackageUpdate
         }
     }
 

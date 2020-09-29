@@ -9,11 +9,14 @@ import Yams
 final class InstallPods: ParsableCommand {
 
     enum Error: LocalizedError {
-        case badPodInit
-        case badPodInstall
         case badPodfile(path: String)
         case badPodBuild(pods: [Pod])
         case badPodMerge(pods: [Pod])
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case options
+        case pods
     }
 
     static let configuration: CommandConfiguration = .init(commandName: "pod-install")
@@ -21,13 +24,9 @@ final class InstallPods: ParsableCommand {
     @OptionGroup()
     private(set) var options: Options
 
+    private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let buildFrameworkShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePackageShellScriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
-
-    private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
-    private let buildPodShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
-    private let mergePodShellScriptPath: String = AppConfiguration.mergePodShellScriptFilePath
-
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
     private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
@@ -35,6 +34,7 @@ final class InstallPods: ParsableCommand {
 
     private let pods: [Pod]?
     private let shell: Shell = .init()
+    private lazy var podCommand: PodCommand = .init(shell: shell)
 
     init() {
         self.pods = nil
@@ -51,7 +51,7 @@ final class InstallPods: ParsableCommand {
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
-        try podInstall()
+        try podCommand.install()
         try build(pods: pods, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
@@ -60,21 +60,13 @@ final class InstallPods: ParsableCommand {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return
         }
-        if !shell("pod", "init") {
-            throw Error.badPodInit
-        }
+        try podCommand.initialize()
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
         let content = PodFile(pods: pods, platformVersion: platformVersion).description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
             throw Error.badPodfile(path: podFilePath)
-        }
-    }
-
-    private func podInstall() throws {
-        if !shell("pod", "install") {
-            throw Error.badPodInstall
         }
     }
 

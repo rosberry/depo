@@ -9,7 +9,11 @@ final class InstallCarthageItems: ParsableCommand {
 
     enum Error: LocalizedError {
         case badCartfile(path: String)
-        case badCarthageUpdate
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case options
+        case carthageItems
     }
 
     static var configuration: CommandConfiguration = .init(commandName: "carthage-install")
@@ -20,6 +24,7 @@ final class InstallCarthageItems: ParsableCommand {
 
     let carthageItems: [CarthageItem]?
     private let shell: Shell = .init()
+    private lazy var carthageCommand: CarthageCommand = .init(shell: shell)
 
     init() {
         self.carthageItems = nil
@@ -43,8 +48,6 @@ final class InstallCarthageItems: ParsableCommand {
     }
 
     private func carthageUpdate() throws {
-        if !shell("carthage", "update", "--platform", "ios") {
-            throw Error.badCarthageUpdate
-        }
+        try carthageCommand.update(arguments: [.platformIOS])
     }
 }
