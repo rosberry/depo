@@ -5,11 +5,19 @@
 import Foundation
 import ArgumentParser
 
-class Update<Command: UpdatePackageManagerCommand>: ParsableCommand {
+class UpdateParsableCommand: ParsableCommand {
+    static let configuration: CommandConfiguration = .init(commandName: "update")
+    required init() {}
+}
+
+class InstallParsableCommand: ParsableCommand {
+    static let configuration: CommandConfiguration = .init(commandName: "install")
+    required init() {}
+}
+
+class Update<Command: HasUpdateCommand>: UpdateParsableCommand {
     @OptionGroup()
     private var options: Options
-
-    required init() {}
 
     func run() throws {
         let depofile = try Depofile(decoder: options.depoFileType.decoder)
@@ -17,13 +25,9 @@ class Update<Command: UpdatePackageManagerCommand>: ParsableCommand {
     }
 }
 
-class Install<Command: InstallPackageManagerCommand>: ParsableCommand {
+class Install<Command: HasInstallCommand>: InstallParsableCommand {
     @OptionGroup()
     private var options: Options
-
-    static let configuration: CommandConfiguration = .init(commandName: "install")
-
-    required init() {}
 
     func run() throws {
         let depofile = try Depofile(decoder: options.depoFileType.decoder)

@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-final class CarthageCommand: PackageManagerCommand {
+final class CarthageManager: PackageManager {
 
     enum Error: LocalizedError {
         case badCartfile(path: String)

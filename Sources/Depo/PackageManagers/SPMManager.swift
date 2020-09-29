@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Files
 
-final class SwiftPackageCommand: UpdatePackageManagerCommand {
+final class SPMManager: HasUpdateCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -55,6 +55,7 @@ final class SwiftPackageCommand: UpdatePackageManagerCommand {
 
     private func build(packages: [SwiftPackage], at packagesSourcesPath: String, to buildPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
+        #warning("hardcoded teamID")
         let failedPackages = packages.filter { package in
             fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
                 !buildSwiftPackageScript(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")

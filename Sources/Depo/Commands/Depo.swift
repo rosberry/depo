@@ -7,27 +7,22 @@ import ArgumentParser
 
 final class Depo: ParsableCommand {
 
+    typealias AllUpdate = Update<AllPackagesManager>
+    typealias AllInstall = Install<AllPackagesManager>
+
     final class Pods: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<PodCommand>.self, Install<PodCommand>.self],
-                                                               defaultSubcommand: Install<PodCommand>.self)
+        static let configuration: CommandConfiguration = .init(subcommands: [Update<PodManager>.self, Install<PodManager>.self],
+                                                               defaultSubcommand: Install<PodManager>.self)
     }
 
     final class Carthage: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<CarthageCommand>.self, Install<CarthageCommand>.self],
-                                                               defaultSubcommand: Install<CarthageCommand>.self)
+        static let configuration: CommandConfiguration = .init(subcommands: [Update<CarthageManager>.self, Install<CarthageManager>.self],
+                                                               defaultSubcommand: Install<CarthageManager>.self)
     }
 
     final class SPM: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<SwiftPackageCommand>.self],
-                                                               defaultSubcommand: Update<SwiftPackageCommand>.self)
-    }
-
-    final class AllUpdate: Update<AllCommand> {
-        static let configuration: CommandConfiguration = .init(commandName: "update", abstract: "Update")
-    }
-
-    final class AllInstall: Install<AllCommand> {
-        static let configuration: CommandConfiguration = .init(commandName: "install", abstract: "Install")
+        static let configuration: CommandConfiguration = .init(subcommands: [Update<SPMManager>.self],
+                                                               defaultSubcommand: Update<SPMManager>.self)
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",
@@ -37,5 +32,5 @@ final class Depo: ParsableCommand {
                                                                          Pods.self,
                                                                          Carthage.self,
                                                                          SPM.self],
-                                                           defaultSubcommand: Install<AllCommand>.self)
+                                                           defaultSubcommand: Install<AllPackagesManager>.self)
 }

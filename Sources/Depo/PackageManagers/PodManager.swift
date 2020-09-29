@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Yams
 
-final class PodCommand: PackageManagerCommand {
+final class PodManager: PackageManager {
 
     enum Error: LocalizedError {
         case badPodfile(path: String)
@@ -43,6 +43,7 @@ final class PodCommand: PackageManagerCommand {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
+        #warning("hardcoded platformVersion")
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
         try podShellCommand.install()
         try build(pods: pods, at: podsProjectPath)
@@ -53,6 +54,7 @@ final class PodCommand: PackageManagerCommand {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
+        #warning("hardcoded platformVersion")
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
         try podShellCommand.update()
         try build(pods: pods, at: podsProjectPath)
