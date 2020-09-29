@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Yams
 
-final class PodCommand {
+final class PodCommand: PackageManagerCommand {
 
     enum Error: LocalizedError {
         case badPodfile(path: String)
@@ -34,8 +34,8 @@ final class PodCommand {
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
 
-    init(pods: [Pod]) {
-        self.pods = pods
+    init(depofile: Depofile) {
+        self.pods = depofile.pods
     }
 
     func install() throws {

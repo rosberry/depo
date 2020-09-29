@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Files
 
-final class SwiftPackageCommand {
+final class SwiftPackageCommand: UpdatePackageManagerCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -29,8 +29,8 @@ final class SwiftPackageCommand {
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
 
-    init(packages: [SwiftPackage]) {
-        self.packages = packages
+    init(depofile: Depofile) {
+        self.packages = depofile.swiftPackages
     }
 
     func update() throws {
@@ -69,6 +69,7 @@ final class SwiftPackageCommand {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages: [SwiftPackage] = try packages.compactMap { package in
             let deviceBuildDir = "./\(buildPath)/\(package.name)/Release-iphoneos"
+            #warning("proceeding all swift packages seems redundant")
             let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
                 dir.extension == "framework" ? dir.nameExcludingExtension : nil
             }

@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-final class CarthageCommand {
+final class CarthageCommand: PackageManagerCommand {
 
     enum Error: LocalizedError {
         case badCartfile(path: String)
@@ -24,8 +24,8 @@ final class CarthageCommand {
     private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
 
-    init(carthageItems: [CarthageItem]) {
-        self.carthageItems = carthageItems
+    init(depofile: Depofile) {
+        self.carthageItems = depofile.carts
     }
 
     func update() throws {
@@ -33,7 +33,7 @@ final class CarthageCommand {
         try carthageShellCommand.update(arguments: [.platformIOS])
     }
 
-    func bootstrap() throws {
+    func install() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
         try carthageShellCommand.bootstrap(arguments: [.platformIOS])
     }
