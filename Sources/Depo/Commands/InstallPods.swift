@@ -25,7 +25,6 @@ final class InstallPods: ParsableCommand {
     private(set) var options: Options
 
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
-    private let buildFrameworkShellScriptPath: String = AppConfiguration.buildPodShellScriptFilePath
     private let mergePackageShellScriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
     private let moveBuiltPodShellScriptPath: String = AppConfiguration.moveBuiltPodShellFilePath
     private let podFileName: String = AppConfiguration.podFileName
@@ -35,6 +34,7 @@ final class InstallPods: ParsableCommand {
     private let pods: [Pod]?
     private let shell: Shell = .init()
     private lazy var podCommand: PodCommand = .init(shell: shell)
+    private lazy var buildPodCommand: BuildPodCommand = .init(shell: shell)
 
     init() {
         self.pods = nil
@@ -74,12 +74,7 @@ final class InstallPods: ParsableCommand {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            if !shell(filePath: buildFrameworkShellScriptPath, arguments: [pod.name]) {
-                return result + [pod]
-            }
-            else {
-                return result
-            }
+            !buildPodCommand(pod: pod) ? result + [pod] : result
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {

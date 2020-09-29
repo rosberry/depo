@@ -9,6 +9,7 @@ final class PodCommand: ShellCommand {
     enum Error: LocalizedError {
         case badInit
         case badInstall
+        case badUpdate
     }
 
     func initialize() throws {
@@ -20,6 +21,12 @@ final class PodCommand: ShellCommand {
     func install() throws {
         if !shell("pod", "install") {
             throw Error.badInstall
+        }
+    }
+
+    func update() throws {
+        if !shell("pod", "update") {
+            throw Error.badUpdate
         }
     }
 }
