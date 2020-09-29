@@ -16,7 +16,7 @@ final class MergePackageCommand: ShellCommand {
         self(packageName: pod.name, schemaName: settings.productName, outputPath: outputPath, buildDir: buildDir)
     }
 
-    func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) -> Bool {
+    private func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) -> Bool {
         shell(filePath: scriptPath, arguments: [packageName, schemaName, outputPath, buildDir])
     }
 }

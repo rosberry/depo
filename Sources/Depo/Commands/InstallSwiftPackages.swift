@@ -24,13 +24,12 @@ final class InstallSwiftPackages: ParsableCommand {
     @OptionGroup()
     private(set) var options: Options
 
-    private let buildSwiftPackageScriptPath: String = AppConfiguration.buildSPShellScriptFilePath
-
     private let packages: [SwiftPackage]?
     private let shell: Shell = .init()
     private let fmg: FileManager = .default
     private lazy var swiftPackageCommand: SwiftPackageCommand = .init(shell: shell)
     private lazy var mergePackageCommand: MergePackageCommand = .init(shell: shell)
+    private lazy var buildSwiftPackageCommand: BuildSwiftPackageCommand = .init(shell: shell)
 
     init() {
         self.packages = nil
@@ -66,7 +65,7 @@ final class InstallSwiftPackages: ParsableCommand {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages = packages.filter { package in
             fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
-                !shell(filePath: buildSwiftPackageScriptPath, arguments: ["GPVA8JVMU3", "\(projectPath)/\(buildPath)"])
+                !buildSwiftPackageCommand(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")
             }
         }
         if !failedPackages.isEmpty {
