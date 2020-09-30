@@ -8,18 +8,14 @@ PACKAGE_NAME=${3:-$(basename "$PWD")}
 
 xcodebuild \
 -configuration Release \
--arch arm64 \
--arch armv7 \
--arch armv7s \
-only_active_arch=no defines_module=yes \
+only_active_arch=no \
+defines_module=yes \
 -sdk "iphoneos" archive \
 DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
 -quiet
 
 xcodebuild \
 -configuration Release \
--arch x86_64 \
--arch i386 \
 only_active_arch=no \
 defines_module=yes \
 -sdk "iphonesimulator" archive \

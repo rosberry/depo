@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import Files
 
-final class SPMManager: HasUpdateCommand {
+final class SPMManager: HasUpdateCommand & HasBuildCommand {
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -41,6 +41,15 @@ final class SPMManager: HasUpdateCommand {
 
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
         try swiftPackageCommand.update()
+        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
+        try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
+    }
+
+    func build() throws {
+        let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
+        let packageSwiftBuildsDirName = AppConfiguration.packageSwiftBuildsDirectoryName
+        let outputDirName = AppConfiguration.packageSwiftOutputDirectoryName
+
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }

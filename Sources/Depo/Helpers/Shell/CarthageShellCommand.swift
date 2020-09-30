@@ -7,7 +7,9 @@ import Foundation
 final class CarthageShellCommand: ShellCommand {
 
     enum Error: LocalizedError {
+        case badBootstrap
         case badUpdate
+        case badBuild
     }
 
     enum BuildArgument {
@@ -30,6 +32,12 @@ final class CarthageShellCommand: ShellCommand {
 
     func bootstrap(arguments: [BuildArgument]) throws {
         try build(command: "bootstrap", arguments: arguments)
+    }
+
+    func build() throws {
+         if !shell("carthage", "build") {
+             throw Error.badBuild
+         }
     }
 
     private func build(command: String, arguments: [BuildArgument]) throws {

@@ -27,4 +27,12 @@ final class AllPackagesManager: PackageManager {
             SPMManager(depofile: depofile).update
         }
     }
+
+    func build() throws {
+        try CompositeError {
+            PodManager(depofile: depofile).build
+            CarthageManager(depofile: depofile).build
+            SPMManager(depofile: depofile).build
+        }
+    }
 }

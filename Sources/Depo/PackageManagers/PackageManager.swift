@@ -4,7 +4,11 @@
 
 import Foundation
 
-typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasDepofileInit
+typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
+
+protocol HasDepofileInit {
+    init(depofile: Depofile)
+}
 
 protocol HasUpdateCommand: HasDepofileInit {
     func update() throws
@@ -14,6 +18,6 @@ protocol HasInstallCommand: HasDepofileInit {
     func install() throws
 }
 
-protocol HasDepofileInit {
-    init(depofile: Depofile)
+protocol HasBuildCommand: HasDepofileInit {
+    func build() throws
 }

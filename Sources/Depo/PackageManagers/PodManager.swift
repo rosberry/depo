@@ -62,6 +62,13 @@ final class PodManager: PackageManager {
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
+    func build() throws {
+        let podsProjectPath = "./\(podsDirectoryName)"
+
+        try build(pods: pods, at: podsProjectPath)
+        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
+    }
+
     private func podInitIfNeeded(podFilePath: String) throws {
         guard !FileManager.default.fileExists(atPath: podFilePath) else {
             return

@@ -21,6 +21,14 @@ class InstallParsableCommand: ParsableCommand {
     }
 }
 
+class BuildParsableCommand: ParsableCommand {
+    static let configuration: CommandConfiguration = .init(commandName: "build")
+    required init() {}
+    func run() throws {
+        print(#function)
+    }
+}
+
 class Update<Command: HasUpdateCommand>: UpdateParsableCommand {
     override func run() throws {
         let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
@@ -32,5 +40,12 @@ class Install<Command: HasInstallCommand>: InstallParsableCommand {
     override func run() throws {
         let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
         try Command(depofile: depofile).install()
+    }
+}
+
+class Build<Command: HasBuildCommand>: BuildParsableCommand {
+    override func run() throws {
+        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
+        try Command(depofile: depofile).build()
     }
 }

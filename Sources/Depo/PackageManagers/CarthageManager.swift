@@ -38,6 +38,10 @@ final class CarthageManager: PackageManager {
         try carthageShellCommand.bootstrap(arguments: [.platformIOS])
     }
 
+    func build() throws {
+        try carthageShellCommand.build()
+    }
+
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
         let content = Cartfile(items: items).description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
