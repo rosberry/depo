@@ -8,29 +8,29 @@ import ArgumentParser
 class UpdateParsableCommand: ParsableCommand {
     static let configuration: CommandConfiguration = .init(commandName: "update")
     required init() {}
+    func run() throws {
+        print(#function)
+    }
 }
 
 class InstallParsableCommand: ParsableCommand {
     static let configuration: CommandConfiguration = .init(commandName: "install")
     required init() {}
+    func run() throws {
+        print(#function)
+    }
 }
 
 class Update<Command: HasUpdateCommand>: UpdateParsableCommand {
-    @OptionGroup()
-    private var options: Options
-
-    func run() throws {
-        let depofile = try Depofile(decoder: options.depoFileType.decoder)
+    override func run() throws {
+        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
         try Command(depofile: depofile).update()
     }
 }
 
 class Install<Command: HasInstallCommand>: InstallParsableCommand {
-    @OptionGroup()
-    private var options: Options
-
-    func run() throws {
-        let depofile = try Depofile(decoder: options.depoFileType.decoder)
+    override func run() throws {
+        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
         try Command(depofile: depofile).install()
     }
 }
