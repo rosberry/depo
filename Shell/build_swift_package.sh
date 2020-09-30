@@ -13,7 +13,8 @@ xcodebuild \
 -arch armv7s \
 only_active_arch=no defines_module=yes \
 -sdk "iphoneos" archive \
-DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
+DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
+-quiet
 
 xcodebuild \
 -configuration Release \
@@ -22,7 +23,8 @@ xcodebuild \
 only_active_arch=no \
 defines_module=yes \
 -sdk "iphonesimulator" archive \
-DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM
+DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
+-quiet
 
 IPHONE_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphoneos"
 SIMULATOR_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphonesimulator"

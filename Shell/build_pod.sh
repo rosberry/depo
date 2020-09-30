@@ -12,6 +12,7 @@ xcodebuild \
 -arch armv7s \
 only_active_arch=no defines_module=yes \
 -sdk "iphoneos" archive \
+-quiet
 
 xcodebuild \
 -target "${FRAMEWORK_NAME}" \
@@ -20,4 +21,6 @@ xcodebuild \
 -arch i386 \
 only_active_arch=no \
 defines_module=yes \
+-quiet
+
 -sdk "iphonesimulator" archive \
