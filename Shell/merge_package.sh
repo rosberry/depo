@@ -15,7 +15,7 @@ if [ -d $IPHONEOS_FRAMEWORK_DIR ]; then
   mkdir -p "${OUTPUT_PATH}"
   cp -a $IPHONEOS_FRAMEWORK_DIR/ "${OUTPUT_PATH}"
 else
-  echo "No frameworks at ${PWD}/${PACKAGE_BUILD_DIR}"
+  echo "No frameworks at ${IPHONEOS_FRAMEWORK_DIR}"
   exit 1
 fi
 
