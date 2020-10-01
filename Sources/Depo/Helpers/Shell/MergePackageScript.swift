@@ -13,7 +13,7 @@ final class MergePackageScript: ShellCommand {
     }
 
     func callAsFunction(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) -> Bool {
-        self(packageName: pod.name, schemaName: settings.productName, outputPath: outputPath, buildDir: buildDir)
+        self(packageName: settings.productName, schemaName: pod.name, outputPath: outputPath, buildDir: buildDir)
     }
 
     private func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) -> Bool {
