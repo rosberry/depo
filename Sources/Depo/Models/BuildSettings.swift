@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class BuildSettings: Codable {
+struct BuildSettings: Codable {
 
     enum Error: LocalizedError {
         case badOutput(io: Shell.IO)
@@ -20,8 +20,11 @@ final class BuildSettings: Codable {
     let targetName: String
     let codesigningFolderPath: URL?
 
-    init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let io: Shell.IO = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
+    init(targetName: String?, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
+        let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
+            ["-target", target]
+        } ?? [])
+        let io: Shell.IO = try shell(command)
         guard let data = io.stdOut.data(using: .utf8) else {
             throw Error.badOutput(io: io)
         }
