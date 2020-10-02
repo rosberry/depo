@@ -6,17 +6,16 @@ import Foundation
 
 final class Shell: Codable {
 
-    struct Output {
+    struct IO {
         let stdOut: String
         let stdErr: String
         let stdIn: String
         let status: Int32
 
-        fileprivate init(_ values: [String], status: Int32) {
-            precondition(values.count == 3)
-            self.stdOut = values[0]
-            self.stdErr = values[1]
-            self.stdIn = values[2]
+        fileprivate init(stdOut: String, stdErr: String, stdIn: String, status: Int32) {
+            self.stdOut = stdOut
+            self.stdErr = stdErr
+            self.stdIn = stdIn
             self.status = status
         }
     }
@@ -39,25 +38,25 @@ final class Shell: Codable {
         return terminationStatus(of: process) == 0
     }
 
-    func callAsFunction(_ args: [String]) throws -> Output {
+    func callAsFunction(_ args: [String]) throws -> IO {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
         return try output(of: process)
     }
 
-    func callAsFunction(_ args: String...) throws -> Output {
+    func callAsFunction(_ args: String...) throws -> IO {
         try callAsFunction(args)
     }
 
-    func callAsFunction(filePath: String, arguments: [String] = []) throws -> Output {
+    func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments
         return try output(of: process)
     }
 
-    private func output(of process: Process) throws -> Output {
+    private func output(of process: Process) throws -> IO {
         let stdOutPipe = Pipe()
         let stdErrPipe = Pipe()
         let stdInFileHandle = FileHandle()
@@ -66,10 +65,13 @@ final class Shell: Codable {
         process.standardInput = stdInFileHandle
         try process.run()
         process.waitUntilExit()
-        return Output([stdOutPipe.fileHandleForReading, stdErrPipe.fileHandleForReading, stdInFileHandle].map { handler in
+        let handlersStrings = [stdOutPipe.fileHandleForReading,
+                               stdErrPipe.fileHandleForReading,
+                               stdInFileHandle].map { handler -> String in
             let outputData = handler.readDataToEndOfFile()
             return String(data: outputData, encoding: .utf8) ?? ""
-        }, status: process.terminationStatus)
+        }
+        return IO(stdOut: handlersStrings[0], stdErr: handlersStrings[1], stdIn: handlersStrings[2], status: process.terminationStatus)
     }
 
     private func terminationStatus(of process: Process) -> Int32 {

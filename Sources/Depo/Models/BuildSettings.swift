@@ -6,36 +6,38 @@ import Foundation
 
 final class BuildSettings: Codable {
 
-    enum CustomError: Error {
-        case badOutput
+    enum Error: LocalizedError {
+        case badOutput(io: Shell.IO)
+        case badBuildSettings([String: String])
     }
 
-    var productName: String {
-        buildSettings["PRODUCT_NAME", default: ""]
-    }
-    var wrapperName: String {
-        buildSettings["WRAPPER_NAME", default: ""]
-    }
-    var codesigningFolderPath: URL? {
-        URL(string: buildSettings["CODESIGNING_FOLDER_PATH", default: ""])
-    }
-    var swiftVersion: String {
-        buildSettings["SWIFT_VERSION", default: ""]
-    }
-    var targetName: String {
-        buildSettings["TARGETNAME", default: ""]
+    private struct ShellOutputWrapper: Codable {
+        let buildSettings: [String: String]
     }
 
-    private let buildSettings: [String: String]
+    let productName: String
+    let swiftVersion: String
+    let targetName: String
+    let codesigningFolderPath: URL?
 
-    init(targetName: String?, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
-            ["-target", target]
-        } ?? [])
-        let output: Shell.Output = try shell(command)
-        guard let data = output.stdOut.data(using: .utf8) else {
-            throw CustomError.badOutput
+    init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
+        let io: Shell.IO = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
+        guard let data = io.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(io: io)
         }
-        buildSettings = (try decoder.decode([BuildSettings].self, from: data)).first?.buildSettings ?? [:]
+        let buildSettings = (try decoder.decode([ShellOutputWrapper].self, from: data)).first?.buildSettings ?? [:]
+        try self.init(settings: buildSettings)
+    }
+
+    init(settings: [String: String]) throws {
+        guard let productName = settings["PRODUCT_NAME"],
+              let swiftVersion = settings["SWIFT_VERSION"],
+              let targetName = settings["TARGETNAME"] else {
+            throw Error.badBuildSettings(settings)
+        }
+        self.productName = productName
+        self.swiftVersion = swiftVersion
+        self.targetName = targetName
+        self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
     }
 }

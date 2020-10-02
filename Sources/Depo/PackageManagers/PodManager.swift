@@ -125,7 +125,8 @@ final class PodManager: PackageManager {
     }
 
     private func allSchemes() throws -> [(Pod, BuildSettings)] {
-        try (try XcodeProject(shell: shell).targets).compactMap { targetName in
+        let project = try XcodeProject(shell: shell)
+        return try project.targets.compactMap { targetName in
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil
             }
