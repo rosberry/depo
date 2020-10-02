@@ -16,7 +16,6 @@ struct BuildSettings: Codable {
     }
 
     let productName: String
-    let wrapperName: String
     let codesigningFolderPath: URL?
 
     init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
@@ -29,8 +28,7 @@ struct BuildSettings: Codable {
     }
 
     init(settings: [String: String]) throws {
-        guard let productName = settings["PRODUCT_NAME"],
-              let wrapperName = settings["WRAPPER_NAME"] else {
+        guard let productName = settings["PRODUCT_NAME"] else {
             throw Error.badBuildSettings(settings)
         }
         self.productName = productName
