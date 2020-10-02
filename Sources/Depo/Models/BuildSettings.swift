@@ -32,7 +32,6 @@ struct BuildSettings: Codable {
             throw Error.badBuildSettings(settings)
         }
         self.productName = productName
-        self.wrapperName = wrapperName
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
     }
 }
