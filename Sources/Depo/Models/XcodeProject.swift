@@ -20,7 +20,7 @@ struct XcodeProject: Codable {
     let targets: [String]
 
     init(name: String? = nil, decoder: JSONDecoder = .init(), shell: Shell = .init()) throws {
-        let output: Shell.Output
+        let output: Shell.IO
         if let name = name {
             output = try shell("xcodebuild", "-list", "-json", "-project", name)
         }

@@ -22,7 +22,7 @@ struct BuildSettings: Codable {
     private let buildSettings: [String: String]
 
     init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let output: Shell.Output = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
+        let output: Shell.IO = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
         guard let data = output.stdOut.data(using: .utf8) else {
             throw CustomError.badOutput
         }
