@@ -6,26 +6,35 @@ import Foundation
 
 struct BuildSettings: Codable {
 
-    enum CustomError: Error {
-        case badOutput
+    enum Error: LocalizedError {
+        case badOutput(io: Shell.IO)
+        case badBuildSettings([String: String])
     }
 
-    var productName: String {
-        buildSettings["PRODUCT_NAME", default: ""]
+    private struct ShellOutputWrapper: Codable {
+        let buildSettings: [String: String]
     }
-    var wrapperName: String {
-        buildSettings["WRAPPER_NAME", default: ""]
-    }
-    var codesigningFolderPath: URL? {
-        URL(string: buildSettings["CODESIGNING_FOLDER_PATH", default: ""])
-    }
-    private let buildSettings: [String: String]
+
+    let productName: String
+    let wrapperName: String
+    let codesigningFolderPath: URL?
 
     init(targetName: String, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let output: Shell.IO = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
-        guard let data = output.stdOut.data(using: .utf8) else {
-            throw CustomError.badOutput
+        let io: Shell.IO = try shell("xcodebuild", "-showBuildSettings", "-json", "-target", targetName)
+        guard let data = io.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(io: io)
         }
-        buildSettings = (try decoder.decode([BuildSettings].self, from: data)).first?.buildSettings ?? [:]
+        let buildSettings = (try decoder.decode([ShellOutputWrapper].self, from: data)).first?.buildSettings ?? [:]
+        try self.init(settings: buildSettings)
+    }
+
+    init(settings: [String: String]) throws {
+        guard let productName = settings["PRODUCT_NAME"],
+              let wrapperName = settings["WRAPPER_NAME"] else {
+            throw Error.badBuildSettings(settings)
+        }
+        self.productName = productName
+        self.wrapperName = wrapperName
+        self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
     }
 }
