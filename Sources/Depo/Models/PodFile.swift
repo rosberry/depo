@@ -32,7 +32,7 @@ struct PodFile: CustomStringConvertible {
     }
 
     private static func podVersion(_ pod: Pod) -> String {
-        guard let version = pod.version else {
+        guard let version = pod.versionConstraint else {
             return ""
         }
         return ", '\(version.operation.symbol) \(version.value)'"

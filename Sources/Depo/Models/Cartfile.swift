@@ -14,14 +14,14 @@ struct Cartfile: CustomStringConvertible {
     }
 
     private static func carthageItemVersion(_ item: CarthageItem) -> String {
-        guard let version = item.version else {
+        guard let versionConstraint = item.versionConstraint else {
             return ""
         }
-        switch version.operation {
+        switch versionConstraint.operation {
         case .branchOrTagOrCommit:
-            return " \"\(version.value)\""
+            return " \"\(versionConstraint.value)\""
         default:
-            return " \(version.operation.symbol) \(version.value)"
+            return " \(versionConstraint.operation.symbol) \(versionConstraint.value)"
         }
     }
 }

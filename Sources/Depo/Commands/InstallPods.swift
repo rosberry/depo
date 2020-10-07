@@ -132,7 +132,7 @@ final class InstallPods: ParsableCommand {
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil
             }
-            return (Pod(name: targetName, version: nil),
+            return (Pod(name: targetName, versionConstraint: nil),
                     try BuildSettings(targetName: targetName, shell: shell))
         }
     }

@@ -7,6 +7,12 @@ import ArgumentParser
 
 struct CarthageItem: Codable {
 
+    private enum CodingKeys: String, CodingKey {
+        case kind
+        case identifier
+        case versionConstraint = "version"
+    }
+
     enum Kind: String, Codable {
         case binary
         case github
@@ -36,5 +42,5 @@ struct CarthageItem: Codable {
 
     let kind: Kind
     let identifier: String
-    let version: Version<Operator>?
+    let versionConstraint: VersionConstraint<Operator>?
 }

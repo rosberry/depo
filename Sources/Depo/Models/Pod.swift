@@ -7,6 +7,11 @@ import ArgumentParser
 
 struct Pod {
 
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case versionConstraint = "version"
+    }
+
     enum Kind {
         case common
         case builtFramework
@@ -42,7 +47,7 @@ struct Pod {
     }
 
     let name: String
-    let version: Version<Operator>?
+    let versionConstraint: VersionConstraint<Operator>?
 }
 
 extension Pod: Codable {
@@ -53,6 +58,6 @@ extension Pod: Codable {
         name = try container.decode(String.self, forKey: .name).filter { character in
             character != slashCharacter
         }
-        version = try container.decodeIfPresent(Version.self, forKey: .version)
+        versionConstraint = try container.decodeIfPresent(VersionConstraint.self, forKey: .versionConstraint)
     }
 }
