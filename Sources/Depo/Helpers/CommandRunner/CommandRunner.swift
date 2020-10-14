@@ -5,16 +5,7 @@
 import Foundation
 import ArgumentParser
 
-struct CompositeRunner {
-
-    struct Error: LocalizedError {
-
-        let errors: [Swift.Error]
-
-        init(errors: [Swift.Error]) {
-            self.errors = errors
-        }
-    }
+struct CommandRunner {
 
     @_functionBuilder
     struct Builder {
@@ -44,11 +35,10 @@ struct CompositeRunner {
         }
     }
 
-    @discardableResult
-    init(@Builder build: () -> [Swift.Error]) throws {
+    static func runIndependently(@Builder build: () -> [Swift.Error]) throws {
         let errors = build()
         guard errors.isEmpty else {
-            throw Error(errors: errors)
+            throw CompositeError(errors: errors)
         }
     }
 }

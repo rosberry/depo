@@ -18,7 +18,7 @@ final class Install: ParsableCommand {
     }
 
     private func runSynchronously(installPodsCommand: InstallPods, installCarthageItemsCommand: InstallCarthageItems) throws {
-        try CompositeRunner {
+        try CommandRunner.runIndependently {
             installPodsCommand
             installCarthageItemsCommand
         }
