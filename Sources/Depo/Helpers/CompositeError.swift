@@ -3,37 +3,52 @@
 //
 
 import Foundation
+import ArgumentParser
 
-@_functionBuilder
-struct ErrorsBuilder {
-    static func buildBlock(_ partialResults: () throws -> Void...) -> [Error] {
-        partialResults.compactMap { closure in
-            do {
-                try closure()
-                return nil
+struct CompositeRunner {
+
+    struct Error: LocalizedError {
+
+        let errors: [Swift.Error]
+
+        init(errors: [Swift.Error]) {
+            self.errors = errors
+        }
+    }
+
+    @_functionBuilder
+    struct Builder {
+        static func buildBlock(_ partialResults: () throws -> Void...) -> [Swift.Error] {
+            partialResults.compactMap { closure in
+                do {
+                    try closure()
+                    return nil
+                }
+                catch {
+                    return error
+                }
             }
-            catch {
-                return error
+        }
+
+        static func buildBlock(_ commands: ParsableCommand & AnyObject...) -> [Swift.Error] {
+            var c = commands
+            return c.indices.compactMap { index in
+                do {
+                    try c[index].run()
+                    return nil
+                }
+                catch {
+                    return error
+                }
             }
         }
     }
-}
-
-struct CompositeError: Error {
-
-    let errors: [Error]
 
     @discardableResult
-    init?(errors: [Error]) throws {
-        guard !errors.isEmpty else {
-            return nil
+    init(@Builder build: () -> [Swift.Error]) throws {
+        let errors = build()
+        guard errors.isEmpty else {
+            throw Error(errors: errors)
         }
-        self.errors = errors
-        throw self
-    }
-
-    @discardableResult
-    init?(@ErrorsBuilder build: () -> [Error]) throws {
-        try self.init(errors: build())
     }
 }
