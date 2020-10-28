@@ -13,7 +13,7 @@ final class AllPackagesManager: PackageManager {
     }
 
     func update() throws {
-        try CompositeError {
+        try CommandRunner.runIndependently {
             PodManager(depofile: depofile).update
             CarthageManager(depofile: depofile).update
             SPMManager(depofile: depofile).update
@@ -21,7 +21,7 @@ final class AllPackagesManager: PackageManager {
     }
 
     func install() throws {
-        try CompositeError {
+        try CommandRunner.runIndependently {
             PodManager(depofile: depofile).install
             CarthageManager(depofile: depofile).install
             SPMManager(depofile: depofile).update
@@ -29,7 +29,7 @@ final class AllPackagesManager: PackageManager {
     }
 
     func build() throws {
-        try CompositeError {
+        try CommandRunner.runIndependently {
             PodManager(depofile: depofile).build
             CarthageManager(depofile: depofile).build
             SPMManager(depofile: depofile).build
