@@ -6,6 +6,8 @@ DEVELOPMENT_TEAM=$1
 BUILD_DIR=$2
 PACKAGE_NAME=${3:-$(basename "$PWD")}
 
+swift package generate-xcodeproj
+
 xcodebuild \
 -configuration Release \
 defines_module=yes \

@@ -7,7 +7,7 @@ import Foundation
 extension FileManager {
 
     @discardableResult
-    func operate<T>(in path: String, _ action: () throws -> T) rethrows -> T {
+    func perform<T>(atPath path: String, _ action: () throws -> T) rethrows -> T {
         let currentPath = currentDirectoryPath
         defer {
             changeCurrentDirectoryPath(currentPath)
@@ -16,7 +16,7 @@ extension FileManager {
         return try action()
     }
 
-    func operate(in path: String, _ action: () throws -> Void) rethrows {
-        let _: Void = try operate(in: path, action)
+    func perform(atPath path: String, _ action: () throws -> Void) rethrows {
+        let _: Void = try perform(atPath: path, action)
     }
 }

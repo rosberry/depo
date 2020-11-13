@@ -30,12 +30,12 @@ final class CarthageManager: PackageManager {
 
     func update() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
-        try carthageShellCommand.update(arguments: [.platformIOS])
+        try carthageShellCommand.update(arguments: [.platform(.ios)])
     }
 
     func install() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
-        try carthageShellCommand.bootstrap(arguments: [.platformIOS])
+        try carthageShellCommand.bootstrap(arguments: [.platform(.ios)])
     }
 
     func build() throws {

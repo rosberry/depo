@@ -13,8 +13,8 @@ endef
 
 .PHONY: build install uninstall clean install_scripts
 
-xcode:
-	swift package generate-xcodeproj
+install: build install_scripts
+	cp $(release_binary) $(executable_path)
 
 build:
 	swift build -c release --disable-sandbox
@@ -22,11 +22,11 @@ build:
 install_scripts:
 	$(foreach script,$(SCRIPTS),$(call SCRIPT_INSTALL,$(script)))
 
-install: build install_scripts
-	cp $(release_binary) $(executable_path)
-
 uninstall:
 	rm -rf $(bindir)/$(binary) $(executable_path)
+
+xcode:
+	swift package generate-xcodeproj
 
 clean:
 	rm -rf .build

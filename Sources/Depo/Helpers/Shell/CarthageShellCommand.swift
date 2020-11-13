@@ -13,17 +13,24 @@ final class CarthageShellCommand: ShellCommand {
     }
 
     enum BuildArgument {
-        case platformIOS
+        case platform(Platform)
         case cacheBuilds
 
         var arguments: [String] {
             switch self {
-            case .platformIOS:
-                return ["--platform", "ios"]
+            case let .platform(platform):
+                return ["--platform", "\(platform.rawValue)"]
             case .cacheBuilds:
                 return ["--cache builds"]
             }
         }
+    }
+
+    enum Platform: String {
+        case mac
+        case ios
+        case tvos
+        case watchos
     }
 
     func update(arguments: [BuildArgument]) throws {

@@ -55,7 +55,7 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
-        let buildSettings = try BuildSettings(targetName: nil, shell: shell)
+        let buildSettings = try BuildSettings(shell: shell)
         let content = PackageSwift(projectBuildSettings: buildSettings, items: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
@@ -66,7 +66,7 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
         let projectPath = fmg.currentDirectoryPath
         #warning("hardcoded teamID")
         let failedPackages = packages.filter { package in
-            fmg.operate(in: "./\(packagesSourcesPath)/\(package.name)") {
+            fmg.perform(atPath: "./\(packagesSourcesPath)/\(package.name)") {
                 !buildSwiftPackageScript(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")
             }
         }
@@ -83,7 +83,7 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
             let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
                 dir.extension == "framework" ? dir.nameExcludingExtension : nil
             }
-            let failedFrameworks: [String] = fmg.operate(in: "./\(buildPath)/\(package.name)") {
+            let failedFrameworks: [String] = fmg.perform(atPath: "./\(buildPath)/\(package.name)") {
                 frameworks.filter { framework in
                     !mergePackageScript(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
                 }

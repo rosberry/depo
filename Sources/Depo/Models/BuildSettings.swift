@@ -20,7 +20,7 @@ struct BuildSettings: Codable {
     let targetName: String
     let codesigningFolderPath: URL?
 
-    init(targetName: String?, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
+    init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
         let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
             ["-target", target]
         } ?? [])
