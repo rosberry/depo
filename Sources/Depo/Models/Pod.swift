@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-struct Pod {
+public struct Pod {
 
     private enum CodingKeys: String, CodingKey {
         case name
@@ -52,7 +52,7 @@ struct Pod {
 
 extension Pod: Codable {
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let slashCharacter = Character("/")
         name = try container.decode(String.self, forKey: .name).filter { character in

@@ -5,7 +5,7 @@
 import Foundation
 import ArgumentParser
 
-struct CarthageItem: Codable {
+public struct CarthageItem: Codable {
 
     private enum CodingKeys: String, CodingKey {
         case kind

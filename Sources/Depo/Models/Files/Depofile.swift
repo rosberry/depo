@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Depofile: Codable {
+public struct Depofile: Codable {
 
     enum CustomError: LocalizedError {
         case badDepoFileURL(path: String)
@@ -15,6 +15,14 @@ struct Depofile: Codable {
     let swiftPackages: [SwiftPackage]
     private static let defaultPath: String = "./\(AppConfiguration.configFileName)"
 
+    public init(pods: [Pod], carts: [CarthageItem], swiftPackages: [SwiftPackage]) {
+        self.pods = pods
+        self.carts = carts
+        self.swiftPackages = swiftPackages
+    }
+}
+
+extension Depofile {
     init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {
         guard let data = fileManager.contents(atPath: path) else {
             throw CustomError.badDepoFileURL(path: path)

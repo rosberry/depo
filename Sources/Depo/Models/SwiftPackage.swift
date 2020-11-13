@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct SwiftPackage {
+public struct SwiftPackage {
 
     private enum CodingKeys: String, CodingKey {
         case name

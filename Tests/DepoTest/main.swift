@@ -8,7 +8,7 @@ import XCTest
 final class MainTest: XCTestCase {
 
     func testTest() {
-        print("test")
+        print("tests are working!")
     }
 }
 
