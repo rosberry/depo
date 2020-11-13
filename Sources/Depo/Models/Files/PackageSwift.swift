@@ -9,9 +9,7 @@ struct PackageSwift: CustomStringConvertible {
     let description: String
 
     init(projectBuildSettings settings: BuildSettings, items: [SwiftPackage]) {
-        let dependencies = items.map { item in
-            "    .package(url: \"\(item.url)\", .exact(\"\(item.exactVersion)\"))"
-        }.joined(separator: ",\n")
+        let dependencies = items.map(Self.package).joined(separator: ",\n")
         self.description = """
                            // swift-tools-version:\(settings.swiftVersion)
 
@@ -29,6 +27,11 @@ struct PackageSwift: CustomStringConvertible {
                                ]
                            )
                            """
+    }
+
+    private static func package(_ package: SwiftPackage) -> String {
+        let version = ".\(package.versionConstraint.operation.rawValue)(\"\(package.versionConstraint.value)\")"
+        return "    .package(name: \"\(package.name)\", url: \"\(package.url)\", \(version)"
     }
 
 }

@@ -9,12 +9,22 @@ struct SwiftPackage {
     private enum CodingKeys: String, CodingKey {
         case name
         case url
-        case exactVersion
+        case versionConstraint = "version"
+    }
+
+    enum Operator: String, Codable, HasDefaultValue {
+        case exact
+        case upToNextMinor
+        case upToNextMajor
+        case branch
+        case revision
+
+        static let defaultValue: SwiftPackage.Operator = .exact
     }
 
     let name: String
     let url: URL
-    let exactVersion: String
+    let versionConstraint: VersionConstraint<Operator>
 }
 
 extension SwiftPackage: Codable {
@@ -24,6 +34,6 @@ extension SwiftPackage: Codable {
         name = try container.decodeIfPresent(String.self, forKey: .name) ??
                    url.lastPathComponent.replacingOccurrences(of: ".git", with: "")
         self.url = url
-        exactVersion = try container.decode(String.self, forKey: .name)
+        versionConstraint = try container.decode(VersionConstraint<Operator>.self, forKey: .versionConstraint)
     }
 }
