@@ -5,47 +5,47 @@
 import Foundation
 import ArgumentParser
 
-class UpdateParsableCommand: ParsableCommand {
-    static let configuration: CommandConfiguration = .init(commandName: "update")
-    required init() {}
+final class Update<Command: HasUpdateCommand>: ParsableCommand {
+
+    static var configuration: CommandConfiguration {
+        .init(commandName: "update")
+    }
+
+    @OptionGroup()
+    var options: Command.Options
+
     func run() throws {
-        print(#function)
+        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        try Command(depofile: depofile, options: options).update()
     }
 }
 
-class InstallParsableCommand: ParsableCommand {
-    static let configuration: CommandConfiguration = .init(commandName: "install")
-    required init() {}
+final class Install<Command: HasInstallCommand>: ParsableCommand {
+
+    static var configuration: CommandConfiguration {
+        .init(commandName: "install")
+    }
+
+    @OptionGroup()
+    var options: Command.Options
+
     func run() throws {
-        print(#function)
+        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        try Command(depofile: depofile, options: options).install()
     }
 }
 
-class BuildParsableCommand: ParsableCommand {
-    static let configuration: CommandConfiguration = .init(commandName: "build")
-    required init() {}
+final class Build<Command: HasBuildCommand>: ParsableCommand {
+
+    static var configuration: CommandConfiguration {
+        .init(commandName: "build")
+    }
+
+    @OptionGroup()
+    var options: Command.Options
+
     func run() throws {
-        print(#function)
-    }
-}
-
-class Update<Command: HasUpdateCommand>: UpdateParsableCommand {
-    override func run() throws {
-        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
-        try Command(depofile: depofile).update()
-    }
-}
-
-class Install<Command: HasInstallCommand>: InstallParsableCommand {
-    override func run() throws {
-        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
-        try Command(depofile: depofile).install()
-    }
-}
-
-class Build<Command: HasBuildCommand>: BuildParsableCommand {
-    override func run() throws {
-        let depofile = try Depofile(decoder: DataDecoder.Kind.yaml.decoder)
-        try Command(depofile: depofile).build()
+        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        try Command(depofile: depofile, options: options).build()
     }
 }

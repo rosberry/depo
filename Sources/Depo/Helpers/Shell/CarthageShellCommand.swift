@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ArgumentParser
 
 final class CarthageShellCommand: ShellCommand {
 
@@ -19,18 +20,31 @@ final class CarthageShellCommand: ShellCommand {
         var arguments: [String] {
             switch self {
             case let .platform(platform):
-                return ["--platform", "\(platform.rawValue)"]
+                return platformArguments(platform: platform)
             case .cacheBuilds:
                 return ["--cache builds"]
             }
         }
+
+        func platformArguments(platform: Platform) -> [String] {
+            switch platform {
+            case .all:
+                return []
+            default:
+                return ["--platform", platform.rawValue]
+            }
+        }
     }
 
-    enum Platform: String {
+    enum Platform: String, ExpressibleByArgument, HasDefaultValue, CaseIterable, RawRepresentable {
+
         case mac
         case ios
         case tvos
         case watchos
+        case all
+
+        static let defaultValue: CarthageShellCommand.Platform = .all
     }
 
     func update(arguments: [BuildArgument]) throws {

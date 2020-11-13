@@ -3,11 +3,20 @@
 //
 
 import Foundation
+import ArgumentParser
 
 typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
 
+protocol HasDepofileExtension {
+    var depofileExtension: DataDecoder.Kind {
+        get
+    }
+}
+
 protocol HasDepofileInit {
-    init(depofile: Depofile)
+    associatedtype Options: ParsableArguments & HasDepofileExtension
+
+    init(depofile: Depofile, options: Options)
 }
 
 protocol HasUpdateCommand: HasDepofileInit {

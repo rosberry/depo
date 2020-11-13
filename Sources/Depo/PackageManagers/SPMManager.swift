@@ -7,6 +7,7 @@ import ArgumentParser
 import Files
 
 final class SPMManager: HasUpdateCommand & HasBuildCommand {
+    typealias Options = DefaultOptions
 
     enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -28,6 +29,10 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
+
+    convenience init(depofile: Depofile, options: Options) {
+        self.init(depofile: depofile)
+    }
 
     init(depofile: Depofile) {
         self.packages = depofile.swiftPackages

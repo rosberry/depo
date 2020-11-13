@@ -7,6 +7,7 @@ import ArgumentParser
 import Yams
 
 final class PodManager: PackageManager {
+    typealias Options = DefaultOptions
 
     enum Error: LocalizedError {
         case badPodfile(path: String)
@@ -33,6 +34,10 @@ final class PodManager: PackageManager {
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
+
+    convenience init(depofile: Depofile, options: Options) {
+        self.init(depofile: depofile)
+    }
 
     init(depofile: Depofile) {
         self.pods = depofile.pods

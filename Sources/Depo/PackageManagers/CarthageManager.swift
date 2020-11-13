@@ -7,6 +7,16 @@ import ArgumentParser
 
 final class CarthageManager: PackageManager {
 
+    struct Options: HasDepofileExtension, ParsableArguments {
+        @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
+                help: "\(DataDecoder.Kind.allFlagsHelp)")
+        var depofileExtension: DataDecoder.Kind = .defaultValue
+
+        @Option(name: [.customLong("platform"), .customShort(Character("p"))],
+                help: "\(CarthageShellCommand.Platform.allFlagsHelp)")
+        var platform: CarthageShellCommand.Platform = .defaultValue
+    }
+
     enum Error: LocalizedError {
         case badCartfile(path: String)
     }
@@ -21,21 +31,27 @@ final class CarthageManager: PackageManager {
     private let cartFileName: String = AppConfiguration.cartFileName
 
     private let carthageItems: [CarthageItem]
+    private let platform: CarthageShellCommand.Platform
     private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
 
-    init(depofile: Depofile) {
+    convenience init(depofile: Depofile, options: Options) {
+        self.init(depofile: depofile, platform: options.platform)
+    }
+
+    init(depofile: Depofile, platform: CarthageShellCommand.Platform) {
         self.carthageItems = depofile.carts
+        self.platform = platform
     }
 
     func update() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
-        try carthageShellCommand.update(arguments: [.platform(.ios)])
+        try carthageShellCommand.update(arguments: [.platform(platform)])
     }
 
     func install() throws {
         try createCartfile(at: "./\(cartFileName)", with: carthageItems)
-        try carthageShellCommand.bootstrap(arguments: [.platform(.ios)])
+        try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
     }
 
     func build() throws {
