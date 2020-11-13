@@ -4,6 +4,7 @@
 
 import Foundation
 
+#warning("make it expressible by string literal to now create object with value field for it in Depofile")
 struct VersionConstraint<Operator: Codable & HasDefaultValue>: Codable {
     private enum CodingKeys: String, CodingKey {
         case value

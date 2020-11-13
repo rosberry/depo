@@ -20,6 +20,10 @@ let package = Package(
                     name: "Depo",
                     dependencies: [.product(name: "ArgumentParser", package: "swift-argument-parser"),
                                    .product(name: "Yams", package: "Yams"),
-                                   .product(name: "Files", package: "Files")])
+                                   .product(name: "Files", package: "Files")]),
+            .testTarget(
+                    name: "DepoTest",
+                    dependencies: ["Depo"]
+            )
         ]
 )
