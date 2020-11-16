@@ -4,11 +4,11 @@
 
 import Foundation
 
-struct PackageSwift: CustomStringConvertible {
+public struct PackageSwift: CustomStringConvertible {
 
-    let description: String
+    public let description: String
 
-    init(projectBuildSettings settings: BuildSettings, items: [SwiftPackage]) {
+    public init(projectBuildSettings settings: BuildSettings, items: [SwiftPackage]) {
         let dependencies = items.map(Self.package).joined(separator: ",\n")
         self.description = """
                            // swift-tools-version:\(settings.swiftVersion)

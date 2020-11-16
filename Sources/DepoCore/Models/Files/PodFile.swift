@@ -4,11 +4,11 @@
 
 import Foundation
 
-struct PodFile: CustomStringConvertible {
+public struct PodFile: CustomStringConvertible {
 
-    let description: String
+    public let description: String
 
-    init(pods: [Pod], platformVersion: Double) {
+    public init(pods: [Pod], platformVersion: Double) {
         self.description = Self.makeDescription(platformVersion: platformVersion,
                                                 targetName: "Depo",
                                                 podsSection: pods.reduce("") { result, pod in

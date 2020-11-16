@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol TopLevelDecoder {
+public protocol TopLevelDecoder {
     associatedtype Input
 
     func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T: Decodable
