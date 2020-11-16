@@ -31,7 +31,7 @@ struct PackageSwift: CustomStringConvertible {
 
     private static func package(_ package: SwiftPackage) -> String {
         let version = ".\(package.versionConstraint.operation.rawValue)(\"\(package.versionConstraint.value)\")"
-        return "    .package(name: \"\(package.name)\", url: \"\(package.url)\", \(version)"
+        return "    .package(name: \"\(package.name)\", url: \"\(package.url)\", \(version))"
     }
 
 }
