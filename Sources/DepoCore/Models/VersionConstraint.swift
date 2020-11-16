@@ -6,13 +6,19 @@ import Foundation
 
 #warning("make it expressible by string literal to now create object with value field for it in Depofile")
 public struct VersionConstraint<Operator: Codable & HasDefaultValue>: Codable {
+
     private enum CodingKeys: String, CodingKey {
         case value
         case operation
     }
 
-    public let value: String
     public let operation: Operator
+    public let value: String
+
+    public init(operation: Operator, value: String) {
+        self.operation = operation
+        self.value = value
+    }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

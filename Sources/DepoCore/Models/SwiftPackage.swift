@@ -25,6 +25,12 @@ public struct SwiftPackage {
     public let name: String
     public let url: URL
     public let versionConstraint: VersionConstraint<Operator>
+
+    public init(name: String, url: URL, versionConstraint: VersionConstraint<Operator>) {
+        self.name = name
+        self.url = url
+        self.versionConstraint = versionConstraint
+    }
 }
 
 extension SwiftPackage: Codable {

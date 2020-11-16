@@ -4,11 +4,12 @@
 
 import Foundation
 import XCTest
-import Depo
+import DepoCore
 
 final class SPMManagerTest: XCTestCase {
 
     func testPackageSwiftFileGeneration() {
         let depofile = Depofile(pods: [], carts: [], swiftPackages: [])
+        print(depofile)
     }
 }

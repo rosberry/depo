@@ -43,4 +43,11 @@ public struct BuildSettings: Codable {
         self.targetName = targetName
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
     }
+
+    public init(productName: String, swiftVersion: String, targetName: String, codesigningFolderPath: URL?) {
+        self.productName = productName
+        self.swiftVersion = swiftVersion
+        self.targetName = targetName
+        self.codesigningFolderPath = codesigningFolderPath
+    }
 }
