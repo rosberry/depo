@@ -2,7 +2,7 @@
 //  Copyright © 2018 Rosberry. All rights reserved.
 //
 
-extension Collection {
+public extension Collection {
 
     /// Returns collection of values at keyPaths of contained elements.
     func map<T>(by keyPath: KeyPath<Element, T>) -> [T] {

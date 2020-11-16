@@ -4,11 +4,11 @@
 
 import Foundation
 
-final class BuildSwiftPackageScript: ShellCommand {
+public final class BuildSwiftPackageScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.buildSPShellScriptFilePath
 
-    func callAsFunction(teamID: String, buildDir: String) -> Bool {
+    public func callAsFunction(teamID: String, buildDir: String) -> Bool {
         shell(filePath: scriptPath, arguments: [teamID, buildDir])
     }
 }

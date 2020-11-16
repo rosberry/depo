@@ -7,7 +7,7 @@ import Yams
 import ArgumentParser
 
 public struct DataDecoder: TopLevelDecoder {
-    typealias Input = Data
+    public typealias Input = Data
 
     public enum Kind: String, Codable, RawRepresentable, CaseIterable, HasDefaultValue, ExpressibleByArgument {
         case json

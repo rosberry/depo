@@ -12,13 +12,13 @@ public struct Pod {
         case versionConstraint = "version"
     }
 
-    enum Kind {
+    public enum Kind {
         case common
         case builtFramework
         case unknown
     }
 
-    enum Operator: String, Codable, HasDefaultValue {
+    public enum Operator: String, Codable, HasDefaultValue {
         case equal
         case greater
         case greaterOrEqual
@@ -43,11 +43,16 @@ public struct Pod {
             }
         }
 
-        static let defaultValue: Operator = .equal
+        public static let defaultValue: Operator = .equal
     }
 
-    let name: String
-    let versionConstraint: VersionConstraint<Operator>?
+    public init(name: String, versionConstraint: VersionConstraint<Operator>?) {
+        self.name = name
+        self.versionConstraint = versionConstraint
+    }
+
+    public let name: String
+    public let versionConstraint: VersionConstraint<Operator>?
 }
 
 extension Pod: Codable {

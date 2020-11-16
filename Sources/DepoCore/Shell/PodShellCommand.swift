@@ -4,27 +4,27 @@
 
 import Foundation
 
-final class PodShellCommand: ShellCommand {
+public final class PodShellCommand: ShellCommand {
 
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case badInit
         case badInstall
         case badUpdate
     }
 
-    func initialize() throws {
+    public func initialize() throws {
         if !shell("pod", "init") {
             throw Error.badInit
         }
     }
 
-    func install() throws {
+    public func install() throws {
         if !shell("pod", "install") {
             throw Error.badInstall
         }
     }
 
-    func update() throws {
+    public func update() throws {
         if !shell("pod", "update") {
             throw Error.badUpdate
         }

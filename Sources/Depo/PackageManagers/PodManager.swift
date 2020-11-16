@@ -5,6 +5,7 @@
 import Foundation
 import ArgumentParser
 import Yams
+import DepoCore
 
 final class PodManager: PackageManager {
     typealias Options = DefaultOptions

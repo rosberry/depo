@@ -4,6 +4,7 @@
 
 import Foundation
 import ArgumentParser
+import DepoCore
 
 struct DefaultOptions: ParsableArguments, HasDepofileExtension {
 

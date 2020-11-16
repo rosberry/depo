@@ -5,6 +5,7 @@
 import Foundation
 import ArgumentParser
 import Files
+import DepoCore
 
 final class SPMManager: HasUpdateCommand & HasBuildCommand {
     typealias Options = DefaultOptions

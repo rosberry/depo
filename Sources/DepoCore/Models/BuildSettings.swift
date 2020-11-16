@@ -4,9 +4,9 @@
 
 import Foundation
 
-struct BuildSettings: Codable {
+public struct BuildSettings: Codable {
 
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case badOutput(io: Shell.IO)
         case badBuildSettings([String: String])
     }
@@ -15,12 +15,12 @@ struct BuildSettings: Codable {
         let buildSettings: [String: String]
     }
 
-    let productName: String
-    let swiftVersion: String
-    let targetName: String
-    let codesigningFolderPath: URL?
+    public let productName: String
+    public let swiftVersion: String
+    public let targetName: String
+    public let codesigningFolderPath: URL?
 
-    init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
+    public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
         let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
             ["-target", target]
         } ?? [])
@@ -32,7 +32,7 @@ struct BuildSettings: Codable {
         try self.init(settings: buildSettings)
     }
 
-    init(settings: [String: String]) throws {
+    public init(settings: [String: String]) throws {
         guard let productName = settings["PRODUCT_NAME"],
               let swiftVersion = settings["SWIFT_VERSION"],
               let targetName = settings["TARGETNAME"] else {

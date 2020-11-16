@@ -4,13 +4,13 @@
 
 import Foundation
 
-final class SwiftPackageShellCommand: ShellCommand {
+public final class SwiftPackageShellCommand: ShellCommand {
 
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case badUpdate
     }
 
-    func update() throws {
+    public func update() throws {
         if !shell("swift", "package", "update") {
             throw Error.badUpdate
         }

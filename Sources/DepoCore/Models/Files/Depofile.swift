@@ -10,10 +10,10 @@ public struct Depofile: Codable {
         case badDepoFileURL(path: String)
     }
 
-    let pods: [Pod]
-    let carts: [CarthageItem]
-    let swiftPackages: [SwiftPackage]
-    private static let defaultPath: String = "./\(AppConfiguration.configFileName)"
+    public let pods: [Pod]
+    public let carts: [CarthageItem]
+    public let swiftPackages: [SwiftPackage]
+    public static let defaultPath: String = "./\(AppConfiguration.configFileName)"
 
     public init(pods: [Pod], carts: [CarthageItem], swiftPackages: [SwiftPackage]) {
         self.pods = pods
@@ -22,7 +22,7 @@ public struct Depofile: Codable {
     }
 }
 
-extension Depofile {
+public extension Depofile {
     init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {
         guard let data = fileManager.contents(atPath: path) else {
             throw CustomError.badDepoFileURL(path: path)

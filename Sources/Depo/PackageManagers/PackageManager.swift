@@ -4,6 +4,7 @@
 
 import Foundation
 import ArgumentParser
+import DepoCore
 
 typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
 

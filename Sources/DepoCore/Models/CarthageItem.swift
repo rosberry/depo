@@ -13,13 +13,13 @@ public struct CarthageItem: Codable {
         case versionConstraint = "version"
     }
 
-    enum Kind: String, Codable {
+    public enum Kind: String, Codable {
         case binary
         case github
         case git
     }
 
-    enum Operator: String, Codable, HasDefaultValue {
+    public enum Operator: String, Codable, HasDefaultValue {
         case equal
         case compatible
         case greaterOrEqual
@@ -37,10 +37,10 @@ public struct CarthageItem: Codable {
                 return ""
             }
         }
-        static let defaultValue: Operator = .equal
+        public static let defaultValue: Operator = .equal
     }
 
-    let kind: Kind
-    let identifier: String
-    let versionConstraint: VersionConstraint<Operator>?
+    public let kind: Kind
+    public let identifier: String
+    public let versionConstraint: VersionConstraint<Operator>?
 }

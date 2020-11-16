@@ -4,10 +4,10 @@
 
 import Foundation
 
-struct Cartfile: CustomStringConvertible {
-    let description: String
+public struct Cartfile: CustomStringConvertible {
+    public let description: String
 
-    init(items: [CarthageItem]) {
+    public init(items: [CarthageItem]) {
         description = items.reduce("") { result, item in
             result + "\(item.kind.rawValue) \"\(item.identifier)\"\(Self.carthageItemVersion(item))\n"
         }

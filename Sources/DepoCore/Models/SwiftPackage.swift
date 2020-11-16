@@ -12,19 +12,19 @@ public struct SwiftPackage {
         case versionConstraint = "version"
     }
 
-    enum Operator: String, Codable, HasDefaultValue {
+    public enum Operator: String, Codable, HasDefaultValue {
         case exact
         case upToNextMinor
         case upToNextMajor
         case branch
         case revision
 
-        static let defaultValue: SwiftPackage.Operator = .exact
+        public static let defaultValue: SwiftPackage.Operator = .exact
     }
 
-    let name: String
-    let url: URL
-    let versionConstraint: VersionConstraint<Operator>
+    public let name: String
+    public let url: URL
+    public let versionConstraint: VersionConstraint<Operator>
 }
 
 extension SwiftPackage: Codable {

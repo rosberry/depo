@@ -4,6 +4,7 @@
 
 import Foundation
 import ArgumentParser
+import DepoCore
 
 extension CaseIterable where Self: RawRepresentable, Self.RawValue: CustomStringConvertible {
 

@@ -4,13 +4,13 @@
 
 import Foundation
 
-final class Shell: Codable {
+public final class Shell: Codable {
 
-    struct IO {
-        let stdOut: String
-        let stdErr: String
-        let stdIn: String
-        let status: Int32
+    public struct IO {
+        public let stdOut: String
+        public let stdErr: String
+        public let stdIn: String
+        public let status: Int32
 
         fileprivate init(stdOut: String, stdErr: String, stdIn: String, status: Int32) {
             self.stdOut = stdOut
@@ -20,36 +20,38 @@ final class Shell: Codable {
         }
     }
 
-    func callAsFunction(_ args: [String]) -> Bool {
+    public init() {}
+
+    public func callAsFunction(_ args: [String]) -> Bool {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
         return terminationStatus(of: process) == 0
     }
 
-    func callAsFunction(_ args: String...) -> Bool {
+    public func callAsFunction(_ args: String...) -> Bool {
         callAsFunction(args)
     }
 
-    func callAsFunction(filePath: String, arguments: [String] = []) -> Bool {
+    public func callAsFunction(filePath: String, arguments: [String] = []) -> Bool {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments
         return terminationStatus(of: process) == 0
     }
 
-    func callAsFunction(_ args: [String]) throws -> IO {
+    public func callAsFunction(_ args: [String]) throws -> IO {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
         return try output(of: process)
     }
 
-    func callAsFunction(_ args: String...) throws -> IO {
+    public func callAsFunction(_ args: String...) throws -> IO {
         try callAsFunction(args)
     }
 
-    func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
+    public func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments

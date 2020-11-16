@@ -4,10 +4,10 @@
 
 import Foundation
 
-class ShellCommand: Codable {
-    let shell: Shell
+public class ShellCommand: Codable {
+    public let shell: Shell
 
-    init(shell: Shell = .init()) {
+    public init(shell: Shell = .init()) {
         self.shell = shell
     }
 }

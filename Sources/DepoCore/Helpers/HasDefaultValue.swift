@@ -4,6 +4,6 @@
 
 import Foundation
 
-protocol HasDefaultValue {
+public protocol HasDefaultValue {
     static var defaultValue: Self { get }
 }
