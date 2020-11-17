@@ -18,7 +18,7 @@ public struct Pod {
         case unknown
     }
 
-    public enum Operator: String, Codable, HasDefaultValue, CaseIterable {
+    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Equatable {
         case equal
         case greater
         case greaterOrEqual
@@ -66,3 +66,5 @@ extension Pod: Codable {
         versionConstraint = try container.decodeIfPresent(VersionConstraint.self, forKey: .versionConstraint)
     }
 }
+
+extension Pod: Equatable {}

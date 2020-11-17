@@ -14,10 +14,6 @@ final class PodfileTest: XCTestCase, PackageManagerFileTest {
     }
 
     func testPodfileWithDependencies() {
-        let pods = Pod.Operator.allCases.enumerated().map { index, versionOperator -> Pod in
-            let name = "test-pod-\(index + 1)"
-            return Pod(name: name, versionConstraint: .init(operation: versionOperator, value: "\(name)-version"))
-        }
         let podfile = PodFile(buildSettings: projectSettings, pods: pods)
         expectNoThrow(try compare(model: podfile, andLocalFile: "PodfileWithDeps"), #file, #line)
     }

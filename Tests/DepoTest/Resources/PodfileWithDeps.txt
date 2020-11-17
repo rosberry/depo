@@ -10,4 +10,5 @@ target 'TestTarget' do
     pod 'test-pod-4', '< test-pod-4-version'
     pod 'test-pod-5', '<= test-pod-5-version'
     pod 'test-pod-6', '~> test-pod-6-version'
+    pod 'test-pod-7'
 end

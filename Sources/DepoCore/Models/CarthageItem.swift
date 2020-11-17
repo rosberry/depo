@@ -19,7 +19,7 @@ public struct CarthageItem: Codable {
         case git
     }
 
-    public enum Operator: String, Codable, HasDefaultValue, CaseIterable {
+    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Equatable {
         case equal
         case greaterOrEqual
         case compatible
@@ -50,3 +50,5 @@ public struct CarthageItem: Codable {
         self.versionConstraint = versionConstraint
     }
 }
+
+extension CarthageItem: Equatable {}

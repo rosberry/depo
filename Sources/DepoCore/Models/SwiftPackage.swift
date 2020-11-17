@@ -12,7 +12,7 @@ public struct SwiftPackage {
         case versionConstraint = "version"
     }
 
-    public enum Operator: String, Codable, HasDefaultValue {
+    public enum Operator: String, Codable, HasDefaultValue, Equatable {
         case exact
         case upToNextMinor
         case upToNextMajor
@@ -43,3 +43,5 @@ extension SwiftPackage: Codable {
         versionConstraint = try container.decode(VersionConstraint<Operator>.self, forKey: .versionConstraint)
     }
 }
+
+extension SwiftPackage: Equatable {}

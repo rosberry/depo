@@ -8,8 +8,8 @@ import Foundation
 public struct VersionConstraint<Operator: Codable & HasDefaultValue>: Codable {
 
     private enum CodingKeys: String, CodingKey {
-        case value
         case operation
+        case value
     }
 
     public let operation: Operator
@@ -26,3 +26,5 @@ public struct VersionConstraint<Operator: Codable & HasDefaultValue>: Codable {
         operation = try container.decodeIfPresent(Operator.self, forKey: .operation) ?? Operator.defaultValue
     }
 }
+
+extension VersionConstraint: Equatable where Operator: Equatable {}
