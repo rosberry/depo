@@ -4,6 +4,7 @@
 
 import Foundation
 import DepoCore
+import XCTest
 
 enum ComparisonError: LocalizedError {
     case badFile(name: String)
@@ -35,6 +36,15 @@ protocol PackageManagerFileTest: class {
 }
 
 extension PackageManagerFileTest {
+
+    func expectNoThrow(_ test: @autoclosure () throws -> Void, _ file: StaticString, _ line: UInt) {
+        do {
+            try test()
+        }
+        catch {
+            XCTFail(error.localizedDescription, file: file, line: line)
+        }
+    }
 
     var projectSettings: BuildSettings {
         .init(productName: "Test",

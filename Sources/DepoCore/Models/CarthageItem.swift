@@ -13,16 +13,16 @@ public struct CarthageItem: Codable {
         case versionConstraint = "version"
     }
 
-    public enum Kind: String, Codable {
+    public enum Kind: String, Codable, CaseIterable {
         case binary
         case github
         case git
     }
 
-    public enum Operator: String, Codable, HasDefaultValue {
+    public enum Operator: String, Codable, HasDefaultValue, CaseIterable {
         case equal
-        case compatible
         case greaterOrEqual
+        case compatible
         case branchOrTagOrCommit
 
         var symbol: String {
@@ -43,4 +43,10 @@ public struct CarthageItem: Codable {
     public let kind: Kind
     public let identifier: String
     public let versionConstraint: VersionConstraint<Operator>?
+
+    public init(kind: Kind, identifier: String, versionConstraint: VersionConstraint<Operator>?) {
+        self.kind = kind
+        self.identifier = identifier
+        self.versionConstraint = versionConstraint
+    }
 }

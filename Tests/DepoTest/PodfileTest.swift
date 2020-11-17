@@ -9,26 +9,16 @@ import DepoCore
 final class PodfileTest: XCTestCase, PackageManagerFileTest {
 
     func testPodfileWithNoDependencies() {
-        do {
-            let podfile = PodFile(buildSettings: projectSettings, pods: [])
-            try compare(model: podfile, andLocalFile: "PodfileNoDeps")
-        }
-        catch {
-            XCTFail(error.localizedDescription)
-        }
+        let podfile = PodFile(buildSettings: projectSettings, pods: [])
+        expectNoThrow(try compare(model: podfile, andLocalFile: "PodfileNoDeps"), #file, #line)
     }
 
     func testPodfileWithDependencies() {
-        do {
-            let pods = Pod.Operator.allCases.enumerated().map { index, versionOperator -> Pod in
-                let name = "test-pod-\(index + 1)"
-                return Pod(name: name, versionConstraint: .init(operation: versionOperator, value: "\(name)-version"))
-            }
-            let podfile = PodFile(buildSettings: projectSettings, pods: pods)
-            try compare(model: podfile, andLocalFile: "PodfileWithDeps")
+        let pods = Pod.Operator.allCases.enumerated().map { index, versionOperator -> Pod in
+            let name = "test-pod-\(index + 1)"
+            return Pod(name: name, versionConstraint: .init(operation: versionOperator, value: "\(name)-version"))
         }
-        catch {
-            XCTFail(error.localizedDescription)
-        }
+        let podfile = PodFile(buildSettings: projectSettings, pods: pods)
+        expectNoThrow(try compare(model: podfile, andLocalFile: "PodfileWithDeps"), #file, #line)
     }
 }
