@@ -41,6 +41,10 @@ final class PackageSwiftFileTest: XCTestCase {
                                                        targetName: "TestTarget",
                                                        codesigningFolderPath: nil)
 
+    func testBundle() {
+        XCTFail()
+    }
+
     func testWithNoDeps() {
         do {
             let packageSwift = PackageSwift(projectBuildSettings: projectSettings, items: [])
