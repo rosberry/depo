@@ -1,0 +1,13 @@
+install! 'cocoapods', integrate_targets: false
+platform :tvos, 'test-deployment-target'
+
+target 'TestTarget' do
+    use_frameworks!
+
+    pod 'test-pod-1', '= test-pod-1-version'
+    pod 'test-pod-2', '> test-pod-2-version'
+    pod 'test-pod-3', '>= test-pod-3-version'
+    pod 'test-pod-4', '< test-pod-4-version'
+    pod 'test-pod-5', '<= test-pod-5-version'
+    pod 'test-pod-6', '~> test-pod-6-version'
+end

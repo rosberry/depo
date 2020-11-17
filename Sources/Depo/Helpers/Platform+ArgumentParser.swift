@@ -6,4 +6,4 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension CarthageShellCommand.Platform: ExpressibleByArgument {}
+extension Platform: ExpressibleByArgument {}

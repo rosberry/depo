@@ -36,17 +36,6 @@ public final class CarthageShellCommand: ShellCommand {
         }
     }
 
-    public enum Platform: String, ExpressibleByArgument, HasDefaultValue, CaseIterable, RawRepresentable {
-
-        case mac
-        case ios
-        case tvos
-        case watchos
-        case all
-
-        public static let defaultValue: CarthageShellCommand.Platform = .all
-    }
-
     public func update(arguments: [BuildArgument]) throws {
         try build(command: "update", arguments: arguments)
     }

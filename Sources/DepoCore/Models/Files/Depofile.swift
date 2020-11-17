@@ -4,10 +4,16 @@
 
 import Foundation
 
-public struct Depofile: Codable {
+public struct Depofile {
 
     enum CustomError: LocalizedError {
         case badDepoFileURL(path: String)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case pods
+        case carts
+        case swiftPackages
     }
 
     public let pods: [Pod]
@@ -28,5 +34,15 @@ public extension Depofile {
             throw CustomError.badDepoFileURL(path: path)
         }
         self = try decoder.decode(Depofile.self, from: data)
+    }
+}
+
+extension Depofile: Codable {
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        pods = try container.decodeIfPresent([Pod].self, forKey: .pods) ?? []
+        carts = try container.decodeIfPresent([CarthageItem].self, forKey: .carts) ?? []
+        swiftPackages = try container.decodeIfPresent([SwiftPackage].self, forKey: .swiftPackages) ?? []
     }
 }

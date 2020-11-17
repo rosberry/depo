@@ -1,0 +1,7 @@
+install! 'cocoapods', integrate_targets: false
+platform :tvos, 'test-deployment-target'
+
+target 'TestTarget' do
+    use_frameworks!
+
+end

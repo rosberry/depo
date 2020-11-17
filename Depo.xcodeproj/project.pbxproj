@@ -43,8 +43,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		36203FC62563CD3F00BC2825 /* PodfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */; };
 		365C665F2563810A0027B245 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 365C664F256380FE0027B245 /* PackageSwiftWithDeps.txt */; };
 		365C666E2563810E0027B245 /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 365C6650256380FE0027B245 /* PackageSwiftNoDeps.txt */; };
+		36B4AFCB2563B95F00DD0FD9 /* PodfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */; };
+		EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */; };
+		EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC438FFC61C5365BEEA3EC2C /* Platform.swift */; };
+		EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B539B37D15C5243168BE5 /* PodfileTest.swift */; };
 		OBJ_158 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_99 /* BashCompletionsGenerator.swift */; };
 		OBJ_159 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_100 /* CompletionsGenerator.swift */; };
 		OBJ_160 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_101 /* FishCompletionsGenerator.swift */; };
@@ -88,7 +93,7 @@
 		OBJ_204 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_74 /* writer.c */; };
 		OBJ_211 /* Depo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Depo.swift */; };
 		OBJ_212 /* ParsableCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* ParsableCommands.swift */; };
-		OBJ_213 /* CarthageShellCommand+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* CarthageShellCommand+ArgumentParser.swift */; };
+		OBJ_213 /* Platform+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Platform+ArgumentParser.swift */; };
 		OBJ_214 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* CommandRunner.swift */; };
 		OBJ_215 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* CompositeError.swift */; };
 		OBJ_216 /* EnumerableFlag+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* EnumerableFlag+Help.swift */; };
@@ -285,6 +290,11 @@
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC438FFC61C5365BEEA3EC2C /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		EC4B539B37D15C5243168BE5 /* PodfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodfileTest.swift; sourceTree = "<group>"; };
+		EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
+		EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
+		EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageManagerFileTest.swift; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* Depo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depo.swift; sourceTree = "<group>"; };
 		OBJ_100 /* CompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsGenerator.swift; sourceTree = "<group>"; };
@@ -315,7 +325,7 @@
 		OBJ_127 /* ParsedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedValues.swift; sourceTree = "<group>"; };
 		OBJ_128 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
 		OBJ_129 /* SplitArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitArguments.swift; sourceTree = "<group>"; };
-		OBJ_13 /* CarthageShellCommand+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarthageShellCommand+ArgumentParser.swift"; sourceTree = "<group>"; };
+		OBJ_13 /* Platform+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+ArgumentParser.swift"; sourceTree = "<group>"; };
 		OBJ_131 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
 		OBJ_132 /* HelpGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpGenerator.swift; sourceTree = "<group>"; };
 		OBJ_133 /* MessageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInfo.swift; sourceTree = "<group>"; };
@@ -474,6 +484,8 @@
 				365C6650256380FE0027B245 /* PackageSwiftNoDeps.txt */,
 				365C664F256380FE0027B245 /* PackageSwiftWithDeps.txt */,
 				365C6630256380B60027B245 /* PackageSwiftNoDeps.swift */,
+				EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */,
+				EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -526,7 +538,7 @@
 		OBJ_12 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_13 /* CarthageShellCommand+ArgumentParser.swift */,
+				OBJ_13 /* Platform+ArgumentParser.swift */,
 				OBJ_14 /* CommandRunner */,
 				OBJ_17 /* EnumerableFlag+Help.swift */,
 				OBJ_18 /* FileManager+Helper.swift */,
@@ -631,6 +643,7 @@
 				OBJ_44 /* Pod.swift */,
 				OBJ_45 /* SwiftPackage.swift */,
 				OBJ_46 /* VersionConstraint.swift */,
+				EC438FFC61C5365BEEA3EC2C /* Platform.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -662,7 +675,7 @@
 			path = Shell;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -676,7 +689,6 @@
 				OBJ_151 /* Makefile */,
 				OBJ_152 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_57 /* Tests */ = {
@@ -694,6 +706,8 @@
 				OBJ_59 /* PackageSwiftFileTest.swift */,
 				OBJ_60 /* SPMManagerTest.swift */,
 				OBJ_61 /* main.swift */,
+				EC4B539B37D15C5243168BE5 /* PodfileTest.swift */,
+				EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */,
 			);
 			name = DepoTest;
 			path = Tests/DepoTest;
@@ -1051,7 +1065,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_140 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1081,6 +1095,8 @@
 			files = (
 				365C665F2563810A0027B245 /* PackageSwiftWithDeps.txt in Resources */,
 				365C666E2563810E0027B245 /* PackageSwiftNoDeps.txt in Resources */,
+				36B4AFCB2563B95F00DD0FD9 /* PodfileNoDeps.txt in Resources */,
+				36203FC62563CD3F00BC2825 /* PodfileWithDeps.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,7 +1164,7 @@
 			files = (
 				OBJ_211 /* Depo.swift in Sources */,
 				OBJ_212 /* ParsableCommands.swift in Sources */,
-				OBJ_213 /* CarthageShellCommand+ArgumentParser.swift in Sources */,
+				OBJ_213 /* Platform+ArgumentParser.swift in Sources */,
 				OBJ_214 /* CommandRunner.swift in Sources */,
 				OBJ_215 /* CompositeError.swift in Sources */,
 				OBJ_216 /* EnumerableFlag+Help.swift in Sources */,
@@ -1191,6 +1207,7 @@
 				OBJ_264 /* Shell.swift in Sources */,
 				OBJ_265 /* ShellCommand.swift in Sources */,
 				OBJ_266 /* SwiftPackageShellCommand.swift in Sources */,
+				EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,6 +1226,8 @@
 				OBJ_290 /* PackageSwiftFileTest.swift in Sources */,
 				OBJ_291 /* SPMManagerTest.swift in Sources */,
 				OBJ_292 /* main.swift in Sources */,
+				EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */,
+				EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,12 +48,12 @@ final class PodManager: PackageManager {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
-        try podInitIfNeeded(podFilePath: podFilePath)
+        // try podInitIfNeeded(podFilePath: podFilePath)
         #warning("hardcoded platformVersion")
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
-        try podShellCommand.install()
+        /*try podShellCommand.install()
         try build(pods: pods, at: podsProjectPath)
-        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
+        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)*/
     }
 
     func update() throws {
@@ -83,7 +83,8 @@ final class PodManager: PackageManager {
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
-        let content = PodFile(pods: pods, platformVersion: platformVersion).description.data(using: .utf8)
+        let podfile = PodFile(buildSettings: try .init(), pods: pods, platformVersion: platformVersion)
+        let content = podfile.description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
             throw Error.badPodfile(path: podFilePath)
         }

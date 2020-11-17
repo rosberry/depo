@@ -14,8 +14,8 @@ final class AllPackagesManager: PackageManager {
         var depofileExtension: DataDecoder.Kind = .defaultValue
 
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(CarthageShellCommand.Platform.allFlagsHelp)")
-        var platform: CarthageShellCommand.Platform = .defaultValue
+                help: "\(Platform.allFlagsHelp)")
+        var platform: Platform = .defaultValue
     }
 
     private let depofile: Depofile

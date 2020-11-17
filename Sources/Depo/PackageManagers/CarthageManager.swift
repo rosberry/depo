@@ -14,8 +14,8 @@ final class CarthageManager: PackageManager {
         var depofileExtension: DataDecoder.Kind = .defaultValue
 
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(CarthageShellCommand.Platform.allFlagsHelp)")
-        var platform: CarthageShellCommand.Platform = .defaultValue
+                help: "\(Platform.allFlagsHelp)")
+        var platform: Platform = .defaultValue
     }
 
     enum Error: LocalizedError {
@@ -32,7 +32,7 @@ final class CarthageManager: PackageManager {
     private let cartFileName: String = AppConfiguration.cartFileName
 
     private let carthageItems: [CarthageItem]
-    private let platform: CarthageShellCommand.Platform
+    private let platform: Platform
     private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
 
@@ -40,7 +40,7 @@ final class CarthageManager: PackageManager {
         self.init(depofile: depofile, platform: options.platform)
     }
 
-    init(depofile: Depofile, platform: CarthageShellCommand.Platform) {
+    init(depofile: Depofile, platform: Platform) {
         self.carthageItems = depofile.carts
         self.platform = platform
     }

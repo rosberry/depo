@@ -8,24 +8,23 @@ public struct PodFile: CustomStringConvertible {
 
     public let description: String
 
-    public init(pods: [Pod], platformVersion: Double) {
-        self.description = Self.makeDescription(platformVersion: platformVersion,
-                                                targetName: "Depo",
+    public init(buildSettings: BuildSettings, pods: [Pod]) {
+        self.description = Self.makeDescription(platform: (buildSettings.platform ?? Platform.defaultValue).rawValue,
+                                                platformVersion: buildSettings.deploymentTarget ?? "",
+                                                targetName: buildSettings.targetName,
                                                 podsSection: pods.reduce("") { result, pod in
-                                                    result + "    pod '\(pod.name)'\(Self.podVersion(pod))\n"
+                                                    result + "\n    pod '\(pod.name)'\(Self.podVersion(pod))"
                                                 })
     }
 
-    private static func makeDescription(platformVersion: Double, targetName: String, podsSection: String) -> String {
+    private static func makeDescription(platform: String, platformVersion: String, targetName: String, podsSection: String) -> String {
         """
         install! 'cocoapods', integrate_targets: false
-        platform :ios, '\(platformVersion)'
+        platform :\(platform), '\(platformVersion)'
 
         target '\(targetName)' do
             use_frameworks!
-
         \(podsSection)
-
         end
 
         """
