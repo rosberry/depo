@@ -52,6 +52,7 @@
 		36B4AFCB2563B95F00DD0FD9 /* PodfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */; };
 		EC401A2C58CBE2DC86F0A4E1 /* CartfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C1028C63B20F8BE0618A /* CartfileTest.swift */; };
 		EC424FBCCA0D24B77D8FED16 /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = EC435E74EC5763EBBE310460 /* DepofileNoDeps */; };
+		EC4309CB8898B5A6DB8784F8 /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C7987A402623E7BB35C50 /* Init.swift */; };
 		EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */; };
 		EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC438FFC61C5365BEEA3EC2C /* Platform.swift */; };
 		EC49640C8A28C09E71CB5BDE /* DepoFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */; };
@@ -303,6 +304,7 @@
 		EC4B539B37D15C5243168BE5 /* PodfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodfileTest.swift; sourceTree = "<group>"; };
 		EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
 		EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
+		EC4C7987A402623E7BB35C50 /* Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
 		EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageManagerFileTest.swift; sourceTree = "<group>"; };
 		EC4F66CEAABE580B164D36C2 /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -838,6 +840,7 @@
 			children = (
 				OBJ_10 /* Depo.swift */,
 				OBJ_11 /* ParsableCommands.swift */,
+				EC4C7987A402623E7BB35C50 /* Init.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -1193,6 +1196,7 @@
 				OBJ_223 /* PodManager.swift in Sources */,
 				OBJ_224 /* SPMManager.swift in Sources */,
 				OBJ_225 /* main.swift in Sources */,
+				EC4309CB8898B5A6DB8784F8 /* Init.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
