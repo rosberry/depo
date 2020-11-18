@@ -54,9 +54,14 @@
 		EC424FBCCA0D24B77D8FED16 /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = EC435E74EC5763EBBE310460 /* DepofileNoDeps */; };
 		EC4309CB8898B5A6DB8784F8 /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C7987A402623E7BB35C50 /* Init.swift */; };
 		EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */; };
+		EC45F1AB06A2FA50B5163A66 /* DuplicateDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */; };
 		EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC438FFC61C5365BEEA3EC2C /* Platform.swift */; };
 		EC49640C8A28C09E71CB5BDE /* DepoFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */; };
+		EC4BAE7E0A6B65992BD86325 /* ActualCartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */; };
+		EC4D5AE3B47B7AA191B6B49C /* CarthageVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */; };
 		EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B539B37D15C5243168BE5 /* PodfileTest.swift */; };
+		EC4E8F9D25619CCF92C57689 /* CarthageDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E567919336D57871C6CF7 /* CarthageDependency.swift */; };
+		EC4F5FCCC020F6F6818BCD2B /* Scannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC474FD245AFF407B0B928F9 /* Scannable.swift */; };
 		OBJ_158 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_99 /* BashCompletionsGenerator.swift */; };
 		OBJ_159 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_100 /* CompletionsGenerator.swift */; };
 		OBJ_160 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_101 /* FishCompletionsGenerator.swift */; };
@@ -300,11 +305,16 @@
 		EC438FFC61C5365BEEA3EC2C /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		EC445AB5E315614507FCE3B3 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
 		EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepoFileTest.swift; sourceTree = "<group>"; };
+		EC474FD245AFF407B0B928F9 /* Scannable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scannable.swift; sourceTree = "<group>"; };
 		EC47C1028C63B20F8BE0618A /* CartfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartfileTest.swift; sourceTree = "<group>"; };
+		EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActualCartfile.swift; sourceTree = "<group>"; };
+		EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageVersion.swift; sourceTree = "<group>"; };
 		EC4B539B37D15C5243168BE5 /* PodfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodfileTest.swift; sourceTree = "<group>"; };
 		EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
 		EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
 		EC4C7987A402623E7BB35C50 /* Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
+		EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuplicateDependency.swift; sourceTree = "<group>"; };
+		EC4E567919336D57871C6CF7 /* CarthageDependency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
 		EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageManagerFileTest.swift; sourceTree = "<group>"; };
 		EC4F66CEAABE580B164D36C2 /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +514,18 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EC4E8A3D22D5871EB967BD21 /* CarthageSourceCode */ = {
+			isa = PBXGroup;
+			children = (
+				EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */,
+				EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */,
+				EC4E567919336D57871C6CF7 /* CarthageDependency.swift */,
+				EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */,
+				EC474FD245AFF407B0B928F9 /* Scannable.swift */,
+			);
+			path = CarthageSourceCode;
+			sourceTree = "<group>";
+		};
 		OBJ_103 /* Parsable Properties */ = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +691,7 @@
 				OBJ_41 /* Depofile.swift */,
 				OBJ_42 /* PackageSwift.swift */,
 				OBJ_43 /* PodFile.swift */,
+				EC4E8A3D22D5871EB967BD21 /* CarthageSourceCode */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -1228,6 +1251,11 @@
 				OBJ_265 /* ShellCommand.swift in Sources */,
 				OBJ_266 /* SwiftPackageShellCommand.swift in Sources */,
 				EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */,
+				EC4D5AE3B47B7AA191B6B49C /* CarthageVersion.swift in Sources */,
+				EC4BAE7E0A6B65992BD86325 /* ActualCartfile.swift in Sources */,
+				EC4E8F9D25619CCF92C57689 /* CarthageDependency.swift in Sources */,
+				EC45F1AB06A2FA50B5163A66 /* DuplicateDependency.swift in Sources */,
+				EC4F5FCCC020F6F6818BCD2B /* Scannable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
