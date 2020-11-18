@@ -44,6 +44,17 @@ public struct Pod {
         }
 
         public static let defaultValue: Operator = .equal
+
+        init?(symbol: String) {
+            typealias Context = (this: Self, symbol: String)
+            let contexts: [Context] = Self.allCases.map { op in
+                (this: op, symbol: op.symbol)
+            }
+            guard let selfContext = contexts.first(with: symbol, at: \.symbol) else {
+                return nil
+            }
+            self = selfContext.this
+        }
     }
 
     public init(name: String, versionConstraint: VersionConstraint<Operator>?) {
