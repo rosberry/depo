@@ -145,7 +145,6 @@
 		OBJ_270 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
 		OBJ_279 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_290 /* PackageSwiftFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* PackageSwiftFileTest.swift */; };
-		OBJ_292 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* main.swift */; };
 		OBJ_294 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
 		OBJ_295 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
 		OBJ_296 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
@@ -177,112 +176,112 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		365C65BF256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		365C65C0256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		365C65C1256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		365C65C2256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		365C65C3256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		365C65C4256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		365C65C5256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		365C65C6256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
 			remoteInfo = ArgumentParser;
 		};
 		365C65C7256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		365C65C8256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		365C65C9256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		365C65CA256380380027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		365C65D02563803B0027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoTest";
+			remoteGlobalIDString = Depo::DepoTest;
 			remoteInfo = DepoTest;
 		};
 		365C65D72563803B0027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::Depo";
+			remoteGlobalIDString = Depo::Depo;
 			remoteInfo = Depo;
 		};
 		365C65D92563803B0027B245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 /* End PBXContainerItemProxy section */
@@ -387,7 +386,6 @@
 		OBJ_56 /* SwiftPackageShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackageShellCommand.swift; sourceTree = "<group>"; };
 		OBJ_59 /* PackageSwiftFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwiftFileTest.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_61 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_64 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/vz/Developer/Depo/.build/checkouts/Files/Package.swift; sourceTree = "<group>"; };
 		OBJ_65 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		OBJ_69 /* api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = api.c; sourceTree = "<group>"; };
@@ -718,7 +716,6 @@
 			children = (
 				365C65FD2563805F0027B245 /* Resources */,
 				OBJ_59 /* PackageSwiftFileTest.swift */,
-				OBJ_61 /* main.swift */,
 				EC4B539B37D15C5243168BE5 /* PodfileTest.swift */,
 				EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */,
 				EC47C1028C63B20F8BE0618A /* CartfileTest.swift */,
@@ -1243,7 +1240,6 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_290 /* PackageSwiftFileTest.swift in Sources */,
-				OBJ_292 /* main.swift in Sources */,
 				EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */,
 				EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */,
 				EC401A2C58CBE2DC86F0A4E1 /* CartfileTest.swift in Sources */,

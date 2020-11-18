@@ -83,7 +83,7 @@ final class PodManager: PackageManager {
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
-        let podfile = PodFile(buildSettings: try .init(), pods: pods, platformVersion: platformVersion)
+        let podfile = PodFile(buildSettings: try .init(), pods: pods)
         let content = podfile.description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
             throw Error.badPodfile(path: podFilePath)
