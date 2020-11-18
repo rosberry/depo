@@ -15,32 +15,75 @@ final class Init: ParsableCommand {
         var filePaths: [String] = []
     }
 
-    private enum Action {
+    fileprivate enum Action {
+
+        struct Files {
+
+            typealias FieldContext = (keyPath: WritableKeyPath<Self, String?>, value: String)
+
+            var cartfilePath: String?
+            var podfilePath: String?
+            var packageSwiftFilePath: String?
+
+            static let fileNames: [FieldContext] = {
+                [(\.cartfilePath, AppConfiguration.cartFileName),
+                 (\.podfilePath, AppConfiguration.podFileName),
+                 (\.packageSwiftFilePath, AppConfiguration.packageSwiftFileName)]
+            }()
+        }
+
         case generateEmpty
-        case generateBy([File])
+        case generateBy(Files)
     }
 
     @OptionGroup()
     var options: Options
-    private let packageManagersFileNames: [String] = [AppConfiguration.cartFileName,
-                                                      AppConfiguration.podFileName,
-                                                      AppConfiguration.packageSwiftFileName]
 
     func run() throws {
-        print(try action(for: options))
+        switch try action(for: options) {
+        case .generateEmpty:
+            generateEmptyDepofile()
+        case let .generateBy(files):
+            generateDepofile(by: files)
+        }
     }
 
     private func action(for options: Options) throws -> Action {
-        guard !options.filePaths.isEmpty else {
+        guard let files = self.files(from: options.filePaths) else {
             return .generateEmpty
         }
-        let files = try options.filePaths.compactMap { path -> File? in
+        return .generateBy(files)
+    }
+
+    private func generateEmptyDepofile() {
+        print(#function)
+    }
+
+    private func generateDepofile(by files: Action.Files) {
+        print(#function, files)
+    }
+
+    private func files(from paths: [String]) -> Action.Files? {
+        guard !paths.isEmpty else {
+            return nil
+        }
+        let paths: [Init.Action.Files.FieldContext] = options.filePaths.compactMap { path in
             guard let url = URL(string: path),
-                  packageManagersFileNames.contains(url.lastPathComponent) else {
+                  let keyPath = Action.Files.fileNames.first(with: url.lastPathComponent, at: \.value)?.keyPath else {
                 return nil
             }
-            return try Folder.current.file(at: path)
+            return (keyPath, path)
         }
-        return .generateBy(files)
+        return Action.Files(fields: paths)
+    }
+}
+
+fileprivate extension Init.Action.Files {
+    init(fields: [FieldContext]) {
+        var this = Self()
+        fields.forEach { (keyPath, value) in
+            this[keyPath: keyPath] = value
+        }
+        self = this
     }
 }
