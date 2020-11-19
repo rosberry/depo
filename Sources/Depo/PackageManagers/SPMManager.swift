@@ -30,6 +30,11 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
 
+    private let packageSwiftFileName = AppConfiguration.Name.packageSwift
+    private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory
+    private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
+    private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+
     convenience init(depofile: Depofile, options: Options) {
         self.init(depofile: depofile)
     }
@@ -39,11 +44,6 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     }
 
     func update() throws {
-        let packageSwiftFileName = AppConfiguration.packageSwiftFileName
-        let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
-        let packageSwiftBuildsDirName = AppConfiguration.packageSwiftBuildsDirectoryName
-        let outputDirName = AppConfiguration.packageSwiftOutputDirectoryName
-
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
         try swiftPackageCommand.update()
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
@@ -51,10 +51,6 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     }
 
     func build() throws {
-        let packageSwiftDirName = AppConfiguration.packageSwiftDirectoryName
-        let packageSwiftBuildsDirName = AppConfiguration.packageSwiftBuildsDirectoryName
-        let outputDirName = AppConfiguration.packageSwiftOutputDirectoryName
-
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }

@@ -15,8 +15,4 @@ extension FileManager {
         changeCurrentDirectoryPath(path)
         return try action()
     }
-
-    func perform(atPath path: String, _ action: () throws -> Void) rethrows {
-        let _: Void = try perform(atPath: path, action)
-    }
 }

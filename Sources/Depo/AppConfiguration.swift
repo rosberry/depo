@@ -5,18 +5,30 @@
 import Foundation
 
 enum AppConfiguration {
-    static let configFileName: String = "Depofile"
-    static let cartFileName: String = "Cartfile"
-    static let podFileName: String = "Podfile"
-    static let packageSwiftFileName: String = "Package.swift"
-    static let podsOutputDirectoryName: String = "Pods/Build/iOS"
+
+    enum Name {
+        static let config: String = "Depofile"
+        static let cartfile: String = "Cartfile"
+        static let podfile: String = "Podfile"
+        static let packageSwift: String = "Package.swift"
+        static let podsDirectory: String = "Pods"
+    }
+
+    enum Path {
+        enum Relative {
+            static let podsOutputDirectory: String = "Pods/Build/iOS"
+            static let packageSwiftDirectory: String = ".build/checkouts"
+            static let packageSwiftBuildsDirectory: String = ".build/builds"
+            static let packageSwiftOutputDirectory: String = "SPM/Build/iOS"
+        }
+
+        enum Absolute {
+            static let buildPodShellScript: String = "/usr/local/bin/build_pod.sh"
+            static let buildSPShellScript: String = "/usr/local/bin/build_swift_package.sh"
+            static let mergePackageShellScript: String = "/usr/local/bin/merge_package.sh"
+            static let moveBuiltPodShellScript: String = "/usr/local/bin/move_built_pod.sh"
+        }
+    }
+
     static let podsInternalTargetsPrefix: String = "Pods"
-    static let podsDirectoryName: String = "Pods"
-    static let packageSwiftDirectoryName: String = ".build/checkouts"
-    static let packageSwiftBuildsDirectoryName: String = ".build/builds"
-    static let packageSwiftOutputDirectoryName: String = "SPM/Build/iOS"
-    static let buildPodShellScriptFilePath: String = "/usr/local/bin/build_pod.sh"
-    static let buildSPShellScriptFilePath: String = "/usr/local/bin/build_swift_package.sh"
-    static let mergePackageShellScriptFilePath: String = "/usr/local/bin/merge_package.sh"
-    static let moveBuiltPodShellFilePath: String = "/usr/local/bin/move_built_pod.sh"
 }

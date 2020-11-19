@@ -13,7 +13,7 @@ struct Depofile: Codable {
     let pods: [Pod]
     let carts: [CarthageItem]
     let swiftPackages: [SwiftPackage]
-    private static let defaultPath: String = "./\(AppConfiguration.configFileName)"
+    private static let defaultPath: String = "./\(AppConfiguration.Name.config)"
 
     init<D: TopLevelDecoder>(path: String = defaultPath, fileManager: FileManager = .default, decoder: D) throws where D.Input == Data {
         guard let data = fileManager.contents(atPath: path) else {

@@ -6,7 +6,7 @@ import Foundation
 
 final class MergePackageScript: ShellCommand {
 
-    private let scriptPath: String = AppConfiguration.mergePackageShellScriptFilePath
+    private let scriptPath: String = AppConfiguration.Path.Absolute.mergePackageShellScript
 
     func callAsFunction(swiftFrameworkName: String, outputPath: String) -> Bool {
         shell(filePath: scriptPath, arguments: [swiftFrameworkName, ".", outputPath])
