@@ -17,9 +17,18 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift? {
-        guard let dependenciesContent = try dependenciesArray(path: path) else {
-            return nil
+    public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
+        try packageSwift(buildSettings: buildSettings, file: try Folder.current.file(at: path))
+    }
+
+    public func packageSwift(buildSettings: BuildSettings, absolutePath: String) throws -> PackageSwift {
+        try packageSwift(buildSettings: buildSettings, file: try File(path: absolutePath))
+    }
+
+    private func packageSwift(buildSettings: BuildSettings, file: File) throws -> PackageSwift {
+        let content = try file.readAsString()
+        guard let dependenciesContent = try dependenciesArray(from: content) else {
+            return PackageSwift(projectBuildSettings: buildSettings, items: [])
         }
         let products = try self.products(from: dependenciesContent)
         let packages = try products.compactMap { productString in
@@ -28,21 +37,20 @@ public final class SwiftPackageShellCommand: ShellCommand {
         return .init(projectBuildSettings: buildSettings, items: packages)
     }
 
-    private func dependenciesArray(path: String) throws -> String? {
-        let content = try Folder.current.file(at: path).readAsString()
-        guard let dependenciesIndex = content.range(of: "dependencies:")?.upperBound else {
+    private func dependenciesArray(from string: String) throws -> String? {
+        guard let dependenciesIndex = string.range(of: "dependencies:")?.upperBound else {
             return nil
         }
-        let lastIndex = content.index(content.startIndex, offsetBy: content.count - 1)
-        let contentFromDependencies = content[dependenciesIndex..<lastIndex]
+        let lastIndex = string.index(string.startIndex, offsetBy: string.count - 1)
+        let contentFromDependencies = string[dependenciesIndex..<lastIndex]
         guard let openSquareBracketIndex = contentFromDependencies.range(of: "[")?.upperBound else {
             return nil
         }
-        let contentFromOpenBracket = content[openSquareBracketIndex..<lastIndex]
+        let contentFromOpenBracket = string[openSquareBracketIndex..<lastIndex]
         guard let closeSquareBracketIndex = contentFromOpenBracket.range(of: "]")?.lowerBound else {
             return nil
         }
-        return content[openSquareBracketIndex..<closeSquareBracketIndex].filter { !$0.isNewline }
+        return string[openSquareBracketIndex..<closeSquareBracketIndex].filter { !$0.isNewline }
     }
 
     private func products(from dependenciesArrayString: String) throws -> [String] {
@@ -85,7 +93,6 @@ public final class SwiftPackageShellCommand: ShellCommand {
         let range = NSRange(location: 0, length: string.utf16.count)
         let regexp = try NSRegularExpression(pattern: pattern)
         let matches = regexp.matches(in: string, range: range)
-        print(matches.count)
         return matches.compactMap { result -> String? in
             guard let matchingRange = Range(result.range, in: string) else {
                 return nil

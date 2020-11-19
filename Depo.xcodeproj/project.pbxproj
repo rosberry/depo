@@ -32,6 +32,7 @@
 		36502ED425662EE800E58ECB /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = 36502EB525662EDC00E58ECB /* TestCartfile */; };
 		36502EF32566536900E58ECB /* PodfileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502EF12566536900E58ECB /* PodfileNoDeps */; };
 		36502EF42566536900E58ECB /* PodfileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502EF22566536900E58ECB /* PodfileWithDeps */; };
+		EC48D75A480AE6023AEC0BC3 /* URL+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC49F355D9441B8383F59758 /* URL+Helper.swift */; };
 		OBJ_175 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_111 /* BashCompletionsGenerator.swift */; };
 		OBJ_176 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_112 /* CompletionsGenerator.swift */; };
 		OBJ_177 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_113 /* FishCompletionsGenerator.swift */; };
@@ -169,147 +170,147 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::Depo";
+			remoteGlobalIDString = Depo::Depo;
 			remoteInfo = Depo;
 		};
 		36502E2725662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
 			remoteInfo = ArgumentParser;
 		};
 		36502E2825662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		36502E2925662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502E2A25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502E2B25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502E2C25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502E2D25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502E2E25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502E2F25662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502E3025662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502E3125662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502E3225662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
 			remoteInfo = ArgumentParser;
 		};
 		36502E3325662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		36502E3425662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502E3525662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502E3625662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502E3725662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502E3825662E1600E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502E4025662E1900E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParserTest";
+			remoteGlobalIDString = Depo::CartfileParserTest;
 			remoteInfo = CartfileParserTest;
 		};
 		36502E4125662E1900E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoTest";
+			remoteGlobalIDString = Depo::DepoTest;
 			remoteInfo = DepoTest;
 		};
 /* End PBXContainerItemProxy section */
@@ -329,6 +330,7 @@
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC49F355D9441B8383F59758 /* URL+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Helper.swift"; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* CarthageDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
@@ -564,6 +566,14 @@
 				36502EB525662EDC00E58ECB /* TestCartfile */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		EC4BE77163F08937A749F8AD /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				EC49F355D9441B8383F59758 /* URL+Helper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		OBJ_108 /* swift-argument-parser 0.3.1 */ = {
@@ -858,6 +868,7 @@
 				OBJ_71 /* PackageManagerFileTest.swift */,
 				OBJ_72 /* PackageSwiftFileTest.swift */,
 				OBJ_73 /* PodfileTest.swift */,
+				EC4BE77163F08937A749F8AD /* Helper */,
 			);
 			name = DepoTest;
 			path = Tests/DepoTest;
@@ -1409,6 +1420,7 @@
 				OBJ_336 /* PackageManagerFileTest.swift in Sources */,
 				OBJ_337 /* PackageSwiftFileTest.swift in Sources */,
 				OBJ_338 /* PodfileTest.swift in Sources */,
+				EC48D75A480AE6023AEC0BC3 /* URL+Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

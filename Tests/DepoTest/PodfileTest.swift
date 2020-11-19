@@ -36,8 +36,6 @@ final class PodfileTest: XCTestCase, PackageManagerFileTest {
 
     private func parsedPodfile(path: String) throws -> PodFile {
         let podfileNoDepsURL = try fileURL(name: path, ext: "")
-        let protocolPart = podfileNoDepsURL.scheme.map { "\($0)://" } ?? ""
-        let processedURL = podfileNoDepsURL.absoluteString.replacingOccurrences(of: protocolPart, with: "")
-        return try PodShellCommand().podfile(buildSettings: projectSettings, path: processedURL)
+        return try PodShellCommand().podfile(buildSettings: projectSettings, path: podfileNoDepsURL.absoluteStringWithoutScheme)
     }
 }
