@@ -105,8 +105,8 @@
 		OBJ_270 /* CartfileParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::CartfileParser::Product" /* CartfileParser.framework */; };
 		OBJ_284 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* AppConfiguration.swift */; };
 		OBJ_285 /* Collection+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* Collection+KeyPath.swift */; };
-		OBJ_286 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* DataDecoder.swift */; };
-		OBJ_287 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Decoder.swift */; };
+		OBJ_286 /* DataCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* DataCoder.swift */; };
+		OBJ_287 /* Coders.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Coders.swift */; };
 		OBJ_288 /* HasDefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* HasDefaultValue.swift */; };
 		OBJ_289 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* BuildSettings.swift */; };
 		OBJ_290 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* CarthageItem.swift */; };
@@ -406,8 +406,8 @@
 		OBJ_35 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_37 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		OBJ_39 /* Collection+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+KeyPath.swift"; sourceTree = "<group>"; };
-		OBJ_40 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
-		OBJ_41 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		OBJ_40 /* DataCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoder.swift; sourceTree = "<group>"; };
+		OBJ_41 /* Coders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coders.swift; sourceTree = "<group>"; };
 		OBJ_42 /* HasDefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValue.swift; sourceTree = "<group>"; };
 		OBJ_44 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		OBJ_45 /* CarthageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
@@ -772,8 +772,8 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_39 /* Collection+KeyPath.swift */,
-				OBJ_40 /* DataDecoder.swift */,
-				OBJ_41 /* Decoder.swift */,
+				OBJ_40 /* DataCoder.swift */,
+				OBJ_41 /* Coders.swift */,
 				OBJ_42 /* HasDefaultValue.swift */,
 			);
 			path = Helpers;
@@ -1378,8 +1378,8 @@
 			files = (
 				OBJ_284 /* AppConfiguration.swift in Sources */,
 				OBJ_285 /* Collection+KeyPath.swift in Sources */,
-				OBJ_286 /* DataDecoder.swift in Sources */,
-				OBJ_287 /* Decoder.swift in Sources */,
+				OBJ_286 /* DataCoder.swift in Sources */,
+				OBJ_287 /* Coders.swift in Sources */,
 				OBJ_288 /* HasDefaultValue.swift in Sources */,
 				OBJ_289 /* BuildSettings.swift in Sources */,
 				OBJ_290 /* CarthageItem.swift in Sources */,

@@ -7,8 +7,10 @@ import Foundation
 public struct PodFile: CustomStringConvertible {
 
     public let description: String
+    public let pods: [Pod]
 
     public init(buildSettings: BuildSettings, pods: [Pod]) {
+        self.pods = pods
         self.description = Self.makeDescription(platform: (buildSettings.platform ?? Platform.defaultValue).rawValue,
                                                 platformVersion: buildSettings.deploymentTarget ?? "",
                                                 targetName: buildSettings.targetName,

@@ -9,7 +9,7 @@ import DepoCore
 typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
 
 protocol HasDepofileExtension {
-    var depofileExtension: DataDecoder.Kind {
+    var depofileExtension: DataCoder.Kind {
         get
     }
 }

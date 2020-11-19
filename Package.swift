@@ -29,6 +29,7 @@ let package = Package(
                         dependencies: ["DepoCore", "Depo"],
                         resources: [.copy("Resources")]),
             .testTarget(name: "CartfileParserTest",
-                        dependencies: ["CartfileParser"])
+                        dependencies: ["CartfileParser"],
+                        resources: [.copy("Resources")])
         ]
 )

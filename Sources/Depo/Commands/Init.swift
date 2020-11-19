@@ -11,7 +11,7 @@ final class Init: ParsableCommand {
 
     struct Options: ParsableArguments {
 
-        @Argument()
+        @Argument(help: "use relative paths")
         var filePaths: [String] = []
     }
 
@@ -38,8 +38,8 @@ final class Init: ParsableCommand {
 
     fileprivate struct Files {
         let cartfile: Cartfile?
-        let podfilePath: PodFile?
-        let packageSwiftFilePath: PackageSwift?
+        let podfile: PodFile?
+        let packageSwiftFile: PackageSwift?
     }
 
     @OptionGroup()
@@ -53,9 +53,10 @@ final class Init: ParsableCommand {
     func run() throws {
         switch try action(for: options) {
         case .generateEmpty:
-            generateEmptyDepofile()
+            try generateEmptyDepofile()
         case let .generateBy(files):
-            try generateDepofile(by: files)
+            let settings = try BuildSettings()
+            try generateDepofile(by: files, buildSettings: settings)
         }
     }
 
@@ -66,20 +67,16 @@ final class Init: ParsableCommand {
         return .generateBy(files)
     }
 
-    private func generateEmptyDepofile() {
-        print(#function)
+    private func generateEmptyDepofile() throws {
+        try create(depofile: .init(pods: [], carts: [], swiftPackages: []))
     }
 
-    private func generateDepofile(by files: Action.Paths) throws {
-        // let buildSettings = try BuildSettings()
-        // let podfile = try pod.podfile(buildSettings: .init(), path: files.podfilePath!)
-        /*guard let packageSwift = try swiftPackage.packageSwift(buildSettings: buildSettings, path: files.packageSwiftFilePath!) else {
-            return
-        }*/
-        guard let cartfile = try carthage.cartfile(path: files.cartfilePath!) else {
-            return
-        }
-        print(cartfile)
+    private func generateDepofile(by paths: Action.Paths, buildSettings: BuildSettings) throws {
+        let files = try self.files(from: paths, buildSettings: buildSettings)
+        let depofile = Depofile(pods: files.podfile?.pods ?? [],
+                                carts: files.cartfile?.items ?? [],
+                                swiftPackages: files.packageSwiftFile?.packages ?? [])
+        try create(depofile: depofile)
     }
 
     private func paths(from paths: [String]) -> Action.Paths? {
@@ -96,8 +93,15 @@ final class Init: ParsableCommand {
         return Action.Paths(fields: paths)
     }
 
-    private func files(from paths: Action.Paths) -> Files {
-        .init(cartfile: nil, podfilePath: nil, packageSwiftFilePath: nil)
+    private func files(from paths: Action.Paths, buildSettings: BuildSettings) throws -> Files {
+        let cartfile = try paths.cartfilePath.map { try carthage.cartfile(path: $0) }
+        let podfile = try paths.podfilePath.map { try pod.podfile(buildSettings: buildSettings, path: $0) }
+        let packageSwift = try paths.packageSwiftFilePath.map { try swiftPackage.packageSwift(buildSettings: buildSettings, path: $0) }
+        return .init(cartfile: cartfile, podfile: podfile, packageSwiftFile: packageSwift)
+    }
+
+    private func create(depofile: Depofile, ext: DataCoder.Kind = .defaultValue) throws {
+        try Folder.current.createFile(at: Depofile.defaultPath, contents: try ext.coder.encode(depofile))
     }
 }
 

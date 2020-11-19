@@ -6,14 +6,15 @@ import Foundation
 import Yams
 import ArgumentParser
 
-public struct DataDecoder: TopLevelDecoder {
+public struct DataCoder: TopLevelDecoder, TopLevelEncoder {
     public typealias Input = Data
+    public typealias Output = Data
 
     public enum Kind: String, Codable, RawRepresentable, CaseIterable, HasDefaultValue, ExpressibleByArgument {
         case json
         case yaml
 
-        public var decoder: DataDecoder {
+        public var coder: DataCoder {
             .init(kind: self)
         }
 
@@ -32,6 +33,19 @@ public struct DataDecoder: TopLevelDecoder {
             return try JSONDecoder().decode(type, from: input)
         case .yaml:
             return try YAMLDecoder().decode(type, from: input)
+        }
+    }
+
+    public func encode<T: Encodable>(_ object: T) throws -> Output {
+        switch kind {
+        case .json:
+            return try JSONEncoder().encode(object)
+        case .yaml:
+            let yamlString = try YAMLEncoder().encode(object)
+            guard let yamlData = yamlString.data(using: .utf8) else {
+                throw EncodingError.invalidValue(yamlString, .init(codingPath: [], debugDescription: "unable to map string to data"))
+            }
+            return yamlData
         }
     }
 }

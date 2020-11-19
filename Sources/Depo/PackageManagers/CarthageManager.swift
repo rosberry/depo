@@ -10,8 +10,8 @@ final class CarthageManager: PackageManager {
 
     struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataDecoder.Kind.allFlagsHelp)")
-        var depofileExtension: DataDecoder.Kind = .defaultValue
+                help: "\(DataCoder.Kind.allFlagsHelp)")
+        var depofileExtension: DataCoder.Kind = .defaultValue
 
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
                 help: "\(Platform.allFlagsHelp)")

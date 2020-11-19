@@ -62,7 +62,7 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
         let buildSettings = try BuildSettings(shell: shell)
-        let content = PackageSwift(projectBuildSettings: buildSettings, items: packages).description.data(using: .utf8)
+        let content = PackageSwift(projectBuildSettings: buildSettings, packages: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
         }

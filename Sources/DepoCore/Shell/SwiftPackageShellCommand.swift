@@ -28,13 +28,13 @@ public final class SwiftPackageShellCommand: ShellCommand {
     private func packageSwift(buildSettings: BuildSettings, file: File) throws -> PackageSwift {
         let content = try file.readAsString()
         guard let dependenciesContent = try dependenciesArray(from: content) else {
-            return PackageSwift(projectBuildSettings: buildSettings, items: [])
+            return PackageSwift(projectBuildSettings: buildSettings, packages: [])
         }
         let products = try self.products(from: dependenciesContent)
         let packages = try products.compactMap { productString in
             try swiftPackage(from: productString)
         }
-        return .init(projectBuildSettings: buildSettings, items: packages)
+        return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
     private func dependenciesArray(from string: String) throws -> String? {

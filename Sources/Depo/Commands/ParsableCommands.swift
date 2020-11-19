@@ -16,7 +16,7 @@ final class Update<Command: HasUpdateCommand>: ParsableCommand {
     var options: Command.Options
 
     func run() throws {
-        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        let depofile = try Depofile(decoder: options.depofileExtension.coder)
         try Command(depofile: depofile, options: options).update()
     }
 }
@@ -31,7 +31,7 @@ final class Install<Command: HasInstallCommand>: ParsableCommand {
     var options: Command.Options
 
     func run() throws {
-        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        let depofile = try Depofile(decoder: options.depofileExtension.coder)
         try Command(depofile: depofile, options: options).install()
     }
 }
@@ -46,7 +46,7 @@ final class Build<Command: HasBuildCommand>: ParsableCommand {
     var options: Command.Options
 
     func run() throws {
-        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
+        let depofile = try Depofile(decoder: options.depofileExtension.coder)
         try Command(depofile: depofile, options: options).build()
     }
 }

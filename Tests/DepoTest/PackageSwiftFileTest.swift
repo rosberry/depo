@@ -9,12 +9,12 @@ import DepoCore
 final class PackageSwiftFileTest: XCTestCase, PackageManagerFileTest {
 
     func testWithNoDeps() {
-        let packageSwift = PackageSwift(projectBuildSettings: projectSettings, items: [])
+        let packageSwift = PackageSwift(projectBuildSettings: projectSettings, packages: [])
         expectNoThrow(try compare(model: packageSwift, andLocalFile: "PackageSwiftNoDeps"), #file, #line)
     }
 
     func testWithDeps() {
-        let packageSwift = PackageSwift(projectBuildSettings: projectSettings, items: swiftPackages)
+        let packageSwift = PackageSwift(projectBuildSettings: projectSettings, packages: swiftPackages)
         expectNoThrow(try compare(model: packageSwift, andLocalFile: "PackageSwiftWithDeps"), #file, #line)
     }
 
@@ -22,7 +22,7 @@ final class PackageSwiftFileTest: XCTestCase, PackageManagerFileTest {
         expectNoThrow(try {
             let url = try fileURL(name: "PackageSwiftNoDeps", ext: "txt")
             let parsedPackageSwift = try self.parsedPackageSwift(path: url.absoluteStringWithoutScheme)
-            let packageSwift = PackageSwift(projectBuildSettings: projectSettings, items: [])
+            let packageSwift = PackageSwift(projectBuildSettings: projectSettings, packages: [])
             XCTAssertEqual(packageSwift.description, parsedPackageSwift.description)
         }(), #file, #line)
     }
@@ -31,7 +31,7 @@ final class PackageSwiftFileTest: XCTestCase, PackageManagerFileTest {
         expectNoThrow(try {
             let url = try fileURL(name: "PackageSwiftWithDeps", ext: "txt")
             let parsedPackageSwift = try self.parsedPackageSwift(path: url.absoluteStringWithoutScheme)
-            let packageSwift = PackageSwift(projectBuildSettings: projectSettings, items: swiftPackages)
+            let packageSwift = PackageSwift(projectBuildSettings: projectSettings, packages: swiftPackages)
             XCTAssertEqual(packageSwift.description, parsedPackageSwift.description)
         }(), #file, #line)
     }
