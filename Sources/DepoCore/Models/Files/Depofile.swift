@@ -12,8 +12,8 @@ public struct Depofile {
 
     private enum CodingKeys: String, CodingKey {
         case pods
-        case carts
         case swiftPackages
+        case carts
     }
 
     public let pods: [Pod]

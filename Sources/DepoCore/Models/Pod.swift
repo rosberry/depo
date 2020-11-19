@@ -18,7 +18,7 @@ public struct Pod {
         case unknown
     }
 
-    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Equatable {
+    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Hashable {
         case equal
         case greater
         case greaterOrEqual
@@ -78,4 +78,4 @@ extension Pod: Codable {
     }
 }
 
-extension Pod: Equatable {}
+extension Pod: Hashable {}

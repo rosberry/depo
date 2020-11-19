@@ -77,16 +77,35 @@ extension PackageManagerFileTest {
     }
 
     var carts: [CarthageItem] {
-        CarthageItem.Kind.allCases.reduce([CarthageItem]()) { result, kind in
-            let ops: [CarthageItem.Operator?] = [nil] + CarthageItem.Operator.allCases
-            return result + ops.enumerated().reduce([CarthageItem]()) { result, context in
-                let (index, op) = context
-                let version = op.map { op in
-                    VersionConstraint<CarthageItem.Operator>(operation: op, value: "test-\(kind)-\(index + 1)-version")
-                }
-                return result + [CarthageItem(kind: kind, identifier: "test-\(kind)-\(index + 1)-identifier", versionConstraint: version)]
-            }
-        }
+        [CarthageItem(kind: .binary, identifier: "file://test-binary-1-identifier", versionConstraint: nil),
+         CarthageItem(kind: .binary, identifier: "file://test-binary-2-identifier", versionConstraint: .init(operation: .equal, value: "0.0.0")),
+         CarthageItem(kind: .binary,
+                      identifier: "file://test-binary-3-identifier",
+                      versionConstraint: .init(operation: .greaterOrEqual, value: "0.0.1")),
+         CarthageItem(kind: .binary,
+                      identifier: "file://test-binary-4-identifier",
+                      versionConstraint: .init(operation: .compatible, value: "0.1.0")),
+         CarthageItem(kind: .binary, identifier: "file://test-binary-5-identifier", versionConstraint: nil),
+         CarthageItem(kind: .github, identifier: "test-github-1-identifier", versionConstraint: nil),
+         CarthageItem(kind: .github, identifier: "test-github-2-identifier", versionConstraint: .init(operation: .equal, value: "0.1.1")),
+         CarthageItem(kind: .github,
+                      identifier: "test-github-3-identifier",
+                      versionConstraint: .init(operation: .greaterOrEqual, value: "1.0.0")),
+         CarthageItem(kind: .github,
+                      identifier: "test-github-4-identifier",
+                      versionConstraint: .init(operation: .compatible, value: "1.0.1")),
+         CarthageItem(kind: .github,
+                      identifier: "test-github-5-identifier",
+                      versionConstraint: .init(operation: .gitReference, value: "test-github-5-git-reference")),
+         CarthageItem(kind: .git, identifier: "test-git-1-identifier", versionConstraint: nil),
+         CarthageItem(kind: .git, identifier: "test-git-2-identifier", versionConstraint: .init(operation: .equal, value: "1.1.0")),
+         CarthageItem(kind: .git,
+                      identifier: "test-git-3-identifier",
+                      versionConstraint: .init(operation: .greaterOrEqual, value: "1.1.1")),
+         CarthageItem(kind: .git, identifier: "test-git-4-identifier", versionConstraint: .init(operation: .compatible, value: "2.2.2")),
+         CarthageItem(kind: .git,
+                      identifier: "test-git-5-identifier",
+                      versionConstraint: .init(operation: .gitReference, value: "test-git-5-git-reference"))]
     }
 
     func compare<FileModel: CustomStringConvertible>(model: FileModel,
@@ -101,12 +120,29 @@ extension PackageManagerFileTest {
     }
 
     func fileContent(name: String, ext: String, bundle: Bundle = .init(for: Self.self)) throws -> String {
-        guard let url = bundle.url(forResource: name, withExtension: ext),
-              let data = try? Data(contentsOf: url),
+        let url = try fileURL(name: name, ext: ext, bundle: bundle)
+        guard let data = try? Data(contentsOf: url),
               let string = String(data: data, encoding: .utf8) else {
             throw ComparisonError.badFile(name: "\(name).\(ext)")
         }
         return string
+    }
+
+    func fileURL(name: String, ext: String, bundle: Bundle = .init(for: Self.self)) throws -> URL {
+        guard let url = bundle.url(forResource: name, withExtension: ext) else {
+            throw ComparisonError.badFile(name: "\(name).\(ext)")
+        }
+        return url
+    }
+
+    func expectNoThrow<T>(_ test: @autoclosure () throws -> T, _ file: StaticString, _ line: UInt) -> T? {
+        do {
+            return try test()
+        }
+        catch {
+            XCTFail(error.localizedDescription, file: file, line: line)
+            return nil
+        }
     }
 
     func expectNoThrow(_ test: @autoclosure () throws -> Void, _ file: StaticString, _ line: UInt) {

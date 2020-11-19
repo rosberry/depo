@@ -31,7 +31,7 @@ final class DepoFileTest: XCTestCase, PackageManagerFileTest {
 
     func testNotEmptyDepofile() {
         expectNoThrow(try {
-            let depofileWithDeps = try fileContent(name: "DepofileWithDeps", ext: "")
+            let depofileWithDeps = try fileContent(name: "DepofileWithDeps", ext: "").trimmingCharacters(in: .whitespacesAndNewlines)
             guard let depofileData = depofileWithDeps.data(using: .utf8) else {
                 throw Error.badData
             }
@@ -39,7 +39,7 @@ final class DepoFileTest: XCTestCase, PackageManagerFileTest {
             guard depofile.swiftPackages == swiftPackages,
                   depofile.carts == carts,
                   depofile.pods == pods else {
-                let depoFileString = try YAMLEncoder().encode(depofile)
+                let depoFileString = try YAMLEncoder().encode(depofile).trimmingCharacters(in: .whitespacesAndNewlines)
                 throw ComparisonError.notEqual(model: depoFileString, file: depofileWithDeps)
             }
         }(), #file, #line)

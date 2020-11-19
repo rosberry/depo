@@ -1,15 +1,15 @@
-binary "test-binary-1-identifier"
-binary "test-binary-2-identifier" == test-binary-2-version
-binary "test-binary-3-identifier" >= test-binary-3-version
-binary "test-binary-4-identifier" ~> test-binary-4-version
-binary "test-binary-5-identifier" "test-binary-5-version"
+binary "file://test-binary-1-identifier"
+binary "file://test-binary-2-identifier" == 0.0.0
+binary "file://test-binary-3-identifier" >= 0.0.1
+binary "file://test-binary-4-identifier" ~> 0.1.0
+binary "file://test-binary-5-identifier"
 github "test-github-1-identifier"
-github "test-github-2-identifier" == test-github-2-version
-github "test-github-3-identifier" >= test-github-3-version
-github "test-github-4-identifier" ~> test-github-4-version
-github "test-github-5-identifier" "test-github-5-version"
+github "test-github-2-identifier" == 0.1.1
+github "test-github-3-identifier" >= 1.0.0
+github "test-github-4-identifier" ~> 1.0.1
+github "test-github-5-identifier" "test-github-5-git-reference"
 git "test-git-1-identifier"
-git "test-git-2-identifier" == test-git-2-version
-git "test-git-3-identifier" >= test-git-3-version
-git "test-git-4-identifier" ~> test-git-4-version
-git "test-git-5-identifier" "test-git-5-version"
+git "test-git-2-identifier" == 1.1.0
+git "test-git-3-identifier" >= 1.1.1
+git "test-git-4-identifier" ~> 2.2.2
+git "test-git-5-identifier" "test-git-5-git-reference"

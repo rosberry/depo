@@ -28,3 +28,4 @@ public struct VersionConstraint<Operator: Codable & HasDefaultValue>: Codable {
 }
 
 extension VersionConstraint: Equatable where Operator: Equatable {}
+extension VersionConstraint: Hashable where Operator: Hashable {}

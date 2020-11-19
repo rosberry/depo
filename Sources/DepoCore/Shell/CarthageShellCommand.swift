@@ -52,9 +52,12 @@ public final class CarthageShellCommand: ShellCommand {
         }
     }
 
-    public func cartfile(path: String) throws -> Cartfile? {
-        let file = try Folder.current.file(at: path)
-        return cartfile(from: try CartfileParser.Cartfile.from(file: file.url).get())
+    public func cartfile(url: URL) throws -> Cartfile {
+        cartfile(from: try CartfileParser.Cartfile.from(file: url).get())
+    }
+
+    public func cartfile(path: String) throws -> Cartfile {
+        try cartfile(url: try Folder.current.file(at: path).url)
     }
 
     private func build(command: String, arguments: [BuildArgument]) throws {
@@ -98,7 +101,7 @@ public final class CarthageShellCommand: ShellCommand {
         case let .exactly(semanticVersion):
             return .init(operation: .equal, value: "\(semanticVersion)")
         case let .gitReference(value):
-            return .init(operation: .branchOrTagOrCommit, value: value)
+            return .init(operation: .gitReference, value: value)
         }
     }
 }

@@ -13,17 +13,17 @@ public struct CarthageItem: Codable {
         case versionConstraint = "version"
     }
 
-    public enum Kind: String, Codable, CaseIterable {
+    public enum Kind: String, Codable, CaseIterable, Hashable {
         case binary
         case github
         case git
     }
 
-    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Equatable {
+    public enum Operator: String, Codable, HasDefaultValue, CaseIterable, Hashable {
         case equal
         case greaterOrEqual
         case compatible
-        case branchOrTagOrCommit
+        case gitReference
 
         var symbol: String {
             switch self {
@@ -33,7 +33,7 @@ public struct CarthageItem: Codable {
                 return ">="
             case .compatible:
                 return "~>"
-            case .branchOrTagOrCommit:
+            case .gitReference:
                 return ""
             }
         }
@@ -51,4 +51,22 @@ public struct CarthageItem: Codable {
     }
 }
 
-extension CarthageItem: Equatable {}
+extension CarthageItem: Hashable {}
+
+extension CarthageItem: CustomStringConvertible {
+    public var description: String {
+        "\(kind.rawValue) \"\(identifier)\"\(versionDescription)"
+    }
+
+    private var versionDescription: String {
+        guard let versionConstraint = versionConstraint else {
+            return ""
+        }
+        switch versionConstraint.operation {
+        case .gitReference:
+            return " \"\(versionConstraint.value)\""
+        default:
+            return " \(versionConstraint.operation.symbol) \(versionConstraint.value)"
+        }
+    }
+}
