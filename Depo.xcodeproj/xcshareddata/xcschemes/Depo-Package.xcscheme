@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::CartfileParser"
-               BuildableName = "CartfileParser.framework"
-               BlueprintName = "CartfileParser"
+               BlueprintIdentifier = "Depo::DepoCore"
+               BuildableName = "DepoCore.framework"
+               BlueprintName = "DepoCore"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::DepoCore"
-               BuildableName = "DepoCore.framework"
-               BlueprintName = "DepoCore"
+               BlueprintIdentifier = "Depo::CartfileParser"
+               BuildableName = "CartfileParser.framework"
+               BlueprintName = "CartfileParser"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -63,6 +63,16 @@
                BlueprintIdentifier = "Depo::DepoTest"
                BuildableName = "DepoTest.xctest"
                BlueprintName = "DepoTest"
+               ReferencedContainer = "container:Depo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Depo::CartfileParserTest"
+               BuildableName = "CartfileParserTest.xctest"
+               BlueprintName = "CartfileParserTest"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </TestableReference>

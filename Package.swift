@@ -27,6 +27,8 @@ let package = Package(
             .target(name: "CartfileParser"),
             .testTarget(name: "DepoTest",
                         dependencies: ["DepoCore", "Depo"],
-                        resources: [.copy("Resources")])
+                        resources: [.copy("Resources")]),
+            .testTarget(name: "CartfileParserTest",
+                        dependencies: ["CartfileParser"])
         ]
 )
