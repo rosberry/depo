@@ -49,8 +49,7 @@ final class PodManager: PackageManager {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        #warning("hardcoded platformVersion")
-        try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
+        try createPodfile(at: podFilePath, with: pods)
         try podShellCommand.install()
         try build(pods: pods, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
@@ -60,8 +59,7 @@ final class PodManager: PackageManager {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
-        #warning("hardcoded platformVersion")
-        try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
+        try createPodfile(at: podFilePath, with: pods)
         try podShellCommand.update()
         try build(pods: pods, at: podsProjectPath)
         #warning("proceeding all pods seems redundant")
@@ -82,7 +80,7 @@ final class PodManager: PackageManager {
         try podShellCommand.initialize()
     }
 
-    private func createPodfile(at podFilePath: String, with pods: [Pod], platformVersion: Double) throws {
+    private func createPodfile(at podFilePath: String, with pods: [Pod]) throws {
         let podfile = PodFile(buildSettings: try .init(), pods: pods)
         let content = podfile.description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {

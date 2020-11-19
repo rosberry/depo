@@ -5,6 +5,7 @@
 import Foundation
 
 #warning("public init(settings:) should be replaced by Codable")
+
 public struct BuildSettings {
 
     public enum Error: LocalizedError {
@@ -22,6 +23,7 @@ public struct BuildSettings {
     public let codesigningFolderPath: URL?
     public let platform: Platform?
     public let deploymentTarget: String?
+    public let developmentTeam: String
 
     public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
         let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
@@ -38,13 +40,15 @@ public struct BuildSettings {
     public init(settings: [String: String]) throws {
         guard let productName = settings["PRODUCT_NAME"],
               let swiftVersion = settings["SWIFT_VERSION"],
-              let targetName = settings["TARGETNAME"] else {
+              let targetName = settings["TARGETNAME"],
+              let developmentTeam = settings["DEVELOPMENT_TEAM"] else {
             throw Error.badBuildSettings(settings)
         }
         self.productName = productName
         self.swiftVersion = swiftVersion
         self.targetName = targetName
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
+        self.developmentTeam = developmentTeam
         if let platform = Self.platform(from: settings) {
             self.platform = platform
             self.deploymentTarget = settings[Self.deploymentTargetKey(platform: platform)]

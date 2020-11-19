@@ -45,31 +45,33 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     }
 
     func update() throws {
-        try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
+        let buildSettings = try BuildSettings()
+        try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update()
-        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
+        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: buildSettings)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
     func build() throws {
-        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName)
+        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: .init())
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
-    private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
-        let buildSettings = try BuildSettings(shell: shell)
+    private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
         let content = PackageSwift(projectBuildSettings: buildSettings, packages: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
         }
     }
 
-    private func build(packages: [SwiftPackage], at packagesSourcesPath: String, to buildPath: String) throws {
+    private func build(packages: [SwiftPackage],
+                       at packagesSourcesPath: String,
+                       to buildPath: String,
+                       buildSettings: BuildSettings) throws {
         let projectPath = fmg.currentDirectoryPath
-        #warning("hardcoded teamID")
         let failedPackages = packages.filter { package in
             fmg.perform(atPath: "./\(packagesSourcesPath)/\(package.name)") {
-                !buildSwiftPackageScript(teamID: "GPVA8JVMU3", buildDir: "\(projectPath)/\(buildPath)")
+                !buildSwiftPackageScript(teamID: buildSettings.developmentTeam, buildDir: "\(projectPath)/\(buildPath)")
             }
         }
         if !failedPackages.isEmpty {
