@@ -24,9 +24,9 @@ final class PodManager: PackageManager {
     static let configuration: CommandConfiguration = .init(commandName: "pod-install")
 
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
-    private let podFileName: String = AppConfiguration.podFileName
-    private let podsDirectoryName: String = AppConfiguration.podsDirectoryName
-    private let podsOutputDirectoryName: String = AppConfiguration.podsOutputDirectoryName
+    private let podFileName: String = AppConfiguration.Name.podfile
+    private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
+    private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
 
     private let pods: [Pod]
 
@@ -48,12 +48,12 @@ final class PodManager: PackageManager {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
-        // try podInitIfNeeded(podFilePath: podFilePath)
+        try podInitIfNeeded(podFilePath: podFilePath)
         #warning("hardcoded platformVersion")
         try createPodfile(at: podFilePath, with: pods, platformVersion: 9.0)
-        /*try podShellCommand.install()
+        try podShellCommand.install()
         try build(pods: pods, at: podsProjectPath)
-        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)*/
+        try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
     func update() throws {

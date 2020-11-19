@@ -19,7 +19,7 @@ public struct Depofile {
     public let pods: [Pod]
     public let carts: [CarthageItem]
     public let swiftPackages: [SwiftPackage]
-    public static let defaultPath: String = "./\(AppConfiguration.configFileName)"
+    public static let defaultPath: String = "./\(AppConfiguration.Name.config)"
 
     public init(pods: [Pod], carts: [CarthageItem], swiftPackages: [SwiftPackage]) {
         self.pods = pods

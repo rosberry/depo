@@ -29,7 +29,7 @@ final class CarthageManager: PackageManager {
 
     static var configuration: CommandConfiguration = .init(commandName: "carthage-install")
 
-    private let cartFileName: String = AppConfiguration.cartFileName
+    private let cartfileName: String = AppConfiguration.Name.cartfile
 
     private let carthageItems: [CarthageItem]
     private let platform: Platform
@@ -46,12 +46,12 @@ final class CarthageManager: PackageManager {
     }
 
     func update() throws {
-        try createCartfile(at: "./\(cartFileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.update(arguments: [.platform(platform)])
     }
 
     func install() throws {
-        try createCartfile(at: "./\(cartFileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
     }
 

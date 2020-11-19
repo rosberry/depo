@@ -26,9 +26,9 @@ final class Init: ParsableCommand {
             var packageSwiftFilePath: String?
 
             static let fileNames: [FieldContext] = {
-                [(\.cartfilePath, AppConfiguration.cartFileName),
-                 (\.podfilePath, AppConfiguration.podFileName),
-                 (\.packageSwiftFilePath, AppConfiguration.packageSwiftFileName)]
+                [(\.cartfilePath, AppConfiguration.Name.cartfile),
+                 (\.podfilePath, AppConfiguration.Name.podfile),
+                 (\.packageSwiftFilePath, AppConfiguration.Name.packageSwift)]
             }()
         }
 
