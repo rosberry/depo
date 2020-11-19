@@ -23,15 +23,15 @@
 
 /* Begin PBXBuildFile section */
 		36502E9025662E5B00E58ECB /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E4A25662E2B00E58ECB /* PackageSwiftWithDeps.txt */; };
-		36502E9125662E5B00E58ECB /* PodfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E4B25662E2B00E58ECB /* PodfileNoDeps.txt */; };
 		36502E9225662E5B00E58ECB /* CartfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E4E25662E2B00E58ECB /* CartfileWithDeps.txt */; };
 		36502E9325662E5B00E58ECB /* CartfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E5025662E2B00E58ECB /* CartfileNoDeps.txt */; };
 		36502E9425662E5B00E58ECB /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E5125662E2B00E58ECB /* PackageSwiftNoDeps.txt */; };
-		36502E9525662E5B00E58ECB /* PodfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502E5225662E2B00E58ECB /* PodfileWithDeps.txt */; };
 		36502E9625662E5B00E58ECB /* DepofileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502E5325662E2B00E58ECB /* DepofileWithDeps */; };
 		36502E9725662E5B00E58ECB /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502E5425662E2B00E58ECB /* DepofileNoDeps */; };
 		36502EB625662EDC00E58ECB /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = 36502EB525662EDC00E58ECB /* TestCartfile */; };
 		36502ED425662EE800E58ECB /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = 36502EB525662EDC00E58ECB /* TestCartfile */; };
+		36502EF32566536900E58ECB /* PodfileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502EF12566536900E58ECB /* PodfileNoDeps */; };
+		36502EF42566536900E58ECB /* PodfileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502EF22566536900E58ECB /* PodfileWithDeps */; };
 		OBJ_175 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_111 /* BashCompletionsGenerator.swift */; };
 		OBJ_176 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_112 /* CompletionsGenerator.swift */; };
 		OBJ_177 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_113 /* FishCompletionsGenerator.swift */; };
@@ -316,14 +316,14 @@
 
 /* Begin PBXFileReference section */
 		36502E4A25662E2B00E58ECB /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
-		36502E4B25662E2B00E58ECB /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
 		36502E4E25662E2B00E58ECB /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
 		36502E5025662E2B00E58ECB /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
 		36502E5125662E2B00E58ECB /* PackageSwiftNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftNoDeps.txt; sourceTree = "<group>"; };
-		36502E5225662E2B00E58ECB /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
 		36502E5325662E2B00E58ECB /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
 		36502E5425662E2B00E58ECB /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
 		36502EB525662EDC00E58ECB /* TestCartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCartfile; sourceTree = "<group>"; };
+		36502EF12566536900E58ECB /* PodfileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps; sourceTree = "<group>"; };
+		36502EF22566536900E58ECB /* PodfileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps; sourceTree = "<group>"; };
 		"Depo::CartfileParser::Product" /* CartfileParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CartfileParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::CartfileParserTest::Product" /* CartfileParserTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = CartfileParserTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,12 +546,12 @@
 		36502E4925662E2B00E58ECB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				36502EF12566536900E58ECB /* PodfileNoDeps */,
+				36502EF22566536900E58ECB /* PodfileWithDeps */,
 				36502E4A25662E2B00E58ECB /* PackageSwiftWithDeps.txt */,
-				36502E4B25662E2B00E58ECB /* PodfileNoDeps.txt */,
 				36502E4E25662E2B00E58ECB /* CartfileWithDeps.txt */,
 				36502E5025662E2B00E58ECB /* CartfileNoDeps.txt */,
 				36502E5125662E2B00E58ECB /* PackageSwiftNoDeps.txt */,
-				36502E5225662E2B00E58ECB /* PodfileWithDeps.txt */,
 				36502E5325662E2B00E58ECB /* DepofileWithDeps */,
 				36502E5425662E2B00E58ECB /* DepofileNoDeps */,
 			);
@@ -1241,14 +1241,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				36502E9025662E5B00E58ECB /* PackageSwiftWithDeps.txt in Resources */,
-				36502E9125662E5B00E58ECB /* PodfileNoDeps.txt in Resources */,
+				36502EF32566536900E58ECB /* PodfileNoDeps in Resources */,
 				36502E9225662E5B00E58ECB /* CartfileWithDeps.txt in Resources */,
 				36502E9325662E5B00E58ECB /* CartfileNoDeps.txt in Resources */,
 				36502E9425662E5B00E58ECB /* PackageSwiftNoDeps.txt in Resources */,
-				36502E9525662E5B00E58ECB /* PodfileWithDeps.txt in Resources */,
 				36502E9625662E5B00E58ECB /* DepofileWithDeps in Resources */,
 				36502EB625662EDC00E58ECB /* TestCartfile in Resources */,
 				36502E9725662E5B00E58ECB /* DepofileNoDeps in Resources */,
+				36502EF42566536900E58ECB /* PodfileWithDeps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

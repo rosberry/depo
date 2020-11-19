@@ -55,7 +55,7 @@ public final class PodShellCommand: ShellCommand {
                 init(from decoder: Decoder) throws {
                     let container = try decoder.container(keyedBy: CodingKeys.self)
                     name = try container.decode(String.self, forKey: .name)
-                    dependencies = try container.decode([Dependency].self, forKey: .dependencies)
+                    dependencies = try container.decodeIfPresent([Dependency].self, forKey: .dependencies) ?? []
                 }
             }
 
