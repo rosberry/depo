@@ -5,6 +5,7 @@
 import Foundation
 import ArgumentParser
 import Files
+import CartfileParser
 
 public final class CarthageShellCommand: ShellCommand {
 
@@ -46,14 +47,14 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     public func build() throws {
-         if !shell("carthage", "build") {
-             throw Error.badBuild
-         }
+        if !shell("carthage", "build") {
+            throw Error.badBuild
+        }
     }
 
     public func cartfile(path: String) throws -> Cartfile? {
         let file = try Folder.current.file(at: path)
-        return cartfile(from: try ActualCartfile.from(file: file.url).get())
+        return cartfile(from: try CartfileParser.Cartfile.from(file: file.url).get())
     }
 
     private func build(command: String, arguments: [BuildArgument]) throws {
@@ -65,28 +66,28 @@ public final class CarthageShellCommand: ShellCommand {
         }
     }
 
-    private func cartfile(from actualCartfile: ActualCartfile) -> Cartfile {
+    private func cartfile(from actualCartfile: CartfileParser.Cartfile) -> Cartfile {
         .init(items: actualCartfile.dependencies.map { dependency, versionSpecifier -> CarthageItem in
             carthageItem(dependency: dependency, versionSpecifier: versionSpecifier)
         })
     }
 
-    private func carthageItem(dependency: Dependency, versionSpecifier: VersionSpecifier) -> CarthageItem {
+    private func carthageItem(dependency: CartfileParser.Dependency, versionSpecifier: CartfileParser.VersionSpecifier) -> CarthageItem {
         .init(kind: kind(from: dependency), identifier: dependency.name, versionConstraint: version(from: versionSpecifier))
     }
 
-    private func kind(from dependency: Dependency) -> CarthageItem.Kind {
+    private func kind(from dependency: CartfileParser.Dependency) -> CarthageItem.Kind {
         switch dependency {
         case .gitHub:
             return .github
         case .git:
             return .git
         case .binary:
-            return.binary
+            return .binary
         }
     }
 
-    private func version(from versionSpecifier: VersionSpecifier) -> VersionConstraint<CarthageItem.Operator>? {
+    private func version(from versionSpecifier: CartfileParser.VersionSpecifier) -> VersionConstraint<CarthageItem.Operator>? {
         switch versionSpecifier {
         case .any:
             return nil

@@ -9,707 +9,754 @@
 /* Begin PBXAggregateTarget section */
 		"Depo::DepoPackageTests::ProductTarget" /* DepoPackageTests */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_281 /* Build configuration list for PBXAggregateTarget "DepoPackageTests" */;
+			buildConfigurationList = OBJ_312 /* Build configuration list for PBXAggregateTarget "DepoPackageTests" */;
 			buildPhases = (
 			);
 			dependencies = (
-				OBJ_284 /* PBXTargetDependency */,
+				OBJ_315 /* PBXTargetDependency */,
 			);
 			name = DepoPackageTests;
 			productName = DepoPackageTests;
 		};
-		"Depo::depo-core::ProductTarget" /* depo-core */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_348 /* Build configuration list for PBXAggregateTarget "depo-core" */;
-			buildPhases = (
-			);
-			dependencies = (
-				OBJ_351 /* PBXTargetDependency */,
-			);
-			name = "depo-core";
-			productName = "depo-core";
-		};
-		"Depo::depo::ProductTarget" /* depo */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_343 /* Build configuration list for PBXAggregateTarget "depo" */;
-			buildPhases = (
-			);
-			dependencies = (
-				OBJ_346 /* PBXTargetDependency */,
-			);
-			name = depo;
-			productName = depo;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		36203FC62563CD3F00BC2825 /* PodfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */; };
-		36203FFF2563D21800BC2825 /* CartfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC445AB5E315614507FCE3B3 /* CartfileNoDeps.txt */; };
-		3620401C2563D28300BC2825 /* CartfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC42D9D268D948E592540B6A /* CartfileWithDeps.txt */; };
-		365C665F2563810A0027B245 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 365C664F256380FE0027B245 /* PackageSwiftWithDeps.txt */; };
-		365C666E2563810E0027B245 /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 365C6650256380FE0027B245 /* PackageSwiftNoDeps.txt */; };
-		3685A9382563ECA800B43707 /* DepofileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = EC4F66CEAABE580B164D36C2 /* DepofileWithDeps */; };
-		36B4AFCB2563B95F00DD0FD9 /* PodfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */; };
-		EC401A2C58CBE2DC86F0A4E1 /* CartfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C1028C63B20F8BE0618A /* CartfileTest.swift */; };
-		EC424FBCCA0D24B77D8FED16 /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = EC435E74EC5763EBBE310460 /* DepofileNoDeps */; };
-		EC4309CB8898B5A6DB8784F8 /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C7987A402623E7BB35C50 /* Init.swift */; };
-		EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */; };
-		EC45F1AB06A2FA50B5163A66 /* DuplicateDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */; };
-		EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC438FFC61C5365BEEA3EC2C /* Platform.swift */; };
-		EC49640C8A28C09E71CB5BDE /* DepoFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */; };
-		EC4BAE7E0A6B65992BD86325 /* ActualCartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */; };
-		EC4D5AE3B47B7AA191B6B49C /* CarthageVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */; };
-		EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B539B37D15C5243168BE5 /* PodfileTest.swift */; };
-		EC4E8F9D25619CCF92C57689 /* CarthageDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E567919336D57871C6CF7 /* CarthageDependency.swift */; };
-		EC4F5FCCC020F6F6818BCD2B /* Scannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC474FD245AFF407B0B928F9 /* Scannable.swift */; };
-		OBJ_158 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_99 /* BashCompletionsGenerator.swift */; };
-		OBJ_159 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_100 /* CompletionsGenerator.swift */; };
-		OBJ_160 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_101 /* FishCompletionsGenerator.swift */; };
-		OBJ_161 /* ZshCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_102 /* ZshCompletionsGenerator.swift */; };
-		OBJ_162 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_104 /* Argument.swift */; };
-		OBJ_163 /* ArgumentHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_105 /* ArgumentHelp.swift */; };
-		OBJ_164 /* CompletionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_106 /* CompletionKind.swift */; };
-		OBJ_165 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_107 /* Errors.swift */; };
-		OBJ_166 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_108 /* Flag.swift */; };
-		OBJ_167 /* NameSpecification.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_109 /* NameSpecification.swift */; };
-		OBJ_168 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_110 /* Option.swift */; };
-		OBJ_169 /* OptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_111 /* OptionGroup.swift */; };
-		OBJ_170 /* CommandConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_113 /* CommandConfiguration.swift */; };
-		OBJ_171 /* EnumerableFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_114 /* EnumerableFlag.swift */; };
-		OBJ_172 /* ExpressibleByArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* ExpressibleByArgument.swift */; };
-		OBJ_173 /* ParsableArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* ParsableArguments.swift */; };
-		OBJ_174 /* ParsableArgumentsValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* ParsableArgumentsValidation.swift */; };
-		OBJ_175 /* ParsableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_118 /* ParsableCommand.swift */; };
-		OBJ_176 /* ArgumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_120 /* ArgumentDecoder.swift */; };
-		OBJ_177 /* ArgumentDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_121 /* ArgumentDefinition.swift */; };
-		OBJ_178 /* ArgumentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_122 /* ArgumentSet.swift */; };
-		OBJ_179 /* CommandParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_123 /* CommandParser.swift */; };
-		OBJ_180 /* InputOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_124 /* InputOrigin.swift */; };
-		OBJ_181 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_125 /* Name.swift */; };
-		OBJ_182 /* Parsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_126 /* Parsed.swift */; };
-		OBJ_183 /* ParsedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_127 /* ParsedValues.swift */; };
-		OBJ_184 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_128 /* ParserError.swift */; };
-		OBJ_185 /* SplitArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_129 /* SplitArguments.swift */; };
-		OBJ_186 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_131 /* HelpCommand.swift */; };
-		OBJ_187 /* HelpGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_132 /* HelpGenerator.swift */; };
-		OBJ_188 /* MessageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_133 /* MessageInfo.swift */; };
-		OBJ_189 /* UsageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_134 /* UsageGenerator.swift */; };
-		OBJ_190 /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_136 /* SequenceExtensions.swift */; };
-		OBJ_191 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_137 /* StringExtensions.swift */; };
-		OBJ_192 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_138 /* Tree.swift */; };
-		OBJ_199 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_69 /* api.c */; };
-		OBJ_200 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_70 /* emitter.c */; };
-		OBJ_201 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_71 /* parser.c */; };
-		OBJ_202 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_72 /* reader.c */; };
-		OBJ_203 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_73 /* scanner.c */; };
-		OBJ_204 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_74 /* writer.c */; };
-		OBJ_211 /* Depo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Depo.swift */; };
-		OBJ_212 /* ParsableCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* ParsableCommands.swift */; };
-		OBJ_213 /* Platform+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Platform+ArgumentParser.swift */; };
-		OBJ_214 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* CommandRunner.swift */; };
-		OBJ_215 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* CompositeError.swift */; };
-		OBJ_216 /* EnumerableFlag+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* EnumerableFlag+Help.swift */; };
-		OBJ_217 /* FileManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* FileManager+Helper.swift */; };
-		OBJ_218 /* DefaultOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* DefaultOptions.swift */; };
-		OBJ_219 /* XcodeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* XcodeProject.swift */; };
-		OBJ_220 /* AllPackagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* AllPackagesManager.swift */; };
-		OBJ_221 /* CarthageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* CarthageManager.swift */; };
-		OBJ_222 /* PackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* PackageManager.swift */; };
-		OBJ_223 /* PodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* PodManager.swift */; };
-		OBJ_224 /* SPMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* SPMManager.swift */; };
-		OBJ_225 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* main.swift */; };
-		OBJ_227 /* ArgumentParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */; };
-		OBJ_228 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
-		OBJ_229 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
-		OBJ_230 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
-		OBJ_231 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
-		OBJ_244 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* AppConfiguration.swift */; };
-		OBJ_245 /* Collection+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* Collection+KeyPath.swift */; };
-		OBJ_246 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* DataDecoder.swift */; };
-		OBJ_247 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* Decoder.swift */; };
-		OBJ_248 /* HasDefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* HasDefaultValue.swift */; };
-		OBJ_249 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* BuildSettings.swift */; };
-		OBJ_250 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* CarthageItem.swift */; };
-		OBJ_251 /* Cartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* Cartfile.swift */; };
-		OBJ_252 /* Depofile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Depofile.swift */; };
-		OBJ_253 /* PackageSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* PackageSwift.swift */; };
-		OBJ_254 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* PodFile.swift */; };
-		OBJ_255 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Pod.swift */; };
-		OBJ_256 /* SwiftPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* SwiftPackage.swift */; };
-		OBJ_257 /* VersionConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* VersionConstraint.swift */; };
-		OBJ_258 /* BuildPodScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* BuildPodScript.swift */; };
-		OBJ_259 /* BuildSwiftPackageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* BuildSwiftPackageScript.swift */; };
-		OBJ_260 /* CarthageShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* CarthageShellCommand.swift */; };
-		OBJ_261 /* MergePackageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* MergePackageScript.swift */; };
-		OBJ_262 /* MoveBuiltPodScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* MoveBuiltPodScript.swift */; };
-		OBJ_263 /* PodShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_53 /* PodShellCommand.swift */; };
-		OBJ_264 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_54 /* Shell.swift */; };
-		OBJ_265 /* ShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* ShellCommand.swift */; };
-		OBJ_266 /* SwiftPackageShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* SwiftPackageShellCommand.swift */; };
-		OBJ_268 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
-		OBJ_269 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
-		OBJ_270 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
-		OBJ_279 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_290 /* PackageSwiftFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* PackageSwiftFileTest.swift */; };
-		OBJ_294 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
-		OBJ_295 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
-		OBJ_296 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
-		OBJ_297 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
-		OBJ_306 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_65 /* Files.swift */; };
-		OBJ_313 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_64 /* Package.swift */; };
-		OBJ_318 /* Constructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_80 /* Constructor.swift */; };
-		OBJ_319 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_81 /* Decoder.swift */; };
-		OBJ_320 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_82 /* Emitter.swift */; };
-		OBJ_321 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_83 /* Encoder.swift */; };
-		OBJ_322 /* Mark.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_84 /* Mark.swift */; };
-		OBJ_323 /* Node.Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_85 /* Node.Mapping.swift */; };
-		OBJ_324 /* Node.Scalar.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_86 /* Node.Scalar.swift */; };
-		OBJ_325 /* Node.Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_87 /* Node.Sequence.swift */; };
-		OBJ_326 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_88 /* Node.swift */; };
-		OBJ_327 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_89 /* Parser.swift */; };
-		OBJ_328 /* Representer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_90 /* Representer.swift */; };
-		OBJ_329 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_91 /* Resolver.swift */; };
-		OBJ_330 /* String+Yams.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_92 /* String+Yams.swift */; };
-		OBJ_331 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_93 /* Tag.swift */; };
-		OBJ_332 /* YamlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_94 /* YamlError.swift */; };
-		OBJ_334 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
-		OBJ_341 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_95 /* Package.swift */; };
-		OBJ_357 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_139 /* Package.swift */; };
+		36A1580F25662C40007C1A34 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580425662C40007C1A34 /* PackageSwiftWithDeps.txt */; };
+		36A1581025662C40007C1A34 /* PodfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580525662C40007C1A34 /* PodfileNoDeps.txt */; };
+		36A1581225662C40007C1A34 /* CartfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580825662C40007C1A34 /* CartfileWithDeps.txt */; };
+		36A1581425662C40007C1A34 /* CartfileNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580A25662C40007C1A34 /* CartfileNoDeps.txt */; };
+		36A1581525662C40007C1A34 /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580B25662C40007C1A34 /* PackageSwiftNoDeps.txt */; };
+		36A1581625662C40007C1A34 /* PodfileWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580C25662C40007C1A34 /* PodfileWithDeps.txt */; };
+		36A1581725662C40007C1A34 /* DepofileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580D25662C40007C1A34 /* DepofileWithDeps */; };
+		36A1581825662C40007C1A34 /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36A1580E25662C40007C1A34 /* DepofileNoDeps */; };
+		OBJ_172 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_109 /* BashCompletionsGenerator.swift */; };
+		OBJ_173 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_110 /* CompletionsGenerator.swift */; };
+		OBJ_174 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_111 /* FishCompletionsGenerator.swift */; };
+		OBJ_175 /* ZshCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_112 /* ZshCompletionsGenerator.swift */; };
+		OBJ_176 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_114 /* Argument.swift */; };
+		OBJ_177 /* ArgumentHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* ArgumentHelp.swift */; };
+		OBJ_178 /* CompletionKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* CompletionKind.swift */; };
+		OBJ_179 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* Errors.swift */; };
+		OBJ_180 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_118 /* Flag.swift */; };
+		OBJ_181 /* NameSpecification.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_119 /* NameSpecification.swift */; };
+		OBJ_182 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_120 /* Option.swift */; };
+		OBJ_183 /* OptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_121 /* OptionGroup.swift */; };
+		OBJ_184 /* CommandConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_123 /* CommandConfiguration.swift */; };
+		OBJ_185 /* EnumerableFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_124 /* EnumerableFlag.swift */; };
+		OBJ_186 /* ExpressibleByArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_125 /* ExpressibleByArgument.swift */; };
+		OBJ_187 /* ParsableArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_126 /* ParsableArguments.swift */; };
+		OBJ_188 /* ParsableArgumentsValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_127 /* ParsableArgumentsValidation.swift */; };
+		OBJ_189 /* ParsableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_128 /* ParsableCommand.swift */; };
+		OBJ_190 /* ArgumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_130 /* ArgumentDecoder.swift */; };
+		OBJ_191 /* ArgumentDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_131 /* ArgumentDefinition.swift */; };
+		OBJ_192 /* ArgumentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_132 /* ArgumentSet.swift */; };
+		OBJ_193 /* CommandParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_133 /* CommandParser.swift */; };
+		OBJ_194 /* InputOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_134 /* InputOrigin.swift */; };
+		OBJ_195 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_135 /* Name.swift */; };
+		OBJ_196 /* Parsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_136 /* Parsed.swift */; };
+		OBJ_197 /* ParsedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_137 /* ParsedValues.swift */; };
+		OBJ_198 /* ParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_138 /* ParserError.swift */; };
+		OBJ_199 /* SplitArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_139 /* SplitArguments.swift */; };
+		OBJ_200 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_141 /* HelpCommand.swift */; };
+		OBJ_201 /* HelpGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_142 /* HelpGenerator.swift */; };
+		OBJ_202 /* MessageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_143 /* MessageInfo.swift */; };
+		OBJ_203 /* UsageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_144 /* UsageGenerator.swift */; };
+		OBJ_204 /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_146 /* SequenceExtensions.swift */; };
+		OBJ_205 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_147 /* StringExtensions.swift */; };
+		OBJ_206 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_148 /* Tree.swift */; };
+		OBJ_213 /* api.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_79 /* api.c */; };
+		OBJ_214 /* emitter.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_80 /* emitter.c */; };
+		OBJ_215 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_81 /* parser.c */; };
+		OBJ_216 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_82 /* reader.c */; };
+		OBJ_217 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_83 /* scanner.c */; };
+		OBJ_218 /* writer.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_84 /* writer.c */; };
+		OBJ_225 /* ActualCartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* ActualCartfile.swift */; };
+		OBJ_226 /* CarthageDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* CarthageDependency.swift */; };
+		OBJ_227 /* CarthageVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CarthageVersion.swift */; };
+		OBJ_228 /* DuplicateDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DuplicateDependency.swift */; };
+		OBJ_229 /* Scannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* Scannable.swift */; };
+		OBJ_236 /* Depo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Depo.swift */; };
+		OBJ_237 /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Init.swift */; };
+		OBJ_238 /* ParsableCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* ParsableCommands.swift */; };
+		OBJ_239 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* CommandRunner.swift */; };
+		OBJ_240 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* CompositeError.swift */; };
+		OBJ_241 /* EnumerableFlag+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* EnumerableFlag+Help.swift */; };
+		OBJ_242 /* FileManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* FileManager+Helper.swift */; };
+		OBJ_243 /* Platform+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* Platform+ArgumentParser.swift */; };
+		OBJ_244 /* DefaultOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* DefaultOptions.swift */; };
+		OBJ_245 /* XcodeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* XcodeProject.swift */; };
+		OBJ_246 /* AllPackagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* AllPackagesManager.swift */; };
+		OBJ_247 /* CarthageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* CarthageManager.swift */; };
+		OBJ_248 /* PackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* PackageManager.swift */; };
+		OBJ_249 /* PodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* PodManager.swift */; };
+		OBJ_250 /* SPMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* SPMManager.swift */; };
+		OBJ_251 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* main.swift */; };
+		OBJ_253 /* ArgumentParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */; };
+		OBJ_254 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
+		OBJ_255 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
+		OBJ_256 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
+		OBJ_257 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
+		OBJ_258 /* CartfileParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::CartfileParser::Product" /* CartfileParser.framework */; };
+		OBJ_272 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* AppConfiguration.swift */; };
+		OBJ_273 /* Collection+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* Collection+KeyPath.swift */; };
+		OBJ_274 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* DataDecoder.swift */; };
+		OBJ_275 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Decoder.swift */; };
+		OBJ_276 /* HasDefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* HasDefaultValue.swift */; };
+		OBJ_277 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* BuildSettings.swift */; };
+		OBJ_278 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* CarthageItem.swift */; };
+		OBJ_279 /* Cartfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Cartfile.swift */; };
+		OBJ_280 /* Depofile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* Depofile.swift */; };
+		OBJ_281 /* PackageSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* PackageSwift.swift */; };
+		OBJ_282 /* PodFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* PodFile.swift */; };
+		OBJ_283 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* Platform.swift */; };
+		OBJ_284 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* Pod.swift */; };
+		OBJ_285 /* SwiftPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_53 /* SwiftPackage.swift */; };
+		OBJ_286 /* VersionConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_54 /* VersionConstraint.swift */; };
+		OBJ_287 /* BuildPodScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* BuildPodScript.swift */; };
+		OBJ_288 /* BuildSwiftPackageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* BuildSwiftPackageScript.swift */; };
+		OBJ_289 /* CarthageShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* CarthageShellCommand.swift */; };
+		OBJ_290 /* MergePackageScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* MergePackageScript.swift */; };
+		OBJ_291 /* MoveBuiltPodScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* MoveBuiltPodScript.swift */; };
+		OBJ_292 /* PodShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* PodShellCommand.swift */; };
+		OBJ_293 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* Shell.swift */; };
+		OBJ_294 /* ShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_63 /* ShellCommand.swift */; };
+		OBJ_295 /* SwiftPackageShellCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_64 /* SwiftPackageShellCommand.swift */; };
+		OBJ_297 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
+		OBJ_298 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
+		OBJ_299 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
+		OBJ_300 /* CartfileParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::CartfileParser::Product" /* CartfileParser.framework */; };
+		OBJ_310 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_321 /* CartfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_67 /* CartfileTest.swift */; };
+		OBJ_322 /* DepoFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_68 /* DepoFileTest.swift */; };
+		OBJ_323 /* PackageManagerFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_69 /* PackageManagerFileTest.swift */; };
+		OBJ_324 /* PackageSwiftFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_70 /* PackageSwiftFileTest.swift */; };
+		OBJ_325 /* PodfileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_71 /* PodfileTest.swift */; };
+		OBJ_327 /* ArgumentParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */; };
+		OBJ_328 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
+		OBJ_329 /* Files.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Files::Files::Product" /* Files.framework */; };
+		OBJ_330 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::Yams::Product" /* Yams.framework */; };
+		OBJ_331 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
+		OBJ_332 /* CartfileParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::CartfileParser::Product" /* CartfileParser.framework */; };
+		OBJ_344 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_75 /* Files.swift */; };
+		OBJ_351 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_74 /* Package.swift */; };
+		OBJ_356 /* Constructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_90 /* Constructor.swift */; };
+		OBJ_357 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_91 /* Decoder.swift */; };
+		OBJ_358 /* Emitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_92 /* Emitter.swift */; };
+		OBJ_359 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_93 /* Encoder.swift */; };
+		OBJ_360 /* Mark.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_94 /* Mark.swift */; };
+		OBJ_361 /* Node.Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_95 /* Node.Mapping.swift */; };
+		OBJ_362 /* Node.Scalar.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_96 /* Node.Scalar.swift */; };
+		OBJ_363 /* Node.Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_97 /* Node.Sequence.swift */; };
+		OBJ_364 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_98 /* Node.swift */; };
+		OBJ_365 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_99 /* Parser.swift */; };
+		OBJ_366 /* Representer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_100 /* Representer.swift */; };
+		OBJ_367 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_101 /* Resolver.swift */; };
+		OBJ_368 /* String+Yams.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_102 /* String+Yams.swift */; };
+		OBJ_369 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_103 /* Tag.swift */; };
+		OBJ_370 /* YamlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_104 /* YamlError.swift */; };
+		OBJ_372 /* CYaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Yams::CYaml::Product" /* CYaml.framework */; };
+		OBJ_379 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_105 /* Package.swift */; };
+		OBJ_385 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_149 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		365C65BE256380380027B245 /* PBXContainerItemProxy */ = {
+		36A157BA25662BB5007C1A34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = Depo::DepoCore;
-			remoteInfo = DepoCore;
-		};
-		365C65BF256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Files::Files;
-			remoteInfo = Files;
-		};
-		365C65C0256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::Yams;
-			remoteInfo = Yams;
-		};
-		365C65C1256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::CYaml;
-			remoteInfo = CYaml;
-		};
-		365C65C2256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::CYaml;
-			remoteInfo = CYaml;
-		};
-		365C65C3256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Files::Files;
-			remoteInfo = Files;
-		};
-		365C65C4256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::Yams;
-			remoteInfo = Yams;
-		};
-		365C65C5256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::CYaml;
-			remoteInfo = CYaml;
-		};
-		365C65C6256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
-			remoteInfo = ArgumentParser;
-		};
-		365C65C7256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Depo::DepoCore;
-			remoteInfo = DepoCore;
-		};
-		365C65C8256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Files::Files;
-			remoteInfo = Files;
-		};
-		365C65C9256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::Yams;
-			remoteInfo = Yams;
-		};
-		365C65CA256380380027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Yams::CYaml;
-			remoteInfo = CYaml;
-		};
-		365C65D02563803B0027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Depo::DepoTest;
-			remoteInfo = DepoTest;
-		};
-		365C65D72563803B0027B245 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = Depo::Depo;
+			remoteGlobalIDString = "Depo::Depo";
 			remoteInfo = Depo;
 		};
-		365C65D92563803B0027B245 /* PBXContainerItemProxy */ = {
+		36A157BB25662BB5007C1A34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = Depo::DepoCore;
+			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteInfo = ArgumentParser;
+		};
+		36A157BC25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::DepoCore";
 			remoteInfo = DepoCore;
+		};
+		36A157BD25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Files::Files";
+			remoteInfo = Files;
+		};
+		36A157BE25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::Yams";
+			remoteInfo = Yams;
+		};
+		36A157BF25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::CYaml";
+			remoteInfo = CYaml;
+		};
+		36A157C025662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::CYaml";
+			remoteInfo = CYaml;
+		};
+		36A157C125662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteInfo = CartfileParser;
+		};
+		36A157C225662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Files::Files";
+			remoteInfo = Files;
+		};
+		36A157C325662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::Yams";
+			remoteInfo = Yams;
+		};
+		36A157C425662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::CYaml";
+			remoteInfo = CYaml;
+		};
+		36A157C525662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteInfo = CartfileParser;
+		};
+		36A157C625662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteInfo = ArgumentParser;
+		};
+		36A157C725662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::DepoCore";
+			remoteInfo = DepoCore;
+		};
+		36A157C825662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Files::Files";
+			remoteInfo = Files;
+		};
+		36A157C925662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::Yams";
+			remoteInfo = Yams;
+		};
+		36A157CA25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Yams::CYaml";
+			remoteInfo = CYaml;
+		};
+		36A157CB25662BB5007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteInfo = CartfileParser;
+		};
+		36A157D225662BB8007C1A34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Depo::DepoTest";
+			remoteInfo = DepoTest;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		365C6630256380B60027B245 /* PackageSwiftNoDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwiftNoDeps.swift; sourceTree = "<group>"; };
-		365C664E256380DA0027B245 /* PackageSwiftWithDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwiftWithDeps.swift; sourceTree = "<group>"; };
-		365C664F256380FE0027B245 /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
-		365C6650256380FE0027B245 /* PackageSwiftNoDeps.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = PackageSwiftNoDeps.txt; sourceTree = "<group>"; };
+		36A1580425662C40007C1A34 /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
+		36A1580525662C40007C1A34 /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
+		36A1580725662C40007C1A34 /* PackageSwiftNoDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftNoDeps.swift; sourceTree = "<group>"; };
+		36A1580825662C40007C1A34 /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
+		36A1580925662C40007C1A34 /* PackageSwiftWithDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftWithDeps.swift; sourceTree = "<group>"; };
+		36A1580A25662C40007C1A34 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
+		36A1580B25662C40007C1A34 /* PackageSwiftNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftNoDeps.txt; sourceTree = "<group>"; };
+		36A1580C25662C40007C1A34 /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
+		36A1580D25662C40007C1A34 /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
+		36A1580E25662C40007C1A34 /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
+		"Depo::CartfileParser::Product" /* CartfileParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CartfileParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC42D9D268D948E592540B6A /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
-		EC435E74EC5763EBBE310460 /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
-		EC438FFC61C5365BEEA3EC2C /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
-		EC445AB5E315614507FCE3B3 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
-		EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepoFileTest.swift; sourceTree = "<group>"; };
-		EC474FD245AFF407B0B928F9 /* Scannable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scannable.swift; sourceTree = "<group>"; };
-		EC47C1028C63B20F8BE0618A /* CartfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartfileTest.swift; sourceTree = "<group>"; };
-		EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActualCartfile.swift; sourceTree = "<group>"; };
-		EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageVersion.swift; sourceTree = "<group>"; };
-		EC4B539B37D15C5243168BE5 /* PodfileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodfileTest.swift; sourceTree = "<group>"; };
-		EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps.txt; sourceTree = "<group>"; };
-		EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps.txt; sourceTree = "<group>"; };
-		EC4C7987A402623E7BB35C50 /* Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
-		EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuplicateDependency.swift; sourceTree = "<group>"; };
-		EC4E567919336D57871C6CF7 /* CarthageDependency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
-		EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageManagerFileTest.swift; sourceTree = "<group>"; };
-		EC4F66CEAABE580B164D36C2 /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_10 /* Depo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depo.swift; sourceTree = "<group>"; };
-		OBJ_100 /* CompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsGenerator.swift; sourceTree = "<group>"; };
-		OBJ_101 /* FishCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishCompletionsGenerator.swift; sourceTree = "<group>"; };
-		OBJ_102 /* ZshCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshCompletionsGenerator.swift; sourceTree = "<group>"; };
-		OBJ_104 /* Argument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
-		OBJ_105 /* ArgumentHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentHelp.swift; sourceTree = "<group>"; };
-		OBJ_106 /* CompletionKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionKind.swift; sourceTree = "<group>"; };
-		OBJ_107 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		OBJ_108 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
-		OBJ_109 /* NameSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpecification.swift; sourceTree = "<group>"; };
-		OBJ_11 /* ParsableCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableCommands.swift; sourceTree = "<group>"; };
-		OBJ_110 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
-		OBJ_111 /* OptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionGroup.swift; sourceTree = "<group>"; };
-		OBJ_113 /* CommandConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandConfiguration.swift; sourceTree = "<group>"; };
-		OBJ_114 /* EnumerableFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumerableFlag.swift; sourceTree = "<group>"; };
-		OBJ_115 /* ExpressibleByArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressibleByArgument.swift; sourceTree = "<group>"; };
-		OBJ_116 /* ParsableArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableArguments.swift; sourceTree = "<group>"; };
-		OBJ_117 /* ParsableArgumentsValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableArgumentsValidation.swift; sourceTree = "<group>"; };
-		OBJ_118 /* ParsableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableCommand.swift; sourceTree = "<group>"; };
-		OBJ_120 /* ArgumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDecoder.swift; sourceTree = "<group>"; };
-		OBJ_121 /* ArgumentDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDefinition.swift; sourceTree = "<group>"; };
-		OBJ_122 /* ArgumentSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentSet.swift; sourceTree = "<group>"; };
-		OBJ_123 /* CommandParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandParser.swift; sourceTree = "<group>"; };
-		OBJ_124 /* InputOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOrigin.swift; sourceTree = "<group>"; };
-		OBJ_125 /* Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
-		OBJ_126 /* Parsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsed.swift; sourceTree = "<group>"; };
-		OBJ_127 /* ParsedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedValues.swift; sourceTree = "<group>"; };
-		OBJ_128 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
-		OBJ_129 /* SplitArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitArguments.swift; sourceTree = "<group>"; };
-		OBJ_13 /* Platform+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+ArgumentParser.swift"; sourceTree = "<group>"; };
-		OBJ_131 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
-		OBJ_132 /* HelpGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpGenerator.swift; sourceTree = "<group>"; };
-		OBJ_133 /* MessageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInfo.swift; sourceTree = "<group>"; };
-		OBJ_134 /* UsageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageGenerator.swift; sourceTree = "<group>"; };
-		OBJ_136 /* SequenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensions.swift; sourceTree = "<group>"; };
-		OBJ_137 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		OBJ_138 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
-		OBJ_139 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/vz/Developer/Depo/.build/checkouts/swift-argument-parser/Package.swift"; sourceTree = "<group>"; };
-		OBJ_148 /* Shell */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shell; sourceTree = SOURCE_ROOT; };
-		OBJ_149 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = text; path = Resources; sourceTree = SOURCE_ROOT; };
-		OBJ_15 /* CommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
-		OBJ_150 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; path = build; sourceTree = SOURCE_ROOT; };
-		OBJ_151 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		OBJ_152 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		OBJ_16 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
-		OBJ_17 /* EnumerableFlag+Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnumerableFlag+Help.swift"; sourceTree = "<group>"; };
-		OBJ_18 /* FileManager+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helper.swift"; sourceTree = "<group>"; };
-		OBJ_20 /* DefaultOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOptions.swift; sourceTree = "<group>"; };
-		OBJ_21 /* XcodeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
-		OBJ_23 /* AllPackagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPackagesManager.swift; sourceTree = "<group>"; };
-		OBJ_24 /* CarthageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageManager.swift; sourceTree = "<group>"; };
-		OBJ_25 /* PackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManager.swift; sourceTree = "<group>"; };
-		OBJ_26 /* PodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodManager.swift; sourceTree = "<group>"; };
-		OBJ_27 /* SPMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMManager.swift; sourceTree = "<group>"; };
-		OBJ_28 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		OBJ_30 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		OBJ_32 /* Collection+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+KeyPath.swift"; sourceTree = "<group>"; };
-		OBJ_33 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
-		OBJ_34 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
-		OBJ_35 /* HasDefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValue.swift; sourceTree = "<group>"; };
-		OBJ_37 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
-		OBJ_38 /* CarthageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
-		OBJ_40 /* Cartfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
-		OBJ_41 /* Depofile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depofile.swift; sourceTree = "<group>"; };
-		OBJ_42 /* PackageSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwift.swift; sourceTree = "<group>"; };
-		OBJ_43 /* PodFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
-		OBJ_44 /* Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
-		OBJ_45 /* SwiftPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackage.swift; sourceTree = "<group>"; };
-		OBJ_46 /* VersionConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionConstraint.swift; sourceTree = "<group>"; };
-		OBJ_48 /* BuildPodScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildPodScript.swift; sourceTree = "<group>"; };
-		OBJ_49 /* BuildSwiftPackageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSwiftPackageScript.swift; sourceTree = "<group>"; };
-		OBJ_50 /* CarthageShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageShellCommand.swift; sourceTree = "<group>"; };
-		OBJ_51 /* MergePackageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergePackageScript.swift; sourceTree = "<group>"; };
-		OBJ_52 /* MoveBuiltPodScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveBuiltPodScript.swift; sourceTree = "<group>"; };
-		OBJ_53 /* PodShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodShellCommand.swift; sourceTree = "<group>"; };
-		OBJ_54 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
-		OBJ_55 /* ShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellCommand.swift; sourceTree = "<group>"; };
-		OBJ_56 /* SwiftPackageShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackageShellCommand.swift; sourceTree = "<group>"; };
-		OBJ_59 /* PackageSwiftFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwiftFileTest.swift; sourceTree = "<group>"; };
+		OBJ_10 /* CarthageDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
+		OBJ_100 /* Representer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Representer.swift; sourceTree = "<group>"; };
+		OBJ_101 /* Resolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
+		OBJ_102 /* String+Yams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Yams.swift"; sourceTree = "<group>"; };
+		OBJ_103 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		OBJ_104 /* YamlError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlError.swift; sourceTree = "<group>"; };
+		OBJ_105 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/vz/Developer/Depo/.build/checkouts/Yams/Package.swift; sourceTree = "<group>"; };
+		OBJ_109 /* BashCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BashCompletionsGenerator.swift; sourceTree = "<group>"; };
+		OBJ_11 /* CarthageVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageVersion.swift; sourceTree = "<group>"; };
+		OBJ_110 /* CompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionsGenerator.swift; sourceTree = "<group>"; };
+		OBJ_111 /* FishCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishCompletionsGenerator.swift; sourceTree = "<group>"; };
+		OBJ_112 /* ZshCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshCompletionsGenerator.swift; sourceTree = "<group>"; };
+		OBJ_114 /* Argument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
+		OBJ_115 /* ArgumentHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentHelp.swift; sourceTree = "<group>"; };
+		OBJ_116 /* CompletionKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionKind.swift; sourceTree = "<group>"; };
+		OBJ_117 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		OBJ_118 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flag.swift; sourceTree = "<group>"; };
+		OBJ_119 /* NameSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpecification.swift; sourceTree = "<group>"; };
+		OBJ_12 /* DuplicateDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateDependency.swift; sourceTree = "<group>"; };
+		OBJ_120 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		OBJ_121 /* OptionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionGroup.swift; sourceTree = "<group>"; };
+		OBJ_123 /* CommandConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandConfiguration.swift; sourceTree = "<group>"; };
+		OBJ_124 /* EnumerableFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumerableFlag.swift; sourceTree = "<group>"; };
+		OBJ_125 /* ExpressibleByArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressibleByArgument.swift; sourceTree = "<group>"; };
+		OBJ_126 /* ParsableArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableArguments.swift; sourceTree = "<group>"; };
+		OBJ_127 /* ParsableArgumentsValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableArgumentsValidation.swift; sourceTree = "<group>"; };
+		OBJ_128 /* ParsableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableCommand.swift; sourceTree = "<group>"; };
+		OBJ_13 /* Scannable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scannable.swift; sourceTree = "<group>"; };
+		OBJ_130 /* ArgumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDecoder.swift; sourceTree = "<group>"; };
+		OBJ_131 /* ArgumentDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDefinition.swift; sourceTree = "<group>"; };
+		OBJ_132 /* ArgumentSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentSet.swift; sourceTree = "<group>"; };
+		OBJ_133 /* CommandParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandParser.swift; sourceTree = "<group>"; };
+		OBJ_134 /* InputOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOrigin.swift; sourceTree = "<group>"; };
+		OBJ_135 /* Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
+		OBJ_136 /* Parsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsed.swift; sourceTree = "<group>"; };
+		OBJ_137 /* ParsedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedValues.swift; sourceTree = "<group>"; };
+		OBJ_138 /* ParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserError.swift; sourceTree = "<group>"; };
+		OBJ_139 /* SplitArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitArguments.swift; sourceTree = "<group>"; };
+		OBJ_141 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
+		OBJ_142 /* HelpGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpGenerator.swift; sourceTree = "<group>"; };
+		OBJ_143 /* MessageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInfo.swift; sourceTree = "<group>"; };
+		OBJ_144 /* UsageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageGenerator.swift; sourceTree = "<group>"; };
+		OBJ_146 /* SequenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensions.swift; sourceTree = "<group>"; };
+		OBJ_147 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		OBJ_148 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		OBJ_149 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/vz/Developer/Depo/.build/checkouts/swift-argument-parser/Package.swift"; sourceTree = "<group>"; };
+		OBJ_159 /* Shell */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shell; sourceTree = SOURCE_ROOT; };
+		OBJ_16 /* Depo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depo.swift; sourceTree = "<group>"; };
+		OBJ_160 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; path = build; sourceTree = SOURCE_ROOT; };
+		OBJ_161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		OBJ_162 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		OBJ_163 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_164 /* Depofile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depofile; sourceTree = "<group>"; };
+		OBJ_165 /* foo */ = {isa = PBXFileReference; lastKnownFileType = text; path = foo; sourceTree = "<group>"; };
+		OBJ_166 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		OBJ_17 /* Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
+		OBJ_18 /* ParsableCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsableCommands.swift; sourceTree = "<group>"; };
+		OBJ_21 /* CommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
+		OBJ_22 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
+		OBJ_23 /* EnumerableFlag+Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnumerableFlag+Help.swift"; sourceTree = "<group>"; };
+		OBJ_24 /* FileManager+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helper.swift"; sourceTree = "<group>"; };
+		OBJ_25 /* Platform+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+ArgumentParser.swift"; sourceTree = "<group>"; };
+		OBJ_27 /* DefaultOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOptions.swift; sourceTree = "<group>"; };
+		OBJ_28 /* XcodeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
+		OBJ_30 /* AllPackagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPackagesManager.swift; sourceTree = "<group>"; };
+		OBJ_31 /* CarthageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageManager.swift; sourceTree = "<group>"; };
+		OBJ_32 /* PackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManager.swift; sourceTree = "<group>"; };
+		OBJ_33 /* PodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodManager.swift; sourceTree = "<group>"; };
+		OBJ_34 /* SPMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMManager.swift; sourceTree = "<group>"; };
+		OBJ_35 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		OBJ_37 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		OBJ_39 /* Collection+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+KeyPath.swift"; sourceTree = "<group>"; };
+		OBJ_40 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
+		OBJ_41 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		OBJ_42 /* HasDefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValue.swift; sourceTree = "<group>"; };
+		OBJ_44 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
+		OBJ_45 /* CarthageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
+		OBJ_47 /* Cartfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cartfile.swift; sourceTree = "<group>"; };
+		OBJ_48 /* Depofile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depofile.swift; sourceTree = "<group>"; };
+		OBJ_49 /* PackageSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwift.swift; sourceTree = "<group>"; };
+		OBJ_50 /* PodFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodFile.swift; sourceTree = "<group>"; };
+		OBJ_51 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		OBJ_52 /* Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
+		OBJ_53 /* SwiftPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackage.swift; sourceTree = "<group>"; };
+		OBJ_54 /* VersionConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionConstraint.swift; sourceTree = "<group>"; };
+		OBJ_56 /* BuildPodScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildPodScript.swift; sourceTree = "<group>"; };
+		OBJ_57 /* BuildSwiftPackageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSwiftPackageScript.swift; sourceTree = "<group>"; };
+		OBJ_58 /* CarthageShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageShellCommand.swift; sourceTree = "<group>"; };
+		OBJ_59 /* MergePackageScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergePackageScript.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_64 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/vz/Developer/Depo/.build/checkouts/Files/Package.swift; sourceTree = "<group>"; };
-		OBJ_65 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
-		OBJ_69 /* api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = api.c; sourceTree = "<group>"; };
-		OBJ_70 /* emitter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emitter.c; sourceTree = "<group>"; };
-		OBJ_71 /* parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
-		OBJ_72 /* reader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = reader.c; sourceTree = "<group>"; };
-		OBJ_73 /* scanner.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
-		OBJ_74 /* writer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = writer.c; sourceTree = "<group>"; };
-		OBJ_76 /* CYaml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CYaml.h; sourceTree = "<group>"; };
-		OBJ_77 /* yaml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
-		OBJ_78 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = /Users/vz/Developer/Depo/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap; sourceTree = "<group>"; };
-		OBJ_80 /* Constructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constructor.swift; sourceTree = "<group>"; };
-		OBJ_81 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
-		OBJ_82 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
-		OBJ_83 /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
-		OBJ_84 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
-		OBJ_85 /* Node.Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Mapping.swift; sourceTree = "<group>"; };
-		OBJ_86 /* Node.Scalar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Scalar.swift; sourceTree = "<group>"; };
-		OBJ_87 /* Node.Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Sequence.swift; sourceTree = "<group>"; };
-		OBJ_88 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		OBJ_89 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		OBJ_90 /* Representer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Representer.swift; sourceTree = "<group>"; };
-		OBJ_91 /* Resolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
-		OBJ_92 /* String+Yams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Yams.swift"; sourceTree = "<group>"; };
-		OBJ_93 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		OBJ_94 /* YamlError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlError.swift; sourceTree = "<group>"; };
-		OBJ_95 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/vz/Developer/Depo/.build/checkouts/Yams/Package.swift; sourceTree = "<group>"; };
-		OBJ_99 /* BashCompletionsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BashCompletionsGenerator.swift; sourceTree = "<group>"; };
+		OBJ_60 /* MoveBuiltPodScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveBuiltPodScript.swift; sourceTree = "<group>"; };
+		OBJ_61 /* PodShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodShellCommand.swift; sourceTree = "<group>"; };
+		OBJ_62 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
+		OBJ_63 /* ShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellCommand.swift; sourceTree = "<group>"; };
+		OBJ_64 /* SwiftPackageShellCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackageShellCommand.swift; sourceTree = "<group>"; };
+		OBJ_67 /* CartfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartfileTest.swift; sourceTree = "<group>"; };
+		OBJ_68 /* DepoFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepoFileTest.swift; sourceTree = "<group>"; };
+		OBJ_69 /* PackageManagerFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManagerFileTest.swift; sourceTree = "<group>"; };
+		OBJ_70 /* PackageSwiftFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageSwiftFileTest.swift; sourceTree = "<group>"; };
+		OBJ_71 /* PodfileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodfileTest.swift; sourceTree = "<group>"; };
+		OBJ_74 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = /Users/vz/Developer/Depo/.build/checkouts/Files/Package.swift; sourceTree = "<group>"; };
+		OBJ_75 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
+		OBJ_79 /* api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = api.c; sourceTree = "<group>"; };
+		OBJ_80 /* emitter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emitter.c; sourceTree = "<group>"; };
+		OBJ_81 /* parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
+		OBJ_82 /* reader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = reader.c; sourceTree = "<group>"; };
+		OBJ_83 /* scanner.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
+		OBJ_84 /* writer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = writer.c; sourceTree = "<group>"; };
+		OBJ_86 /* CYaml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CYaml.h; sourceTree = "<group>"; };
+		OBJ_87 /* yaml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yaml.h; sourceTree = "<group>"; };
+		OBJ_88 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = /Users/vz/Developer/Depo/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap; sourceTree = "<group>"; };
+		OBJ_9 /* ActualCartfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActualCartfile.swift; sourceTree = "<group>"; };
+		OBJ_90 /* Constructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constructor.swift; sourceTree = "<group>"; };
+		OBJ_91 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		OBJ_92 /* Emitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emitter.swift; sourceTree = "<group>"; };
+		OBJ_93 /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
+		OBJ_94 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
+		OBJ_95 /* Node.Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Mapping.swift; sourceTree = "<group>"; };
+		OBJ_96 /* Node.Scalar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Scalar.swift; sourceTree = "<group>"; };
+		OBJ_97 /* Node.Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.Sequence.swift; sourceTree = "<group>"; };
+		OBJ_98 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		OBJ_99 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		"Yams::CYaml::Product" /* CYaml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CYaml.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Yams::Yams::Product" /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Yams.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArgumentParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_193 /* Frameworks */ = {
+		OBJ_207 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_205 /* Frameworks */ = {
+		OBJ_219 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_226 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_227 /* ArgumentParser.framework in Frameworks */,
-				OBJ_228 /* DepoCore.framework in Frameworks */,
-				OBJ_229 /* Files.framework in Frameworks */,
-				OBJ_230 /* Yams.framework in Frameworks */,
-				OBJ_231 /* CYaml.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_267 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_268 /* Files.framework in Frameworks */,
-				OBJ_269 /* Yams.framework in Frameworks */,
-				OBJ_270 /* CYaml.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_293 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_294 /* DepoCore.framework in Frameworks */,
-				OBJ_295 /* Files.framework in Frameworks */,
-				OBJ_296 /* Yams.framework in Frameworks */,
-				OBJ_297 /* CYaml.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_307 /* Frameworks */ = {
+		OBJ_230 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_333 /* Frameworks */ = {
+		OBJ_252 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_334 /* CYaml.framework in Frameworks */,
+				OBJ_253 /* ArgumentParser.framework in Frameworks */,
+				OBJ_254 /* DepoCore.framework in Frameworks */,
+				OBJ_255 /* Files.framework in Frameworks */,
+				OBJ_256 /* Yams.framework in Frameworks */,
+				OBJ_257 /* CYaml.framework in Frameworks */,
+				OBJ_258 /* CartfileParser.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_296 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_297 /* Files.framework in Frameworks */,
+				OBJ_298 /* Yams.framework in Frameworks */,
+				OBJ_299 /* CYaml.framework in Frameworks */,
+				OBJ_300 /* CartfileParser.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_326 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_327 /* ArgumentParser.framework in Frameworks */,
+				OBJ_328 /* DepoCore.framework in Frameworks */,
+				OBJ_329 /* Files.framework in Frameworks */,
+				OBJ_330 /* Yams.framework in Frameworks */,
+				OBJ_331 /* CYaml.framework in Frameworks */,
+				OBJ_332 /* CartfileParser.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_371 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_372 /* CYaml.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		365C65FD2563805F0027B245 /* Resources */ = {
+		36A1580325662C40007C1A34 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				365C664E256380DA0027B245 /* PackageSwiftWithDeps.swift */,
-				365C6650256380FE0027B245 /* PackageSwiftNoDeps.txt */,
-				365C664F256380FE0027B245 /* PackageSwiftWithDeps.txt */,
-				365C6630256380B60027B245 /* PackageSwiftNoDeps.swift */,
-				EC4BED61D9370EFB8A907E1A /* PodfileNoDeps.txt */,
-				EC4C347FD2212BE448C7732E /* PodfileWithDeps.txt */,
-				EC445AB5E315614507FCE3B3 /* CartfileNoDeps.txt */,
-				EC42D9D268D948E592540B6A /* CartfileWithDeps.txt */,
-				EC435E74EC5763EBBE310460 /* DepofileNoDeps */,
-				EC4F66CEAABE580B164D36C2 /* DepofileWithDeps */,
+				36A1580425662C40007C1A34 /* PackageSwiftWithDeps.txt */,
+				36A1580525662C40007C1A34 /* PodfileNoDeps.txt */,
+				36A1580725662C40007C1A34 /* PackageSwiftNoDeps.swift */,
+				36A1580825662C40007C1A34 /* CartfileWithDeps.txt */,
+				36A1580925662C40007C1A34 /* PackageSwiftWithDeps.swift */,
+				36A1580A25662C40007C1A34 /* CartfileNoDeps.txt */,
+				36A1580B25662C40007C1A34 /* PackageSwiftNoDeps.txt */,
+				36A1580C25662C40007C1A34 /* PodfileWithDeps.txt */,
+				36A1580D25662C40007C1A34 /* DepofileWithDeps */,
+				36A1580E25662C40007C1A34 /* DepofileNoDeps */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		EC4E8A3D22D5871EB967BD21 /* CarthageSourceCode */ = {
+		OBJ_106 /* swift-argument-parser 0.3.1 */ = {
 			isa = PBXGroup;
 			children = (
-				EC48DBBE2DD01F38F71B1082 /* CarthageVersion.swift */,
-				EC47C56E0930D237C1E9B115 /* ActualCartfile.swift */,
-				EC4E567919336D57871C6CF7 /* CarthageDependency.swift */,
-				EC4E15B4D859D89DABF81BB4 /* DuplicateDependency.swift */,
-				EC474FD245AFF407B0B928F9 /* Scannable.swift */,
+				OBJ_107 /* ArgumentParser */,
+				OBJ_149 /* Package.swift */,
 			);
-			path = CarthageSourceCode;
+			name = "swift-argument-parser 0.3.1";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_107 /* ArgumentParser */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_108 /* Completions */,
+				OBJ_113 /* Parsable Properties */,
+				OBJ_122 /* Parsable Types */,
+				OBJ_129 /* Parsing */,
+				OBJ_140 /* Usage */,
+				OBJ_145 /* Utilities */,
+			);
+			name = ArgumentParser;
+			path = ".build/checkouts/swift-argument-parser/Sources/ArgumentParser";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_108 /* Completions */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_109 /* BashCompletionsGenerator.swift */,
+				OBJ_110 /* CompletionsGenerator.swift */,
+				OBJ_111 /* FishCompletionsGenerator.swift */,
+				OBJ_112 /* ZshCompletionsGenerator.swift */,
+			);
+			path = Completions;
 			sourceTree = "<group>";
 		};
-		OBJ_103 /* Parsable Properties */ = {
+		OBJ_113 /* Parsable Properties */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_104 /* Argument.swift */,
-				OBJ_105 /* ArgumentHelp.swift */,
-				OBJ_106 /* CompletionKind.swift */,
-				OBJ_107 /* Errors.swift */,
-				OBJ_108 /* Flag.swift */,
-				OBJ_109 /* NameSpecification.swift */,
-				OBJ_110 /* Option.swift */,
-				OBJ_111 /* OptionGroup.swift */,
+				OBJ_114 /* Argument.swift */,
+				OBJ_115 /* ArgumentHelp.swift */,
+				OBJ_116 /* CompletionKind.swift */,
+				OBJ_117 /* Errors.swift */,
+				OBJ_118 /* Flag.swift */,
+				OBJ_119 /* NameSpecification.swift */,
+				OBJ_120 /* Option.swift */,
+				OBJ_121 /* OptionGroup.swift */,
 			);
 			path = "Parsable Properties";
 			sourceTree = "<group>";
 		};
-		OBJ_112 /* Parsable Types */ = {
+		OBJ_122 /* Parsable Types */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_113 /* CommandConfiguration.swift */,
-				OBJ_114 /* EnumerableFlag.swift */,
-				OBJ_115 /* ExpressibleByArgument.swift */,
-				OBJ_116 /* ParsableArguments.swift */,
-				OBJ_117 /* ParsableArgumentsValidation.swift */,
-				OBJ_118 /* ParsableCommand.swift */,
+				OBJ_123 /* CommandConfiguration.swift */,
+				OBJ_124 /* EnumerableFlag.swift */,
+				OBJ_125 /* ExpressibleByArgument.swift */,
+				OBJ_126 /* ParsableArguments.swift */,
+				OBJ_127 /* ParsableArgumentsValidation.swift */,
+				OBJ_128 /* ParsableCommand.swift */,
 			);
 			path = "Parsable Types";
 			sourceTree = "<group>";
 		};
-		OBJ_119 /* Parsing */ = {
+		OBJ_129 /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_120 /* ArgumentDecoder.swift */,
-				OBJ_121 /* ArgumentDefinition.swift */,
-				OBJ_122 /* ArgumentSet.swift */,
-				OBJ_123 /* CommandParser.swift */,
-				OBJ_124 /* InputOrigin.swift */,
-				OBJ_125 /* Name.swift */,
-				OBJ_126 /* Parsed.swift */,
-				OBJ_127 /* ParsedValues.swift */,
-				OBJ_128 /* ParserError.swift */,
-				OBJ_129 /* SplitArguments.swift */,
+				OBJ_130 /* ArgumentDecoder.swift */,
+				OBJ_131 /* ArgumentDefinition.swift */,
+				OBJ_132 /* ArgumentSet.swift */,
+				OBJ_133 /* CommandParser.swift */,
+				OBJ_134 /* InputOrigin.swift */,
+				OBJ_135 /* Name.swift */,
+				OBJ_136 /* Parsed.swift */,
+				OBJ_137 /* ParsedValues.swift */,
+				OBJ_138 /* ParserError.swift */,
+				OBJ_139 /* SplitArguments.swift */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
 		};
-		OBJ_12 /* Helpers */ = {
+		OBJ_14 /* Depo */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_13 /* Platform+ArgumentParser.swift */,
-				OBJ_14 /* CommandRunner */,
-				OBJ_17 /* EnumerableFlag+Help.swift */,
-				OBJ_18 /* FileManager+Helper.swift */,
+				OBJ_15 /* Commands */,
+				OBJ_19 /* Helpers */,
+				OBJ_26 /* Models */,
+				OBJ_29 /* PackageManagers */,
+				OBJ_35 /* main.swift */,
 			);
-			path = Helpers;
-			sourceTree = "<group>";
+			name = Depo;
+			path = Sources/Depo;
+			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_130 /* Usage */ = {
+		OBJ_140 /* Usage */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_131 /* HelpCommand.swift */,
-				OBJ_132 /* HelpGenerator.swift */,
-				OBJ_133 /* MessageInfo.swift */,
-				OBJ_134 /* UsageGenerator.swift */,
+				OBJ_141 /* HelpCommand.swift */,
+				OBJ_142 /* HelpGenerator.swift */,
+				OBJ_143 /* MessageInfo.swift */,
+				OBJ_144 /* UsageGenerator.swift */,
 			);
 			path = Usage;
 			sourceTree = "<group>";
 		};
-		OBJ_135 /* Utilities */ = {
+		OBJ_145 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_136 /* SequenceExtensions.swift */,
-				OBJ_137 /* StringExtensions.swift */,
-				OBJ_138 /* Tree.swift */,
+				OBJ_146 /* SequenceExtensions.swift */,
+				OBJ_147 /* StringExtensions.swift */,
+				OBJ_148 /* Tree.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		OBJ_14 /* CommandRunner */ = {
+		OBJ_15 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_15 /* CommandRunner.swift */,
-				OBJ_16 /* CompositeError.swift */,
+				OBJ_16 /* Depo.swift */,
+				OBJ_17 /* Init.swift */,
+				OBJ_18 /* ParsableCommands.swift */,
 			);
-			path = CommandRunner;
+			path = Commands;
 			sourceTree = "<group>";
 		};
-		OBJ_140 /* Products */ = {
+		OBJ_150 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				"Depo::DepoCore::Product" /* DepoCore.framework */,
-				"Yams::CYaml::Product" /* CYaml.framework */,
+				"swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */,
 				"Depo::Depo::Product" /* Depo */,
 				"Depo::DepoTest::Product" /* DepoTest.xctest */,
+				"Depo::DepoCore::Product" /* DepoCore.framework */,
 				"Yams::Yams::Product" /* Yams.framework */,
 				"Files::Files::Product" /* Files.framework */,
-				"swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */,
+				"Yams::CYaml::Product" /* CYaml.framework */,
+				"Depo::CartfileParser::Product" /* CartfileParser.framework */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_19 /* Models */ = {
+		OBJ_19 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_20 /* DefaultOptions.swift */,
-				OBJ_21 /* XcodeProject.swift */,
+				OBJ_20 /* CommandRunner */,
+				OBJ_23 /* EnumerableFlag+Help.swift */,
+				OBJ_24 /* FileManager+Helper.swift */,
+				OBJ_25 /* Platform+ArgumentParser.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		OBJ_20 /* CommandRunner */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_21 /* CommandRunner.swift */,
+				OBJ_22 /* CompositeError.swift */,
+			);
+			path = CommandRunner;
+			sourceTree = "<group>";
+		};
+		OBJ_26 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_27 /* DefaultOptions.swift */,
+				OBJ_28 /* XcodeProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_22 /* PackageManagers */ = {
+		OBJ_29 /* PackageManagers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_23 /* AllPackagesManager.swift */,
-				OBJ_24 /* CarthageManager.swift */,
-				OBJ_25 /* PackageManager.swift */,
-				OBJ_26 /* PodManager.swift */,
-				OBJ_27 /* SPMManager.swift */,
+				OBJ_30 /* AllPackagesManager.swift */,
+				OBJ_31 /* CarthageManager.swift */,
+				OBJ_32 /* PackageManager.swift */,
+				OBJ_33 /* PodManager.swift */,
+				OBJ_34 /* SPMManager.swift */,
 			);
 			path = PackageManagers;
 			sourceTree = "<group>";
 		};
-		OBJ_29 /* DepoCore */ = {
+		OBJ_36 /* DepoCore */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_30 /* AppConfiguration.swift */,
-				OBJ_31 /* Helpers */,
-				OBJ_36 /* Models */,
-				OBJ_47 /* Shell */,
+				OBJ_37 /* AppConfiguration.swift */,
+				OBJ_38 /* Helpers */,
+				OBJ_43 /* Models */,
+				OBJ_55 /* Shell */,
 			);
 			name = DepoCore;
 			path = Sources/DepoCore;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_31 /* Helpers */ = {
+		OBJ_38 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_32 /* Collection+KeyPath.swift */,
-				OBJ_33 /* DataDecoder.swift */,
-				OBJ_34 /* Decoder.swift */,
-				OBJ_35 /* HasDefaultValue.swift */,
+				OBJ_39 /* Collection+KeyPath.swift */,
+				OBJ_40 /* DataDecoder.swift */,
+				OBJ_41 /* Decoder.swift */,
+				OBJ_42 /* HasDefaultValue.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		OBJ_36 /* Models */ = {
+		OBJ_43 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_37 /* BuildSettings.swift */,
-				OBJ_38 /* CarthageItem.swift */,
-				OBJ_39 /* Files */,
-				OBJ_44 /* Pod.swift */,
-				OBJ_45 /* SwiftPackage.swift */,
-				OBJ_46 /* VersionConstraint.swift */,
-				EC438FFC61C5365BEEA3EC2C /* Platform.swift */,
+				OBJ_44 /* BuildSettings.swift */,
+				OBJ_45 /* CarthageItem.swift */,
+				OBJ_46 /* Files */,
+				OBJ_51 /* Platform.swift */,
+				OBJ_52 /* Pod.swift */,
+				OBJ_53 /* SwiftPackage.swift */,
+				OBJ_54 /* VersionConstraint.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		OBJ_39 /* Files */ = {
+		OBJ_46 /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_40 /* Cartfile.swift */,
-				OBJ_41 /* Depofile.swift */,
-				OBJ_42 /* PackageSwift.swift */,
-				OBJ_43 /* PodFile.swift */,
-				EC4E8A3D22D5871EB967BD21 /* CarthageSourceCode */,
+				OBJ_47 /* Cartfile.swift */,
+				OBJ_48 /* Depofile.swift */,
+				OBJ_49 /* PackageSwift.swift */,
+				OBJ_50 /* PodFile.swift */,
 			);
 			path = Files;
-			sourceTree = "<group>";
-		};
-		OBJ_47 /* Shell */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_48 /* BuildPodScript.swift */,
-				OBJ_49 /* BuildSwiftPackageScript.swift */,
-				OBJ_50 /* CarthageShellCommand.swift */,
-				OBJ_51 /* MergePackageScript.swift */,
-				OBJ_52 /* MoveBuiltPodScript.swift */,
-				OBJ_53 /* PodShellCommand.swift */,
-				OBJ_54 /* Shell.swift */,
-				OBJ_55 /* ShellCommand.swift */,
-				OBJ_56 /* SwiftPackageShellCommand.swift */,
-			);
-			path = Shell;
 			sourceTree = "<group>";
 		};
 		OBJ_5 = {
@@ -717,209 +764,202 @@
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_57 /* Tests */,
-				OBJ_62 /* Dependencies */,
-				OBJ_140 /* Products */,
-				OBJ_148 /* Shell */,
-				OBJ_149 /* Resources */,
-				OBJ_150 /* build */,
-				OBJ_151 /* Makefile */,
-				OBJ_152 /* README.md */,
+				OBJ_65 /* Tests */,
+				OBJ_72 /* Dependencies */,
+				OBJ_150 /* Products */,
+				OBJ_159 /* Shell */,
+				OBJ_160 /* build */,
+				OBJ_161 /* Makefile */,
+				OBJ_162 /* Cartfile */,
+				OBJ_163 /* README.md */,
+				OBJ_164 /* Depofile */,
+				OBJ_165 /* foo */,
+				OBJ_166 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};
-		OBJ_57 /* Tests */ = {
+		OBJ_55 /* Shell */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_58 /* DepoTest */,
+				OBJ_56 /* BuildPodScript.swift */,
+				OBJ_57 /* BuildSwiftPackageScript.swift */,
+				OBJ_58 /* CarthageShellCommand.swift */,
+				OBJ_59 /* MergePackageScript.swift */,
+				OBJ_60 /* MoveBuiltPodScript.swift */,
+				OBJ_61 /* PodShellCommand.swift */,
+				OBJ_62 /* Shell.swift */,
+				OBJ_63 /* ShellCommand.swift */,
+				OBJ_64 /* SwiftPackageShellCommand.swift */,
+			);
+			path = Shell;
+			sourceTree = "<group>";
+		};
+		OBJ_65 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_66 /* DepoTest */,
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_58 /* DepoTest */ = {
+		OBJ_66 /* DepoTest */ = {
 			isa = PBXGroup;
 			children = (
-				365C65FD2563805F0027B245 /* Resources */,
-				OBJ_59 /* PackageSwiftFileTest.swift */,
-				EC4B539B37D15C5243168BE5 /* PodfileTest.swift */,
-				EC4EF57A55C591431879388F /* PackageManagerFileTest.swift */,
-				EC47C1028C63B20F8BE0618A /* CartfileTest.swift */,
-				EC446DF442B96DBC5B5A777F /* DepoFileTest.swift */,
+				36A1580325662C40007C1A34 /* Resources */,
+				OBJ_67 /* CartfileTest.swift */,
+				OBJ_68 /* DepoFileTest.swift */,
+				OBJ_69 /* PackageManagerFileTest.swift */,
+				OBJ_70 /* PackageSwiftFileTest.swift */,
+				OBJ_71 /* PodfileTest.swift */,
 			);
 			name = DepoTest;
 			path = Tests/DepoTest;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_62 /* Dependencies */ = {
+		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_63 /* Files 4.1.1 */,
-				OBJ_66 /* Yams 4.0.0 */,
-				OBJ_96 /* swift-argument-parser 0.3.1 */,
+				OBJ_8 /* CartfileParser */,
+				OBJ_14 /* Depo */,
+				OBJ_36 /* DepoCore */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_72 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_73 /* Files 4.1.1 */,
+				OBJ_76 /* Yams 4.0.0 */,
+				OBJ_106 /* swift-argument-parser 0.3.1 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_63 /* Files 4.1.1 */ = {
+		OBJ_73 /* Files 4.1.1 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_64 /* Package.swift */,
-				OBJ_65 /* Files.swift */,
+				OBJ_74 /* Package.swift */,
+				OBJ_75 /* Files.swift */,
 			);
 			name = "Files 4.1.1";
 			path = .build/checkouts/Files/Sources;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_66 /* Yams 4.0.0 */ = {
+		OBJ_76 /* Yams 4.0.0 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_67 /* CYaml */,
-				OBJ_79 /* Yams */,
-				OBJ_95 /* Package.swift */,
+				OBJ_77 /* CYaml */,
+				OBJ_89 /* Yams */,
+				OBJ_105 /* Package.swift */,
 			);
 			name = "Yams 4.0.0";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_67 /* CYaml */ = {
+		OBJ_77 /* CYaml */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_68 /* src */,
-				OBJ_75 /* include */,
+				OBJ_78 /* src */,
+				OBJ_85 /* include */,
 			);
 			name = CYaml;
 			path = .build/checkouts/Yams/Sources/CYaml;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_68 /* src */ = {
+		OBJ_78 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_69 /* api.c */,
-				OBJ_70 /* emitter.c */,
-				OBJ_71 /* parser.c */,
-				OBJ_72 /* reader.c */,
-				OBJ_73 /* scanner.c */,
-				OBJ_74 /* writer.c */,
+				OBJ_79 /* api.c */,
+				OBJ_80 /* emitter.c */,
+				OBJ_81 /* parser.c */,
+				OBJ_82 /* reader.c */,
+				OBJ_83 /* scanner.c */,
+				OBJ_84 /* writer.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		OBJ_7 /* Sources */ = {
+		OBJ_8 /* CartfileParser */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_8 /* Depo */,
-				OBJ_29 /* DepoCore */,
+				OBJ_9 /* ActualCartfile.swift */,
+				OBJ_10 /* CarthageDependency.swift */,
+				OBJ_11 /* CarthageVersion.swift */,
+				OBJ_12 /* DuplicateDependency.swift */,
+				OBJ_13 /* Scannable.swift */,
 			);
-			name = Sources;
+			name = CartfileParser;
+			path = Sources/CartfileParser;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_75 /* include */ = {
+		OBJ_85 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_76 /* CYaml.h */,
-				OBJ_77 /* yaml.h */,
-				OBJ_78 /* module.modulemap */,
+				OBJ_86 /* CYaml.h */,
+				OBJ_87 /* yaml.h */,
+				OBJ_88 /* module.modulemap */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		OBJ_79 /* Yams */ = {
+		OBJ_89 /* Yams */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_80 /* Constructor.swift */,
-				OBJ_81 /* Decoder.swift */,
-				OBJ_82 /* Emitter.swift */,
-				OBJ_83 /* Encoder.swift */,
-				OBJ_84 /* Mark.swift */,
-				OBJ_85 /* Node.Mapping.swift */,
-				OBJ_86 /* Node.Scalar.swift */,
-				OBJ_87 /* Node.Sequence.swift */,
-				OBJ_88 /* Node.swift */,
-				OBJ_89 /* Parser.swift */,
-				OBJ_90 /* Representer.swift */,
-				OBJ_91 /* Resolver.swift */,
-				OBJ_92 /* String+Yams.swift */,
-				OBJ_93 /* Tag.swift */,
-				OBJ_94 /* YamlError.swift */,
+				OBJ_90 /* Constructor.swift */,
+				OBJ_91 /* Decoder.swift */,
+				OBJ_92 /* Emitter.swift */,
+				OBJ_93 /* Encoder.swift */,
+				OBJ_94 /* Mark.swift */,
+				OBJ_95 /* Node.Mapping.swift */,
+				OBJ_96 /* Node.Scalar.swift */,
+				OBJ_97 /* Node.Sequence.swift */,
+				OBJ_98 /* Node.swift */,
+				OBJ_99 /* Parser.swift */,
+				OBJ_100 /* Representer.swift */,
+				OBJ_101 /* Resolver.swift */,
+				OBJ_102 /* String+Yams.swift */,
+				OBJ_103 /* Tag.swift */,
+				OBJ_104 /* YamlError.swift */,
 			);
 			name = Yams;
 			path = .build/checkouts/Yams/Sources/Yams;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_8 /* Depo */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_9 /* Commands */,
-				OBJ_12 /* Helpers */,
-				OBJ_19 /* Models */,
-				OBJ_22 /* PackageManagers */,
-				OBJ_28 /* main.swift */,
-			);
-			name = Depo;
-			path = Sources/Depo;
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_9 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_10 /* Depo.swift */,
-				OBJ_11 /* ParsableCommands.swift */,
-				EC4C7987A402623E7BB35C50 /* Init.swift */,
-			);
-			path = Commands;
-			sourceTree = "<group>";
-		};
-		OBJ_96 /* swift-argument-parser 0.3.1 */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_97 /* ArgumentParser */,
-				OBJ_139 /* Package.swift */,
-			);
-			name = "swift-argument-parser 0.3.1";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_97 /* ArgumentParser */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_98 /* Completions */,
-				OBJ_103 /* Parsable Properties */,
-				OBJ_112 /* Parsable Types */,
-				OBJ_119 /* Parsing */,
-				OBJ_130 /* Usage */,
-				OBJ_135 /* Utilities */,
-			);
-			name = ArgumentParser;
-			path = ".build/checkouts/swift-argument-parser/Sources/ArgumentParser";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_98 /* Completions */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_99 /* BashCompletionsGenerator.swift */,
-				OBJ_100 /* CompletionsGenerator.swift */,
-				OBJ_101 /* FishCompletionsGenerator.swift */,
-				OBJ_102 /* ZshCompletionsGenerator.swift */,
-			);
-			path = Completions;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		"Depo::Depo" /* Depo */ = {
+		"Depo::CartfileParser" /* CartfileParser */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_207 /* Build configuration list for PBXNativeTarget "Depo" */;
+			buildConfigurationList = OBJ_221 /* Build configuration list for PBXNativeTarget "CartfileParser" */;
 			buildPhases = (
-				OBJ_210 /* Sources */,
-				OBJ_226 /* Frameworks */,
+				OBJ_224 /* Sources */,
+				OBJ_230 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_232 /* PBXTargetDependency */,
-				OBJ_233 /* PBXTargetDependency */,
-				OBJ_235 /* PBXTargetDependency */,
-				OBJ_237 /* PBXTargetDependency */,
-				OBJ_239 /* PBXTargetDependency */,
+			);
+			name = CartfileParser;
+			productName = CartfileParser;
+			productReference = "Depo::CartfileParser::Product" /* CartfileParser.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"Depo::Depo" /* Depo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_232 /* Build configuration list for PBXNativeTarget "Depo" */;
+			buildPhases = (
+				OBJ_235 /* Sources */,
+				OBJ_252 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_259 /* PBXTargetDependency */,
+				OBJ_260 /* PBXTargetDependency */,
+				OBJ_262 /* PBXTargetDependency */,
+				OBJ_264 /* PBXTargetDependency */,
+				OBJ_266 /* PBXTargetDependency */,
+				OBJ_267 /* PBXTargetDependency */,
 			);
 			name = Depo;
 			productName = Depo;
@@ -928,17 +968,18 @@
 		};
 		"Depo::DepoCore" /* DepoCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_240 /* Build configuration list for PBXNativeTarget "DepoCore" */;
+			buildConfigurationList = OBJ_268 /* Build configuration list for PBXNativeTarget "DepoCore" */;
 			buildPhases = (
-				OBJ_243 /* Sources */,
-				OBJ_267 /* Frameworks */,
+				OBJ_271 /* Sources */,
+				OBJ_296 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_271 /* PBXTargetDependency */,
-				OBJ_272 /* PBXTargetDependency */,
-				OBJ_273 /* PBXTargetDependency */,
+				OBJ_301 /* PBXTargetDependency */,
+				OBJ_302 /* PBXTargetDependency */,
+				OBJ_303 /* PBXTargetDependency */,
+				OBJ_304 /* PBXTargetDependency */,
 			);
 			name = DepoCore;
 			productName = DepoCore;
@@ -947,19 +988,22 @@
 		};
 		"Depo::DepoTest" /* DepoTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_286 /* Build configuration list for PBXNativeTarget "DepoTest" */;
+			buildConfigurationList = OBJ_317 /* Build configuration list for PBXNativeTarget "DepoTest" */;
 			buildPhases = (
-				OBJ_289 /* Sources */,
-				OBJ_293 /* Frameworks */,
-				365C65DC2563803E0027B245 /* Resources */,
+				OBJ_320 /* Sources */,
+				OBJ_326 /* Frameworks */,
+				36A157DA25662BC1007C1A34 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_298 /* PBXTargetDependency */,
-				OBJ_299 /* PBXTargetDependency */,
-				OBJ_300 /* PBXTargetDependency */,
-				OBJ_301 /* PBXTargetDependency */,
+				OBJ_333 /* PBXTargetDependency */,
+				OBJ_334 /* PBXTargetDependency */,
+				OBJ_335 /* PBXTargetDependency */,
+				OBJ_336 /* PBXTargetDependency */,
+				OBJ_337 /* PBXTargetDependency */,
+				OBJ_338 /* PBXTargetDependency */,
+				OBJ_339 /* PBXTargetDependency */,
 			);
 			name = DepoTest;
 			productName = DepoTest;
@@ -968,9 +1012,9 @@
 		};
 		"Depo::SwiftPMPackageDescription" /* DepoPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_275 /* Build configuration list for PBXNativeTarget "DepoPackageDescription" */;
+			buildConfigurationList = OBJ_306 /* Build configuration list for PBXNativeTarget "DepoPackageDescription" */;
 			buildPhases = (
-				OBJ_278 /* Sources */,
+				OBJ_309 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -982,10 +1026,10 @@
 		};
 		"Files::Files" /* Files */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_302 /* Build configuration list for PBXNativeTarget "Files" */;
+			buildConfigurationList = OBJ_340 /* Build configuration list for PBXNativeTarget "Files" */;
 			buildPhases = (
-				OBJ_305 /* Sources */,
-				OBJ_307 /* Frameworks */,
+				OBJ_343 /* Sources */,
+				OBJ_345 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -998,9 +1042,9 @@
 		};
 		"Files::SwiftPMPackageDescription" /* FilesPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_309 /* Build configuration list for PBXNativeTarget "FilesPackageDescription" */;
+			buildConfigurationList = OBJ_347 /* Build configuration list for PBXNativeTarget "FilesPackageDescription" */;
 			buildPhases = (
-				OBJ_312 /* Sources */,
+				OBJ_350 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1012,10 +1056,10 @@
 		};
 		"Yams::CYaml" /* CYaml */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_195 /* Build configuration list for PBXNativeTarget "CYaml" */;
+			buildConfigurationList = OBJ_209 /* Build configuration list for PBXNativeTarget "CYaml" */;
 			buildPhases = (
-				OBJ_198 /* Sources */,
-				OBJ_205 /* Frameworks */,
+				OBJ_212 /* Sources */,
+				OBJ_219 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1028,9 +1072,9 @@
 		};
 		"Yams::SwiftPMPackageDescription" /* YamsPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_337 /* Build configuration list for PBXNativeTarget "YamsPackageDescription" */;
+			buildConfigurationList = OBJ_375 /* Build configuration list for PBXNativeTarget "YamsPackageDescription" */;
 			buildPhases = (
-				OBJ_340 /* Sources */,
+				OBJ_378 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1042,15 +1086,15 @@
 		};
 		"Yams::Yams" /* Yams */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_314 /* Build configuration list for PBXNativeTarget "Yams" */;
+			buildConfigurationList = OBJ_352 /* Build configuration list for PBXNativeTarget "Yams" */;
 			buildPhases = (
-				OBJ_317 /* Sources */,
-				OBJ_333 /* Frameworks */,
+				OBJ_355 /* Sources */,
+				OBJ_371 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_335 /* PBXTargetDependency */,
+				OBJ_373 /* PBXTargetDependency */,
 			);
 			name = Yams;
 			productName = Yams;
@@ -1059,10 +1103,10 @@
 		};
 		"swift-argument-parser::ArgumentParser" /* ArgumentParser */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_154 /* Build configuration list for PBXNativeTarget "ArgumentParser" */;
+			buildConfigurationList = OBJ_168 /* Build configuration list for PBXNativeTarget "ArgumentParser" */;
 			buildPhases = (
-				OBJ_157 /* Sources */,
-				OBJ_193 /* Frameworks */,
+				OBJ_171 /* Sources */,
+				OBJ_207 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1075,9 +1119,9 @@
 		};
 		"swift-argument-parser::SwiftPMPackageDescription" /* swift-argument-parserPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_353 /* Build configuration list for PBXNativeTarget "swift-argument-parserPackageDescription" */;
+			buildConfigurationList = OBJ_381 /* Build configuration list for PBXNativeTarget "swift-argument-parserPackageDescription" */;
 			buildPhases = (
-				OBJ_356 /* Sources */,
+				OBJ_384 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1104,12 +1148,13 @@
 				en,
 			);
 			mainGroup = OBJ_5;
-			productRefGroup = OBJ_140 /* Products */;
+			productRefGroup = OBJ_150 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				"swift-argument-parser::ArgumentParser" /* ArgumentParser */,
 				"Yams::CYaml" /* CYaml */,
+				"Depo::CartfileParser" /* CartfileParser */,
 				"Depo::Depo" /* Depo */,
 				"Depo::DepoCore" /* DepoCore */,
 				"Depo::SwiftPMPackageDescription" /* DepoPackageDescription */,
@@ -1119,307 +1164,327 @@
 				"Files::SwiftPMPackageDescription" /* FilesPackageDescription */,
 				"Yams::Yams" /* Yams */,
 				"Yams::SwiftPMPackageDescription" /* YamsPackageDescription */,
-				"Depo::depo::ProductTarget" /* depo */,
-				"Depo::depo-core::ProductTarget" /* depo-core */,
 				"swift-argument-parser::SwiftPMPackageDescription" /* swift-argument-parserPackageDescription */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		365C65DC2563803E0027B245 /* Resources */ = {
+		36A157DA25662BC1007C1A34 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3685A9382563ECA800B43707 /* DepofileWithDeps in Resources */,
-				EC424FBCCA0D24B77D8FED16 /* DepofileNoDeps in Resources */,
-				3620401C2563D28300BC2825 /* CartfileWithDeps.txt in Resources */,
-				36203FFF2563D21800BC2825 /* CartfileNoDeps.txt in Resources */,
-				365C665F2563810A0027B245 /* PackageSwiftWithDeps.txt in Resources */,
-				365C666E2563810E0027B245 /* PackageSwiftNoDeps.txt in Resources */,
-				36B4AFCB2563B95F00DD0FD9 /* PodfileNoDeps.txt in Resources */,
-				36203FC62563CD3F00BC2825 /* PodfileWithDeps.txt in Resources */,
+				36A1581625662C40007C1A34 /* PodfileWithDeps.txt in Resources */,
+				36A1580F25662C40007C1A34 /* PackageSwiftWithDeps.txt in Resources */,
+				36A1581225662C40007C1A34 /* CartfileWithDeps.txt in Resources */,
+				36A1581025662C40007C1A34 /* PodfileNoDeps.txt in Resources */,
+				36A1581725662C40007C1A34 /* DepofileWithDeps in Resources */,
+				36A1581525662C40007C1A34 /* PackageSwiftNoDeps.txt in Resources */,
+				36A1581425662C40007C1A34 /* CartfileNoDeps.txt in Resources */,
+				36A1581825662C40007C1A34 /* DepofileNoDeps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_157 /* Sources */ = {
+		OBJ_171 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_158 /* BashCompletionsGenerator.swift in Sources */,
-				OBJ_159 /* CompletionsGenerator.swift in Sources */,
-				OBJ_160 /* FishCompletionsGenerator.swift in Sources */,
-				OBJ_161 /* ZshCompletionsGenerator.swift in Sources */,
-				OBJ_162 /* Argument.swift in Sources */,
-				OBJ_163 /* ArgumentHelp.swift in Sources */,
-				OBJ_164 /* CompletionKind.swift in Sources */,
-				OBJ_165 /* Errors.swift in Sources */,
-				OBJ_166 /* Flag.swift in Sources */,
-				OBJ_167 /* NameSpecification.swift in Sources */,
-				OBJ_168 /* Option.swift in Sources */,
-				OBJ_169 /* OptionGroup.swift in Sources */,
-				OBJ_170 /* CommandConfiguration.swift in Sources */,
-				OBJ_171 /* EnumerableFlag.swift in Sources */,
-				OBJ_172 /* ExpressibleByArgument.swift in Sources */,
-				OBJ_173 /* ParsableArguments.swift in Sources */,
-				OBJ_174 /* ParsableArgumentsValidation.swift in Sources */,
-				OBJ_175 /* ParsableCommand.swift in Sources */,
-				OBJ_176 /* ArgumentDecoder.swift in Sources */,
-				OBJ_177 /* ArgumentDefinition.swift in Sources */,
-				OBJ_178 /* ArgumentSet.swift in Sources */,
-				OBJ_179 /* CommandParser.swift in Sources */,
-				OBJ_180 /* InputOrigin.swift in Sources */,
-				OBJ_181 /* Name.swift in Sources */,
-				OBJ_182 /* Parsed.swift in Sources */,
-				OBJ_183 /* ParsedValues.swift in Sources */,
-				OBJ_184 /* ParserError.swift in Sources */,
-				OBJ_185 /* SplitArguments.swift in Sources */,
-				OBJ_186 /* HelpCommand.swift in Sources */,
-				OBJ_187 /* HelpGenerator.swift in Sources */,
-				OBJ_188 /* MessageInfo.swift in Sources */,
-				OBJ_189 /* UsageGenerator.swift in Sources */,
-				OBJ_190 /* SequenceExtensions.swift in Sources */,
-				OBJ_191 /* StringExtensions.swift in Sources */,
-				OBJ_192 /* Tree.swift in Sources */,
+				OBJ_172 /* BashCompletionsGenerator.swift in Sources */,
+				OBJ_173 /* CompletionsGenerator.swift in Sources */,
+				OBJ_174 /* FishCompletionsGenerator.swift in Sources */,
+				OBJ_175 /* ZshCompletionsGenerator.swift in Sources */,
+				OBJ_176 /* Argument.swift in Sources */,
+				OBJ_177 /* ArgumentHelp.swift in Sources */,
+				OBJ_178 /* CompletionKind.swift in Sources */,
+				OBJ_179 /* Errors.swift in Sources */,
+				OBJ_180 /* Flag.swift in Sources */,
+				OBJ_181 /* NameSpecification.swift in Sources */,
+				OBJ_182 /* Option.swift in Sources */,
+				OBJ_183 /* OptionGroup.swift in Sources */,
+				OBJ_184 /* CommandConfiguration.swift in Sources */,
+				OBJ_185 /* EnumerableFlag.swift in Sources */,
+				OBJ_186 /* ExpressibleByArgument.swift in Sources */,
+				OBJ_187 /* ParsableArguments.swift in Sources */,
+				OBJ_188 /* ParsableArgumentsValidation.swift in Sources */,
+				OBJ_189 /* ParsableCommand.swift in Sources */,
+				OBJ_190 /* ArgumentDecoder.swift in Sources */,
+				OBJ_191 /* ArgumentDefinition.swift in Sources */,
+				OBJ_192 /* ArgumentSet.swift in Sources */,
+				OBJ_193 /* CommandParser.swift in Sources */,
+				OBJ_194 /* InputOrigin.swift in Sources */,
+				OBJ_195 /* Name.swift in Sources */,
+				OBJ_196 /* Parsed.swift in Sources */,
+				OBJ_197 /* ParsedValues.swift in Sources */,
+				OBJ_198 /* ParserError.swift in Sources */,
+				OBJ_199 /* SplitArguments.swift in Sources */,
+				OBJ_200 /* HelpCommand.swift in Sources */,
+				OBJ_201 /* HelpGenerator.swift in Sources */,
+				OBJ_202 /* MessageInfo.swift in Sources */,
+				OBJ_203 /* UsageGenerator.swift in Sources */,
+				OBJ_204 /* SequenceExtensions.swift in Sources */,
+				OBJ_205 /* StringExtensions.swift in Sources */,
+				OBJ_206 /* Tree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_198 /* Sources */ = {
+		OBJ_212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_199 /* api.c in Sources */,
-				OBJ_200 /* emitter.c in Sources */,
-				OBJ_201 /* parser.c in Sources */,
-				OBJ_202 /* reader.c in Sources */,
-				OBJ_203 /* scanner.c in Sources */,
-				OBJ_204 /* writer.c in Sources */,
+				OBJ_213 /* api.c in Sources */,
+				OBJ_214 /* emitter.c in Sources */,
+				OBJ_215 /* parser.c in Sources */,
+				OBJ_216 /* reader.c in Sources */,
+				OBJ_217 /* scanner.c in Sources */,
+				OBJ_218 /* writer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_210 /* Sources */ = {
+		OBJ_224 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_211 /* Depo.swift in Sources */,
-				OBJ_212 /* ParsableCommands.swift in Sources */,
-				OBJ_213 /* Platform+ArgumentParser.swift in Sources */,
-				OBJ_214 /* CommandRunner.swift in Sources */,
-				OBJ_215 /* CompositeError.swift in Sources */,
-				OBJ_216 /* EnumerableFlag+Help.swift in Sources */,
-				OBJ_217 /* FileManager+Helper.swift in Sources */,
-				OBJ_218 /* DefaultOptions.swift in Sources */,
-				OBJ_219 /* XcodeProject.swift in Sources */,
-				OBJ_220 /* AllPackagesManager.swift in Sources */,
-				OBJ_221 /* CarthageManager.swift in Sources */,
-				OBJ_222 /* PackageManager.swift in Sources */,
-				OBJ_223 /* PodManager.swift in Sources */,
-				OBJ_224 /* SPMManager.swift in Sources */,
-				OBJ_225 /* main.swift in Sources */,
-				EC4309CB8898B5A6DB8784F8 /* Init.swift in Sources */,
+				OBJ_225 /* ActualCartfile.swift in Sources */,
+				OBJ_226 /* CarthageDependency.swift in Sources */,
+				OBJ_227 /* CarthageVersion.swift in Sources */,
+				OBJ_228 /* DuplicateDependency.swift in Sources */,
+				OBJ_229 /* Scannable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_243 /* Sources */ = {
+		OBJ_235 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_244 /* AppConfiguration.swift in Sources */,
-				OBJ_245 /* Collection+KeyPath.swift in Sources */,
-				OBJ_246 /* DataDecoder.swift in Sources */,
-				OBJ_247 /* Decoder.swift in Sources */,
-				OBJ_248 /* HasDefaultValue.swift in Sources */,
-				OBJ_249 /* BuildSettings.swift in Sources */,
-				OBJ_250 /* CarthageItem.swift in Sources */,
-				OBJ_251 /* Cartfile.swift in Sources */,
-				OBJ_252 /* Depofile.swift in Sources */,
-				OBJ_253 /* PackageSwift.swift in Sources */,
-				OBJ_254 /* PodFile.swift in Sources */,
-				OBJ_255 /* Pod.swift in Sources */,
-				OBJ_256 /* SwiftPackage.swift in Sources */,
-				OBJ_257 /* VersionConstraint.swift in Sources */,
-				OBJ_258 /* BuildPodScript.swift in Sources */,
-				OBJ_259 /* BuildSwiftPackageScript.swift in Sources */,
-				OBJ_260 /* CarthageShellCommand.swift in Sources */,
-				OBJ_261 /* MergePackageScript.swift in Sources */,
-				OBJ_262 /* MoveBuiltPodScript.swift in Sources */,
-				OBJ_263 /* PodShellCommand.swift in Sources */,
-				OBJ_264 /* Shell.swift in Sources */,
-				OBJ_265 /* ShellCommand.swift in Sources */,
-				OBJ_266 /* SwiftPackageShellCommand.swift in Sources */,
-				EC494B9D3FC4A8FC8AE3594A /* Platform.swift in Sources */,
-				EC4D5AE3B47B7AA191B6B49C /* CarthageVersion.swift in Sources */,
-				EC4BAE7E0A6B65992BD86325 /* ActualCartfile.swift in Sources */,
-				EC4E8F9D25619CCF92C57689 /* CarthageDependency.swift in Sources */,
-				EC45F1AB06A2FA50B5163A66 /* DuplicateDependency.swift in Sources */,
-				EC4F5FCCC020F6F6818BCD2B /* Scannable.swift in Sources */,
+				OBJ_236 /* Depo.swift in Sources */,
+				OBJ_237 /* Init.swift in Sources */,
+				OBJ_238 /* ParsableCommands.swift in Sources */,
+				OBJ_239 /* CommandRunner.swift in Sources */,
+				OBJ_240 /* CompositeError.swift in Sources */,
+				OBJ_241 /* EnumerableFlag+Help.swift in Sources */,
+				OBJ_242 /* FileManager+Helper.swift in Sources */,
+				OBJ_243 /* Platform+ArgumentParser.swift in Sources */,
+				OBJ_244 /* DefaultOptions.swift in Sources */,
+				OBJ_245 /* XcodeProject.swift in Sources */,
+				OBJ_246 /* AllPackagesManager.swift in Sources */,
+				OBJ_247 /* CarthageManager.swift in Sources */,
+				OBJ_248 /* PackageManager.swift in Sources */,
+				OBJ_249 /* PodManager.swift in Sources */,
+				OBJ_250 /* SPMManager.swift in Sources */,
+				OBJ_251 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_278 /* Sources */ = {
+		OBJ_271 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_279 /* Package.swift in Sources */,
+				OBJ_272 /* AppConfiguration.swift in Sources */,
+				OBJ_273 /* Collection+KeyPath.swift in Sources */,
+				OBJ_274 /* DataDecoder.swift in Sources */,
+				OBJ_275 /* Decoder.swift in Sources */,
+				OBJ_276 /* HasDefaultValue.swift in Sources */,
+				OBJ_277 /* BuildSettings.swift in Sources */,
+				OBJ_278 /* CarthageItem.swift in Sources */,
+				OBJ_279 /* Cartfile.swift in Sources */,
+				OBJ_280 /* Depofile.swift in Sources */,
+				OBJ_281 /* PackageSwift.swift in Sources */,
+				OBJ_282 /* PodFile.swift in Sources */,
+				OBJ_283 /* Platform.swift in Sources */,
+				OBJ_284 /* Pod.swift in Sources */,
+				OBJ_285 /* SwiftPackage.swift in Sources */,
+				OBJ_286 /* VersionConstraint.swift in Sources */,
+				OBJ_287 /* BuildPodScript.swift in Sources */,
+				OBJ_288 /* BuildSwiftPackageScript.swift in Sources */,
+				OBJ_289 /* CarthageShellCommand.swift in Sources */,
+				OBJ_290 /* MergePackageScript.swift in Sources */,
+				OBJ_291 /* MoveBuiltPodScript.swift in Sources */,
+				OBJ_292 /* PodShellCommand.swift in Sources */,
+				OBJ_293 /* Shell.swift in Sources */,
+				OBJ_294 /* ShellCommand.swift in Sources */,
+				OBJ_295 /* SwiftPackageShellCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_289 /* Sources */ = {
+		OBJ_309 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_290 /* PackageSwiftFileTest.swift in Sources */,
-				EC4E7C97E1280B45530E2E2F /* PodfileTest.swift in Sources */,
-				EC455168BB930AA833C5F7FC /* PackageManagerFileTest.swift in Sources */,
-				EC401A2C58CBE2DC86F0A4E1 /* CartfileTest.swift in Sources */,
-				EC49640C8A28C09E71CB5BDE /* DepoFileTest.swift in Sources */,
+				OBJ_310 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_305 /* Sources */ = {
+		OBJ_320 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_306 /* Files.swift in Sources */,
+				OBJ_321 /* CartfileTest.swift in Sources */,
+				OBJ_322 /* DepoFileTest.swift in Sources */,
+				OBJ_323 /* PackageManagerFileTest.swift in Sources */,
+				OBJ_324 /* PackageSwiftFileTest.swift in Sources */,
+				OBJ_325 /* PodfileTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_312 /* Sources */ = {
+		OBJ_343 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_313 /* Package.swift in Sources */,
+				OBJ_344 /* Files.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_317 /* Sources */ = {
+		OBJ_350 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_318 /* Constructor.swift in Sources */,
-				OBJ_319 /* Decoder.swift in Sources */,
-				OBJ_320 /* Emitter.swift in Sources */,
-				OBJ_321 /* Encoder.swift in Sources */,
-				OBJ_322 /* Mark.swift in Sources */,
-				OBJ_323 /* Node.Mapping.swift in Sources */,
-				OBJ_324 /* Node.Scalar.swift in Sources */,
-				OBJ_325 /* Node.Sequence.swift in Sources */,
-				OBJ_326 /* Node.swift in Sources */,
-				OBJ_327 /* Parser.swift in Sources */,
-				OBJ_328 /* Representer.swift in Sources */,
-				OBJ_329 /* Resolver.swift in Sources */,
-				OBJ_330 /* String+Yams.swift in Sources */,
-				OBJ_331 /* Tag.swift in Sources */,
-				OBJ_332 /* YamlError.swift in Sources */,
+				OBJ_351 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_340 /* Sources */ = {
+		OBJ_355 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_341 /* Package.swift in Sources */,
+				OBJ_356 /* Constructor.swift in Sources */,
+				OBJ_357 /* Decoder.swift in Sources */,
+				OBJ_358 /* Emitter.swift in Sources */,
+				OBJ_359 /* Encoder.swift in Sources */,
+				OBJ_360 /* Mark.swift in Sources */,
+				OBJ_361 /* Node.Mapping.swift in Sources */,
+				OBJ_362 /* Node.Scalar.swift in Sources */,
+				OBJ_363 /* Node.Sequence.swift in Sources */,
+				OBJ_364 /* Node.swift in Sources */,
+				OBJ_365 /* Parser.swift in Sources */,
+				OBJ_366 /* Representer.swift in Sources */,
+				OBJ_367 /* Resolver.swift in Sources */,
+				OBJ_368 /* String+Yams.swift in Sources */,
+				OBJ_369 /* Tag.swift in Sources */,
+				OBJ_370 /* YamlError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_356 /* Sources */ = {
+		OBJ_378 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_357 /* Package.swift in Sources */,
+				OBJ_379 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_385 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_232 /* PBXTargetDependency */ = {
+		OBJ_259 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "swift-argument-parser::ArgumentParser" /* ArgumentParser */;
-			targetProxy = 365C65C6256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157BB25662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
-		OBJ_233 /* PBXTargetDependency */ = {
+		OBJ_260 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Depo::DepoCore" /* DepoCore */;
-			targetProxy = 365C65C7256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157BC25662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
-		OBJ_235 /* PBXTargetDependency */ = {
+		OBJ_262 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Files::Files" /* Files */;
-			targetProxy = 365C65C8256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157C225662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
-		OBJ_237 /* PBXTargetDependency */ = {
+		OBJ_264 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Yams::Yams" /* Yams */;
-			targetProxy = 365C65C9256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157C325662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
-		OBJ_239 /* PBXTargetDependency */ = {
+		OBJ_266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "Yams::CYaml" /* CYaml */;
-			targetProxy = 365C65CA256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157C425662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
-		OBJ_271 /* PBXTargetDependency */ = {
+		OBJ_267 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = "Files::Files" /* Files */;
-			targetProxy = 365C65BF256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_272 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Yams::Yams" /* Yams */;
-			targetProxy = 365C65C0256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_273 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Yams::CYaml" /* CYaml */;
-			targetProxy = 365C65C2256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Depo::DepoTest" /* DepoTest */;
-			targetProxy = 365C65D02563803B0027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_298 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Depo::DepoCore" /* DepoCore */;
-			targetProxy = 365C65BE256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_299 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Files::Files" /* Files */;
-			targetProxy = 365C65C3256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_300 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Yams::Yams" /* Yams */;
-			targetProxy = 365C65C4256380380027B245 /* PBXContainerItemProxy */;
+			target = "Depo::CartfileParser" /* CartfileParser */;
+			targetProxy = 36A157C525662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
 		OBJ_301 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			target = "Files::Files" /* Files */;
+			targetProxy = 36A157BD25662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_302 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Yams::Yams" /* Yams */;
+			targetProxy = 36A157BE25662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_303 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
 			target = "Yams::CYaml" /* CYaml */;
-			targetProxy = 365C65C5256380380027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157C025662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_304 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Depo::CartfileParser" /* CartfileParser */;
+			targetProxy = 36A157C125662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_315 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Depo::DepoTest" /* DepoTest */;
+			targetProxy = 36A157D225662BB8007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_333 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Depo::Depo" /* Depo */;
+			targetProxy = 36A157BA25662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_334 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "swift-argument-parser::ArgumentParser" /* ArgumentParser */;
+			targetProxy = 36A157C625662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
 		OBJ_335 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = "Yams::CYaml" /* CYaml */;
-			targetProxy = 365C65C1256380380027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_346 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "Depo::Depo" /* Depo */;
-			targetProxy = 365C65D72563803B0027B245 /* PBXContainerItemProxy */;
-		};
-		OBJ_351 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
 			target = "Depo::DepoCore" /* DepoCore */;
-			targetProxy = 365C65D92563803B0027B245 /* PBXContainerItemProxy */;
+			targetProxy = 36A157C725662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_336 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Files::Files" /* Files */;
+			targetProxy = 36A157C825662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_337 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Yams::Yams" /* Yams */;
+			targetProxy = 36A157C925662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_338 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Yams::CYaml" /* CYaml */;
+			targetProxy = 36A157CA25662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_339 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Depo::CartfileParser" /* CartfileParser */;
+			targetProxy = 36A157CB25662BB5007C1A34 /* PBXContainerItemProxy */;
+		};
+		OBJ_373 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Yams::CYaml" /* CYaml */;
+			targetProxy = 36A157BF25662BB5007C1A34 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_155 /* Debug */ = {
+		OBJ_169 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1447,7 +1512,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_156 /* Release */ = {
+		OBJ_170 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1475,7 +1540,7 @@
 			};
 			name = Release;
 		};
-		OBJ_196 /* Debug */ = {
+		OBJ_210 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = NO;
@@ -1506,7 +1571,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_197 /* Release */ = {
+		OBJ_211 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = NO;
@@ -1537,7 +1602,63 @@
 			};
 			name = Release;
 		};
-		OBJ_208 /* Debug */ = {
+		OBJ_222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Depo.xcodeproj/CartfileParser_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = CartfileParser;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = CartfileParser;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_223 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Depo.xcodeproj/CartfileParser_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = CartfileParser;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = CartfileParser;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_233 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1565,7 +1686,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_209 /* Release */ = {
+		OBJ_234 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1593,7 +1714,7 @@
 			};
 			name = Release;
 		};
-		OBJ_241 /* Debug */ = {
+		OBJ_269 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1624,7 +1745,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_242 /* Release */ = {
+		OBJ_270 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1650,92 +1771,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = DepoCore;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Release;
-		};
-		OBJ_276 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.3.0";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		OBJ_277 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.3.0";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		OBJ_282 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		OBJ_283 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		OBJ_287 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include",
-				);
-				INFOPLIST_FILE = Depo.xcodeproj/DepoTest_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DepoTest;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Debug;
-		};
-		OBJ_288 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include",
-				);
-				INFOPLIST_FILE = Depo.xcodeproj/DepoTest_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DepoTest;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1768,7 +1803,93 @@
 			};
 			name = Debug;
 		};
-		OBJ_303 /* Debug */ = {
+		OBJ_307 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.3.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_308 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.3.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_313 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_314 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_318 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include",
+				);
+				INFOPLIST_FILE = Depo.xcodeproj/DepoTest_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DepoTest;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_319 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include",
+				);
+				INFOPLIST_FILE = Depo.xcodeproj/DepoTest_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/Yams/Sources/CYaml/include/module.modulemap";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DepoTest;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_341 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1796,7 +1917,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_304 /* Release */ = {
+		OBJ_342 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1824,7 +1945,7 @@
 			};
 			name = Release;
 		};
-		OBJ_310 /* Debug */ = {
+		OBJ_348 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1833,7 +1954,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_311 /* Release */ = {
+		OBJ_349 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1842,7 +1963,7 @@
 			};
 			name = Release;
 		};
-		OBJ_315 /* Debug */ = {
+		OBJ_353 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1873,7 +1994,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_316 /* Release */ = {
+		OBJ_354 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
@@ -1904,7 +2025,7 @@
 			};
 			name = Release;
 		};
-		OBJ_338 /* Debug */ = {
+		OBJ_376 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1913,7 +2034,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_339 /* Release */ = {
+		OBJ_377 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1922,31 +2043,7 @@
 			};
 			name = Release;
 		};
-		OBJ_344 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		OBJ_345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		OBJ_349 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		OBJ_350 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		OBJ_354 /* Debug */ = {
+		OBJ_382 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1955,7 +2052,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_355 /* Release */ = {
+		OBJ_383 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -1991,20 +2088,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_154 /* Build configuration list for PBXNativeTarget "ArgumentParser" */ = {
+		OBJ_168 /* Build configuration list for PBXNativeTarget "ArgumentParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_155 /* Debug */,
-				OBJ_156 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		OBJ_195 /* Build configuration list for PBXNativeTarget "CYaml" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_196 /* Debug */,
-				OBJ_197 /* Release */,
+				OBJ_169 /* Debug */,
+				OBJ_170 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2018,110 +2106,110 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_207 /* Build configuration list for PBXNativeTarget "Depo" */ = {
+		OBJ_209 /* Build configuration list for PBXNativeTarget "CYaml" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_208 /* Debug */,
-				OBJ_209 /* Release */,
+				OBJ_210 /* Debug */,
+				OBJ_211 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_240 /* Build configuration list for PBXNativeTarget "DepoCore" */ = {
+		OBJ_221 /* Build configuration list for PBXNativeTarget "CartfileParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_241 /* Debug */,
-				OBJ_242 /* Release */,
+				OBJ_222 /* Debug */,
+				OBJ_223 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_275 /* Build configuration list for PBXNativeTarget "DepoPackageDescription" */ = {
+		OBJ_232 /* Build configuration list for PBXNativeTarget "Depo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_276 /* Debug */,
-				OBJ_277 /* Release */,
+				OBJ_233 /* Debug */,
+				OBJ_234 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_281 /* Build configuration list for PBXAggregateTarget "DepoPackageTests" */ = {
+		OBJ_268 /* Build configuration list for PBXNativeTarget "DepoCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_282 /* Debug */,
-				OBJ_283 /* Release */,
+				OBJ_269 /* Debug */,
+				OBJ_270 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_286 /* Build configuration list for PBXNativeTarget "DepoTest" */ = {
+		OBJ_306 /* Build configuration list for PBXNativeTarget "DepoPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_287 /* Debug */,
-				OBJ_288 /* Release */,
+				OBJ_307 /* Debug */,
+				OBJ_308 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_302 /* Build configuration list for PBXNativeTarget "Files" */ = {
+		OBJ_312 /* Build configuration list for PBXAggregateTarget "DepoPackageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_303 /* Debug */,
-				OBJ_304 /* Release */,
+				OBJ_313 /* Debug */,
+				OBJ_314 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_309 /* Build configuration list for PBXNativeTarget "FilesPackageDescription" */ = {
+		OBJ_317 /* Build configuration list for PBXNativeTarget "DepoTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_310 /* Debug */,
-				OBJ_311 /* Release */,
+				OBJ_318 /* Debug */,
+				OBJ_319 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_314 /* Build configuration list for PBXNativeTarget "Yams" */ = {
+		OBJ_340 /* Build configuration list for PBXNativeTarget "Files" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_315 /* Debug */,
-				OBJ_316 /* Release */,
+				OBJ_341 /* Debug */,
+				OBJ_342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_337 /* Build configuration list for PBXNativeTarget "YamsPackageDescription" */ = {
+		OBJ_347 /* Build configuration list for PBXNativeTarget "FilesPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_338 /* Debug */,
-				OBJ_339 /* Release */,
+				OBJ_348 /* Debug */,
+				OBJ_349 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_343 /* Build configuration list for PBXAggregateTarget "depo" */ = {
+		OBJ_352 /* Build configuration list for PBXNativeTarget "Yams" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_344 /* Debug */,
-				OBJ_345 /* Release */,
+				OBJ_353 /* Debug */,
+				OBJ_354 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_348 /* Build configuration list for PBXAggregateTarget "depo-core" */ = {
+		OBJ_375 /* Build configuration list for PBXNativeTarget "YamsPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_349 /* Debug */,
-				OBJ_350 /* Release */,
+				OBJ_376 /* Debug */,
+				OBJ_377 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_353 /* Build configuration list for PBXNativeTarget "swift-argument-parserPackageDescription" */ = {
+		OBJ_381 /* Build configuration list for PBXNativeTarget "swift-argument-parserPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_354 /* Debug */,
-				OBJ_355 /* Release */,
+				OBJ_382 /* Debug */,
+				OBJ_383 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -17,28 +17,28 @@ extension Result {
     }
 }
 
-/// Represents a ActualCartfile, which is a specification of a project's dependencies
+/// Represents a Cartfile, which is a specification of a project's dependencies
 /// and any other settings Carthage needs to build it.
-public struct ActualCartfile {
+public struct Cartfile {
 
     /// Any text following this character is considered a comment
     static let commentIndicator = "#"
 
-    /// The dependencies listed in the ActualCartfile.
+    /// The dependencies listed in the Cartfile.
     public var dependencies: [Dependency: VersionSpecifier]
 
     public init(dependencies: [Dependency: VersionSpecifier] = [:]) {
         self.dependencies = dependencies
     }
 
-    /// Returns the location where ActualCartfile should exist within the given
+    /// Returns the location where Cartfile should exist within the given
     /// directory.
     public static func url(in directoryURL: URL) -> URL {
         return directoryURL.appendingPathComponent("Cartfile")
     }
 
-    /// Attempts to parse ActualCartfile information from a string.
-    public static func from(string: String) -> Result<ActualCartfile, CarthageError> {
+    /// Attempts to parse Cartfile information from a string.
+    public static func from(string: String) -> Result<Cartfile, CarthageError> {
         var dependencies: [Dependency: VersionSpecifier] = [:]
         var duplicates: [Dependency] = []
         var result: Result<(), CarthageError> = .success(())
@@ -46,7 +46,7 @@ public struct ActualCartfile {
         string.enumerateLines { line, stop in
             let scannerWithComments = Scanner(string: line)
 
-            if scannerWithComments.scanString(ActualCartfile.commentIndicator, into: nil) {
+            if scannerWithComments.scanString(Cartfile.commentIndicator, into: nil) {
                 // Skip the rest of the line.
                 return
             }
@@ -104,15 +104,15 @@ public struct ActualCartfile {
             if !duplicates.isEmpty {
                 return .failure(.duplicateDependencies(duplicates.map { DuplicateDependency(dependency: $0, locations: []) }))
             }
-            return .success(ActualCartfile(dependencies: dependencies))
+            return .success(Cartfile(dependencies: dependencies))
         }
     }
 
-    /// Attempts to parse a ActualCartfile from a file at a given URL.
-    public static func from(file cartfileURL: URL) -> Result<ActualCartfile, CarthageError> {
+    /// Attempts to parse a Cartfile from a file at a given URL.
+    public static func from(file cartfileURL: URL) -> Result<Cartfile, CarthageError> {
         return Result(catching: { try String(contentsOf: cartfileURL, encoding: .utf8) })
                 .mapError { .readFailed(cartfileURL, $0 as NSError) }
-                .flatMap(ActualCartfile.from(string:))
+                .flatMap(Cartfile.from(string:))
                 .mapError { error in
                     guard case let .duplicateDependencies(dupes) = error else { return error }
 
@@ -127,47 +127,47 @@ public struct ActualCartfile {
                 }
     }
 
-    /// Appends the contents of another ActualCartfile to that of the receiver.
-    public mutating func append(_ ActualCartfile: ActualCartfile) {
-        for (dependency, version) in ActualCartfile.dependencies {
+    /// Appends the contents of another Cartfile to that of the receiver.
+    public mutating func append(_ Cartfile: Cartfile) {
+        for (dependency, version) in Cartfile.dependencies {
             dependencies[dependency] = version
         }
     }
 }
 
 /// Returns an array containing dependencies that are listed in both arguments.
-public func duplicateDependenciesIn(_ cartfile1: ActualCartfile, _ cartfile2: ActualCartfile) -> [Dependency] {
+public func duplicateDependenciesIn(_ cartfile1: Cartfile, _ cartfile2: Cartfile) -> [Dependency] {
     let projects1 = cartfile1.dependencies.keys
     let projects2 = cartfile2.dependencies.keys
     return Array(Set(projects1).intersection(Set(projects2)))
 }
 
-/// Represents a parsed ActualCartfile.resolved, which specifies which exact version was
+/// Represents a parsed Cartfile.resolved, which specifies which exact version was
 /// checked out for each dependency.
 public struct ResolvedCartfile {
-    /// The dependencies listed in the ActualCartfile.resolved.
+    /// The dependencies listed in the Cartfile.resolved.
     public var dependencies: [Dependency: PinnedVersion]
 
     public init(dependencies: [Dependency: PinnedVersion]) {
         self.dependencies = dependencies
     }
 
-    /// Returns the location where ActualCartfile.resolved should exist within the given
+    /// Returns the location where Cartfile.resolved should exist within the given
     /// directory.
     public static func url(in directoryURL: URL) -> URL {
-        return directoryURL.appendingPathComponent("ActualCartfile.resolved")
+        return directoryURL.appendingPathComponent("Cartfile.resolved")
     }
 
-    /// Attempts to parse ActualCartfile.resolved information from a string.
+    /// Attempts to parse Cartfile.resolved information from a string.
     public static func from(string: String) -> Result<ResolvedCartfile, CarthageError> {
-        var ActualCartfile = self.init(dependencies: [:])
+        var Cartfile = self.init(dependencies: [:])
         var result: Result<(), CarthageError> = .success(())
 
         let scanner = Scanner(string: string)
         scannerLoop: while !scanner.isAtEnd {
             switch Dependency.from(scanner).fanout(PinnedVersion.from(scanner)) {
             case let .success((dep, version)):
-                ActualCartfile.dependencies[dep] = version
+                Cartfile.dependencies[dep] = version
 
             case let .failure(error):
                 result = .failure(CarthageError(scannableError: error))
@@ -175,7 +175,7 @@ public struct ResolvedCartfile {
             }
         }
 
-        return result.map { _ in ActualCartfile }
+        return result.map { _ in Cartfile }
     }
 }
 
@@ -190,11 +190,11 @@ extension ResolvedCartfile: CustomStringConvertible {
 
 extension String {
 
-    /// Returns self without any potential trailing ActualCartfile comment. A ActualCartfile
+    /// Returns self without any potential trailing Cartfile comment. A Cartfile
     /// comment starts with the first `commentIndicator` that is not embedded in any quote
     var strippingTrailingCartfileComment: String {
 
-        // Since the ActualCartfile syntax doesn't support nested quotes, such as `"version-\"alpha\""`,
+        // Since the Cartfile syntax doesn't support nested quotes, such as `"version-\"alpha\""`,
         // simply consider any odd-number occurence of a quote as a quote-start, and any
         // even-numbered occurrence of a quote as quote-end.
         // The comment indicator (e.g. `#`) is the start of a comment if it's not nested in quotes.
@@ -217,7 +217,7 @@ extension String {
             if isInQuote {
                 continue // don't consider comment indicators inside quotes
             }
-            if let range = chunk.range(of: ActualCartfile.commentIndicator) {
+            if let range = chunk.range(of: Cartfile.commentIndicator) {
                 // there is a comment, return everything before its position
                 let advancedOffset = (..<offset).relative(to: quoteDelimitedChunks)
                 let previousChunks = quoteDelimitedChunks[advancedOffset]

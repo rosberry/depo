@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::DepoCore"
-               BuildableName = "DepoCore.framework"
-               BlueprintName = "DepoCore"
+               BlueprintIdentifier = "Depo::Depo"
+               BuildableName = "Depo"
+               BlueprintName = "Depo"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::Depo"
-               BuildableName = "Depo"
-               BlueprintName = "Depo"
+               BlueprintIdentifier = "Depo::CartfileParser"
+               BuildableName = "CartfileParser.framework"
+               BlueprintName = "CartfileParser"
+               ReferencedContainer = "container:Depo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Depo::DepoCore"
+               BuildableName = "DepoCore.framework"
+               BlueprintName = "DepoCore"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

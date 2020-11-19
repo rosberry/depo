@@ -7,8 +7,9 @@ let package = Package(
         name: "Depo",
         platforms: [.macOS(.v10_15)],
         products: [
-            .executable(name: "depo", targets: ["Depo"]),
-            .library(name: "depo-core", targets: ["DepoCore"])
+            .executable(name: "Depo", targets: ["Depo"]),
+            .library(name: "DepoCore", targets: ["DepoCore"]),
+            .library(name: "CartfileParser", targets: ["CartfileParser"])
         ],
         dependencies: [
             .package(url: "https://github.com/apple/swift-argument-parser.git", .exact("0.3.1")),
@@ -21,9 +22,11 @@ let package = Package(
                                    "DepoCore"]),
             .target(name: "DepoCore",
                     dependencies: [.product(name: "Yams", package: "Yams"),
-                                   .product(name: "Files", package: "Files")]),
+                                   .product(name: "Files", package: "Files"),
+                                   .target(name: "CartfileParser")]),
+            .target(name: "CartfileParser"),
             .testTarget(name: "DepoTest",
                         dependencies: ["DepoCore", "Depo"],
-                        resources: [.process("./Resources/")])
+                        resources: [.copy("Resources")])
         ]
 )
