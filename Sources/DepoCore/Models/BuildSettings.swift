@@ -64,13 +64,15 @@ public struct BuildSettings {
                 targetName: String,
                 codesigningFolderPath: URL?,
                 platform: Platform?,
-                deploymentTarget: String?) {
+                deploymentTarget: String?,
+                developmentTeam: String) {
         self.productName = productName
         self.swiftVersion = swiftVersion
         self.targetName = targetName
         self.codesigningFolderPath = codesigningFolderPath
         self.platform = platform
         self.deploymentTarget = deploymentTarget
+        self.developmentTeam = developmentTeam
     }
 
     private static func platform(from settings: [String: String]) -> Platform? {

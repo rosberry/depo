@@ -171,147 +171,147 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::Depo";
+			remoteGlobalIDString = Depo::Depo;
 			remoteInfo = Depo;
 		};
 		36502F6625666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
 			remoteInfo = ArgumentParser;
 		};
 		36502F6725666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		36502F6825666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502F6925666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502F6A25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502F6B25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502F6C25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502F6D25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502F6E25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502F6F25666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502F7025666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502F7125666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "swift-argument-parser::ArgumentParser";
+			remoteGlobalIDString = swift-argument-parser::ArgumentParser;
 			remoteInfo = ArgumentParser;
 		};
 		36502F7225666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoCore";
+			remoteGlobalIDString = Depo::DepoCore;
 			remoteInfo = DepoCore;
 		};
 		36502F7325666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Files::Files";
+			remoteGlobalIDString = Files::Files;
 			remoteInfo = Files;
 		};
 		36502F7425666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::Yams";
+			remoteGlobalIDString = Yams::Yams;
 			remoteInfo = Yams;
 		};
 		36502F7525666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Yams::CYaml";
+			remoteGlobalIDString = Yams::CYaml;
 			remoteInfo = CYaml;
 		};
 		36502F7625666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502F7725666E9F00E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParser";
+			remoteGlobalIDString = Depo::CartfileParser;
 			remoteInfo = CartfileParser;
 		};
 		36502F7F25666EA000E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::CartfileParserTest";
+			remoteGlobalIDString = Depo::CartfileParserTest;
 			remoteInfo = CartfileParserTest;
 		};
 		36502F8025666EA000E58ECB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "Depo::DepoTest";
+			remoteGlobalIDString = Depo::DepoTest;
 			remoteInfo = DepoTest;
 		};
 /* End PBXContainerItemProxy section */
@@ -392,7 +392,6 @@
 		OBJ_17 /* Depo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Depo.swift; sourceTree = "<group>"; };
 		OBJ_170 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_171 /* Depofile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depofile; sourceTree = "<group>"; };
-		OBJ_172 /* foo */ = {isa = PBXFileReference; lastKnownFileType = text; path = foo; sourceTree = "<group>"; };
 		OBJ_173 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		OBJ_18 /* Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
 		OBJ_19 /* Install.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Install.swift; sourceTree = "<group>"; };
@@ -815,7 +814,6 @@
 				OBJ_169 /* Cartfile */,
 				OBJ_170 /* README.md */,
 				OBJ_171 /* Depofile */,
-				OBJ_172 /* foo */,
 				OBJ_173 /* Podfile */,
 			);
 			name = "";
