@@ -8,9 +8,9 @@ import Foundation
 
 public struct BuildSettings {
 
-    public enum Error: LocalizedError {
+    public enum Error: Swift.Error {
         case badOutput(io: Shell.IO)
-        case badBuildSettings([String: String])
+        case badBuildSettings(missedKey: String, settings: [String: String])
     }
 
     private struct ShellOutputWrapper: Codable {
@@ -38,12 +38,11 @@ public struct BuildSettings {
     }
 
     public init(settings: [String: String]) throws {
-        guard let productName = settings["PRODUCT_NAME"],
-              let swiftVersion = settings["SWIFT_VERSION"],
-              let targetName = settings["TARGETNAME"],
-              let developmentTeam = settings["DEVELOPMENT_TEAM"] else {
-            throw Error.badBuildSettings(settings)
-        }
+        let extract = BuildSettings.extract
+        let productName     = try extract("PRODUCT_NAME", settings)
+        let swiftVersion    = try extract("SWIFT_VERSION", settings)
+        let targetName      = try extract("TARGETNAME", settings)
+        let developmentTeam = try extract("DEVELOPMENT_TEAM", settings)
         self.productName = productName
         self.swiftVersion = swiftVersion
         self.targetName = targetName
@@ -96,5 +95,12 @@ public struct BuildSettings {
             prefix = ""
         }
         return "\(prefix)DEPLOYMENT_TARGET"
+    }
+
+    private static func extract(key: String, from settings: [String: String]) throws -> String {
+        guard let productName = settings["PRODUCT_NAME"] else {
+            throw Error.badBuildSettings(missedKey: key, settings: settings)
+        }
+        return productName
     }
 }

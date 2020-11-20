@@ -31,6 +31,12 @@
 		36502FF425666EED00E58ECB /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = 36502FA325666ED200E58ECB /* PackageSwiftNoDeps.txt */; };
 		36502FF525666EED00E58ECB /* DepofileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502FA425666ED200E58ECB /* DepofileWithDeps */; };
 		36502FF625666EED00E58ECB /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502FA525666ED200E58ECB /* DepofileNoDeps */; };
+		EC402D2E5E3F12DA2B7C90EF /* ProgressObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC454FB895B34F2F40542B69 /* ProgressObservable.swift */; };
+		EC40FDC55F83FF6698DB96C0 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC40A26ACCBAB6F8D6DF391D /* UI.swift */; };
+		EC42DD827831C4BEA97FC2E6 /* ProgressNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */; };
+		EC445C593FCA609D0FC30C5C /* UI+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DB23412D5BCAE13E2DB93 /* UI+Errors.swift */; };
+		EC44F93B01C186C2846B596C /* DefaultProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */; };
+		EC46A59006260CB75C0094A4 /* UI+DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C2E394798A1D211011A61 /* UI+DecodingError.swift */; };
 		OBJ_179 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* BashCompletionsGenerator.swift */; };
 		OBJ_180 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* CompletionsGenerator.swift */; };
 		OBJ_181 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* FishCompletionsGenerator.swift */; };
@@ -331,6 +337,12 @@
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC40A26ACCBAB6F8D6DF391D /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressNotifier.swift; sourceTree = "<group>"; };
+		EC454FB895B34F2F40542B69 /* ProgressObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressObservable.swift; sourceTree = "<group>"; };
+		EC4C2E394798A1D211011A61 /* UI+DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+DecodingError.swift"; sourceTree = "<group>"; };
+		EC4DB23412D5BCAE13E2DB93 /* UI+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+Errors.swift"; sourceTree = "<group>"; };
+		EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultProgressController.swift; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* CarthageDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
@@ -570,6 +582,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EC49BBE953368B1481F20AEC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				EC40A26ACCBAB6F8D6DF391D /* UI.swift */,
+				EC4DB23412D5BCAE13E2DB93 /* UI+Errors.swift */,
+				EC4C2E394798A1D211011A61 /* UI+DecodingError.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		OBJ_112 /* swift-argument-parser 0.3.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -657,6 +679,7 @@
 				OBJ_28 /* Models */,
 				OBJ_31 /* PackageManagers */,
 				OBJ_37 /* main.swift */,
+				EC49BBE953368B1481F20AEC /* UI */,
 			);
 			name = Depo;
 			path = Sources/Depo;
@@ -771,6 +794,9 @@
 				OBJ_42 /* Collection+KeyPath.swift */,
 				OBJ_43 /* DataCoder.swift */,
 				OBJ_44 /* HasDefaultValue.swift */,
+				EC454FB895B34F2F40542B69 /* ProgressObservable.swift */,
+				EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */,
+				EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1373,6 +1399,8 @@
 				OBJ_267 /* PodManager.swift in Sources */,
 				OBJ_268 /* SPMManager.swift in Sources */,
 				OBJ_269 /* main.swift in Sources */,
+				EC40FDC55F83FF6698DB96C0 /* UI.swift in Sources */,
+				EC445C593FCA609D0FC30C5C /* UI+Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,6 +1432,10 @@
 				OBJ_311 /* Shell.swift in Sources */,
 				OBJ_312 /* ShellCommand.swift in Sources */,
 				OBJ_313 /* SwiftPackageShellCommand.swift in Sources */,
+				EC402D2E5E3F12DA2B7C90EF /* ProgressObservable.swift in Sources */,
+				EC44F93B01C186C2846B596C /* DefaultProgressController.swift in Sources */,
+				EC42DD827831C4BEA97FC2E6 /* ProgressNotifier.swift in Sources */,
+				EC46A59006260CB75C0094A4 /* UI+DecodingError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
