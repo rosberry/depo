@@ -18,23 +18,28 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
-        try packageSwift(buildSettings: buildSettings, file: try Folder.current.file(at: path))
+        let packages = try swiftPackages(file: try Folder.current.file(at: path))
+        return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
     public func packageSwift(buildSettings: BuildSettings, absolutePath: String) throws -> PackageSwift {
-        try packageSwift(buildSettings: buildSettings, file: try File(path: absolutePath))
+        let packages = try swiftPackages(file: try File(path: absolutePath))
+        return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
-    private func packageSwift(buildSettings: BuildSettings, file: File) throws -> PackageSwift {
+    public func swiftPackages(packageSwiftFilePath: String) throws -> [SwiftPackage] {
+        try swiftPackages(file: try File(path: packageSwiftFilePath))
+    }
+
+    private func swiftPackages(file: File) throws -> [SwiftPackage] {
         let content = try file.readAsString()
         guard let dependenciesContent = try dependenciesArray(from: content) else {
-            return PackageSwift(projectBuildSettings: buildSettings, packages: [])
+            return []
         }
         let products = try self.products(from: dependenciesContent)
-        let packages = try products.compactMap { productString in
+        return try products.compactMap { productString in
             try swiftPackage(from: productString)
         }
-        return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
     private func dependenciesArray(from string: String) throws -> String? {

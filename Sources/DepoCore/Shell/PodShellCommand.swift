@@ -85,10 +85,14 @@ public final class PodShellCommand: ShellCommand {
     }
 
     public func podfile(buildSettings: BuildSettings, path: String) throws -> PodFile {
+        PodFile(buildSettings: buildSettings, pods: try pods(path: path))
+    }
+
+    public func pods(path: String) throws -> [Pod] {
         let output: Shell.IO = try shell("pod", "ipc", "podfile-json", path)
         let podfileJson = output.stdOut.data(using: .utf8) ?? Data()
         let model = try JSONDecoder().decode(PodIpcJsonOutput.self, from: podfileJson)
-        return PodFile(buildSettings: buildSettings, pods: pods(from: model))
+        return pods(from: model)
     }
 
     private func pods(from jsonPodFile: PodIpcJsonOutput) -> [Pod] {

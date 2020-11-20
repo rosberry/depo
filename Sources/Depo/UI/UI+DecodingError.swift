@@ -8,13 +8,13 @@ extension DecodingError: CustomStringConvertible {
     public var description: String {
         switch self {
         case let .typeMismatch(type, context):
-            return "got type mismatch while decoding \(type) \n\(context)"
+            return "Got type mismatch while decoding \(type). \n\(context)"
         case let .valueNotFound(type, context):
-            return "value not found while decoding \(type) \n\(context)"
+            return "Value not found while decoding \(type). \n\(context)"
         case let .keyNotFound(key, context):
-            return "key \"\(key.stringValue)\" not found \n\(context)"
+            return "Key \"\(key.stringValue)\" not found. \n\(context)"
         case let .dataCorrupted(context):
-            return "data corrupted \n\(context)"
+            return "Data corrupted. \n\(context)"
         @unknown default:
             return ""
         }

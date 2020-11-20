@@ -13,25 +13,15 @@ final class Init: ParsableCommand {
         var description: String {
             switch self {
             case .generatingEmptyDepofile:
-                return "generating empty Depofile"
+                return "[1/1] generating empty Depofile"
             case let .generatingDepofile(paths):
                 let files = [paths.cartfilePath, paths.podfilePath, paths.packageSwiftFilePath].compactMap { $0 }
-                return "generating Depofile from \(files.joined(separator: " "))"
-            case .doneGeneratingDepofile:
-                return "doneGeneratingDepofile"
-            case .gettingBuildSettings:
-                return "gettingBuildSettings"
-            case .doneGettingBuildSettings:
-                return "doneGettingBuildSettings"
+                return "[1/1] generating Depofile from \(files.joined(separator: " "))"
             }
         }
 
         case generatingEmptyDepofile
         case generatingDepofile(paths: Action.Paths)
-        case doneGeneratingDepofile
-        case gettingBuildSettings
-        case doneGettingBuildSettings
-
     }
 
     struct Options: ParsableArguments {
@@ -61,10 +51,10 @@ final class Init: ParsableCommand {
         case generateBy(Paths)
     }
 
-    fileprivate struct Files {
-        let cartfile: Cartfile?
-        let podfile: PodFile?
-        let packageSwiftFile: PackageSwift?
+    fileprivate struct Dependencies {
+        let carthageItems: [CarthageItem]
+        let pods: [Pod]
+        let swiftPackages: [SwiftPackage]
     }
 
     @OptionGroup()
@@ -93,14 +83,9 @@ final class Init: ParsableCommand {
         case .generateEmpty:
             progress.notify(.generatingEmptyDepofile)
             try generateEmptyDepofile(at: depofilePath)
-            progress.notify(.doneGeneratingDepofile)
         case let .generateBy(paths):
-            progress.notify(.gettingBuildSettings)
-            let settings = try BuildSettings(shell: shell)
-            progress.notify(.doneGettingBuildSettings)
             progress.notify(.generatingDepofile(paths: paths))
-            try generateDepofile(at: depofilePath, by: paths, buildSettings: settings)
-            progress.notify(.doneGeneratingDepofile)
+            try generateDepofile(at: depofilePath, by: paths)
         }
     }
 
@@ -115,11 +100,11 @@ final class Init: ParsableCommand {
         try create(depofile: .init(pods: [], carts: [], swiftPackages: []), at: path)
     }
 
-    private func generateDepofile(at path: String, by paths: Action.Paths, buildSettings: BuildSettings) throws {
-        let files = try self.files(from: paths, buildSettings: buildSettings)
-        let depofile = Depofile(pods: files.podfile?.pods ?? [],
-                                carts: files.cartfile?.items ?? [],
-                                swiftPackages: files.packageSwiftFile?.packages ?? [])
+    private func generateDepofile(at path: String, by paths: Action.Paths) throws {
+        let files = try self.files(from: paths)
+        let depofile = Depofile(pods: files.pods,
+                                carts: files.carthageItems,
+                                swiftPackages: files.swiftPackages)
         try create(depofile: depofile, at: path)
     }
 
@@ -137,11 +122,13 @@ final class Init: ParsableCommand {
         return Action.Paths(fields: paths)
     }
 
-    private func files(from paths: Action.Paths, buildSettings: BuildSettings) throws -> Files {
-        let cartfile = try paths.cartfilePath.map { try carthage.cartfile(path: $0) }
-        let podfile = try paths.podfilePath.map { try pod.podfile(buildSettings: buildSettings, path: $0) }
-        let packageSwift = try paths.packageSwiftFilePath.map { try swiftPackage.packageSwift(buildSettings: buildSettings, path: $0) }
-        return .init(cartfile: cartfile, podfile: podfile, packageSwiftFile: packageSwift)
+    private func files(from paths: Action.Paths) throws -> Dependencies {
+        let carthageItems = try paths.cartfilePath.map { try carthage.cartfile(path: $0).items } ?? []
+        let pods = try paths.podfilePath.map { try pod.pods(path: $0) } ?? []
+        let swiftPackages = try paths.packageSwiftFilePath.map {
+            try swiftPackage.swiftPackages(packageSwiftFilePath: $0)
+        } ?? []
+        return .init(carthageItems: carthageItems, pods: pods, swiftPackages: swiftPackages)
     }
 
     private func create(depofile: Depofile, at path: String, ext: DataCoder.Kind = .defaultValue) throws {
