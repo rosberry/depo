@@ -5,7 +5,14 @@
 import Foundation
 import Yams
 
-public final class PodManager {
+public final class PodManager: ProgressObservable {
+
+    public enum State {
+
+        case installing
+        case updating
+        case building
+    }
 
     public enum Error: LocalizedError {
         case badPodfile(path: String)
@@ -30,9 +37,15 @@ public final class PodManager {
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
+    private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile) {
         self.pods = depofile.pods
+    }
+
+    public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
+        self.observer = observer
+        return self
     }
 
     public func install() throws {

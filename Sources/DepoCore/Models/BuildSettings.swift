@@ -98,9 +98,9 @@ public struct BuildSettings {
     }
 
     private static func extract(key: String, from settings: [String: String]) throws -> String {
-        guard let productName = settings["PRODUCT_NAME"] else {
+        guard let value = settings[key] else {
             throw Error.badBuildSettings(missedKey: key, settings: settings)
         }
-        return productName
+        return value
     }
 }

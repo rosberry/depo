@@ -4,23 +4,41 @@
 
 import Foundation
 
-public final class AllPackagesManager {
+public final class AllPackagesManager: ProgressObservable {
+
+    public enum State {
+        case podManager(PodManager.State)
+        case carthageManager(CarthageManager.State)
+        case spmManager(SPMManager.State)
+    }
 
     private let depofile: Depofile
     private let platform: Platform
     private var podManager: PodManager {
-        .init(depofile: depofile)
+        PodManager(depofile: depofile).subscribe { [weak self] state in
+            self?.observer?(.podManager(state))
+        }
     }
     private var carthageManager: CarthageManager {
-        .init(depofile: depofile, platform: platform)
+        CarthageManager(depofile: depofile, platform: platform).subscribe { [weak self] state in
+            self?.observer?(.carthageManager(state))
+        }
     }
     private var spmManager: SPMManager {
-        .init(depofile: depofile)
+        SPMManager(depofile: depofile).subscribe { [weak self] state in
+            self?.observer?(.spmManager(state))
+        }
     }
+    private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile, platform: Platform) {
         self.depofile = depofile
         self.platform = platform
+    }
+
+    public func subscribe(_ observer: @escaping (State) -> Void) -> AllPackagesManager {
+        self.observer = observer
+        return self
     }
 
     public func update() throws {

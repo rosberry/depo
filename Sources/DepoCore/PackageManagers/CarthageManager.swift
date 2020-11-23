@@ -4,7 +4,14 @@
 
 import Foundation
 
-public final class CarthageManager {
+public final class CarthageManager: ProgressObservable {
+
+    public enum State {
+        case updating
+        case installing
+        case building
+        case creatingCartfile(path: String)
+    }
 
     public enum Error: LocalizedError {
         case badCartfile(path: String)
@@ -19,29 +26,41 @@ public final class CarthageManager {
 
     private let carthageItems: [CarthageItem]
     private let platform: Platform
-    private let shell: Shell = .init()
-    private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
+    private let carthageShell: Shell = Shell().subscribe { state in
+        print(state)
+    }
+    private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: carthageShell)
+    private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile, platform: Platform) {
         self.carthageItems = depofile.carts
         self.platform = platform
     }
 
+    public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
+        self.observer = observer
+        return self
+    }
+
     public func update() throws {
+        observer?(.updating)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.update(arguments: [.platform(platform)])
     }
 
     public func install() throws {
+        observer?(.installing)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
     }
 
     public func build() throws {
+        observer?(.building)
         try carthageShellCommand.build()
     }
 
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
+        observer?(.creatingCartfile(path: cartfilePath))
         let content = Cartfile(items: items).description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)

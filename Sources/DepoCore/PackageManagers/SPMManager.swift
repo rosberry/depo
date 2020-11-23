@@ -5,7 +5,11 @@
 import Foundation
 import Files
 
-public final class SPMManager {
+public final class SPMManager: ProgressObservable {
+
+    public enum State {
+
+    }
 
     public enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
@@ -30,9 +34,15 @@ public final class SPMManager {
     private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+    private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile) {
         self.packages = depofile.swiftPackages
+    }
+
+    public func subscribe(_ observer: @escaping (State) -> Void) -> SPMManager {
+        self.observer = observer
+        return self
     }
 
     public func update() throws {
