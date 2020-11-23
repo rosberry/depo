@@ -5,6 +5,10 @@
 import Foundation
 import ArgumentParser
 
+protocol Command {
+    func run() throws
+}
+
 struct CommandRunner {
 
     @_functionBuilder
@@ -21,7 +25,7 @@ struct CommandRunner {
             }
         }
 
-        static func buildBlock(_ commands: ParsableCommand & AnyObject...) -> [Swift.Error] {
+        static func buildBlock(_ commands: Command & AnyObject...) -> [Swift.Error] {
             var c = commands
             return c.indices.compactMap { index in
                 do {

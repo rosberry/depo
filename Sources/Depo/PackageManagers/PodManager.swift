@@ -3,14 +3,11 @@
 //
 
 import Foundation
-import ArgumentParser
 import Yams
-import DepoCore
 
-final class PodManager: PackageManager {
-    typealias Options = DefaultOptions
+public final class PodManager {
 
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case badPodfile(path: String)
         case badPodBuild(pods: [Pod])
         case badPodMerge(pods: [Pod])
@@ -20,8 +17,6 @@ final class PodManager: PackageManager {
         case options
         case pods
     }
-
-    static let configuration: CommandConfiguration = .init(commandName: "pod-install")
 
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.Name.podfile
@@ -36,15 +31,11 @@ final class PodManager: PackageManager {
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
 
-    convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile)
-    }
-
-    init(depofile: Depofile) {
+    public init(depofile: Depofile) {
         self.pods = depofile.pods
     }
 
-    func install() throws {
+    public func install() throws {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
@@ -55,7 +46,7 @@ final class PodManager: PackageManager {
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
-    func update() throws {
+    public func update() throws {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
@@ -66,7 +57,7 @@ final class PodManager: PackageManager {
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
-    func build() throws {
+    public func build() throws {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try build(pods: pods, at: podsProjectPath)

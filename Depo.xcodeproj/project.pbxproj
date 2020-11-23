@@ -32,11 +32,23 @@
 		36502FF525666EED00E58ECB /* DepofileWithDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502FA425666ED200E58ECB /* DepofileWithDeps */; };
 		36502FF625666EED00E58ECB /* DepofileNoDeps in Resources */ = {isa = PBXBuildFile; fileRef = 36502FA525666ED200E58ECB /* DepofileNoDeps */; };
 		EC402D2E5E3F12DA2B7C90EF /* ProgressObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC454FB895B34F2F40542B69 /* ProgressObservable.swift */; };
+		EC404F448AACB7C225A0A6D9 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC40AFE10FA970AAF8A46AB5 /* CommandRunner.swift */; };
 		EC40FDC55F83FF6698DB96C0 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC40A26ACCBAB6F8D6DF391D /* UI.swift */; };
+		EC41BD58B3F606E1E263D3CD /* FileManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC49D9BD2D776DA19D599C16 /* FileManager+Helper.swift */; };
+		EC42923A9A0EE67ABFDEB155 /* SPMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4914433E015A16F98AD736 /* SPMManager.swift */; };
 		EC42DD827831C4BEA97FC2E6 /* ProgressNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */; };
 		EC445C593FCA609D0FC30C5C /* UI+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DB23412D5BCAE13E2DB93 /* UI+Errors.swift */; };
+		EC446ADB59031B7937743619 /* PodManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4913D0ACA07DF000BB6F78 /* PodManager+CLI.swift */; };
 		EC44F93B01C186C2846B596C /* DefaultProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */; };
+		EC45D697A4CACC040FAD1EE1 /* AllPackagesManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC444D1A90CD366751385701 /* AllPackagesManager+CLI.swift */; };
+		EC4621608E435F08A80DB851 /* CarthageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC467B88499F7965637A286D /* CarthageManager.swift */; };
 		EC46A59006260CB75C0094A4 /* UI+DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C2E394798A1D211011A61 /* UI+DecodingError.swift */; };
+		EC4836DB36D10D88FD7EF5EB /* AllPackagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4A1B91AA6CA77AB512799B /* AllPackagesManager.swift */; };
+		EC48F6A3B474C23325C8FAC5 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4A2CC29D2596109C0ACC15 /* CompositeError.swift */; };
+		EC4C62B476025526D20A3349 /* XcodeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48AC2F0E74BA3A76E6F4A9 /* XcodeProject.swift */; };
+		EC4C87F930517505101ABEEE /* SPMManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4FA29980CA98514D187FCC /* SPMManager+CLI.swift */; };
+		EC4C88B28472C9E324EF97A1 /* CarthageManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4134E5A1E0085591BD817D /* CarthageManager+CLI.swift */; };
+		EC4D204FE661D648ACDF0934 /* PodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4498F0F6981527420D229C /* PodManager.swift */; };
 		OBJ_179 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* BashCompletionsGenerator.swift */; };
 		OBJ_180 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* CompletionsGenerator.swift */; };
 		OBJ_181 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* FishCompletionsGenerator.swift */; };
@@ -90,18 +102,10 @@
 		OBJ_254 /* Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Init.swift */; };
 		OBJ_255 /* Install.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Install.swift */; };
 		OBJ_256 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* Update.swift */; };
-		OBJ_257 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* CommandRunner.swift */; };
-		OBJ_258 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* CompositeError.swift */; };
 		OBJ_259 /* EnumerableFlag+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* EnumerableFlag+Help.swift */; };
-		OBJ_260 /* FileManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* FileManager+Helper.swift */; };
 		OBJ_261 /* Platform+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* Platform+ArgumentParser.swift */; };
 		OBJ_262 /* DefaultOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* DefaultOptions.swift */; };
-		OBJ_263 /* XcodeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* XcodeProject.swift */; };
-		OBJ_264 /* AllPackagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* AllPackagesManager.swift */; };
-		OBJ_265 /* CarthageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* CarthageManager.swift */; };
 		OBJ_266 /* PackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* PackageManager.swift */; };
-		OBJ_267 /* PodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* PodManager.swift */; };
-		OBJ_268 /* SPMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* SPMManager.swift */; };
 		OBJ_269 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* main.swift */; };
 		OBJ_271 /* ArgumentParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */; };
 		OBJ_272 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
@@ -338,11 +342,23 @@
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC40A26ACCBAB6F8D6DF391D /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		EC40AFE10FA970AAF8A46AB5 /* CommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
+		EC4134E5A1E0085591BD817D /* CarthageManager+CLI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarthageManager+CLI.swift"; sourceTree = "<group>"; };
 		EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressNotifier.swift; sourceTree = "<group>"; };
+		EC444D1A90CD366751385701 /* AllPackagesManager+CLI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllPackagesManager+CLI.swift"; sourceTree = "<group>"; };
+		EC4498F0F6981527420D229C /* PodManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PodManager.swift; path = Sources/Depo/PackageManagers/PodManager.swift; sourceTree = SOURCE_ROOT; };
 		EC454FB895B34F2F40542B69 /* ProgressObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressObservable.swift; sourceTree = "<group>"; };
+		EC467B88499F7965637A286D /* CarthageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarthageManager.swift; path = Sources/Depo/PackageManagers/CarthageManager.swift; sourceTree = SOURCE_ROOT; };
+		EC48AC2F0E74BA3A76E6F4A9 /* XcodeProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XcodeProject.swift; path = Sources/Depo/Models/XcodeProject.swift; sourceTree = SOURCE_ROOT; };
+		EC4913D0ACA07DF000BB6F78 /* PodManager+CLI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PodManager+CLI.swift"; sourceTree = "<group>"; };
+		EC4914433E015A16F98AD736 /* SPMManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SPMManager.swift; path = Sources/Depo/PackageManagers/SPMManager.swift; sourceTree = SOURCE_ROOT; };
+		EC49D9BD2D776DA19D599C16 /* FileManager+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FileManager+Helper.swift"; path = "Sources/Depo/Helpers/FileManager+Helper.swift"; sourceTree = SOURCE_ROOT; };
+		EC4A1B91AA6CA77AB512799B /* AllPackagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllPackagesManager.swift; path = Sources/Depo/PackageManagers/AllPackagesManager.swift; sourceTree = SOURCE_ROOT; };
+		EC4A2CC29D2596109C0ACC15 /* CompositeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 		EC4C2E394798A1D211011A61 /* UI+DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+DecodingError.swift"; sourceTree = "<group>"; };
 		EC4DB23412D5BCAE13E2DB93 /* UI+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+Errors.swift"; sourceTree = "<group>"; };
 		EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultProgressController.swift; sourceTree = "<group>"; };
+		EC4FA29980CA98514D187FCC /* SPMManager+CLI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPMManager+CLI.swift"; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* CarthageDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageDependency.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
@@ -408,18 +424,10 @@
 		OBJ_18 /* Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Init.swift; sourceTree = "<group>"; };
 		OBJ_19 /* Install.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Install.swift; sourceTree = "<group>"; };
 		OBJ_20 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
-		OBJ_23 /* CommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
-		OBJ_24 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 		OBJ_25 /* EnumerableFlag+Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnumerableFlag+Help.swift"; sourceTree = "<group>"; };
-		OBJ_26 /* FileManager+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helper.swift"; sourceTree = "<group>"; };
 		OBJ_27 /* Platform+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+ArgumentParser.swift"; sourceTree = "<group>"; };
 		OBJ_29 /* DefaultOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOptions.swift; sourceTree = "<group>"; };
-		OBJ_30 /* XcodeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProject.swift; sourceTree = "<group>"; };
-		OBJ_32 /* AllPackagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPackagesManager.swift; sourceTree = "<group>"; };
-		OBJ_33 /* CarthageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageManager.swift; sourceTree = "<group>"; };
 		OBJ_34 /* PackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageManager.swift; sourceTree = "<group>"; };
-		OBJ_35 /* PodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodManager.swift; sourceTree = "<group>"; };
-		OBJ_36 /* SPMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMManager.swift; sourceTree = "<group>"; };
 		OBJ_37 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_39 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		OBJ_41 /* Coders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coders.swift; sourceTree = "<group>"; };
@@ -582,6 +590,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EC4944DAAA0A428C9025B398 /* PackageManagers */ = {
+			isa = PBXGroup;
+			children = (
+				EC4A1B91AA6CA77AB512799B /* AllPackagesManager.swift */,
+				EC467B88499F7965637A286D /* CarthageManager.swift */,
+				EC4498F0F6981527420D229C /* PodManager.swift */,
+				EC4914433E015A16F98AD736 /* SPMManager.swift */,
+			);
+			path = PackageManagers;
+			sourceTree = "<group>";
+		};
 		EC49BBE953368B1481F20AEC /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +610,16 @@
 			);
 			path = UI;
 			sourceTree = "<group>";
+		};
+		EC4A1A3EAAD29DBD395CA5BD /* CommandRunner */ = {
+			isa = PBXGroup;
+			children = (
+				EC40AFE10FA970AAF8A46AB5 /* CommandRunner.swift */,
+				EC4A2CC29D2596109C0ACC15 /* CompositeError.swift */,
+			);
+			name = CommandRunner;
+			path = Sources/Depo/Helpers/CommandRunner;
+			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_112 /* swift-argument-parser 0.3.1 */ = {
 			isa = PBXGroup;
@@ -737,28 +766,20 @@
 		OBJ_21 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_22 /* CommandRunner */,
 				OBJ_25 /* EnumerableFlag+Help.swift */,
-				OBJ_26 /* FileManager+Helper.swift */,
 				OBJ_27 /* Platform+ArgumentParser.swift */,
+				EC444D1A90CD366751385701 /* AllPackagesManager+CLI.swift */,
+				EC4913D0ACA07DF000BB6F78 /* PodManager+CLI.swift */,
+				EC4134E5A1E0085591BD817D /* CarthageManager+CLI.swift */,
+				EC4FA29980CA98514D187FCC /* SPMManager+CLI.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		OBJ_22 /* CommandRunner */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_23 /* CommandRunner.swift */,
-				OBJ_24 /* CompositeError.swift */,
-			);
-			path = CommandRunner;
 			sourceTree = "<group>";
 		};
 		OBJ_28 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_29 /* DefaultOptions.swift */,
-				OBJ_30 /* XcodeProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -766,11 +787,7 @@
 		OBJ_31 /* PackageManagers */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_32 /* AllPackagesManager.swift */,
-				OBJ_33 /* CarthageManager.swift */,
 				OBJ_34 /* PackageManager.swift */,
-				OBJ_35 /* PodManager.swift */,
-				OBJ_36 /* SPMManager.swift */,
 			);
 			path = PackageManagers;
 			sourceTree = "<group>";
@@ -782,6 +799,7 @@
 				OBJ_40 /* Helpers */,
 				OBJ_45 /* Models */,
 				OBJ_57 /* Shell */,
+				EC4944DAAA0A428C9025B398 /* PackageManagers */,
 			);
 			name = DepoCore;
 			path = Sources/DepoCore;
@@ -797,6 +815,8 @@
 				EC454FB895B34F2F40542B69 /* ProgressObservable.swift */,
 				EC4F3EE786D7D0779E825C66 /* DefaultProgressController.swift */,
 				EC41D0AF6D30088318197F70 /* ProgressNotifier.swift */,
+				EC4A1A3EAAD29DBD395CA5BD /* CommandRunner */,
+				EC49D9BD2D776DA19D599C16 /* FileManager+Helper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -811,6 +831,7 @@
 				OBJ_54 /* Pod.swift */,
 				OBJ_55 /* SwiftPackage.swift */,
 				OBJ_56 /* VersionConstraint.swift */,
+				EC48AC2F0E74BA3A76E6F4A9 /* XcodeProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1386,21 +1407,17 @@
 				OBJ_254 /* Init.swift in Sources */,
 				OBJ_255 /* Install.swift in Sources */,
 				OBJ_256 /* Update.swift in Sources */,
-				OBJ_257 /* CommandRunner.swift in Sources */,
-				OBJ_258 /* CompositeError.swift in Sources */,
 				OBJ_259 /* EnumerableFlag+Help.swift in Sources */,
-				OBJ_260 /* FileManager+Helper.swift in Sources */,
 				OBJ_261 /* Platform+ArgumentParser.swift in Sources */,
 				OBJ_262 /* DefaultOptions.swift in Sources */,
-				OBJ_263 /* XcodeProject.swift in Sources */,
-				OBJ_264 /* AllPackagesManager.swift in Sources */,
-				OBJ_265 /* CarthageManager.swift in Sources */,
 				OBJ_266 /* PackageManager.swift in Sources */,
-				OBJ_267 /* PodManager.swift in Sources */,
-				OBJ_268 /* SPMManager.swift in Sources */,
 				OBJ_269 /* main.swift in Sources */,
 				EC40FDC55F83FF6698DB96C0 /* UI.swift in Sources */,
 				EC445C593FCA609D0FC30C5C /* UI+Errors.swift in Sources */,
+				EC45D697A4CACC040FAD1EE1 /* AllPackagesManager+CLI.swift in Sources */,
+				EC446ADB59031B7937743619 /* PodManager+CLI.swift in Sources */,
+				EC4C88B28472C9E324EF97A1 /* CarthageManager+CLI.swift in Sources */,
+				EC4C87F930517505101ABEEE /* SPMManager+CLI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,6 +1453,14 @@
 				EC44F93B01C186C2846B596C /* DefaultProgressController.swift in Sources */,
 				EC42DD827831C4BEA97FC2E6 /* ProgressNotifier.swift in Sources */,
 				EC46A59006260CB75C0094A4 /* UI+DecodingError.swift in Sources */,
+				EC4836DB36D10D88FD7EF5EB /* AllPackagesManager.swift in Sources */,
+				EC4621608E435F08A80DB851 /* CarthageManager.swift in Sources */,
+				EC4D204FE661D648ACDF0934 /* PodManager.swift in Sources */,
+				EC42923A9A0EE67ABFDEB155 /* SPMManager.swift in Sources */,
+				EC404F448AACB7C225A0A6D9 /* CommandRunner.swift in Sources */,
+				EC48F6A3B474C23325C8FAC5 /* CompositeError.swift in Sources */,
+				EC4C62B476025526D20A3349 /* XcodeProject.swift in Sources */,
+				EC41BD58B3F606E1E263D3CD /* FileManager+Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

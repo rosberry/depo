@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Update<Command: HasUpdateCommand>: ParsableCommand {
+final class Update<Command: HasUpdateCommand>: ParsableCommand where Command.Options: ParsableArguments {
 
     static var configuration: CommandConfiguration {
         .init(commandName: "update")

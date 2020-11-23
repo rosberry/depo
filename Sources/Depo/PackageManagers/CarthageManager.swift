@@ -3,22 +3,10 @@
 //
 
 import Foundation
-import ArgumentParser
-import DepoCore
 
-final class CarthageManager: PackageManager {
+public final class CarthageManager {
 
-    struct Options: HasDepofileExtension, ParsableArguments {
-        @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
-        var depofileExtension: DataCoder.Kind = .defaultValue
-
-        @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(Platform.allFlagsHelp)")
-        var platform: Platform = .defaultValue
-    }
-
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case badCartfile(path: String)
     }
 
@@ -27,8 +15,6 @@ final class CarthageManager: PackageManager {
         case carthageItems
     }
 
-    static var configuration: CommandConfiguration = .init(commandName: "carthage-install")
-
     private let cartfileName: String = AppConfiguration.Name.cartfile
 
     private let carthageItems: [CarthageItem]
@@ -36,26 +22,22 @@ final class CarthageManager: PackageManager {
     private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
 
-    convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, platform: options.platform)
-    }
-
-    init(depofile: Depofile, platform: Platform) {
+    public init(depofile: Depofile, platform: Platform) {
         self.carthageItems = depofile.carts
         self.platform = platform
     }
 
-    func update() throws {
+    public func update() throws {
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.update(arguments: [.platform(platform)])
     }
 
-    func install() throws {
+    public func install() throws {
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
         try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
     }
 
-    func build() throws {
+    public func build() throws {
         try carthageShellCommand.build()
     }
 

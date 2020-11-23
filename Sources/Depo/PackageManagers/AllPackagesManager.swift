@@ -3,39 +3,27 @@
 //
 
 import Foundation
-import ArgumentParser
-import DepoCore
 
-final class AllPackagesManager: PackageManager {
-
-    struct Options: HasDepofileExtension, ParsableArguments {
-        @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
-        var depofileExtension: DataCoder.Kind = .defaultValue
-
-        @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(Platform.allFlagsHelp)")
-        var platform: Platform = .defaultValue
-    }
+public final class AllPackagesManager {
 
     private let depofile: Depofile
-    private let options: Options
+    private let platform: Platform
     private var podManager: PodManager {
         .init(depofile: depofile)
     }
     private var carthageManager: CarthageManager {
-        .init(depofile: depofile, platform: options.platform)
+        .init(depofile: depofile, platform: platform)
     }
     private var spmManager: SPMManager {
         .init(depofile: depofile)
     }
 
-    init(depofile: Depofile, options: Options) {
+    public init(depofile: Depofile, platform: Platform) {
         self.depofile = depofile
-        self.options = options
+        self.platform = platform
     }
 
-    func update() throws {
+    public func update() throws {
         try CommandRunner.runIndependently {
             podManager.update
             carthageManager.update
@@ -43,7 +31,7 @@ final class AllPackagesManager: PackageManager {
         }
     }
 
-    func install() throws {
+    public func install() throws {
         try CommandRunner.runIndependently {
             podManager.install
             carthageManager.install
@@ -51,7 +39,7 @@ final class AllPackagesManager: PackageManager {
         }
     }
 
-    func build() throws {
+    public func build() throws {
         try CommandRunner.runIndependently {
             podManager.build
             carthageManager.build

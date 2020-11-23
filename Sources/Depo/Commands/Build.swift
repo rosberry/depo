@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Build<Command: HasBuildCommand>: ParsableCommand {
+final class Build<Command: HasBuildCommand>: ParsableCommand where Command.Options: ParsableArguments {
 
     static var configuration: CommandConfiguration {
         .init(commandName: "build")

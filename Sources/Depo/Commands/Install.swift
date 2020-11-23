@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Install<Command: HasInstallCommand>: ParsableCommand {
+final class Install<Command: HasInstallCommand>: ParsableCommand where Command.Options: ParsableArguments {
 
     static var configuration: CommandConfiguration {
         .init(commandName: "install")

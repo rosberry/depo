@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-typealias PackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
+typealias CLIPackageManager = HasInstallCommand & HasUpdateCommand & HasBuildCommand & HasDepofileInit
 
 protocol HasDepofileExtension {
     var depofileExtension: DataCoder.Kind {
@@ -15,7 +15,7 @@ protocol HasDepofileExtension {
 }
 
 protocol HasDepofileInit {
-    associatedtype Options: ParsableArguments & HasDepofileExtension
+    associatedtype Options: HasDepofileExtension
 
     init(depofile: Depofile, options: Options)
 }

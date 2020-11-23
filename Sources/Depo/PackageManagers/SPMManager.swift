@@ -3,14 +3,11 @@
 //
 
 import Foundation
-import ArgumentParser
 import Files
-import DepoCore
 
-final class SPMManager: HasUpdateCommand & HasBuildCommand {
-    typealias Options = DefaultOptions
+public final class SPMManager {
 
-    enum CustomError: LocalizedError {
+    public enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
         case badSwiftPackageBuild(packages: [SwiftPackage])
         case badSwiftPackageProceed(packages: [SwiftPackage])
@@ -20,8 +17,6 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
         case options
         case packages
     }
-
-    static let configuration: CommandConfiguration = .init(commandName: "swift-package-install")
 
     private let packages: [SwiftPackage]
     private let shell: Shell = .init()
@@ -36,15 +31,11 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
-    convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile)
-    }
-
-    init(depofile: Depofile) {
+    public init(depofile: Depofile) {
         self.packages = depofile.swiftPackages
     }
 
-    func update() throws {
+    public func update() throws {
         let buildSettings = try BuildSettings()
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update()
@@ -52,7 +43,7 @@ final class SPMManager: HasUpdateCommand & HasBuildCommand {
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
-    func build() throws {
+    public func build() throws {
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: .init())
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }

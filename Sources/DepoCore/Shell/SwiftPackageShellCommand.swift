@@ -70,7 +70,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
-        let packages = try swiftPackagesByRegex(file: try Folder.current.file(at: path))
+        let packages = try swiftPackages(packageSwiftFilePath: path)
         return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 

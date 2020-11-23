@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import DepoCore
 
 struct XcodeProject: Codable {
 
