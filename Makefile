@@ -16,6 +16,11 @@ endef
 install: build install_scripts install_jsoner
 	cp $(release_binary) $(executable_path)
 
+update: update_jsoner
+
+update_jsoner:
+	git submodule update --recursive --remote
+
 build:
 	swift build -c release --disable-sandbox
 
