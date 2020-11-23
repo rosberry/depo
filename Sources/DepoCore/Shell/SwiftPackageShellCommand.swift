@@ -7,6 +7,58 @@ import Files
 
 public final class SwiftPackageShellCommand: ShellCommand {
 
+    private struct JsonerOutputWrapper: Codable {
+        struct Dependency: Codable {
+
+            struct Requirement: Codable {
+
+                enum Kind: String, Codable {
+                    case range
+                    case exact
+                    case branch
+                    case revision
+                    case localPackage
+                }
+
+                private enum CodingKeys: String, CodingKey {
+                    case type
+                    case identifier
+                    case lowerBound
+                    case upperBound
+                }
+
+                let type: Kind
+                let identifier: String?
+                let lowerBound: String?
+                let upperBound: String?
+            }
+
+            let name: String?
+            let url: URL
+            let requirement: Requirement
+        }
+
+        let dependencies: [Dependency]
+    }
+
+    private struct Version {
+        let major: Int
+        let minor: Int
+        let patch: Int
+
+        init?(string: String) {
+            let splitted = string.split(separator: Character(".")).compactMap { sequence in
+                Int(sequence)
+            }
+            guard splitted.count == 3 else {
+                return nil
+            }
+            major = splitted[0]
+            minor = splitted[1]
+            patch = splitted[2]
+        }
+    }
+
     public enum Error: LocalizedError {
         case badUpdate
     }
@@ -18,20 +70,30 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
-        let packages = try swiftPackages(file: try Folder.current.file(at: path))
+        let packages = try swiftPackagesByRegex(file: try Folder.current.file(at: path))
         return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
     public func packageSwift(buildSettings: BuildSettings, absolutePath: String) throws -> PackageSwift {
-        let packages = try swiftPackages(file: try File(path: absolutePath))
+        let packages = try swiftPackages(packageSwiftFilePath: absolutePath)
         return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
     public func swiftPackages(packageSwiftFilePath: String) throws -> [SwiftPackage] {
-        try swiftPackages(file: try File(path: packageSwiftFilePath))
+        try swiftPackageByJsoner(packageSwiftFilePath: packageSwiftFilePath)
     }
 
-    private func swiftPackages(file: File) throws -> [SwiftPackage] {
+    private func swiftPackageByJsoner(packageSwiftFilePath: String) throws -> [SwiftPackage] {
+        let output: Shell.IO = try shell("jsoner", "package-swift", packageSwiftFilePath)
+        let model = try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
+        return model.dependencies.map { dependency in
+            .init(name: dependency.name,
+                  url: dependency.url,
+                  versionConstraint: versionConstraint(from: dependency.requirement))
+        }
+    }
+
+    private func swiftPackagesByRegex(file: File) throws -> [SwiftPackage] {
         let content = try file.readAsString()
         guard let dependenciesContent = try dependenciesArray(from: content) else {
             return []
@@ -103,6 +165,40 @@ public final class SwiftPackageShellCommand: ShellCommand {
                 return nil
             }
             return String(string[matchingRange]).replacingOccurrences(of: "\"", with: "")
+        }
+    }
+
+    private func versionConstraint(from req: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+        switch req.type {
+        case .range:
+            return upToVersionConstraint(from: req)
+        case .exact:
+            return .init(operation: .exact, value: req.identifier ?? "")
+        case .branch:
+            return .init(operation: .branch, value: req.identifier ?? "")
+        case .revision:
+            return .init(operation: .revision, value: req.identifier ?? "")
+        case .localPackage:
+            return nil
+        }
+    }
+
+    private func upToVersionConstraint(from requirement: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+        guard let lowerBound = requirement.lowerBound,
+              let upperBound = requirement.upperBound,
+              let lowerBoundVersion = Version(string: lowerBound),
+              let upperBoundVersion = Version(string: upperBound) else {
+            return nil
+        }
+        return .init(operation: upToVersionOperator(lowerVersion: lowerBoundVersion, upperVersion: upperBoundVersion), value: lowerBound)
+    }
+
+    private func upToVersionOperator(lowerVersion: Version, upperVersion: Version) -> SwiftPackage.Operator {
+        if lowerVersion.major + 1 == upperVersion.major {
+            return .upToNextMajor
+        }
+        else {
+            return .upToNextMinor
         }
     }
 }

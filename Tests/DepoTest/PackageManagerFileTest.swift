@@ -43,7 +43,8 @@ extension PackageManagerFileTest {
               targetName: "TestTarget",
               codesigningFolderPath: nil,
               platform: .tvos,
-              deploymentTarget: "test-deployment-target")
+              deploymentTarget: "test-deployment-target",
+              developmentTeam: "test-development-team")
     }
 
     var pods: [Pod] {

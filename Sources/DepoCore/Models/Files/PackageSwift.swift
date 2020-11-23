@@ -28,7 +28,7 @@ public struct PackageSwift: CustomStringConvertible {
     }
 
     private static func package(_ package: SwiftPackage) -> String {
-        let version = ".\(package.versionConstraint.operation.rawValue)(\"\(package.versionConstraint.value)\")"
+        let version = package.versionConstraint.map { self.version($0) } ?? ""
         return ".package(name: \"\(package.name)\", url: \"\(package.url)\", \(version))"
     }
 
@@ -38,4 +38,13 @@ public struct PackageSwift: CustomStringConvertible {
         }
     }
 
+    private static func version(_ versionConstraint: VersionConstraint<SwiftPackage.Operator>) -> String {
+        switch versionConstraint.operation {
+        case .upToNextMinor,
+             .upToNextMajor:
+            return ".\(versionConstraint.operation.rawValue)(from: \"\(versionConstraint.value)\")"
+        default:
+            return ".\(versionConstraint.operation.rawValue)(\"\(versionConstraint.value)\")"
+        }
+    }
 }
