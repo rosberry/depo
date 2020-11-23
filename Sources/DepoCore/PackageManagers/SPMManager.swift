@@ -8,7 +8,12 @@ import Files
 public final class SPMManager: ProgressObservable {
 
     public enum State {
-
+        case updating
+        case building
+        case buildingPackage(SwiftPackage)
+        case processing
+        case processingPackage(SwiftPackage)
+        case creatingPackageSwiftFile(path: String)
     }
 
     public enum CustomError: LocalizedError {
@@ -23,8 +28,10 @@ public final class SPMManager: ProgressObservable {
     }
 
     private let packages: [SwiftPackage]
-    private let shell: Shell = .init()
     private let fmg: FileManager = .default
+    private let shell: Shell = Shell().subscribe { state in
+        print(state)
+    }
 
     private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
@@ -46,19 +53,25 @@ public final class SPMManager: ProgressObservable {
     }
 
     public func update() throws {
-        let buildSettings = try BuildSettings()
+        observer?(.updating)
+        let buildSettings = try BuildSettings(shell: shell)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update()
+        observer?(.building)
         try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: buildSettings)
+        observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
     public func build() throws {
-        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: .init())
+        observer?(.building)
+        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: .init(shell: shell))
+        observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
+        observer?(.creatingPackageSwiftFile(path: filePath))
         let content = PackageSwift(projectBuildSettings: buildSettings, packages: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw CustomError.badPackageSwiftFile(path: filePath)
@@ -71,6 +84,7 @@ public final class SPMManager: ProgressObservable {
                        buildSettings: BuildSettings) throws {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages = packages.filter { package in
+            observer?(.buildingPackage(package))
             fmg.perform(atPath: "./\(packagesSourcesPath)/\(package.name)") {
                 !buildSwiftPackageScript(teamID: buildSettings.developmentTeam, buildDir: "\(projectPath)/\(buildPath)")
             }
@@ -83,6 +97,7 @@ public final class SPMManager: ProgressObservable {
     private func proceed(packages: [SwiftPackage], at buildPath: String, to outputPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages: [SwiftPackage] = try packages.compactMap { package in
+            observer?(.processingPackage(package))
             let deviceBuildDir = "./\(buildPath)/\(package.name)/Release-iphoneos"
             #warning("proceeding all swift packages seems redundant")
             let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in

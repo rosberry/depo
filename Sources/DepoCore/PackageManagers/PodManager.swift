@@ -12,6 +12,10 @@ public final class PodManager: ProgressObservable {
         case installing
         case updating
         case building
+        case processing
+        case creatingPodfile(path: String)
+        case buildingPod(Pod)
+        case processingPod(Pod)
     }
 
     public enum Error: LocalizedError {
@@ -32,7 +36,9 @@ public final class PodManager: ProgressObservable {
 
     private let pods: [Pod]
 
-    private let shell: Shell = .init()
+    private let shell: Shell = Shell().subscribe { state in
+        print(state)
+    }
     private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
@@ -49,28 +55,33 @@ public final class PodManager: ProgressObservable {
     }
 
     public func install() throws {
+        observer?(.installing)
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods)
         try podShellCommand.install()
+        observer?(.building)
         try build(pods: pods, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
     public func update() throws {
+        observer?(.updating)
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try createPodfile(at: podFilePath, with: pods)
         try podShellCommand.update()
+        observer?(.building)
         try build(pods: pods, at: podsProjectPath)
         #warning("proceeding all pods seems redundant")
         try proceedAllPods(at: podsProjectPath, to: podsOutputDirectoryName)
     }
 
     public func build() throws {
+        observer?(.building)
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try build(pods: pods, at: podsProjectPath)
@@ -85,6 +96,7 @@ public final class PodManager: ProgressObservable {
     }
 
     private func createPodfile(at podFilePath: String, with pods: [Pod]) throws {
+        observer?(.creatingPodfile(path: podFilePath))
         let podfile = PodFile(buildSettings: try .init(), pods: pods)
         let content = podfile.description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
@@ -96,7 +108,8 @@ public final class PodManager: ProgressObservable {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods = pods.reduce([Pod]()) { (result, pod) in
-            !buildPodScript(pod: pod) ? result + [pod] : result
+            observer?(.buildingPod(pod))
+            return !buildPodScript(pod: pod) ? result + [pod] : result
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
         if !failedPods.isEmpty {
@@ -109,6 +122,7 @@ public final class PodManager: ProgressObservable {
         FileManager.default.changeCurrentDirectoryPath(path)
         let failedPods: [Pod] = try allSchemes().compactMap { schema in
             let (pod, settings) = schema
+            observer?(.processingPod(pod))
             let ifProceedFailed = (try? proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")) == nil
             return ifProceedFailed ? pod : nil
         }
