@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::CartfileParserTest"
-               BuildableName = "CartfileParserTest.xctest"
-               BlueprintName = "CartfileParserTest"
+               BlueprintIdentifier = "Depo::DepoTest"
+               BuildableName = "DepoTest.xctest"
+               BlueprintName = "DepoTest"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Depo::DepoTest"
-               BuildableName = "DepoTest.xctest"
-               BlueprintName = "DepoTest"
+               BlueprintIdentifier = "Depo::CartfileParserTest"
+               BuildableName = "CartfileParserTest.xctest"
+               BlueprintName = "CartfileParserTest"
                ReferencedContainer = "container:Depo.xcodeproj">
             </BuildableReference>
          </TestableReference>
