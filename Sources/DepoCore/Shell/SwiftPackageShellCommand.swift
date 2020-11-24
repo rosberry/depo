@@ -77,6 +77,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
+    @discardableResult
     public func update() throws -> Shell.IO {
         try shell("swift", "package", "update")
     }

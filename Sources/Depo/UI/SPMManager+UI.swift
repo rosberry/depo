@@ -23,3 +23,24 @@ extension SPMManager.State: CustomStringConvertible {
         }
     }
 }
+
+extension SPMManager.Error: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .badPackageSwiftFile(path):
+            return "bad Package.swift at \(path)"
+        case let .badSwiftPackageBuild(contexts):
+            return """
+                   bad swift package build:
+                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)"}.newLineJoined)
+                   """
+        case let .badSwiftPackageProceed(contexts):
+            return """
+                   bad proceeding of swift packages:
+                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)"}.newLineJoined)
+                   """
+        case .noDevelopmentTeam:
+            return "development team is required for building swift packages"
+        }
+    }
+}

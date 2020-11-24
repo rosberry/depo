@@ -18,7 +18,7 @@ public final class SPMManager: ProgressObservable {
         case creatingPackageSwiftFile(path: String)
     }
 
-    public enum CustomError: LocalizedError {
+    public enum Error: Swift.Error {
         case badPackageSwiftFile(path: String)
         case badSwiftPackageBuild(contexts: [FailedContext])
         case badSwiftPackageProceed(contexts: [FailedContext])
@@ -84,7 +84,7 @@ public final class SPMManager: ProgressObservable {
         observer?(.creatingPackageSwiftFile(path: filePath))
         let content = PackageSwift(projectBuildSettings: buildSettings, packages: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
-            throw CustomError.badPackageSwiftFile(path: filePath)
+            throw Error.badPackageSwiftFile(path: filePath)
         }
     }
 
@@ -109,7 +109,7 @@ public final class SPMManager: ProgressObservable {
             }
         }
         if !failedPackages.isEmpty {
-            throw CustomError.badSwiftPackageBuild(contexts: failedPackages)
+            throw Error.badSwiftPackageBuild(contexts: failedPackages)
         }
     }
 
@@ -142,13 +142,13 @@ public final class SPMManager: ProgressObservable {
             }
         }
         if !failedPackages.isEmpty {
-            throw CustomError.badSwiftPackageProceed(contexts: failedPackages)
+            throw Error.badSwiftPackageProceed(contexts: failedPackages)
         }
     }
 
     private func teamID(buildSettings: BuildSettings) throws -> String {
         guard let developmentTeam = buildSettings.developmentTeam else {
-            throw CustomError.noDevelopmentTeam
+            throw Error.noDevelopmentTeam
         }
         return developmentTeam
     }
