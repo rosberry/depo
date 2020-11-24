@@ -8,7 +8,7 @@ import ArgumentParser
 
 extension AllPackagesManager: CLIPackageManager {
     struct Options: HasDepofileExtension, ParsableArguments {
-        @Option(name: [.customLong("depofileextension"), .customShort(Character("e"))],
+        @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 help: "\(DataCoder.Kind.allFlagsHelp)")
 
         var depofileExtension: DataCoder.Kind = .defaultValue

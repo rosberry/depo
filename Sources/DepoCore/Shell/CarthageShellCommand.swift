@@ -9,10 +9,6 @@ import CartfileParser
 
 public final class CarthageShellCommand: ShellCommand {
 
-    public enum Error: LocalizedError {
-        case badCarthage(command: String, arguments: [BuildArgument])
-    }
-
     public enum BuildArgument {
         case platform(Platform)
         case cacheBuilds
@@ -36,15 +32,15 @@ public final class CarthageShellCommand: ShellCommand {
         }
     }
 
-    public func update(arguments: [BuildArgument]) throws {
+    public func update(arguments: [BuildArgument]) throws -> Shell.IO {
         try carthage("update", arguments: arguments)
     }
 
-    public func bootstrap(arguments: [BuildArgument]) throws {
+    public func bootstrap(arguments: [BuildArgument]) throws -> Shell.IO {
         try carthage("bootstrap", arguments: arguments)
     }
 
-    public func build() throws {
+    public func build() throws -> Shell.IO {
         try carthage("build", arguments: [])
     }
 
@@ -56,13 +52,11 @@ public final class CarthageShellCommand: ShellCommand {
         try cartfile(url: try Folder.current.file(at: path).url)
     }
 
-    private func carthage(_ command: String, arguments: [BuildArgument]) throws {
+    private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Shell.IO {
         let args: [String] = ["carthage", command] + arguments.reduce([]) { result, arg in
             result + arg.arguments
         }
-        if !shell(args) {
-            throw Error.badCarthage(command: command, arguments: arguments)
-        }
+        return try shell(args)
     }
 
     private func cartfile(from actualCartfile: CartfileParser.Cartfile) -> Cartfile {

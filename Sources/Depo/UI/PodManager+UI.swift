@@ -25,3 +25,22 @@ extension PodManager.State: CustomStringConvertible {
         }
     }
 }
+
+extension PodManager.Error: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .badPodfile(path):
+            return "bad Podfile at \(path)"
+        case let .badPodBuild(contexts):
+            return """
+                   bad pod build:
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   """
+        case let .badPodMerge(contexts):
+            return """
+                   bad pod merge:
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   """
+        }
+    }
+}

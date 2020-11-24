@@ -30,26 +30,6 @@ public final class Shell {
     
     public init() {}
 
-    public func callAsFunction(_ args: String...) -> Bool {
-        callAsFunction(args)
-    }
-
-    public func callAsFunction(_ args: [String]) -> Bool {
-        observer?(.start(command: args))
-        let process = Process()
-        process.launchPath = "/usr/bin/env"
-        process.arguments = args
-        return terminationStatus(of: process) == 0
-    }
-
-    public func callAsFunction(filePath: String, arguments: [String] = []) -> Bool {
-        observer?(.start(command: [filePath] + arguments))
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: filePath)
-        process.arguments = arguments
-        return terminationStatus(of: process) == 0
-    }
-
     public func callAsFunction(_ args: String...) throws -> IO {
         try callAsFunction(args)
     }

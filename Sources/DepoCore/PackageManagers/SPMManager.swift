@@ -7,6 +7,8 @@ import Files
 
 public final class SPMManager: ProgressObservable {
 
+    public typealias FailedContext = (Swift.Error, SwiftPackage)
+
     public enum State {
         case updating
         case building
@@ -18,8 +20,8 @@ public final class SPMManager: ProgressObservable {
 
     public enum CustomError: LocalizedError {
         case badPackageSwiftFile(path: String)
-        case badSwiftPackageBuild(packages: [SwiftPackage])
-        case badSwiftPackageProceed(packages: [SwiftPackage])
+        case badSwiftPackageBuild(contexts: [FailedContext])
+        case badSwiftPackageProceed(contexts: [FailedContext])
         case noDevelopmentTeam
     }
 
@@ -91,29 +93,35 @@ public final class SPMManager: ProgressObservable {
                        to buildPath: String,
                        teamID: String) throws {
         let projectPath = fmg.currentDirectoryPath
-        let failedPackages = try packages.filter { package in
+        let failedPackages = packages.compactMap { package -> FailedContext? in
             let path = "./\(packagesSourcesPath)/\(package.name)"
             observer?(.buildingPackage(package, path: path))
-            return try fmg.perform(atPath: path) {
-                !build(targets: try swiftPackageCommand.targetsOfSwiftPackage(at: packageSwiftFileName),
-                       teamID: teamID,
-                       buildDir: "\(projectPath)/\(buildPath)")
+            return fmg.perform(atPath: path) {
+                do {
+                    try build(targets: try swiftPackageCommand.targetsOfSwiftPackage(at: packageSwiftFileName),
+                              teamID: teamID,
+                              buildDir: "\(projectPath)/\(buildPath)")
+                    return nil
+                }
+                catch {
+                    return (error, package)
+                }
             }
         }
         if !failedPackages.isEmpty {
-            throw CustomError.badSwiftPackageBuild(packages: failedPackages)
+            throw CustomError.badSwiftPackageBuild(contexts: failedPackages)
         }
     }
 
-    private func build(targets: [String], teamID: String, buildDir: String) -> Bool {
-        targets.reduce(true) { result, element in
-            result && buildSwiftPackageScript(teamID: teamID, buildDir: buildDir, target: element)
+    private func build(targets: [String], teamID: String, buildDir: String) throws {
+        try targets.forEach { element in
+            try buildSwiftPackageScript(teamID: teamID, buildDir: buildDir, target: element)
         }
     }
 
     private func proceed(packages: [SwiftPackage], at buildPath: String, to outputPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
-        let failedPackages: [SwiftPackage] = try packages.compactMap { package in
+        let failedPackages: [FailedContext] = try packages.compactMap { package in
             let path = "./\(buildPath)/\(package.name)"
             observer?(.processingPackage(package, path: path))
             let deviceBuildDir = "\(path)/Release-iphoneos"
@@ -121,15 +129,20 @@ public final class SPMManager: ProgressObservable {
             let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
                 dir.extension == "framework" ? dir.nameExcludingExtension : nil
             }
-            let failedFrameworks: [String] = fmg.perform(atPath: path) {
-                frameworks.filter { framework in
-                    !mergePackageScript(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
+            do {
+                try fmg.perform(atPath: path) {
+                    try frameworks.forEach { framework in
+                        try mergePackageScript(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
+                    }
                 }
+                return nil
             }
-            return failedFrameworks.isEmpty ? nil : package
+            catch {
+                return (error, package)
+            }
         }
         if !failedPackages.isEmpty {
-            throw CustomError.badSwiftPackageProceed(packages: failedPackages)
+            throw CustomError.badSwiftPackageProceed(contexts: failedPackages)
         }
     }
 

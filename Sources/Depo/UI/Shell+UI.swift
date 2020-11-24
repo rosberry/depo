@@ -16,7 +16,7 @@ extension Shell.Error: LocalizedError {
 
 extension Shell.IO: CustomStringConvertible {
     public var description: String {
-        "\(self.command.joined(separator: " ")) exits with \(self.status) code" +
+        "\(self.command.joined(separator: " ")) exits with \(self.status) status code" +
         fileDescriptorsDescription
     }
 

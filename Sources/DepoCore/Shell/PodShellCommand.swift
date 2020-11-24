@@ -6,12 +6,6 @@ import Foundation
 
 public final class PodShellCommand: ShellCommand {
 
-    public enum Error: LocalizedError {
-        case badInit
-        case badInstall
-        case badUpdate
-    }
-
     private typealias Dependency = PodIpcJsonOutput.RootObject.Children.Dependency
 
     private struct PodIpcJsonOutput: Codable {
@@ -66,22 +60,16 @@ public final class PodShellCommand: ShellCommand {
         let roots: [RootObject]
     }
 
-    public func initialize() throws {
-        if !shell("pod", "init") {
-            throw Error.badInit
-        }
+    public func initialize() throws -> Shell.IO {
+        try shell("pod", "init")
     }
 
-    public func install() throws {
-        if !shell("pod", "install") {
-            throw Error.badInstall
-        }
+    public func install() throws -> Shell.IO {
+        try shell("pod", "install")
     }
 
-    public func update() throws {
-        if !shell("pod", "update") {
-            throw Error.badUpdate
-        }
+    public func update() throws -> Shell.IO {
+        try shell("pod", "update")
     }
 
     public func podfile(buildSettings: BuildSettings, path: String) throws -> PodFile {

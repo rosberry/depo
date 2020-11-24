@@ -8,7 +8,8 @@ public final class MoveBuiltPodScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.Path.Absolute.moveBuiltPodShellScript
 
-    public func callAsFunction(pod: Pod) -> Bool {
-        shell(filePath: scriptPath, arguments: [pod.name])
+    @discardableResult
+    public func callAsFunction(pod: Pod) throws -> Shell.IO {
+        try shell(filePath: scriptPath, arguments: [pod.name])
     }
 }

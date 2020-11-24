@@ -12,7 +12,7 @@ final class Depo: ParsableCommand {
     typealias AllInstall = Install<AllPackagesManager>
     typealias AllBuild = Build<AllPackagesManager>
 
-    final class Pods: ParsableCommand {
+    final class Pod: ParsableCommand {
         static let configuration: CommandConfiguration = .init(subcommands: [Update<PodManager>.self,
                                                                              Install<PodManager>.self,
                                                                              Build<PodManager>.self],
@@ -37,7 +37,7 @@ final class Depo: ParsableCommand {
                                                                          AllUpdate.self,
                                                                          AllInstall.self,
                                                                          AllBuild.self,
-                                                                         Pods.self,
+                                                                         Pod.self,
                                                                          Carthage.self,
                                                                          SPM.self],
                                                            defaultSubcommand: Install<AllPackagesManager>.self)

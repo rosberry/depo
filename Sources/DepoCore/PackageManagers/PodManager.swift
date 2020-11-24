@@ -7,6 +7,8 @@ import Yams
 
 public final class PodManager: ProgressObservable {
 
+    public typealias FailedContext = (Swift.Error, Pod)
+
     public enum State {
 
         case installing
@@ -18,10 +20,10 @@ public final class PodManager: ProgressObservable {
         case processingPod(Pod)
     }
 
-    public enum Error: LocalizedError {
+    public enum Error: Swift.Error {
         case badPodfile(path: String)
-        case badPodBuild(pods: [Pod])
-        case badPodMerge(pods: [Pod])
+        case badPodBuild(contexts: [FailedContext])
+        case badPodMerge(contexts: [FailedContext])
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -107,41 +109,48 @@ public final class PodManager: ProgressObservable {
     private func build(pods: [Pod], at path: String) throws {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let failedPods = pods.reduce([Pod]()) { (result, pod) in
+        let buildErrors = pods.reduce([FailedContext]()) { (result, pod) in
             observer?(.buildingPod(pod))
-            return !buildPodScript(pod: pod) ? result + [pod] : result
+            do {
+                try buildPodScript(pod: pod)
+                return result
+            }
+            catch {
+                return result + [(error, pod)]
+            }
         }
         FileManager.default.changeCurrentDirectoryPath(currentPath)
-        if !failedPods.isEmpty {
-            throw Error.badPodBuild(pods: failedPods)
+        if !buildErrors.isEmpty {
+            throw Error.badPodBuild(contexts: buildErrors)
         }
     }
 
     private func proceedAllPods(at path: String, to outputPath: String) throws {
         let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let failedPods: [Pod] = try allSchemes().compactMap { schema in
+        let proceedErrors: [FailedContext] = try allSchemes().compactMap { schema in
             let (pod, settings) = schema
             observer?(.processingPod(pod))
-            let ifProceedFailed = (try? proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")) == nil
-            return ifProceedFailed ? pod : nil
+            do {
+                try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")
+                return nil
+            }
+            catch {
+                return (error, pod)
+            }
         }
         FileManager.default.changeCurrentDirectoryPath(projectPath)
-        if !failedPods.isEmpty {
-            throw Error.badPodMerge(pods: failedPods)
+        if !proceedErrors.isEmpty {
+            throw Error.badPodMerge(contexts: proceedErrors)
         }
     }
 
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
-            if !mergePackageScript(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build") {
-                throw Error.badPodMerge(pods: [pod])
-            }
+            try mergePackageScript(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build")
         case .builtFramework:
-            if !moveBuiltPodScript(pod: pod) {
-                throw Error.badPodMerge(pods: [pod])
-            }
+            try moveBuiltPodScript(pod: pod)
         case .unknown:
             break
         }

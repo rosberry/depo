@@ -8,15 +8,18 @@ public final class MergePackageScript: ShellCommand {
 
     private let scriptPath: String = AppConfiguration.Path.Absolute.mergePackageShellScript
 
-    public func callAsFunction(swiftFrameworkName: String, outputPath: String) -> Bool {
-        shell(filePath: scriptPath, arguments: [swiftFrameworkName, ".", outputPath])
+    @discardableResult
+    public func callAsFunction(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+        try shell(filePath: scriptPath, arguments: [swiftFrameworkName, ".", outputPath])
     }
 
-    public func callAsFunction(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) -> Bool {
-        self(packageName: settings.productName, schemaName: pod.name, outputPath: outputPath, buildDir: buildDir)
+    @discardableResult
+    public func callAsFunction(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+        try self(packageName: settings.productName, schemaName: pod.name, outputPath: outputPath, buildDir: buildDir)
     }
 
-    private func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) -> Bool {
-        shell(filePath: scriptPath, arguments: [packageName, schemaName, outputPath, buildDir])
+    @discardableResult
+    private func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) throws -> Shell.IO {
+        try shell(filePath: scriptPath, arguments: [packageName, schemaName, outputPath, buildDir])
     }
 }

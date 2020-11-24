@@ -77,14 +77,8 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    public enum Error: LocalizedError {
-        case badUpdate
-    }
-
-    public func update() throws {
-        if !shell("swift", "package", "update") {
-            throw Error.badUpdate
-        }
+    public func update() throws -> Shell.IO {
+        try shell("swift", "package", "update")
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
