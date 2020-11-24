@@ -26,15 +26,16 @@ public final class CarthageManager: ProgressObservable {
 
     private let carthageItems: [CarthageItem]
     private let platform: Platform
-    private let carthageShell: Shell = Shell().subscribe { state in
-        print("carthage:", state)
-    }
-    private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: carthageShell)
+    private let shell: Shell
+    private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, platform: Platform) {
+    public init(depofile: Depofile, platform: Platform, logPrefix: String) {
         self.carthageItems = depofile.carts
         self.platform = platform
+        self.shell = Shell().subscribe { state in
+            print(logPrefix + "\(state)")
+        }
     }
 
     public func subscribe(_ observer: @escaping (State) -> Void) -> Self {

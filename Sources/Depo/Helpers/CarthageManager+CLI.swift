@@ -19,6 +19,6 @@ extension CarthageManager: CLIPackageManager {
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, platform: options.platform)
+        self.init(depofile: depofile, platform: options.platform, logPrefix: "")
     }
 }

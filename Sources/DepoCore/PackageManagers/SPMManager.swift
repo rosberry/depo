@@ -32,9 +32,7 @@ public final class SPMManager: ProgressObservable {
 
     private let packages: [SwiftPackage]
     private let fmg: FileManager = .default
-    private let shell: Shell = Shell().subscribe { state in
-        print("spm:", state)
-    }
+    private let shell: Shell
 
     private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
@@ -46,8 +44,11 @@ public final class SPMManager: ProgressObservable {
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile) {
+    public init(depofile: Depofile, logPrefix: String) {
         self.packages = depofile.swiftPackages
+        self.shell = Shell().subscribe { [logPrefix] state in
+            print(logPrefix + "\(state)")
+        }
     }
 
     public func subscribe(_ observer: @escaping (State) -> Void) -> SPMManager {
