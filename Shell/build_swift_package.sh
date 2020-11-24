@@ -4,11 +4,14 @@ set -e
 
 DEVELOPMENT_TEAM=$1
 BUILD_DIR=$2
-PACKAGE_NAME=${3:-$(basename "$PWD")}
+TARGET_NAME=$3
+PACKAGE_NAME=${4:-$(basename "$PWD")}
 
+chmod -R +rw .
 swift package generate-xcodeproj
 
 xcodebuild \
+-target $TARGET_NAME \
 -configuration Release \
 defines_module=yes \
 -sdk "iphoneos" archive \
@@ -16,6 +19,7 @@ DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
 -quiet
 
 xcodebuild \
+-target $TARGET_NAME \
 -configuration Release \
 only_active_arch=no \
 defines_module=yes \

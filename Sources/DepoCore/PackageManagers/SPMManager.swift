@@ -10,9 +10,9 @@ public final class SPMManager: ProgressObservable {
     public enum State {
         case updating
         case building
-        case buildingPackage(SwiftPackage)
+        case buildingPackage(SwiftPackage, path: String)
         case processing
-        case processingPackage(SwiftPackage)
+        case processingPackage(SwiftPackage, path: String)
         case creatingPackageSwiftFile(path: String)
     }
 
@@ -20,6 +20,7 @@ public final class SPMManager: ProgressObservable {
         case badPackageSwiftFile(path: String)
         case badSwiftPackageBuild(packages: [SwiftPackage])
         case badSwiftPackageProceed(packages: [SwiftPackage])
+        case noDevelopmentTeam
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -30,7 +31,7 @@ public final class SPMManager: ProgressObservable {
     private let packages: [SwiftPackage]
     private let fmg: FileManager = .default
     private let shell: Shell = Shell().subscribe { state in
-        print(state)
+        print("spm:", state)
     }
 
     private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
@@ -58,14 +59,21 @@ public final class SPMManager: ProgressObservable {
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update()
         observer?(.building)
-        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: buildSettings)
+        try build(packages: packages,
+                  at: packageSwiftDirName,
+                  to: packageSwiftBuildsDirName,
+                  teamID: try teamID(buildSettings: buildSettings))
         observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
 
     public func build() throws {
         observer?(.building)
-        try build(packages: packages, at: packageSwiftDirName, to: packageSwiftBuildsDirName, buildSettings: .init(shell: shell))
+        let buildSettings = try BuildSettings(shell: shell)
+        try build(packages: packages,
+                  at: packageSwiftDirName,
+                  to: packageSwiftBuildsDirName,
+                  teamID: try teamID(buildSettings: buildSettings))
         observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
@@ -81,12 +89,15 @@ public final class SPMManager: ProgressObservable {
     private func build(packages: [SwiftPackage],
                        at packagesSourcesPath: String,
                        to buildPath: String,
-                       buildSettings: BuildSettings) throws {
+                       teamID: String) throws {
         let projectPath = fmg.currentDirectoryPath
-        let failedPackages = packages.filter { package in
-            observer?(.buildingPackage(package))
-            fmg.perform(atPath: "./\(packagesSourcesPath)/\(package.name)") {
-                !buildSwiftPackageScript(teamID: buildSettings.developmentTeam, buildDir: "\(projectPath)/\(buildPath)")
+        let failedPackages = try packages.filter { package in
+            let path = "./\(packagesSourcesPath)/\(package.name)"
+            observer?(.buildingPackage(package, path: path))
+            return try fmg.perform(atPath: path) {
+                !build(targets: try swiftPackageCommand.targetsOfSwiftPackage(at: packageSwiftFileName),
+                       teamID: teamID,
+                       buildDir: "\(projectPath)/\(buildPath)")
             }
         }
         if !failedPackages.isEmpty {
@@ -94,16 +105,23 @@ public final class SPMManager: ProgressObservable {
         }
     }
 
+    private func build(targets: [String], teamID: String, buildDir: String) -> Bool {
+        targets.reduce(true) { result, element in
+            result && buildSwiftPackageScript(teamID: teamID, buildDir: buildDir, target: element)
+        }
+    }
+
     private func proceed(packages: [SwiftPackage], at buildPath: String, to outputPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages: [SwiftPackage] = try packages.compactMap { package in
-            observer?(.processingPackage(package))
-            let deviceBuildDir = "./\(buildPath)/\(package.name)/Release-iphoneos"
+            let path = "./\(buildPath)/\(package.name)"
+            observer?(.processingPackage(package, path: path))
+            let deviceBuildDir = "\(path)/Release-iphoneos"
             #warning("proceeding all swift packages seems redundant")
             let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
                 dir.extension == "framework" ? dir.nameExcludingExtension : nil
             }
-            let failedFrameworks: [String] = fmg.perform(atPath: "./\(buildPath)/\(package.name)") {
+            let failedFrameworks: [String] = fmg.perform(atPath: path) {
                 frameworks.filter { framework in
                     !mergePackageScript(swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
                 }
@@ -113,5 +131,12 @@ public final class SPMManager: ProgressObservable {
         if !failedPackages.isEmpty {
             throw CustomError.badSwiftPackageProceed(packages: failedPackages)
         }
+    }
+
+    private func teamID(buildSettings: BuildSettings) throws -> String {
+        guard let developmentTeam = buildSettings.developmentTeam else {
+            throw CustomError.noDevelopmentTeam
+        }
+        return developmentTeam
     }
 }

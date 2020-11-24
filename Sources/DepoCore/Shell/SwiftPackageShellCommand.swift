@@ -38,6 +38,24 @@ public final class SwiftPackageShellCommand: ShellCommand {
             let requirement: Requirement
         }
 
+        struct Target: Codable {
+
+            enum TypeEnum: String, Codable {
+                case regular
+                case test
+            }
+
+            let name: String
+            let type: TypeEnum
+        }
+
+        struct Product: Codable {
+            let name: String
+            let targets: [String]
+        }
+
+        let products: [Product]
+        let targets: [Target]
         let dependencies: [Dependency]
     }
 
@@ -79,18 +97,25 @@ public final class SwiftPackageShellCommand: ShellCommand {
         return .init(projectBuildSettings: buildSettings, packages: packages)
     }
 
+    public func targetsOfSwiftPackage(at path: String) throws -> [String] {
+        try jsonerOutput(at: path).products.map(by: \.targets).reduce([], +)
+    }
+
     public func swiftPackages(packageSwiftFilePath: String) throws -> [SwiftPackage] {
         try swiftPackageByJsoner(packageSwiftFilePath: packageSwiftFilePath)
     }
 
     private func swiftPackageByJsoner(packageSwiftFilePath: String) throws -> [SwiftPackage] {
-        let output: Shell.IO = try shell("jsoner", "package-swift", packageSwiftFilePath)
-        let model = try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
-        return model.dependencies.map { dependency in
+        try jsonerOutput(at: packageSwiftFilePath).dependencies.map { dependency in
             .init(name: dependency.name,
                   url: dependency.url,
                   versionConstraint: versionConstraint(from: dependency.requirement))
         }
+    }
+
+    private func jsonerOutput(at path: String) throws -> JsonerOutputWrapper {
+        let output: Shell.IO = try shell("jsoner", "package-swift", path)
+        return try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
 
     private func swiftPackagesByRegex(file: File) throws -> [SwiftPackage] {

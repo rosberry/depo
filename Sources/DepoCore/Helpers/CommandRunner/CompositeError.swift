@@ -4,9 +4,9 @@
 
 import Foundation
 
-struct CompositeError: LocalizedError {
+public struct CompositeError: Error {
 
-    let errors: [Error]
+    public let errors: [Error]
 
     init(errors: [Error]) {
         self.errors = errors

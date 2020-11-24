@@ -6,6 +6,10 @@ import Foundation
 
 public final class Shell {
 
+    public enum Error: Swift.Error {
+        case failure(IO)
+    }
+
     public struct IO {
         public let stdOut: String
         public let stdErr: String
@@ -55,7 +59,13 @@ public final class Shell {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
-        return try output(of: process, command: args)
+        let io = try output(of: process, command: args)
+        if io.status == 0 {
+            return io
+        }
+        else {
+            throw Error.failure(io)
+        }
     }
 
     public func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
@@ -63,7 +73,13 @@ public final class Shell {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments
-        return try output(of: process, command: [filePath] + arguments)
+        let io = try output(of: process, command: [filePath] + arguments)
+        if io.status == 0 {
+            return io
+        }
+        else {
+            throw Error.failure(io)
+        }
     }
 
     private func output(of process: Process, command: [String]) throws -> IO {

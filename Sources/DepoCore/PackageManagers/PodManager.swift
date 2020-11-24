@@ -37,7 +37,7 @@ public final class PodManager: ProgressObservable {
     private let pods: [Pod]
 
     private let shell: Shell = Shell().subscribe { state in
-        print(state)
+        print("pod:", state)
     }
     private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
@@ -60,7 +60,7 @@ public final class PodManager: ProgressObservable {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        try createPodfile(at: podFilePath, with: pods)
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
         try podShellCommand.install()
         observer?(.building)
         try build(pods: pods, at: podsProjectPath)
@@ -72,7 +72,7 @@ public final class PodManager: ProgressObservable {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
-        try createPodfile(at: podFilePath, with: pods)
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
         try podShellCommand.update()
         observer?(.building)
         try build(pods: pods, at: podsProjectPath)
@@ -95,9 +95,9 @@ public final class PodManager: ProgressObservable {
         try podShellCommand.initialize()
     }
 
-    private func createPodfile(at podFilePath: String, with pods: [Pod]) throws {
+    private func createPodfile(at podFilePath: String, with pods: [Pod], buildSettings: BuildSettings) throws {
         observer?(.creatingPodfile(path: podFilePath))
-        let podfile = PodFile(buildSettings: try .init(), pods: pods)
+        let podfile = PodFile(buildSettings: buildSettings, pods: pods)
         let content = podfile.description.data(using: .utf8)
         if !FileManager.default.createFile(atPath: podFilePath, contents: content) {
             throw Error.badPodfile(path: podFilePath)

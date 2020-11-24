@@ -13,7 +13,7 @@ public struct PackageSwift: CustomStringConvertible {
         self.packages = packages
         let dependencies = packages.map(Self.package).joined(separator: ",\n\(Self.tabs(9)) ")
         self.description = """
-                           // swift-tools-version:\(settings.swiftVersion)
+                           // swift-tools-version:\(settings.systemSwiftVersion)
 
                            import PackageDescription
 

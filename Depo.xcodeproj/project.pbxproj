@@ -32,10 +32,17 @@
 		36B9E4B4256BD8850059E6A7 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */; };
 		36B9E4D2256BD8980059E6A7 /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = EC4FA3CF6608F67BD447C158 /* TestCartfile */; };
 		EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */; };
+		EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */; };
+		EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */; };
 		EC44FABB16BF3067DDAECC58 /* PackageSwiftNoDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4FB6648315C0E746D5C73D /* PackageSwiftNoDeps.swift */; };
 		EC46D970CBCB2E25DCC229A2 /* PackageSwiftWithDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4CC8B1C84E847EFC4C77F4 /* PackageSwiftWithDeps.swift */; };
-		EC476186052564633321FA24 /* State+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC425B28EE0CD43C57754BFE /* State+CustomStringConvertible.swift */; };
 		EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48CD52ECEC50462B650F6F /* CommandRunner.swift */; };
+		EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */; };
+		EC4D3977446AE0276E4E55E5 /* Array+Joined.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */; };
+		EC4D6F7084F7E8571D86FB3C /* Shell+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */; };
+		EC4E7AFBBF32277F5F3BA0B0 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F0CBDEF8E892FC642E084 /* String+Index.swift */; };
+		EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */; };
+		EC4F9F68D5F02A474CCA785B /* SPMManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */; };
 		OBJ_189 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_126 /* BashCompletionsGenerator.swift */; };
 		OBJ_190 /* CompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_127 /* CompletionsGenerator.swift */; };
 		OBJ_191 /* FishCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_128 /* FishCompletionsGenerator.swift */; };
@@ -97,9 +104,8 @@
 		OBJ_274 /* PodManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* PodManager+CLI.swift */; };
 		OBJ_275 /* SPMManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* SPMManager+CLI.swift */; };
 		OBJ_276 /* DefaultOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* DefaultOptions.swift */; };
-		OBJ_277 /* UI+DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* UI+DecodingError.swift */; };
-		OBJ_278 /* UI+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* UI+Errors.swift */; };
-		OBJ_279 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* UI.swift */; };
+		OBJ_277 /* DecodingError+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* DecodingError+CustomStringConvertible.swift */; };
+		OBJ_278 /* BuildSettingsError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* BuildSettingsError+LocalizedError.swift */; };
 		OBJ_280 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* main.swift */; };
 		OBJ_282 /* ArgumentParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "swift-argument-parser::ArgumentParser::Product" /* ArgumentParser.framework */; };
 		OBJ_283 /* DepoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Depo::DepoCore::Product" /* DepoCore.framework */; };
@@ -335,18 +341,25 @@
 		"Depo::Depo::Product" /* Depo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Depo; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoCore::Product" /* DepoCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DepoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Depo::DepoTest::Product" /* DepoTest.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DepoTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllPackagesManager+UI.swift"; sourceTree = "<group>"; };
+		EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPMManager+UI.swift"; sourceTree = "<group>"; };
 		EC421DDF2CDD3D330CAD1148 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
-		EC425B28EE0CD43C57754BFE /* State+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "State+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CompositeError+LocalizedError.swift"; sourceTree = "<group>"; };
 		EC458F05235C3C3F99B9F520 /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
 		EC4692E13BE4A7DF27432573 /* PodfileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps; sourceTree = "<group>"; };
+		EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shell+UI.swift"; sourceTree = "<group>"; };
 		EC48CD52ECEC50462B650F6F /* CommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
 		EC498404991178E5B15FCDBF /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
 		EC4A0D66FC5745512B0881BC /* PackageSwiftNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftNoDeps.txt; sourceTree = "<group>"; };
 		EC4AEF51CAB6CECCAC8F2844 /* PodfileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps; sourceTree = "<group>"; };
 		EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 		EC4CC8B1C84E847EFC4C77F4 /* PackageSwiftWithDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftWithDeps.swift; sourceTree = "<group>"; };
+		EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Joined.swift"; sourceTree = "<group>"; };
 		EC4D40E2F085BBF30A8D8919 /* DepofileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileWithDeps; sourceTree = "<group>"; };
+		EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PodManager+UI.swift"; sourceTree = "<group>"; };
+		EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarthageManager+UI.swift"; sourceTree = "<group>"; };
 		EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
+		EC4F0CBDEF8E892FC642E084 /* String+Index.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
 		EC4FA3CF6608F67BD447C158 /* TestCartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCartfile; sourceTree = "<group>"; };
 		EC4FB6648315C0E746D5C73D /* PackageSwiftNoDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftNoDeps.swift; sourceTree = "<group>"; };
 		"Files::Files::Product" /* Files.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Files.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -431,9 +444,8 @@
 		OBJ_30 /* PodManager+CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodManager+CLI.swift"; sourceTree = "<group>"; };
 		OBJ_31 /* SPMManager+CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPMManager+CLI.swift"; sourceTree = "<group>"; };
 		OBJ_33 /* DefaultOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOptions.swift; sourceTree = "<group>"; };
-		OBJ_35 /* UI+DecodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI+DecodingError.swift"; sourceTree = "<group>"; };
-		OBJ_36 /* UI+Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI+Errors.swift"; sourceTree = "<group>"; };
-		OBJ_37 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		OBJ_35 /* DecodingError+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DecodingError+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		OBJ_36 /* BuildSettingsError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildSettingsError+LocalizedError.swift"; sourceTree = "<group>"; };
 		OBJ_38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_40 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		OBJ_42 /* Coders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coders.swift; sourceTree = "<group>"; };
@@ -791,6 +803,7 @@
 				OBJ_29 /* Platform+ArgumentParser.swift */,
 				OBJ_30 /* PodManager+CLI.swift */,
 				OBJ_31 /* SPMManager+CLI.swift */,
+				EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -806,10 +819,14 @@
 		OBJ_34 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_35 /* UI+DecodingError.swift */,
-				OBJ_36 /* UI+Errors.swift */,
-				OBJ_37 /* UI.swift */,
-				EC425B28EE0CD43C57754BFE /* State+CustomStringConvertible.swift */,
+				OBJ_35 /* DecodingError+CustomStringConvertible.swift */,
+				OBJ_36 /* BuildSettingsError+LocalizedError.swift */,
+				EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */,
+				EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */,
+				EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */,
+				EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */,
+				EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */,
+				EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -839,6 +856,7 @@
 				OBJ_48 /* ProgressNotifier.swift */,
 				OBJ_49 /* ProgressObservable.swift */,
 				EC472ABB6DCF5B9114A08A8C /* CommandRunner */,
+				EC4F0CBDEF8E892FC642E084 /* String+Index.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1415,11 +1433,17 @@
 				OBJ_274 /* PodManager+CLI.swift in Sources */,
 				OBJ_275 /* SPMManager+CLI.swift in Sources */,
 				OBJ_276 /* DefaultOptions.swift in Sources */,
-				OBJ_277 /* UI+DecodingError.swift in Sources */,
-				OBJ_278 /* UI+Errors.swift in Sources */,
-				OBJ_279 /* UI.swift in Sources */,
+				OBJ_277 /* DecodingError+CustomStringConvertible.swift in Sources */,
+				OBJ_278 /* BuildSettingsError+LocalizedError.swift in Sources */,
 				OBJ_280 /* main.swift in Sources */,
-				EC476186052564633321FA24 /* State+CustomStringConvertible.swift in Sources */,
+				EC4D6F7084F7E8571D86FB3C /* Shell+UI.swift in Sources */,
+				EC4D3977446AE0276E4E55E5 /* Array+Joined.swift in Sources */,
+				EC4F9F68D5F02A474CCA785B /* SPMManager+UI.swift in Sources */,
+				EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */,
+				EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */,
+				EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */,
+				EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */,
+				EC4E7AFBBF32277F5F3BA0B0 /* String+Index.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

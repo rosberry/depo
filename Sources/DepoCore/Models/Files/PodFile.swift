@@ -11,7 +11,7 @@ public struct PodFile: CustomStringConvertible {
 
     public init(buildSettings: BuildSettings, pods: [Pod]) {
         self.pods = pods
-        self.description = Self.makeDescription(platform: (buildSettings.platform ?? Platform.defaultValue).rawValue,
+        self.description = Self.makeDescription(platform: (buildSettings.platform ?? Platform.defaultValue).podfileDescription,
                                                 platformVersion: buildSettings.deploymentTarget ?? "",
                                                 targetName: buildSettings.targetName,
                                                 podsSection: pods.reduce("") { result, pod in
@@ -37,5 +37,16 @@ public struct PodFile: CustomStringConvertible {
             return ""
         }
         return ", '\(version.operation.symbol) \(version.value)'"
+    }
+}
+
+private extension Platform {
+    var podfileDescription: String {
+        switch self {
+        case .mac:
+            return "macos"
+        default:
+            return self.rawValue
+        }
     }
 }

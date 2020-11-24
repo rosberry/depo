@@ -27,7 +27,7 @@ public final class CarthageManager: ProgressObservable {
     private let carthageItems: [CarthageItem]
     private let platform: Platform
     private let carthageShell: Shell = Shell().subscribe { state in
-        print(state)
+        print("carthage:", state)
     }
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: carthageShell)
     private var observer: ((State) -> Void)?
