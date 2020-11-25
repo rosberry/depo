@@ -16,9 +16,12 @@ extension CarthageManager: CLIPackageManager {
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
                 help: "\(Platform.allFlagsHelp)")
         var platform: Platform = .defaultValue
+
+        @Option()
+        var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, platform: options.platform)
+        self.init(depofile: depofile, platform: options.platform, carthageCommandPath: options.carthageCommandPath)
     }
 }

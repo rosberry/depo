@@ -61,15 +61,15 @@ public final class PodShellCommand: ShellCommand {
     }
 
     public func initialize() throws -> Shell.IO {
-        try shell("pod", "init")
+        try shell(commandPath, "init")
     }
 
     public func install() throws -> Shell.IO {
-        try shell("pod", "install")
+        try shell(commandPath, "install")
     }
 
     public func update() throws -> Shell.IO {
-        try shell("pod", "update")
+        try shell(commandPath, "update")
     }
 
     public func podfile(buildSettings: BuildSettings, path: String) throws -> PodFile {
@@ -77,7 +77,7 @@ public final class PodShellCommand: ShellCommand {
     }
 
     public func pods(path: String) throws -> [Pod] {
-        let output: Shell.IO = try shell("pod", "ipc", "podfile-json", path)
+        let output: Shell.IO = try shell(commandPath, "ipc", "podfile-json", path)
         let podfileJson = output.stdOut.data(using: .utf8) ?? Data()
         let model = try JSONDecoder().decode(PodIpcJsonOutput.self, from: podfileJson)
         return pods(from: model)

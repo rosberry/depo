@@ -103,7 +103,6 @@
 		OBJ_273 /* Platform+ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* Platform+ArgumentParser.swift */; };
 		OBJ_274 /* PodManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* PodManager+CLI.swift */; };
 		OBJ_275 /* SPMManager+CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* SPMManager+CLI.swift */; };
-		OBJ_276 /* DefaultOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* DefaultOptions.swift */; };
 		OBJ_277 /* DecodingError+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* DecodingError+CustomStringConvertible.swift */; };
 		OBJ_278 /* BuildSettingsError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* BuildSettingsError+LocalizedError.swift */; };
 		OBJ_280 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* main.swift */; };
@@ -443,7 +442,6 @@
 		OBJ_29 /* Platform+ArgumentParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+ArgumentParser.swift"; sourceTree = "<group>"; };
 		OBJ_30 /* PodManager+CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodManager+CLI.swift"; sourceTree = "<group>"; };
 		OBJ_31 /* SPMManager+CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SPMManager+CLI.swift"; sourceTree = "<group>"; };
-		OBJ_33 /* DefaultOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOptions.swift; sourceTree = "<group>"; };
 		OBJ_35 /* DecodingError+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DecodingError+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		OBJ_36 /* BuildSettingsError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildSettingsError+LocalizedError.swift"; sourceTree = "<group>"; };
 		OBJ_38 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -720,7 +718,6 @@
 				OBJ_15 /* CLIPackageManager.swift */,
 				OBJ_16 /* Commands */,
 				OBJ_22 /* Helpers */,
-				OBJ_32 /* Models */,
 				OBJ_34 /* UI */,
 				OBJ_38 /* main.swift */,
 			);
@@ -806,14 +803,6 @@
 				EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		OBJ_32 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_33 /* DefaultOptions.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		OBJ_34 /* UI */ = {
@@ -1432,7 +1421,6 @@
 				OBJ_273 /* Platform+ArgumentParser.swift in Sources */,
 				OBJ_274 /* PodManager+CLI.swift in Sources */,
 				OBJ_275 /* SPMManager+CLI.swift in Sources */,
-				OBJ_276 /* DefaultOptions.swift in Sources */,
 				OBJ_277 /* DecodingError+CustomStringConvertible.swift in Sources */,
 				OBJ_278 /* BuildSettingsError+LocalizedError.swift in Sources */,
 				OBJ_280 /* main.swift in Sources */,

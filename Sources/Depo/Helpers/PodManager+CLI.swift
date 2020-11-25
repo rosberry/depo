@@ -8,9 +8,17 @@ import ArgumentParser
 
 extension PodManager: CLIPackageManager {
 
-    typealias Options = DefaultOptions
+    struct Options: ParsableArguments, HasDepofileExtension {
 
-    convenience init(depofile: Depofile, options: DefaultOptions) {
-        self.init(depofile: depofile)
+        @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
+                help: "\(DataCoder.Kind.allFlagsHelp)")
+        var depofileExtension: DataCoder.Kind = .defaultValue
+
+        @Option()
+        var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
+    }
+
+    convenience init(depofile: Depofile, options: Options) {
+        self.init(depofile: depofile, podCommandPath: options.podCommandPath)
     }
 }

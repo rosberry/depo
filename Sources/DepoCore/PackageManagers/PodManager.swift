@@ -39,14 +39,15 @@ public final class PodManager: ProgressObservable {
     private let pods: [Pod]
 
     private let shell: Shell = .init()
-    private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
+    private let podShellCommand: PodShellCommand
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile) {
+    public init(depofile: Depofile, podCommandPath: String) {
         self.pods = depofile.pods
+        self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }

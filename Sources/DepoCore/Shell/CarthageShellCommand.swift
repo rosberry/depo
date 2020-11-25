@@ -53,7 +53,7 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Shell.IO {
-        let args: [String] = ["carthage", command] + arguments.reduce([]) { result, arg in
+        let args: [String] = [commandPath, command] + arguments.reduce([]) { result, arg in
             result + arg.arguments
         }
         return try shell(args)

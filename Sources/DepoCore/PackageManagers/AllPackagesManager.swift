@@ -15,25 +15,31 @@ public final class AllPackagesManager: ProgressObservable {
     private let depofile: Depofile
     private let platform: Platform
     private var podManager: PodManager {
-        PodManager(depofile: depofile).subscribe { [weak self] state in
+        PodManager(depofile: depofile, podCommandPath: podCommandPath).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
     }
     private var carthageManager: CarthageManager {
-        CarthageManager(depofile: depofile, platform: platform).subscribe { [weak self] state in
+        CarthageManager(depofile: depofile, platform: platform, carthageCommandPath: carthageCommandPath).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
     }
     private var spmManager: SPMManager {
-        SPMManager(depofile: depofile).subscribe { [weak self] state in
+        SPMManager(depofile: depofile, swiftCommandPath: swiftCommandPath).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
     }
     private var observer: ((State) -> Void)?
+    private let podCommandPath: String
+    private let carthageCommandPath: String
+    private let swiftCommandPath: String
 
-    public init(depofile: Depofile, platform: Platform) {
+    public init(depofile: Depofile, platform: Platform, podCommandPath: String, carthageCommandPath: String, swiftCommandPath: String) {
         self.depofile = depofile
         self.platform = platform
+        self.podCommandPath = podCommandPath
+        self.carthageCommandPath = carthageCommandPath
+        self.swiftCommandPath = swiftCommandPath
     }
 
     public func subscribe(_ observer: @escaping (State) -> Void) -> AllPackagesManager {
@@ -64,4 +70,5 @@ public final class AllPackagesManager: ProgressObservable {
             spmManager.build
         }
     }
+
 }

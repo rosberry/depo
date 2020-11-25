@@ -6,11 +6,17 @@ import Foundation
 
 public final class MergePackageScript: ShellCommand {
 
-    private let scriptPath: String = AppConfiguration.Path.Absolute.mergePackageShellScript
+    public override init(commandPath: String = AppConfiguration.Path.Absolute.mergePackageShellScript, shell: Shell) {
+        super.init(commandPath: commandPath, shell: shell)
+    }
+
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
 
     @discardableResult
     public func callAsFunction(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
-        try shell(filePath: scriptPath, arguments: [swiftFrameworkName, ".", outputPath])
+        try shell(filePath: commandPath, arguments: [swiftFrameworkName, ".", outputPath])
     }
 
     @discardableResult
@@ -20,6 +26,6 @@ public final class MergePackageScript: ShellCommand {
 
     @discardableResult
     private func callAsFunction(packageName: String, schemaName: String, outputPath: String, buildDir: String) throws -> Shell.IO {
-        try shell(filePath: scriptPath, arguments: [packageName, schemaName, outputPath, buildDir])
+        try shell(filePath: commandPath, arguments: [packageName, schemaName, outputPath, buildDir])
     }
 }

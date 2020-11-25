@@ -28,6 +28,15 @@ final class Init: ParsableCommand {
 
         @Argument(help: "use relative paths")
         var filePaths: [String] = []
+
+        @Option()
+        var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
+
+        @Option()
+        var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
+
+        @Option()
+        var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
     }
 
     fileprivate enum Action {
@@ -66,9 +75,9 @@ final class Init: ParsableCommand {
             print(command.joined(separator: " "))
         }
     }
-    private lazy var pod: PodShellCommand = .init(shell: shell)
-    private lazy var swiftPackage: SwiftPackageShellCommand = .init(shell: shell)
-    private lazy var carthage: CarthageShellCommand = .init(shell: shell)
+    private lazy var pod: PodShellCommand = .init(commandPath: options.podCommandPath, shell: shell)
+    private lazy var swiftPackage: SwiftPackageShellCommand = .init(commandPath: options.swiftCommandPath, shell: shell)
+    private lazy var carthage: CarthageShellCommand = .init(commandPath: options.carthageCommandPath, shell: shell)
     private let progress = DefaultProgressController<State>().subscribe { state in
         print(state)
     }
