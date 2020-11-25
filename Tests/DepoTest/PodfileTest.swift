@@ -36,6 +36,7 @@ final class PodfileTest: XCTestCase, PackageManagerFileTest {
 
     private func parsedPodfile(path: String) throws -> PodFile {
         let podfileNoDepsURL = try fileURL(name: path, ext: "")
-        return try PodShellCommand().podfile(buildSettings: projectSettings, path: podfileNoDepsURL.absoluteStringWithoutScheme)
+        return try PodShellCommand(commandPath: "pod").podfile(buildSettings: projectSettings,
+                                                               path: podfileNoDepsURL.absoluteStringWithoutScheme)
     }
 }

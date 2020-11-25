@@ -39,12 +39,13 @@ extension PackageManagerFileTest {
 
     var projectSettings: BuildSettings {
         .init(productName: "Test",
-              swiftVersion: "test-swift-version",
+              swiftVersion: "test-xcode-swift-version",
               targetName: "TestTarget",
               codesigningFolderPath: nil,
               platform: .tvos,
               deploymentTarget: "test-deployment-target",
-              developmentTeam: "test-development-team")
+              developmentTeam: "test-development-team",
+              systemSwiftVersion: "test-swift-version")
     }
 
     var pods: [Pod] {

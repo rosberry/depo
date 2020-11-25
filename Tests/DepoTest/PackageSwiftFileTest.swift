@@ -38,6 +38,6 @@ final class PackageSwiftFileTest: XCTestCase, PackageManagerFileTest {
     }
 
     private func parsedPackageSwift(path: String) throws -> PackageSwift {
-        try SwiftPackageShellCommand().packageSwift(buildSettings: projectSettings, absolutePath: path)
+        try SwiftPackageShellCommand(commandPath: "swift").packageSwift(buildSettings: projectSettings, absolutePath: path)
     }
 }

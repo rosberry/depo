@@ -4,7 +4,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
 
     subscript(from index: Index) -> Substring {
         self[index..<self.index(startIndex, offsetBy: count)]

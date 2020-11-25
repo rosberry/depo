@@ -34,13 +34,11 @@
 		EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */; };
 		EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */; };
 		EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */; };
-		EC44FABB16BF3067DDAECC58 /* PackageSwiftNoDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4FB6648315C0E746D5C73D /* PackageSwiftNoDeps.swift */; };
-		EC46D970CBCB2E25DCC229A2 /* PackageSwiftWithDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4CC8B1C84E847EFC4C77F4 /* PackageSwiftWithDeps.swift */; };
 		EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48CD52ECEC50462B650F6F /* CommandRunner.swift */; };
 		EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */; };
 		EC4D3977446AE0276E4E55E5 /* Array+Joined.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */; };
 		EC4D6F7084F7E8571D86FB3C /* Shell+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */; };
-		EC4E7AFBBF32277F5F3BA0B0 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F0CBDEF8E892FC642E084 /* String+Index.swift */; };
+		EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F0CBDEF8E892FC642E084 /* String+Index.swift */; };
 		EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */; };
 		EC4F9F68D5F02A474CCA785B /* SPMManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */; };
 		OBJ_189 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_126 /* BashCompletionsGenerator.swift */; };
@@ -850,7 +848,7 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -866,7 +864,6 @@
 				OBJ_182 /* Depofile */,
 				OBJ_183 /* Podfile */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_50 /* Models */ = {
@@ -1280,7 +1277,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_167 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1431,7 +1428,6 @@
 				EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */,
 				EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */,
 				EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */,
-				EC4E7AFBBF32277F5F3BA0B0 /* String+Index.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1474,6 +1470,7 @@
 				OBJ_333 /* SwiftPackageShellCommand.swift in Sources */,
 				EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */,
 				EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */,
+				EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,8 +1492,6 @@
 				OBJ_363 /* PackageManagerFileTest.swift in Sources */,
 				OBJ_364 /* PackageSwiftFileTest.swift in Sources */,
 				OBJ_365 /* PodfileTest.swift in Sources */,
-				EC44FABB16BF3067DDAECC58 /* PackageSwiftNoDeps.swift in Sources */,
-				EC46D970CBCB2E25DCC229A2 /* PackageSwiftWithDeps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

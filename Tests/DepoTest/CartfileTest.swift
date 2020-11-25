@@ -19,7 +19,7 @@ final class CartfileTest: XCTestCase, PackageManagerFileTest {
     func testEmptyCartfileFromActualCartfile() {
         expectNoThrow(try {
             let cartfileNoDepsURL = try fileURL(name: "CartfileNoDeps", ext: "txt")
-            let parsedCartfile = try CarthageShellCommand().cartfile(url: cartfileNoDepsURL)
+            let parsedCartfile = try CarthageShellCommand(commandPath: "carthage").cartfile(url: cartfileNoDepsURL)
             let cartfile = Cartfile(items: [])
             XCTAssertEqual(cartfile.description, parsedCartfile.description)
         }(), #file, #line)
@@ -28,7 +28,7 @@ final class CartfileTest: XCTestCase, PackageManagerFileTest {
     func testCartfileFromActualCartfile() {
         expectNoThrow(try {
             let cartfileNoDepsURL = try fileURL(name: "CartfileWithDeps", ext: "txt")
-            let parsedCartfile = try CarthageShellCommand().cartfile(url: cartfileNoDepsURL)
+            let parsedCartfile = try CarthageShellCommand(commandPath: "carthage").cartfile(url: cartfileNoDepsURL)
             let cartfile = Cartfile(items: carts)
             let parsedCartfileLines = lines(from: parsedCartfile.description)
             let cartfileLines = lines(from: cartfile.description)
