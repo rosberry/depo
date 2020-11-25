@@ -7,53 +7,7 @@ import Files
 
 public final class SwiftPackageShellCommand: ShellCommand {
 
-    private struct JsonerOutputWrapper: Codable {
-        struct Dependency: Codable {
-
-            struct Requirement: Codable {
-
-                enum Kind: String, Codable {
-                    case range
-                    case exact
-                    case branch
-                    case revision
-                    case localPackage
-                }
-
-                private enum CodingKeys: String, CodingKey {
-                    case type
-                    case identifier
-                    case lowerBound
-                    case upperBound
-                }
-
-                let type: Kind
-                let identifier: String?
-                let lowerBound: String?
-                let upperBound: String?
-            }
-
-            let name: String?
-            let url: URL
-            let requirement: Requirement
-        }
-
-        struct Target: Codable {
-
-            enum TypeEnum: String, Codable {
-                case regular
-                case test
-            }
-
-            let name: String
-            let type: TypeEnum
-        }
-
-        struct Product: Codable {
-            let name: String
-            let targets: [String]
-        }
-
+    fileprivate struct JsonerOutputWrapper: Codable {
         let products: [Product]
         let targets: [Target]
         let dependencies: [Dependency]
@@ -137,7 +91,9 @@ public final class SwiftPackageShellCommand: ShellCommand {
         guard let closeSquareBracketIndex = contentFromOpenBracket.range(of: "]")?.lowerBound else {
             return nil
         }
-        return string[openSquareBracketIndex..<closeSquareBracketIndex].filter { !$0.isNewline }
+        return string[openSquareBracketIndex..<closeSquareBracketIndex].filter { character in
+            !character.isNewline
+        }
     }
 
     private func products(from dependenciesArrayString: String) throws -> [String] {
@@ -150,7 +106,9 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
 
         let output: Shell.IO = try shell("perl", file.path)
-        return output.stdOut.split(separator: Character("\n")).map { String($0) }
+        return output.stdOut.split(separator: Character("\n")).map { substrings in
+            String(substrings)
+        }
     }
 
     private func swiftPackage(from string: String) throws -> SwiftPackage? {
@@ -220,5 +178,54 @@ public final class SwiftPackageShellCommand: ShellCommand {
         else {
             return .upToNextMinor
         }
+    }
+}
+
+extension SwiftPackageShellCommand.JsonerOutputWrapper {
+    fileprivate struct Dependency: Codable {
+        let name: String?
+        let url: URL
+        let requirement: Requirement
+    }
+
+    fileprivate struct Target: Codable {
+
+        enum TypeEnum: String, Codable {
+            case regular
+            case test
+        }
+
+        let name: String
+        let type: TypeEnum
+    }
+
+    fileprivate struct Product: Codable {
+        let name: String
+        let targets: [String]
+    }
+}
+
+extension SwiftPackageShellCommand.JsonerOutputWrapper.Dependency {
+    fileprivate struct Requirement: Codable {
+
+        enum Kind: String, Codable {
+            case range
+            case exact
+            case branch
+            case revision
+            case localPackage
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case type
+            case identifier
+            case lowerBound
+            case upperBound
+        }
+
+        let type: Kind
+        let identifier: String?
+        let lowerBound: String?
+        let upperBound: String?
     }
 }

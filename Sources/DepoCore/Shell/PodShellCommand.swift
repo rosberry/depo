@@ -8,53 +8,10 @@ public final class PodShellCommand: ShellCommand {
 
     private typealias Dependency = PodIpcJsonOutput.RootObject.Children.Dependency
 
-    private struct PodIpcJsonOutput: Codable {
+    fileprivate struct PodIpcJsonOutput: Codable {
 
         private enum CodingKeys: String, CodingKey {
             case roots = "target_definitions"
-        }
-
-        struct RootObject: Codable {
-
-            struct Children: Codable {
-
-                private enum CodingKeys: String, CodingKey {
-                    case name
-                    case dependencies
-                }
-
-                struct Dependency: Codable {
-                    let name: String
-                    let version: String
-
-                    init(from decoder: Decoder) throws {
-                        let container = try decoder.singleValueContainer()
-                        if let dict = try? container.decode([String: [String]].self) {
-                            self.name = dict.keys.first!
-                            self.version = dict.values.first![0]
-                        }
-                        else if let name = try? container.decode(String.self) {
-                            self.name = name
-                            self.version = ""
-                        }
-                        else {
-                            fatalError("nothing")
-                        }
-                    }
-                }
-
-                let name: String
-                let dependencies: [Dependency]
-
-                init(from decoder: Decoder) throws {
-                    let container = try decoder.container(keyedBy: CodingKeys.self)
-                    name = try container.decode(String.self, forKey: .name)
-                    dependencies = try container.decodeIfPresent([Dependency].self, forKey: .dependencies) ?? []
-                }
-            }
-
-            let name: String
-            let children: [Children]
         }
 
         let roots: [RootObject]
@@ -101,5 +58,53 @@ public final class PodShellCommand: ShellCommand {
             return nil
         }
         return VersionConstraint<Pod.Operator>(operation: op, value: String(version[1]))
+    }
+}
+
+extension PodShellCommand.PodIpcJsonOutput {
+    fileprivate struct RootObject: Codable {
+        let name: String
+        let children: [Children]
+    }
+}
+
+extension PodShellCommand.PodIpcJsonOutput.RootObject {
+    fileprivate struct Children: Codable {
+
+        private enum CodingKeys: String, CodingKey {
+            case name
+            case dependencies
+        }
+
+        let name: String
+        let dependencies: [Dependency]
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            name = try container.decode(String.self, forKey: .name)
+            dependencies = try container.decodeIfPresent([Dependency].self, forKey: .dependencies) ?? []
+        }
+    }
+}
+
+extension PodShellCommand.PodIpcJsonOutput.RootObject.Children {
+    fileprivate struct Dependency: Codable {
+        let name: String
+        let version: String
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let dict = try? container.decode([String: [String]].self) {
+                self.name = dict.keys.first!
+                self.version = dict.values.first![0]
+            }
+            else if let name = try? container.decode(String.self) {
+                self.name = name
+                self.version = ""
+            }
+            else {
+                fatalError("nothing")
+            }
+        }
     }
 }
