@@ -44,7 +44,6 @@ extension PackageManagerFileTest {
               codesigningFolderPath: nil,
               platform: .tvos,
               deploymentTarget: "test-deployment-target",
-              developmentTeam: "test-development-team",
               systemSwiftVersion: "test-swift-version")
     }
 

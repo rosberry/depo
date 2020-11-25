@@ -15,7 +15,7 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     @discardableResult
-    public func callAsFunction(teamID: String, buildDir: String, target: String) throws -> Shell.IO {
-        try shell(filePath: commandPath, arguments: [teamID, buildDir, target])
+    public func callAsFunction(buildDir: String, target: String) throws -> Shell.IO {
+        try shell(filePath: commandPath, arguments: [buildDir, target])
     }
 }

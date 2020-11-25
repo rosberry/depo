@@ -66,8 +66,7 @@ public final class SPMManager: ProgressObservable {
         observer?(.building)
         try build(packages: packages,
                   at: packageSwiftDirName,
-                  to: packageSwiftBuildsDirName,
-                  teamID: try teamID(buildSettings: buildSettings))
+                  to: packageSwiftBuildsDirName)
         observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
@@ -77,8 +76,7 @@ public final class SPMManager: ProgressObservable {
         let buildSettings = try BuildSettings(shell: shell)
         try build(packages: packages,
                   at: packageSwiftDirName,
-                  to: packageSwiftBuildsDirName,
-                  teamID: try teamID(buildSettings: buildSettings))
+                  to: packageSwiftBuildsDirName)
         observer?(.processing)
         try proceed(packages: packages, at: packageSwiftBuildsDirName, to: outputDirName)
     }
@@ -93,8 +91,7 @@ public final class SPMManager: ProgressObservable {
 
     private func build(packages: [SwiftPackage],
                        at packagesSourcesPath: String,
-                       to buildPath: String,
-                       teamID: String) throws {
+                       to buildPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
         let failedPackages = packages.compactMap { package -> FailedContext? in
             let path = "./\(packagesSourcesPath)/\(package.name)"
@@ -102,7 +99,6 @@ public final class SPMManager: ProgressObservable {
             return fmg.perform(atPath: path) {
                 do {
                     try build(targets: try swiftPackageCommand.targetsOfSwiftPackage(at: packageSwiftFileName),
-                              teamID: teamID,
                               buildDir: "\(projectPath)/\(buildPath)")
                     return nil
                 }
@@ -116,9 +112,9 @@ public final class SPMManager: ProgressObservable {
         }
     }
 
-    private func build(targets: [String], teamID: String, buildDir: String) throws {
+    private func build(targets: [String], buildDir: String) throws {
         try targets.forEach { element in
-            try buildSwiftPackageScript(teamID: teamID, buildDir: buildDir, target: element)
+            try buildSwiftPackageScript(buildDir: buildDir, target: element)
         }
     }
 
@@ -147,12 +143,5 @@ public final class SPMManager: ProgressObservable {
         if !failedPackages.isEmpty {
             throw Error.badSwiftPackageProceed(contexts: failedPackages)
         }
-    }
-
-    private func teamID(buildSettings: BuildSettings) throws -> String {
-        guard let developmentTeam = buildSettings.developmentTeam else {
-            throw Error.noDevelopmentTeam
-        }
-        return developmentTeam
     }
 }
