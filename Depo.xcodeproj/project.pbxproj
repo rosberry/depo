@@ -36,9 +36,11 @@
 		EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */; };
 		EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48CD52ECEC50462B650F6F /* CommandRunner.swift */; };
 		EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */; };
+		EC49EDCC34065B75F68FA7E6 /* InitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4278C80E8BC3B2725E0A22 /* InitService.swift */; };
 		EC4D3977446AE0276E4E55E5 /* Array+Joined.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */; };
 		EC4D6F7084F7E8571D86FB3C /* Shell+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */; };
 		EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F0CBDEF8E892FC642E084 /* String+Index.swift */; };
+		EC4EB05B3C860DA2B23C1055 /* InitService+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47AF006C6A33FDB880FF3D /* InitService+UI.swift */; };
 		EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */; };
 		EC4F9F68D5F02A474CCA785B /* SPMManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */; };
 		OBJ_189 /* BashCompletionsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_126 /* BashCompletionsGenerator.swift */; };
@@ -341,9 +343,11 @@
 		EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllPackagesManager+UI.swift"; sourceTree = "<group>"; };
 		EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPMManager+UI.swift"; sourceTree = "<group>"; };
 		EC421DDF2CDD3D330CAD1148 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
+		EC4278C80E8BC3B2725E0A22 /* InitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitService.swift; sourceTree = "<group>"; };
 		EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CompositeError+LocalizedError.swift"; sourceTree = "<group>"; };
 		EC458F05235C3C3F99B9F520 /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
 		EC4692E13BE4A7DF27432573 /* PodfileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps; sourceTree = "<group>"; };
+		EC47AF006C6A33FDB880FF3D /* InitService+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InitService+UI.swift"; sourceTree = "<group>"; };
 		EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shell+UI.swift"; sourceTree = "<group>"; };
 		EC48CD52ECEC50462B650F6F /* CommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
 		EC498404991178E5B15FCDBF /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
@@ -606,6 +610,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EC4282F5EE00C0D9A7B76470 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EC4278C80E8BC3B2725E0A22 /* InitService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		EC472ABB6DCF5B9114A08A8C /* CommandRunner */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +826,7 @@
 				EC417EDFC981123F505FD580 /* AllPackagesManager+UI.swift */,
 				EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */,
 				EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */,
+				EC47AF006C6A33FDB880FF3D /* InitService+UI.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -826,6 +839,7 @@
 				OBJ_50 /* Models */,
 				OBJ_63 /* PackageManagers */,
 				OBJ_68 /* Shell */,
+				EC4282F5EE00C0D9A7B76470 /* Services */,
 			);
 			name = DepoCore;
 			path = Sources/DepoCore;
@@ -1428,6 +1442,7 @@
 				EC4F4E71A7064280161D96E6 /* AllPackagesManager+UI.swift in Sources */,
 				EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */,
 				EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */,
+				EC4EB05B3C860DA2B23C1055 /* InitService+UI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1471,6 +1486,7 @@
 				EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */,
 				EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */,
 				EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */,
+				EC49EDCC34065B75F68FA7E6 /* InitService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

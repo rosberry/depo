@@ -16,14 +16,14 @@ extension Shell.Error: LocalizedError {
 
 extension Shell.IO: CustomStringConvertible {
     public var description: String {
-        "\(self.command.joined(separator: " ")) exits with \(self.status) status code" +
+        "\(command.spaceJoined) exits with \(status) status code" +
         fileDescriptorsDescription
     }
 
     private var fileDescriptorsDescription: String {
-        (self.stdOut.isEmpty ? "" : "\nstdOut: \n\(stdOut)") +
-        (self.stdIn.isEmpty ? "" : "\nstdIn: \n\(stdIn)") +
-        (self.stdErr.isEmpty ? "" : "\nstdErr: \n\(stdErr)")
+        (stdOut.isEmpty ? "" : "\nstdOut: \n\(stdOut)") +
+        (stdIn.isEmpty ? "" : "\nstdIn: \n\(stdIn)") +
+        (stdErr.isEmpty ? "" : "\nstdErr: \n\(stdErr)")
     }
 }
 

@@ -48,8 +48,8 @@ public final class CarthageShellCommand: ShellCommand {
         cartfile(from: try CartfileParser.Cartfile.from(file: url).get())
     }
 
-    public func cartfile(path: String) throws -> Cartfile {
-        try cartfile(url: try Folder.current.file(at: path).url)
+    public func cartfile(cartfilePath: String) throws -> Cartfile {
+        try cartfile(url: try Folder.current.file(at: cartfilePath).url)
     }
 
     private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Shell.IO {
