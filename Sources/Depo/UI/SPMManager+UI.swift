@@ -20,6 +20,8 @@ extension SPMManager.State: CustomStringConvertible {
             return "processing package \(package.name) at \(path)"
         case let .creatingPackageSwiftFile(path):
             return "creation Package.swift at \(path)"
+        case let .shell(state):
+            return state.description
         }
     }
 }

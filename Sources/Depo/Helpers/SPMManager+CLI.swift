@@ -11,6 +11,6 @@ extension SPMManager: HasUpdateCommand, HasBuildCommand {
     typealias Options = DefaultOptions
 
     convenience init(depofile: Depofile, options: DefaultOptions) {
-        self.init(depofile: depofile, logPrefix: "")
+        self.init(depofile: depofile)
     }
 }

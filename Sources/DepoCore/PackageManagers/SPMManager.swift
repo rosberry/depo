@@ -16,6 +16,7 @@ public final class SPMManager: ProgressObservable {
         case processing
         case processingPackage(SwiftPackage, path: String)
         case creatingPackageSwiftFile(path: String)
+        case shell(state: Shell.State)
     }
 
     public enum Error: Swift.Error {
@@ -32,7 +33,7 @@ public final class SPMManager: ProgressObservable {
 
     private let packages: [SwiftPackage]
     private let fmg: FileManager = .default
-    private let shell: Shell
+    private let shell: Shell = .init()
 
     private lazy var swiftPackageCommand: SwiftPackageShellCommand = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
@@ -44,10 +45,10 @@ public final class SPMManager: ProgressObservable {
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, logPrefix: String) {
+    public init(depofile: Depofile) {
         self.packages = depofile.swiftPackages
-        self.shell = Shell().subscribe { [logPrefix] state in
-            print(logPrefix + "\(state)")
+        self.shell.subscribe { [weak self] state in
+            self?.observer?(.shell(state: state))
         }
     }
 

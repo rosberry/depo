@@ -11,6 +11,6 @@ extension PodManager: CLIPackageManager {
     typealias Options = DefaultOptions
 
     convenience init(depofile: Depofile, options: DefaultOptions) {
-        self.init(depofile: depofile, logPrefix: "")
+        self.init(depofile: depofile)
     }
 }

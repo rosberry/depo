@@ -21,9 +21,9 @@ extension Shell.IO: CustomStringConvertible {
     }
 
     private var fileDescriptorsDescription: String {
-        (self.stdOut.isEmpty ? "" : "\nstdOut: \(stdOut)") +
-        (self.stdIn.isEmpty ? "" : "\nstdIn: \(stdIn)") +
-        (self.stdErr.isEmpty ? "" : "\nstdErr: \(stdErr)")
+        (self.stdOut.isEmpty ? "" : "\nstdOut: \n\(stdOut)") +
+        (self.stdIn.isEmpty ? "" : "\nstdIn: \n\(stdIn)") +
+        (self.stdErr.isEmpty ? "" : "\nstdErr: \n\(stdErr)")
     }
 }
 

@@ -22,6 +22,8 @@ extension PodManager.State: CustomStringConvertible {
             return "building pod \(pod.name)"
         case let .processingPod(pod):
             return "processing pod \(pod.name)"
+        case let .shell(state):
+            return state.description
         }
     }
 }

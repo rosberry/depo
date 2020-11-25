@@ -16,6 +16,8 @@ extension CarthageManager.State: CustomStringConvertible {
             return "starts building carthage"
         case let .creatingCartfile(path):
             return "creating cartfile at \(path)"
+        case let .shell(state):
+            return state.description
         }
     }
 }

@@ -15,17 +15,17 @@ public final class AllPackagesManager: ProgressObservable {
     private let depofile: Depofile
     private let platform: Platform
     private var podManager: PodManager {
-        PodManager(depofile: depofile, logPrefix: "pod: ").subscribe { [weak self] state in
+        PodManager(depofile: depofile).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
     }
     private var carthageManager: CarthageManager {
-        CarthageManager(depofile: depofile, platform: platform, logPrefix: "carthage: ").subscribe { [weak self] state in
+        CarthageManager(depofile: depofile, platform: platform).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
     }
     private var spmManager: SPMManager {
-        SPMManager(depofile: depofile, logPrefix: "spm: ").subscribe { [weak self] state in
+        SPMManager(depofile: depofile).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
     }

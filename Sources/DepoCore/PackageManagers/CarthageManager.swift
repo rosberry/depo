@@ -11,6 +11,7 @@ public final class CarthageManager: ProgressObservable {
         case installing
         case building
         case creatingCartfile(path: String)
+        case shell(state: Shell.State)
     }
 
     public enum Error: LocalizedError {
@@ -26,15 +27,15 @@ public final class CarthageManager: ProgressObservable {
 
     private let carthageItems: [CarthageItem]
     private let platform: Platform
-    private let shell: Shell
+    private let shell: Shell = .init()
     private lazy var carthageShellCommand: CarthageShellCommand = .init(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, platform: Platform, logPrefix: String) {
+    public init(depofile: Depofile, platform: Platform) {
         self.carthageItems = depofile.carts
         self.platform = platform
-        self.shell = Shell().subscribe { state in
-            print(logPrefix + "\(state)")
+        self.shell.subscribe { [weak self] state in
+            self?.observer?(.shell(state: state))
         }
     }
 

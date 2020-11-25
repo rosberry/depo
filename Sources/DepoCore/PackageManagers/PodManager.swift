@@ -10,7 +10,6 @@ public final class PodManager: ProgressObservable {
     public typealias FailedContext = (Swift.Error, Pod)
 
     public enum State {
-
         case installing
         case updating
         case building
@@ -18,6 +17,7 @@ public final class PodManager: ProgressObservable {
         case creatingPodfile(path: String)
         case buildingPod(Pod)
         case processingPod(Pod)
+        case shell(state: Shell.State)
     }
 
     public enum Error: Swift.Error {
@@ -38,17 +38,17 @@ public final class PodManager: ProgressObservable {
 
     private let pods: [Pod]
 
-    private let shell: Shell
+    private let shell: Shell = .init()
     private lazy var podShellCommand: PodShellCommand = .init(shell: shell)
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
     private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, logPrefix: String) {
+    public init(depofile: Depofile) {
         self.pods = depofile.pods
-        self.shell = Shell().subscribe { state in
-            print(logPrefix + "\(state)")
+        self.shell.subscribe { [weak self] state in
+            self?.observer?(.shell(state: state))
         }
     }
 
