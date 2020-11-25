@@ -116,10 +116,8 @@
 		OBJ_302 /* Coders.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Coders.swift */; };
 		OBJ_303 /* Collection+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* Collection+KeyPath.swift */; };
 		OBJ_304 /* DataCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* DataCoder.swift */; };
-		OBJ_305 /* DefaultProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* DefaultProgressController.swift */; };
 		OBJ_306 /* FileManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* FileManager+Helper.swift */; };
 		OBJ_307 /* HasDefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* HasDefaultValue.swift */; };
-		OBJ_308 /* ProgressNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* ProgressNotifier.swift */; };
 		OBJ_309 /* ProgressObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* ProgressObservable.swift */; };
 		OBJ_310 /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* BuildSettings.swift */; };
 		OBJ_311 /* CarthageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* CarthageItem.swift */; };
@@ -451,10 +449,8 @@
 		OBJ_42 /* Coders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coders.swift; sourceTree = "<group>"; };
 		OBJ_43 /* Collection+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+KeyPath.swift"; sourceTree = "<group>"; };
 		OBJ_44 /* DataCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoder.swift; sourceTree = "<group>"; };
-		OBJ_45 /* DefaultProgressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProgressController.swift; sourceTree = "<group>"; };
 		OBJ_46 /* FileManager+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helper.swift"; sourceTree = "<group>"; };
 		OBJ_47 /* HasDefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValue.swift; sourceTree = "<group>"; };
-		OBJ_48 /* ProgressNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNotifier.swift; sourceTree = "<group>"; };
 		OBJ_49 /* ProgressObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressObservable.swift; sourceTree = "<group>"; };
 		OBJ_51 /* BuildSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildSettings.swift; sourceTree = "<group>"; };
 		OBJ_52 /* CarthageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarthageItem.swift; sourceTree = "<group>"; };
@@ -851,10 +847,8 @@
 				OBJ_42 /* Coders.swift */,
 				OBJ_43 /* Collection+KeyPath.swift */,
 				OBJ_44 /* DataCoder.swift */,
-				OBJ_45 /* DefaultProgressController.swift */,
 				OBJ_46 /* FileManager+Helper.swift */,
 				OBJ_47 /* HasDefaultValue.swift */,
-				OBJ_48 /* ProgressNotifier.swift */,
 				OBJ_49 /* ProgressObservable.swift */,
 				EC472ABB6DCF5B9114A08A8C /* CommandRunner */,
 				EC4F0CBDEF8E892FC642E084 /* String+Index.swift */,
@@ -1454,10 +1448,8 @@
 				OBJ_302 /* Coders.swift in Sources */,
 				OBJ_303 /* Collection+KeyPath.swift in Sources */,
 				OBJ_304 /* DataCoder.swift in Sources */,
-				OBJ_305 /* DefaultProgressController.swift in Sources */,
 				OBJ_306 /* FileManager+Helper.swift in Sources */,
 				OBJ_307 /* HasDefaultValue.swift in Sources */,
-				OBJ_308 /* ProgressNotifier.swift in Sources */,
 				OBJ_309 /* ProgressObservable.swift in Sources */,
 				OBJ_310 /* BuildSettings.swift in Sources */,
 				OBJ_311 /* CarthageItem.swift in Sources */,
