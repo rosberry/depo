@@ -19,7 +19,7 @@ install: build install_scripts update_jsoner install_jsoner
 update: update_jsoner
 
 update_jsoner:
-	git submodule update --recursive --remote
+	git submodule update --init --recursive --remote
 
 build:
 	swift build -c release --disable-sandbox
