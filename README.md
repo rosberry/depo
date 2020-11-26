@@ -1,9 +1,9 @@
 # Depo :station:
 The dependency managers wrapper. 
 
-Use Carthage, Pods and SwiftPackages in single project easily. 
-Manage Cartfile, Podfile and Package.swift by single file. 
-Update and install Carthage, Pods and Swift Packages by single command
++ Use Carthage, Pods and SwiftPackages in single project easily.
++ Manage Cartfile, Podfile and Package.swift by single **Depofile** file. 
++ Update and install Carthage, Pods and Swift Packages by single command
 
 ## Requirements
 
@@ -15,6 +15,12 @@ Update and install Carthage, Pods and Swift Packages by single command
 git clone git@github.com:rosberry/Depo.git
 cd Depo
 make
+```
+
+## Example
+```
+depo init <PATH_TO_CARTFILE> <PATH_TO_PODFILE> <PATH_TO_PACKAGE_SWIFT>
+depo install
 ```
 
 ## Documentation
