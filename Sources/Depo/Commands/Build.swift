@@ -6,10 +6,10 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Install<Command: HasInstallCommand & ProgressObservable>: ParsableCommand where Command.Options: ParsableArguments {
+final class Build<Command: HasBuildCommand & ProgressObservable>: ParsableCommand where Command.Options: ParsableArguments {
 
     static var configuration: CommandConfiguration {
-        .init(commandName: "install")
+        .init(commandName: "build")
     }
 
     @OptionGroup()
@@ -20,6 +20,6 @@ final class Install<Command: HasInstallCommand & ProgressObservable>: ParsableCo
         let command = Command(depofile: depofile, options: options).subscribe { state in
             print(state)
         }
-        try command.install()
+        try command.build()
     }
 }
