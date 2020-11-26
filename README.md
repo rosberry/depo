@@ -1,9 +1,4 @@
 # Depo :station:
-<p align="center">
-    <a href="https://swift.org/">
-        <img src="https://img.shields.io/badge/swift-5.3-orange.svg" alt="Swift Version" />
-    </a>
-</p>
 
 ## Requirements
 
