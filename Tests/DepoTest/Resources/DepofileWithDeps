@@ -1,0 +1,117 @@
+pods:
+- name: test-pod-1
+  version:
+    operation: equal
+    value: test-pod-1-version
+- name: test-pod-2
+  version:
+    operation: greater
+    value: test-pod-2-version
+- name: test-pod-3
+  version:
+    operation: greaterOrEqual
+    value: test-pod-3-version
+- name: test-pod-4
+  version:
+    operation: lower
+    value: test-pod-4-version
+- name: test-pod-5
+  version:
+    operation: lowerOrEqual
+    value: test-pod-5-version
+- name: test-pod-6
+  version:
+    operation: compatible
+    value: test-pod-6-version
+- name: test-pod-7
+swiftPackages:
+- name: test-package-1
+  url: file://test-package-1
+  version:
+    operation: exact
+    value: 0.0.1
+- name: test-package-2
+  url: file://test-package-2
+  version:
+    operation: upToNextMinor
+    value: 0.1.0
+- name: test-package-3
+  url: file://test-package-3
+  version:
+    operation: upToNextMajor
+    value: 0.1.1
+- name: test-package-4
+  url: file://test-package-4
+  version:
+    operation: branch
+    value: test-package-4-branch
+- name: test-package-5
+  url: file://test-package-5
+  version:
+    operation: revision
+    value: test-package-5-commit-hash
+carts:
+- kind: binary
+  identifier: file://test-binary-1-identifier
+- kind: binary
+  identifier: file://test-binary-2-identifier
+  version:
+    operation: equal
+    value: 0.0.0
+- kind: binary
+  identifier: file://test-binary-3-identifier
+  version:
+    operation: greaterOrEqual
+    value: 0.0.1
+- kind: binary
+  identifier: file://test-binary-4-identifier
+  version:
+    operation: compatible
+    value: 0.1.0
+- kind: binary
+  identifier: file://test-binary-5-identifier
+- kind: github
+  identifier: test-github-1-identifier
+- kind: github
+  identifier: test-github-2-identifier
+  version:
+    operation: equal
+    value: 0.1.1
+- kind: github
+  identifier: test-github-3-identifier
+  version:
+    operation: greaterOrEqual
+    value: 1.0.0
+- kind: github
+  identifier: test-github-4-identifier
+  version:
+    operation: compatible
+    value: 1.0.1
+- kind: github
+  identifier: test-github-5-identifier
+  version:
+    operation: gitReference
+    value: test-github-5-git-reference
+- kind: git
+  identifier: test-git-1-identifier
+- kind: git
+  identifier: test-git-2-identifier
+  version:
+    operation: equal
+    value: 1.1.0
+- kind: git
+  identifier: test-git-3-identifier
+  version:
+    operation: greaterOrEqual
+    value: 1.1.1
+- kind: git
+  identifier: test-git-4-identifier
+  version:
+    operation: compatible
+    value: 2.2.2
+- kind: git
+  identifier: test-git-5-identifier
+  version:
+    operation: gitReference
+    value: test-git-5-git-reference
+    

@@ -4,8 +4,9 @@
 
 import Foundation
 import ArgumentParser
+import DepoCore
 
-final class Build<Command: HasBuildCommand>: ParsableCommand {
+final class Build<Command: HasBuildCommand & ProgressObservable>: ParsableCommand where Command.Options: ParsableArguments {
 
     static var configuration: CommandConfiguration {
         .init(commandName: "build")
@@ -15,7 +16,10 @@ final class Build<Command: HasBuildCommand>: ParsableCommand {
     var options: Command.Options
 
     func run() throws {
-        let depofile = try Depofile(decoder: options.depofileExtension.decoder)
-        try Command(depofile: depofile, options: options).build()
+        let depofile = try Depofile(decoder: options.depofileExtension.coder)
+        let command = Command(depofile: depofile, options: options).subscribe { state in
+            print(state)
+        }
+        try command.build()
     }
 }

@@ -11,16 +11,24 @@ cp Shell/$(1) $(bindir)/$(1);
 chmod +x $(bindir)/$(1);
 endef
 
-.PHONY: build install uninstall clean install_scripts
+.PHONY: build install uninstall clean install_scripts install_jsoner
 
-install: build install_scripts
+install: build install_scripts install_jsoner
 	cp $(release_binary) $(executable_path)
+
+update: update_jsoner
+
+update_jsoner:
+	git submodule update --recursive --remote
 
 build:
 	swift build -c release --disable-sandbox
 
 install_scripts:
 	$(foreach script,$(SCRIPTS),$(call SCRIPT_INSTALL,$(script)))
+
+install_jsoner:
+	cd jsoner && $(MAKE)
 
 uninstall:
 	rm -rf $(bindir)/$(binary) $(executable_path)

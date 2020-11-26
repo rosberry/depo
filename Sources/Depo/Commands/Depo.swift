@@ -4,6 +4,7 @@
 
 import Foundation
 import ArgumentParser
+import DepoCore
 
 final class Depo: ParsableCommand {
 
@@ -11,7 +12,7 @@ final class Depo: ParsableCommand {
     typealias AllInstall = Install<AllPackagesManager>
     typealias AllBuild = Build<AllPackagesManager>
 
-    final class Pods: ParsableCommand {
+    final class Pod: ParsableCommand {
         static let configuration: CommandConfiguration = .init(subcommands: [Update<PodManager>.self,
                                                                              Install<PodManager>.self,
                                                                              Build<PodManager>.self],
@@ -32,10 +33,11 @@ final class Depo: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",
                                                            version: "0.0",
-                                                           subcommands: [AllUpdate.self,
+                                                           subcommands: [Init.self,
+                                                                         AllUpdate.self,
                                                                          AllInstall.self,
                                                                          AllBuild.self,
-                                                                         Pods.self,
+                                                                         Pod.self,
                                                                          Carthage.self,
                                                                          SPM.self],
                                                            defaultSubcommand: Install<AllPackagesManager>.self)
