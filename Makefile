@@ -13,7 +13,7 @@ endef
 
 .PHONY: build install uninstall clean install_scripts install_jsoner
 
-install: build install_scripts install_jsoner
+install: build install_scripts update_jsoner install_jsoner
 	cp $(release_binary) $(executable_path)
 
 update: update_jsoner

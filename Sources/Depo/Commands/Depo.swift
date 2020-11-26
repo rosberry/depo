@@ -32,7 +32,7 @@ final class Depo: ParsableCommand {
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",
-                                                           version: "0.0",
+                                                           version: "1.0.0",
                                                            subcommands: [Init.self,
                                                                          AllUpdate.self,
                                                                          AllInstall.self,
