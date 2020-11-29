@@ -4,6 +4,7 @@ The dependency managers wrapper.
 + Use Carthage, Pods and SwiftPackages in single project easily.
 + Manage Cartfile, Podfile and Package.swift by single **Depofile** file. 
 + Update and install Carthage, Pods and Swift Packages by single command
++ Build Pods into actual **frameworks** (like Carthage did) and just add them into your `xcodeproj`. No more `xcworkspacecs` and other weird-pods stuff
 
 ## Requirements
 
