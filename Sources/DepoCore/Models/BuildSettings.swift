@@ -114,9 +114,9 @@ public struct BuildSettings {
     }
 
     private static func systemSwiftVersion(shell: Shell) throws -> String {
-        let swiftVersionOutput: Shell.IO = try shell("swift", "-version")
+        let swiftVersionOutput: Shell.IO = try shell("swift", "package", "--version")
         let output = swiftVersionOutput.stdOut
-        guard let range = output.range(of: #"Apple Swift version "#, options: .regularExpression),
+        guard let range = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
               let range2 = output[from: range.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
             return ""
         }
