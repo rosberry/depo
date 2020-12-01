@@ -63,7 +63,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     private func jsonerOutput(at path: String) throws -> JsonerOutputWrapper {
-        let output: Shell.IO = try shell("jsoner", "package-swift", path)
+        let output: Shell.IO = try shell("jsoner", "package-swift", "\(FileManager.default.currentDirectoryPath)/\(path)")
         return try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
 
