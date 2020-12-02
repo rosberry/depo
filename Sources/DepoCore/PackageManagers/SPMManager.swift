@@ -24,6 +24,11 @@ public final class SPMManager: ProgressObservable {
         case badSwiftPackageBuild(contexts: [FailedContext])
         case badSwiftPackageProceed(contexts: [FailedContext])
         case noDevelopmentTeam
+        case noSchemaToBuild(package: SwiftPackage)
+    }
+
+    private enum InternalError: Swift.Error {
+        case noSchemaToBuild
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -98,8 +103,12 @@ public final class SPMManager: ProgressObservable {
             observer?(.buildingPackage(package, path: path))
             return fmg.perform(atPath: path) {
                 do {
-                    try build(targets: try swiftPackageCommand.targetsOfSwiftPackage(at: packageSwiftFileName),
-                              buildDir: "\(projectPath)/\(buildPath)")
+                    do {
+                        try buildPackageInCurrentDir(buildDir: "\(projectPath)/\(buildPath)")
+                    }
+                    catch InternalError.noSchemaToBuild {
+                        throw Error.noSchemaToBuild(package: package)
+                    }
                     return nil
                 }
                 catch {
@@ -112,9 +121,17 @@ public final class SPMManager: ProgressObservable {
         }
     }
 
-    private func build(targets: [String], buildDir: String) throws {
-        try targets.forEach { element in
-            try buildSwiftPackageScript(buildDir: buildDir, target: element)
+    private func buildPackageInCurrentDir(buildDir: String) throws {
+        try shell("chmod", "-R", "+rw", ".")
+        guard let schema = try ProjectSettings(shell: shell).schemes.first else {
+            throw InternalError.noSchemaToBuild
+        }
+        try build(schemes: [schema], buildDir: buildDir)
+    }
+
+    private func build(schemes: [String], buildDir: String) throws {
+        try schemes.forEach { scheme in
+            try buildSwiftPackageScript(buildDir: buildDir, scheme: scheme)
         }
     }
 

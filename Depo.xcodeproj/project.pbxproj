@@ -32,11 +32,13 @@
 		36B9E4B4256BD8850059E6A7 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */; };
 		36B9E4D2256BD8980059E6A7 /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = EC4FA3CF6608F67BD447C158 /* TestCartfile */; };
 		EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */; };
+		EC41F131BCC69035E58E6E13 /* ProjectSettingsError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC498685D7AF1017ADE0511E /* ProjectSettingsError+LocalizedError.swift */; };
 		EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */; };
 		EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */; };
 		EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48CD52ECEC50462B650F6F /* CommandRunner.swift */; };
 		EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */; };
 		EC49EDCC34065B75F68FA7E6 /* InitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4278C80E8BC3B2725E0A22 /* InitService.swift */; };
+		EC4CAA3FCB8152F2A1669F65 /* ProjectSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E7C1BA8F6719B1677D7A1 /* ProjectSettings.swift */; };
 		EC4D3977446AE0276E4E55E5 /* Array+Joined.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D134727DBEDAD6D080C1A /* Array+Joined.swift */; };
 		EC4D6F7084F7E8571D86FB3C /* Shell+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */; };
 		EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4F0CBDEF8E892FC642E084 /* String+Index.swift */; };
@@ -349,6 +351,7 @@
 		EC47C82EF8C36D21C2CD1C4A /* Shell+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shell+UI.swift"; sourceTree = "<group>"; };
 		EC48CD52ECEC50462B650F6F /* CommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
 		EC498404991178E5B15FCDBF /* DepofileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DepofileNoDeps; sourceTree = "<group>"; };
+		EC498685D7AF1017ADE0511E /* ProjectSettingsError+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProjectSettingsError+LocalizedError.swift"; sourceTree = "<group>"; };
 		EC4A0D66FC5745512B0881BC /* PackageSwiftNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftNoDeps.txt; sourceTree = "<group>"; };
 		EC4AEF51CAB6CECCAC8F2844 /* PodfileWithDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileWithDeps; sourceTree = "<group>"; };
 		EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
@@ -358,6 +361,7 @@
 		EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PodManager+UI.swift"; sourceTree = "<group>"; };
 		EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarthageManager+UI.swift"; sourceTree = "<group>"; };
 		EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
+		EC4E7C1BA8F6719B1677D7A1 /* ProjectSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSettings.swift; sourceTree = "<group>"; };
 		EC4F0CBDEF8E892FC642E084 /* String+Index.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
 		EC4FA3CF6608F67BD447C158 /* TestCartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCartfile; sourceTree = "<group>"; };
 		EC4FB6648315C0E746D5C73D /* PackageSwiftNoDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftNoDeps.swift; sourceTree = "<group>"; };
@@ -823,6 +827,7 @@
 				EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */,
 				EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */,
 				EC47AF006C6A33FDB880FF3D /* InitService+UI.swift */,
+				EC498685D7AF1017ADE0511E /* ProjectSettingsError+LocalizedError.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -885,6 +890,7 @@
 				OBJ_60 /* SwiftPackage.swift */,
 				OBJ_61 /* VersionConstraint.swift */,
 				OBJ_62 /* XcodeProject.swift */,
+				EC4E7C1BA8F6719B1677D7A1 /* ProjectSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1437,6 +1443,7 @@
 				EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */,
 				EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */,
 				EC4EB05B3C860DA2B23C1055 /* InitService+UI.swift in Sources */,
+				EC41F131BCC69035E58E6E13 /* ProjectSettingsError+LocalizedError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1479,6 +1486,7 @@
 				EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */,
 				EC4E590B1052717095A6EEC0 /* String+Index.swift in Sources */,
 				EC49EDCC34065B75F68FA7E6 /* InitService.swift in Sources */,
+				EC4CAA3FCB8152F2A1669F65 /* ProjectSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

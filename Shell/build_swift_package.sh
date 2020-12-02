@@ -3,35 +3,37 @@
 set -e
 
 BUILD_DIR=$1
-TARGET_NAME=$2
+SCHEME=$2
 PACKAGE_NAME=${3:-$(basename "$PWD")}
+
+CONFIGURATION='Release'
+DERIVED_DATA_PATH='build'
 
 xcodeprojects_count=`ls -1 -d *.xcodeproj | wc -l`
 if [ $xcodeprojects_count == 0 ]; then
-  chmod -R +rw .
   swift package generate-xcodeproj
 fi
 
 xcodebuild \
-  -target $TARGET_NAME \
-  -configuration Release \
+  -scheme $SCHEME \
+  -configuration $CONFIGURATION \
   defines_module=yes \
-  -sdk "iphoneos" archive \
+  -sdk "iphoneos" \
   -quiet \
-  PRODUCT_NAME=$TARGET_NAME
+  -derivedDataPath $DERIVED_DATA_PATH
 
 xcodebuild \
-  -target $TARGET_NAME \
-  -configuration Release \
+  -scheme $SCHEME \
+  -configuration $CONFIGURATION \
   only_active_arch=no \
   defines_module=yes \
   -arch x86_64 \
-  -sdk "iphonesimulator" archive \
+  -sdk "iphonesimulator" \
   -quiet \
-  PRODUCT_NAME=$TARGET_NAME
+  -derivedDataPath $DERIVED_DATA_PATH
 
-IPHONE_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphoneos"
-SIMULATOR_DIR="${BUILD_DIR}/${PACKAGE_NAME}/Release-iphonesimulator"
+IPHONE_DIR="${BUILD_DIR}/${PACKAGE_NAME}/${CONFIGURATION}-iphoneos"
+SIMULATOR_DIR="${BUILD_DIR}/${PACKAGE_NAME}/${CONFIGURATION}-iphonesimulator"
 mkdir -p $IPHONE_DIR $SIMULATOR_DIR
-cp -r build/Release-iphoneos/* $IPHONE_DIR
-cp -r build/Release-iphonesimulator/* $SIMULATOR_DIR
+cp -r `echo "${DERIVED_DATA_PATH}/Build/Products/${CONFIGURATION}-iphoneos/*"` $IPHONE_DIR
+cp -r `echo "${DERIVED_DATA_PATH}/Build/Products/${CONFIGURATION}-iphonesimulator/*"` $SIMULATOR_DIR

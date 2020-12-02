@@ -43,6 +43,8 @@ extension SPMManager.Error: LocalizedError {
                    """
         case .noDevelopmentTeam:
             return "development team is required for building swift packages"
+        case let .noSchemaToBuild(package):
+            return "no schema found for \(package.name)"
         }
     }
 }
