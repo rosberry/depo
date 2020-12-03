@@ -62,8 +62,11 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func jsonerOutput(at path: String) throws -> JsonerOutputWrapper {
-        let output: Shell.IO = try shell("jsoner", "package-swift", "\(FileManager.default.currentDirectoryPath)/\(path)")
+    private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> JsonerOutputWrapper {
+        let output = try fmg.perform(atPath: path) {
+            try shell("swift", "package", "dump-package")
+        }
+        print(output)
         return try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
 
@@ -221,6 +224,34 @@ extension SwiftPackageShellCommand.JsonerOutputWrapper.Dependency {
             case identifier
             case lowerBound
             case upperBound
+        }
+
+        private struct RangeModel: Codable {
+            let lowerBound: String
+            let upperBound: String
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let wrapper = try? container.decode([String: [RangeModel]].self),
+               let range = wrapper.first?.value.first {
+                self.type = .range
+                self.identifier = nil
+                self.lowerBound = range.lowerBound
+                self.upperBound = range.upperBound
+            }
+            else {
+                guard let wrapper = try container.decode([String: [String]].self).first,
+                      let type = Kind(rawValue: wrapper.key),
+                      let identifier = wrapper.value.first else {
+                    throw DecodingError.typeMismatch(Requirement.self,
+                                                     .init(codingPath: [], debugDescription: "Cannot parse Requirement model"))
+                }
+                self.type = type
+                self.identifier = identifier
+                self.lowerBound = nil
+                self.upperBound = nil
+            }
         }
 
         let type: Kind
