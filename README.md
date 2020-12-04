@@ -11,6 +11,11 @@ The dependency managers wrapper.
 - Swift 5.3+
 
 ## Installation
+### Homebrew
+```
+brew install rosberry/tap/depo
+```
+
 ### Makefile
 ```
 git clone git@github.com:rosberry/Depo.git
