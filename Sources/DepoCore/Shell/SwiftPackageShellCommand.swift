@@ -66,7 +66,6 @@ public final class SwiftPackageShellCommand: ShellCommand {
         let output = try fmg.perform(atPath: path) {
             try shell("swift", "package", "dump-package")
         }
-        print(output)
         return try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
 
