@@ -124,7 +124,7 @@ extension SemanticVersion: Scannable {
 	/// form "a.b.c" from a string scanner.
 	public static func from(_ scanner: Scanner) -> Result<SemanticVersion, ScannableError> {
 
-		var versionBuffer: NSString?
+		var versionBuffer: String?
 		guard scanner.scanCharacters(from: versionCharacterSet, into: &versionBuffer),
 			let version = versionBuffer as String? else {
 			return .failure(ScannableError(message: "expected version", currentLine: scanner.currentLine))
@@ -230,7 +230,7 @@ extension Scanner {
 	fileprivate func scanStringWithPrefix(_ prefix: Character, until: String) -> String? {
 		guard !self.isAtEnd, self.remainingSubstring?.first == prefix else { return nil }
 
-		var buffer: NSString?
+		var buffer: String?
 		self.scanUpTo(until, into: &buffer)
 		guard let stringWithPrefix = buffer as String?, stringWithPrefix.first == prefix else {
 			return nil
@@ -382,7 +382,7 @@ extension PinnedVersion: Scannable {
 			return .failure(ScannableError(message: "expected pinned version", currentLine: scanner.currentLine))
 		}
 
-		var commitish: NSString?
+		var commitish: String?
 		if !scanner.scanUpTo("\"", into: &commitish) || commitish == nil {
 			return .failure(ScannableError(message: "empty pinned version", currentLine: scanner.currentLine))
 		}
@@ -478,7 +478,7 @@ extension VersionSpecifier: Scannable {
 		} else if scanner.scanString("~>", into: nil) {
 			return SemanticVersion.from(scanner).map { .compatibleWith($0) }
 		} else if scanner.scanString("\"", into: nil) {
-			var refName: NSString?
+			var refName: String?
 			if !scanner.scanUpTo("\"", into: &refName) || refName == nil {
 				return .failure(ScannableError(message: "expected Git reference name", currentLine: scanner.currentLine))
 			}
