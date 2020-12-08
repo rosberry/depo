@@ -65,15 +65,15 @@ public final class Shell {
     private func output(of process: Process, command: [String]) throws -> IO {
         let stdOutPipe = Pipe()
         let stdErrPipe = Pipe()
-        let stdInFileHandle = FileHandle()
+        let stdInPipe = Pipe()
         process.standardOutput = stdOutPipe
         process.standardError = stdErrPipe
-        process.standardInput = stdInFileHandle
+        process.standardInput = stdInPipe
         try process.run()
         process.waitUntilExit()
         let handlersStrings = [stdOutPipe.fileHandleForReading,
                                stdErrPipe.fileHandleForReading,
-                               stdInFileHandle].map { handler -> String in
+                               stdInPipe.fileHandleForReading].map { handler -> String in
             let outputData = handler.readDataToEndOfFile()
             return String(data: outputData, encoding: .utf8) ?? ""
         }
