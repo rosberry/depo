@@ -10,14 +10,14 @@ extension CarthageManager: CLIPackageManager {
 
     struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
+                completion: .list(DataCoder.Kind.allFlagsHelp))
         var depofileExtension: DataCoder.Kind = .defaultValue
-
+        
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(Platform.allFlagsHelp)")
+                completion: .list(Platform.allFlagsHelp))
         var platform: Platform = .defaultValue
 
-        @Option()
+        @Option(completion: .file())
         var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
     }
 
