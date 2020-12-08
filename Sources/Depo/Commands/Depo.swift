@@ -8,27 +8,22 @@ import DepoCore
 
 final class Depo: ParsableCommand {
 
-    typealias AllUpdate = Update<AllPackagesManager>
-    typealias AllInstall = Install<AllPackagesManager>
-    typealias AllBuild = Build<AllPackagesManager>
-
-    final class Pod: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<PodManager>.self,
-                                                                             Install<PodManager>.self,
-                                                                             Build<PodManager>.self],
-                                                               defaultSubcommand: Install<PodManager>.self)
+    final class AllInstall: Install<AllPackagesManager> {
+        override class var configuration: CommandConfiguration {
+            .init(commandName: "install", abstract: "run install for all package managers")
+        }
     }
 
-    final class Carthage: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<CarthageManager>.self,
-                                                                             Install<CarthageManager>.self,
-                                                                             Build<CarthageManager>.self],
-                                                               defaultSubcommand: Install<CarthageManager>.self)
+    final class AllUpdate: Update<AllPackagesManager> {
+        override class var configuration: CommandConfiguration {
+            .init(commandName: "update", abstract: "run update for all package managers")
+        }
     }
 
-    final class SPM: ParsableCommand {
-        static let configuration: CommandConfiguration = .init(subcommands: [Update<SPMManager>.self, Build<SPMManager>.self],
-                                                               defaultSubcommand: Update<SPMManager>.self)
+    final class AllBuild: Build<AllPackagesManager> {
+        override class var configuration: CommandConfiguration {
+            .init(commandName: "build", abstract: "run build for all package managers")
+        }
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",
@@ -40,5 +35,5 @@ final class Depo: ParsableCommand {
                                                                          Pod.self,
                                                                          Carthage.self,
                                                                          SPM.self],
-                                                           defaultSubcommand: Install<AllPackagesManager>.self)
+                                                           defaultSubcommand: AllInstall.self)
 }
