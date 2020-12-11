@@ -31,10 +31,13 @@
 		36B9E4B3256BD8850059E6A7 /* PackageSwiftNoDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4A0D66FC5745512B0881BC /* PackageSwiftNoDeps.txt */; };
 		36B9E4B4256BD8850059E6A7 /* PackageSwiftWithDeps.txt in Resources */ = {isa = PBXBuildFile; fileRef = EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */; };
 		36B9E4D2256BD8980059E6A7 /* TestCartfile in Resources */ = {isa = PBXBuildFile; fileRef = EC4FA3CF6608F67BD447C158 /* TestCartfile */; };
+		EC40E09EA801A591F0843D4D /* SPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4EEAB913818AF9CEFB5EDA /* SPM.swift */; };
 		EC416CA69735D08C4F1B63E2 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4B43E6E02B4E5F2EBC086D /* CompositeError.swift */; };
 		EC41F131BCC69035E58E6E13 /* ProjectSettingsError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC498685D7AF1017ADE0511E /* ProjectSettingsError+LocalizedError.swift */; };
 		EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */; };
+		EC43140685A6E97F4CA9A4E6 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E6715CEFB9ECD838669EF /* Pod.swift */; };
 		EC43C215BF7754953D14459C /* PodManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */; };
+		EC46D5B6DABD22FC7C19971E /* Carthage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC437B6CEE6F945EF0D50262 /* Carthage.swift */; };
 		EC47E43E4E9408DDEF7FB2FE /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC48CD52ECEC50462B650F6F /* CommandRunner.swift */; };
 		EC49619D9E59DE00BB0C02AD /* CarthageManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */; };
 		EC49EDCC34065B75F68FA7E6 /* InitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4278C80E8BC3B2725E0A22 /* InitService.swift */; };
@@ -344,6 +347,7 @@
 		EC41EF4A28EC35202298BF76 /* SPMManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SPMManager+UI.swift"; sourceTree = "<group>"; };
 		EC421DDF2CDD3D330CAD1148 /* CartfileNoDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileNoDeps.txt; sourceTree = "<group>"; };
 		EC4278C80E8BC3B2725E0A22 /* InitService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitService.swift; sourceTree = "<group>"; };
+		EC437B6CEE6F945EF0D50262 /* Carthage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Carthage.swift; sourceTree = "<group>"; };
 		EC43C5E3314A994EC75FDDF0 /* CompositeError+LocalizedError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CompositeError+LocalizedError.swift"; sourceTree = "<group>"; };
 		EC458F05235C3C3F99B9F520 /* CartfileWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartfileWithDeps.txt; sourceTree = "<group>"; };
 		EC4692E13BE4A7DF27432573 /* PodfileNoDeps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodfileNoDeps; sourceTree = "<group>"; };
@@ -361,7 +365,9 @@
 		EC4D63483B7E6BB97F04C58A /* PodManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PodManager+UI.swift"; sourceTree = "<group>"; };
 		EC4E309628E6E0F98E43D262 /* CarthageManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CarthageManager+UI.swift"; sourceTree = "<group>"; };
 		EC4E3FB4DD79CCB197F5F42C /* PackageSwiftWithDeps.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageSwiftWithDeps.txt; sourceTree = "<group>"; };
+		EC4E6715CEFB9ECD838669EF /* Pod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pod.swift; sourceTree = "<group>"; };
 		EC4E7C1BA8F6719B1677D7A1 /* ProjectSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSettings.swift; sourceTree = "<group>"; };
+		EC4EEAB913818AF9CEFB5EDA /* SPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPM.swift; sourceTree = "<group>"; };
 		EC4F0CBDEF8E892FC642E084 /* String+Index.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Index.swift"; sourceTree = "<group>"; };
 		EC4FA3CF6608F67BD447C158 /* TestCartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestCartfile; sourceTree = "<group>"; };
 		EC4FB6648315C0E746D5C73D /* PackageSwiftNoDeps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageSwiftNoDeps.swift; sourceTree = "<group>"; };
@@ -771,6 +777,9 @@
 				OBJ_19 /* Init.swift */,
 				OBJ_20 /* Install.swift */,
 				OBJ_21 /* Update.swift */,
+				EC4EEAB913818AF9CEFB5EDA /* SPM.swift */,
+				EC4E6715CEFB9ECD838669EF /* Pod.swift */,
+				EC437B6CEE6F945EF0D50262 /* Carthage.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -1444,6 +1453,9 @@
 				EC428475571C8923B38BC7CD /* CompositeError+LocalizedError.swift in Sources */,
 				EC4EB05B3C860DA2B23C1055 /* InitService+UI.swift in Sources */,
 				EC41F131BCC69035E58E6E13 /* ProjectSettingsError+LocalizedError.swift in Sources */,
+				EC40E09EA801A591F0843D4D /* SPM.swift in Sources */,
+				EC43140685A6E97F4CA9A4E6 /* Pod.swift in Sources */,
+				EC46D5B6DABD22FC7C19971E /* Carthage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

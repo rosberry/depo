@@ -6,17 +6,12 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-class Install<Command: HasInstallCommand & ProgressObservable>: ParsableCommand where Command.Options: ParsableArguments {
+protocol Install: ParsableCommand {
+    associatedtype Command: HasInstallCommand, ProgressObservable
+    var options: Command.Options { get }
+}
 
-    class var configuration: CommandConfiguration {
-        .init(commandName: "install")
-    }
-
-    @OptionGroup()
-    var options: Command.Options
-
-    required init() {}
-    
+extension Install {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
         let command = Command(depofile: depofile, options: options).subscribe { state in
