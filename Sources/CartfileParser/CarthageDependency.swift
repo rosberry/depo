@@ -133,17 +133,11 @@ extension Dependency: Scannable {
             return .failure(ScannableError(message: "expected string after dependency type", currentLine: scanner.currentLine))
         }
 
-        var address: String?
-        if !scanner.scanUpTo("\"", into: &address) || !scanner.scanString("\"", into: nil) {
+        guard let address = scanner.scanUpToString("\""),
+              scanner.scanString("\"") != nil else {
             return .failure(ScannableError(message: "empty or unterminated string after dependency type", currentLine: scanner.currentLine))
         }
-
-        if let address = address {
-            return parser(address as String)
-        }
-        else {
-            return .failure(ScannableError(message: "empty string after dependency type", currentLine: scanner.currentLine))
-        }
+        return parser(address)
     }
 }
 
