@@ -130,8 +130,8 @@ public final class PodManager: ProgressObservable {
     private func proceedAllPods(at path: String, to outputPath: String) throws {
         let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let proceedErrors: [FailedContext] = try allContexts().compactMap { context in
-            let (pod, settings) = context
+        let proceedErrors: [FailedContext] = try allSchemes().compactMap { schema in
+            let (pod, settings) = schema
             observer?(.processingPod(pod))
             do {
                 try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)")
@@ -158,7 +158,7 @@ public final class PodManager: ProgressObservable {
         }
     }
 
-    private func allContexts() throws -> [(Pod, BuildSettings)] {
+    private func allSchemes() throws -> [(Pod, BuildSettings)] {
         let project = try XcodeProjectList(shell: shell)
         return try project.targets.compactMap { targetName in
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {

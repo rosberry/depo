@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import XcodeProj
 
 #warning("public init(settings:) should be replaced by Codable")
 
@@ -12,7 +11,6 @@ public struct BuildSettings {
     public enum Error: Swift.Error {
         case badOutput(shellIO: Shell.IO)
         case badBuildSettings(missedKey: String, shellIO: Shell.IO)
-        case noBuildSettings(target: PBXNativeTarget)
     }
 
     private enum InternalError: Swift.Error {
@@ -29,6 +27,7 @@ public struct BuildSettings {
     public let codesigningFolderPath: URL?
     public let platform: Platform?
     public let deploymentTarget: String?
+    public let systemSwiftVersion: String
 
     public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
         let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
@@ -39,15 +38,16 @@ public struct BuildSettings {
             throw Error.badOutput(shellIO: shellIO)
         }
         let buildSettings = (try decoder.decode([ShellOutputWrapper].self, from: data)).first?.buildSettings ?? [:]
+        let systemSwiftVersion = try BuildSettings.systemSwiftVersion(shell: shell)
         do {
-            try self.init(settings: buildSettings)
+            try self.init(settings: buildSettings, systemSwiftVersion: systemSwiftVersion)
         }
         catch let InternalError.badExtract(missedKey, _) {
             throw Error.badBuildSettings(missedKey: missedKey, shellIO: shellIO)
         }
     }
 
-    private init(settings: [String: String]) throws {
+    private init(settings: [String: String], systemSwiftVersion: String) throws {
         let extract = BuildSettings.extract
         let productName = try extract("PRODUCT_NAME", settings)
         let swiftVersion = try extract("SWIFT_VERSION", settings)
@@ -56,6 +56,7 @@ public struct BuildSettings {
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
+        self.systemSwiftVersion = systemSwiftVersion
         if let platform = Self.platform(from: settings) {
             self.platform = platform
             self.deploymentTarget = settings[Self.deploymentTargetKey(platform: platform)]
@@ -71,13 +72,15 @@ public struct BuildSettings {
                 targetName: String,
                 codesigningFolderPath: URL?,
                 platform: Platform?,
-                deploymentTarget: String?) {
+                deploymentTarget: String?,
+                systemSwiftVersion: String) {
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
         self.codesigningFolderPath = codesigningFolderPath
         self.platform = platform
         self.deploymentTarget = deploymentTarget
+        self.systemSwiftVersion = systemSwiftVersion
     }
 
     private static func platform(from settings: [String: String]) -> Platform? {
@@ -108,5 +111,15 @@ public struct BuildSettings {
             throw InternalError.badExtract(missedKey: key, settings: settings)
         }
         return value
+    }
+
+    private static func systemSwiftVersion(shell: Shell) throws -> String {
+        let swiftVersionOutput: Shell.IO = try shell("swift", "package", "--version")
+        let output = swiftVersionOutput.stdOut
+        guard let range = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
+              let range2 = output[from: range.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
+            return ""
+        }
+        return String(output[range2])
     }
 }

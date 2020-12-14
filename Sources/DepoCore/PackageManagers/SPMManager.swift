@@ -88,10 +88,7 @@ public final class SPMManager: ProgressObservable {
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
         observer?(.creatingPackageSwiftFile(path: filePath))
-        let spmVersion = try swiftPackageCommand.spmVersion()
-        let content = PackageSwift(projectBuildSettings: buildSettings,
-                                   spmVersion: spmVersion,
-                                   packages: packages).description.data(using: .utf8)
+        let content = PackageSwift(projectBuildSettings: buildSettings, packages: packages).description.data(using: .utf8)
         if !fmg.createFile(atPath: filePath, contents: content) {
             throw Error.badPackageSwiftFile(path: filePath)
         }

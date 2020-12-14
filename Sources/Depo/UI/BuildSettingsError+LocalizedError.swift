@@ -12,8 +12,6 @@ extension BuildSettings.Error: LocalizedError {
             return "cannot parse output of \(shellIO.command.spaceJoined)"
         case let .badBuildSettings(missedKey, shellIO):
             return "cannot find key \(missedKey) in output of \"\(shellIO.command.spaceJoined)\""
-        case let .noBuildSettings(xcodeProject):
-            return "cannot find build settings for project at \(xcodeProject)"
         }
     }
 }

@@ -9,11 +9,11 @@ public struct PackageSwift: CustomStringConvertible {
     public let description: String
     public let packages: [SwiftPackage]
 
-    public init(projectBuildSettings settings: BuildSettings, spmVersion: String, packages: [SwiftPackage]) {
+    public init(projectBuildSettings settings: BuildSettings, packages: [SwiftPackage]) {
         self.packages = packages
         let dependencies = packages.map(Self.package).joined(separator: ",\n\(Self.tabs(9)) ")
         self.description = """
-                           // swift-tools-version:\(spmVersion)
+                           // swift-tools-version:\(settings.systemSwiftVersion)
 
                            import PackageDescription
 
