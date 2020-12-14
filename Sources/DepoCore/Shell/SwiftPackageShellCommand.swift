@@ -38,12 +38,12 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
         let packages = try swiftPackages(packageSwiftFilePath: path)
-        return .init(projectBuildSettings: buildSettings, packages: packages)
+        return .init(projectBuildSettings: buildSettings, spmVersion: try spmVersion(), packages: packages)
     }
 
     public func packageSwift(buildSettings: BuildSettings, absolutePath: String) throws -> PackageSwift {
         let packages = try swiftPackages(packageSwiftFilePath: absolutePath)
-        return .init(projectBuildSettings: buildSettings, packages: packages)
+        return .init(projectBuildSettings: buildSettings, spmVersion: try spmVersion(), packages: packages)
     }
 
     public func targetsOfSwiftPackage(at path: String) throws -> [String] {
@@ -52,6 +52,16 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     public func swiftPackages(packageSwiftFilePath: String) throws -> [SwiftPackage] {
         try swiftPackageByJsoner(packageSwiftFilePath: packageSwiftFilePath)
+    }
+
+    public func spmVersion() throws -> String {
+        let swiftVersionOutput: Shell.IO = try shell("swift", "package", "--version")
+        let output = swiftVersionOutput.stdOut
+        guard let range = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
+              let range2 = output[from: range.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
+            return ""
+        }
+        return String(output[range2])
     }
 
     private func swiftPackageByJsoner(packageSwiftFilePath: String) throws -> [SwiftPackage] {
