@@ -54,10 +54,10 @@ public final class PodShellCommand: ShellCommand {
     private func version(from string: String) -> VersionConstraint<Pod.Operator>? {
         let version = string.split(separator: .init(" "))
         guard version.count == 2,
-              let op = Pod.Operator(symbol: String(version[0])) else {
+              let `operator` = Pod.Operator(symbol: String(version[0])) else {
             return nil
         }
-        return VersionConstraint<Pod.Operator>(operation: op, value: String(version[1]))
+        return VersionConstraint<Pod.Operator>(operation: `operator`, value: String(version[1]))
     }
 }
 

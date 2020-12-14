@@ -14,7 +14,7 @@ final class Pod: ParsableCommand {
         static let configuration: CommandConfiguration = .init(commandName: "update", abstract: "run pod update and build pods")
 
         @OptionGroup()
-        var options: PodManager.Options
+        var options: Command.Options
     }
 
     final class PodInstall: Install {

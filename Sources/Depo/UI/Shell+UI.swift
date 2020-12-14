@@ -8,8 +8,8 @@ import DepoCore
 extension Shell.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .failure(io):
-            return "\(io)"
+        case let .failure(shellIO):
+            return "\(shellIO)"
         }
     }
 }

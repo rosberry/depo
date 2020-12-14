@@ -36,12 +36,12 @@ extension PodManager.Error: LocalizedError {
         case let .badPodBuild(contexts):
             return """
                    bad pod build:
-                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
         case let .badPodMerge(contexts):
             return """
                    bad pod merge:
-                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
         }
     }

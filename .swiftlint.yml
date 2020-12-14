@@ -5,6 +5,8 @@ excluded:
   - Pods
   - .build
   - Package.swift
+  - Sources/CartfileParser
+  - Tests
 
 # Rules
 
@@ -22,6 +24,9 @@ opt_in_rules:
   - prohibited_super_call
   - sorted_first_last
   - untyped_error_in_catch
+
+disabled_rules:
+  - nesting
 
 force_cast: error
 force_try: error

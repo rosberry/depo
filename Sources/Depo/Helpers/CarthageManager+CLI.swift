@@ -12,7 +12,7 @@ extension CarthageManager: CLIPackageManager {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
         var depofileExtension: DataCoder.Kind = .defaultValue
-        
+
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
                 completion: .list(Platform.allFlagsHelp))
         var platform: Platform = .defaultValue

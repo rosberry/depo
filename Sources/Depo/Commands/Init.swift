@@ -27,10 +27,10 @@ final class Init: ParsableCommand {
     static var configuration: CommandConfiguration {
         .init(commandName: "init", abstract: "create Depofile")
     }
-    
+
     @OptionGroup()
     var options: Options
-  
+
     func run() throws {
         let initService = InitService(podCommandPath: options.podCommandPath,
                                       carthageCommandPath: options.carthageCommandPath,

@@ -9,8 +9,8 @@ import Foundation
 public struct BuildSettings {
 
     public enum Error: Swift.Error {
-        case badOutput(io: Shell.IO)
-        case badBuildSettings(missedKey: String, io: Shell.IO)
+        case badOutput(shellIO: Shell.IO)
+        case badBuildSettings(missedKey: String, shellIO: Shell.IO)
     }
 
     private enum InternalError: Swift.Error {
@@ -33,9 +33,9 @@ public struct BuildSettings {
         let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
             ["-target", target]
         } ?? [])
-        let io: Shell.IO = try shell(command)
-        guard let data = io.stdOut.data(using: .utf8) else {
-            throw Error.badOutput(io: io)
+        let shellIO: Shell.IO = try shell(command)
+        guard let data = shellIO.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(shellIO: shellIO)
         }
         let buildSettings = (try decoder.decode([ShellOutputWrapper].self, from: data)).first?.buildSettings ?? [:]
         let systemSwiftVersion = try BuildSettings.systemSwiftVersion(shell: shell)
@@ -43,7 +43,7 @@ public struct BuildSettings {
             try self.init(settings: buildSettings, systemSwiftVersion: systemSwiftVersion)
         }
         catch let InternalError.badExtract(missedKey, _) {
-            throw Error.badBuildSettings(missedKey: missedKey, io: io)
+            throw Error.badBuildSettings(missedKey: missedKey, shellIO: shellIO)
         }
     }
 

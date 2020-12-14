@@ -26,10 +26,9 @@ struct CommandRunner {
         }
 
         static func buildBlock(_ commands: Command & AnyObject...) -> [Swift.Error] {
-            var c = commands
-            return c.indices.compactMap { index in
+            commands.indices.compactMap { index in
                 do {
-                    try c[index].run()
+                    try commands[index].run()
                     return nil
                 }
                 catch {

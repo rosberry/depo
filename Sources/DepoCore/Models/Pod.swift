@@ -47,8 +47,8 @@ public struct Pod {
 
         init?(symbol: String) {
             typealias Context = (this: Self, symbol: String)
-            let contexts: [Context] = Self.allCases.map { op in
-                (this: op, symbol: op.symbol)
+            let contexts: [Context] = Self.allCases.map { oper in
+                (this: oper, symbol: oper.symbol)
             }
             guard let selfContext = contexts.first(with: symbol, at: \.symbol) else {
                 return nil
@@ -78,4 +78,5 @@ extension Pod: Codable {
     }
 }
 
-extension Pod: Hashable {}
+extension Pod: Hashable {
+}

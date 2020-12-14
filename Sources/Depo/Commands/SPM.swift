@@ -10,7 +10,8 @@ final class SPM: ParsableCommand {
 
     final class SPMUpdate: Update {
         typealias Command = SPMManager
-        static let configuration: CommandConfiguration = .init(commandName: "update", abstract: "run swift package update and build swift packages")
+        static let configuration: CommandConfiguration = .init(commandName: "update",
+                                                               abstract: "run swift package update and build swift packages")
 
         @OptionGroup()
         var options: Command.Options
@@ -23,7 +24,7 @@ final class SPM: ParsableCommand {
         @OptionGroup()
         var options: Command.Options
     }
-    
+
     static let configuration: CommandConfiguration = .init(abstract: "SPM wrapper",
                                                            subcommands: [SPMUpdate.self,
                                                                          SPMBuild.self],

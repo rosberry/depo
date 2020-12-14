@@ -163,9 +163,9 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func upToVersionConstraint(from requirement: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
-        guard let lowerBound = requirement.lowerBound,
-              let upperBound = requirement.upperBound,
+    private func upToVersionConstraint(from req: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+        guard let lowerBound = req.lowerBound,
+              let upperBound = req.upperBound,
               let lowerBoundVersion = Version(string: lowerBound),
               let upperBoundVersion = Version(string: upperBound) else {
             return nil

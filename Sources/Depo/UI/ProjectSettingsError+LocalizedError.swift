@@ -8,8 +8,8 @@ import DepoCore
 extension ProjectSettings.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .badOutput(io):
-            return "cannot parse output of \(io.command.spaceJoined)"
+        case let .badOutput(shellIO):
+            return "cannot parse output of \(shellIO.command.spaceJoined)"
         }
     }
 }
