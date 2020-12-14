@@ -13,7 +13,7 @@ cp Shell/$(1) $(bindir)/$(1);
 chmod +x $(bindir)/$(1);
 endef
 
-.PHONY: build install uninstall clean install_scripts completion
+.PHONY: build install uninstall clean install_scripts completion test
 
 $(executable_path): $(release_binary)
 	cp $(release_binary) $(executable_path)
@@ -37,6 +37,9 @@ uninstall:
 
 xcode:
 	swift package generate-xcodeproj
+
+test:
+	xcodebuild test -scheme Depo-Package
 
 clean:
 	rm -rf .build

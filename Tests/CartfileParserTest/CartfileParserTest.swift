@@ -8,7 +8,7 @@ import CartfileParser
 
 final class CartfileParserTest: XCTestCase {
 
-    private let bundle: Bundle = .init(for: CartfileParserTest.self)
+    private let bundle: Bundle = Bundle.module
 
     // the origin of this test can be found here:
     // https://github.com/Carthage/Carthage/blob/master/Tests/CarthageKitTests/CartfileSpec.swift
