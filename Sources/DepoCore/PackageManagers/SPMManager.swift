@@ -123,7 +123,7 @@ public final class SPMManager: ProgressObservable {
 
     private func buildPackageInCurrentDir(buildDir: String) throws {
         try shell("chmod", "-R", "+rw", ".")
-        guard let schema = try ProjectSettings(shell: shell).schemes.first else {
+        guard let schema = try XcodeProjectList(shell: shell).schemes.first else {
             throw InternalError.noSchemaToBuild
         }
         try build(schemes: [schema], buildDir: buildDir)

@@ -15,7 +15,7 @@ let package = Package(
             .package(name: "swift-argument-parser", url: "https://github.com/apple/swift-argument-parser.git", .exact("0.3.1")),
             .package(name: "Yams", url: "https://github.com/jpsim/Yams.git", .exact("4.0.0")),
             .package(name: "Files", url: "https://github.com/JohnSundell/Files", .exact("4.1.1")),
-            .package(name: "XcodeProj", url: "https://github.com/tuist/xcodeproj.git", .upToNextMajor(from: "7.18.0"))
+            .package(name: "XcodeProj", url: "https://github.com/tuist/xcodeproj.git", .upToNextMajor(from: "7.18.0")),
         ],
         targets: [
             .target(name: "Depo",
