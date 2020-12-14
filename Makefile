@@ -5,7 +5,7 @@ release_binary=.build/release/Depo
 executable_path=$(bindir)/$(binary)
 completion_script=/usr/share/zsh/site-functions/_depo
 
-SCRIPTS = build_swift_package.sh merge_package.sh move_built_pod.sh
+SCRIPTS = build_swift_package.sh merge_package.sh
 SOURCES := $(shell find Sources -name "*.swift")
 
 define SCRIPT_INSTALL

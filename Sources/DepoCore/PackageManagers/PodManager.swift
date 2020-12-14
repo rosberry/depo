@@ -4,6 +4,7 @@
 
 import Foundation
 import Yams
+import Files
 
 public final class PodManager: ProgressObservable {
 
@@ -17,6 +18,7 @@ public final class PodManager: ProgressObservable {
         case creatingPodfile(path: String)
         case buildingPod(Pod)
         case processingPod(Pod)
+        case movingPod(from: String, toFolder: String)
         case shell(state: Shell.State)
     }
 
@@ -35,6 +37,7 @@ public final class PodManager: ProgressObservable {
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
     private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
+    private let productExtensions: [String] = ["framework", "bundle"]
 
     private let pods: [Pod]
 
@@ -42,7 +45,6 @@ public final class PodManager: ProgressObservable {
     private let podShellCommand: PodShellCommand
     private lazy var buildPodScript: BuildPodScript = .init(shell: shell)
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
-    private lazy var moveBuiltPodScript: MoveBuiltPodScript = .init(shell: shell)
     private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile, podCommandPath: String) {
@@ -150,12 +152,28 @@ public final class PodManager: ProgressObservable {
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String) throws {
         switch kind(for: pod, with: settings) {
         case .common:
+            print("*** common ***")
             try mergePackageScript(pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build")
         case .builtFramework:
-            try moveBuiltPodScript(pod: pod)
+            print("*** built ***")
+            try move(builtPod: pod)
         case .unknown:
+            print("*** unknown ***")
             break
         }
+    }
+
+    private func move(builtPod pod: Pod) throws {
+        let outputFolder = try Folder(path: "Build/iOS")
+        let podBuildProductsDirectory = try Folder(path: pod.name)
+        for subFolder in podBuildProductsDirectory.subfolders where isProduct(subFolder) {
+            observer?(.movingPod(from: subFolder.path, toFolder: outputFolder.path))
+            try subFolder.move(to: outputFolder)
+        }
+    }
+
+    private func isProduct(_ folder: Folder) -> Bool {
+        productExtensions.contains(with: folder.extension ?? "", at: \.self)
     }
 
     private func allSchemes() throws -> [(Pod, BuildSettings)] {
