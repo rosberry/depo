@@ -5,7 +5,7 @@ release_binary=.build/release/Depo
 executable_path=$(bindir)/$(binary)
 completion_script=/usr/share/zsh/site-functions/_depo
 
-SCRIPTS = build_swift_package.sh build_pod.sh merge_package.sh move_built_pod.sh
+SCRIPTS = build_swift_package.sh merge_package.sh move_built_pod.sh
 SOURCES := $(shell find Sources -name "*.swift")
 
 define SCRIPT_INSTALL
@@ -13,7 +13,9 @@ cp Shell/$(1) $(bindir)/$(1);
 chmod +x $(bindir)/$(1);
 endef
 
-.PHONY: build install uninstall clean install_scripts completion test
+.PHONY: build install uninstall clean install_scripts completion test install
+
+install: $(executable_path)
 
 $(executable_path): $(release_binary)
 	cp $(release_binary) $(executable_path)

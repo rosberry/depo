@@ -4,18 +4,11 @@
 
 import Foundation
 
-public final class BuildPodScript: ShellCommand {
-
-    public override init(commandPath: String = AppConfiguration.Path.Absolute.buildPodShellScript, shell: Shell) {
-        super.init(commandPath: commandPath, shell: shell)
-    }
-
-    public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-    }
+public final class BuildPodScript: XcodeBuild {
 
     @discardableResult
-    public func callAsFunction(pod: Pod) throws -> Shell.IO {
-        try shell(filePath: commandPath, arguments: [pod.name])
+    public func callAsFunction(pod: Pod) throws -> [Shell.IO] {
+        [try archive(.device(target: pod.name)),
+         try archive(.simulator(target: pod.name))]
     }
 }

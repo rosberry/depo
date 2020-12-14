@@ -30,6 +30,7 @@ public enum AppConfiguration {
             public static let podCommandPath: String = "pod"
             public static let carthageCommandPath: String = "carthage"
             public static let swiftCommandPath: String = "swift"
+            public static let xcodebuild: String = "xcodebuild"
         }
     }
 
