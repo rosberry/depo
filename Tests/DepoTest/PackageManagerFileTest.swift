@@ -43,8 +43,11 @@ extension PackageManagerFileTest {
               targetName: "TestTarget",
               codesigningFolderPath: nil,
               platform: .tvos,
-              deploymentTarget: "test-deployment-target",
-              systemSwiftVersion: "test-swift-version")
+              deploymentTarget: "test-deployment-target")
+    }
+
+    var spmVersion: String {
+        "test-swift-version"
     }
 
     var pods: [Pod] {
