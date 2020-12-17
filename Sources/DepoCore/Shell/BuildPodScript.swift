@@ -8,7 +8,7 @@ public final class BuildPodScript: XcodeBuild {
 
     @discardableResult
     public func callAsFunction(pod: Pod) throws -> [Shell.IO] {
-        [try archive(.device(target: pod.name)),
-         try archive(.simulator(target: pod.name))]
+        [try self(.device(target: pod.name)),
+         try self(.simulator(target: pod.name))]
     }
 }
