@@ -166,9 +166,10 @@ public final class PodManager: ProgressObservable {
     private func move(builtPod pod: Pod) throws {
         let outputFolder = try Folder(path: "Build/iOS")
         let podBuildProductsDirectory = try Folder(path: pod.name)
-        for subFolder in podBuildProductsDirectory.subfolders where isProduct(subFolder) {
+        for subFolder in podBuildProductsDirectory.allSubfolders where isProduct(subFolder) {
             observer?(.movingPod(from: subFolder.path, toFolder: outputFolder.path))
-            try subFolder.move(to: outputFolder)
+            try? outputFolder.subfolder(named: subFolder.name).delete()
+            try subFolder.copy(to: outputFolder)
         }
     }
 
