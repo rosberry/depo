@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct AnyArgument<Root> {
+public struct AnyArgument<Root> {
 
     let value: (Root) -> [String]
 

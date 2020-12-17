@@ -14,7 +14,7 @@ public class ShellCommand: Codable {
     }
 }
 
-protocol ArgumentedShellCommand {
+public protocol ArgumentedShellCommand {
 
     associatedtype Settings: ShellCommandArguments
 
@@ -23,16 +23,17 @@ protocol ArgumentedShellCommand {
     var shell: Shell { get }
 }
 
-extension ArgumentedShellCommand {
+public extension ArgumentedShellCommand {
+    @discardableResult
     func callAsFunction(_ settings: Settings) throws -> Shell.IO {
         try shell(commands + settings.stringArguments(keys: Self.keys))
     }
 }
 
-protocol ShellCommandArguments {
+public protocol ShellCommandArguments {
 }
 
-extension ShellCommandArguments {
+public extension ShellCommandArguments {
     func stringArguments(keys: [AnyArgument<Self>]) -> [String] {
         keys.reduce([]) { acc, argument in
             acc + argument.value(self)
@@ -40,7 +41,7 @@ extension ShellCommandArguments {
     }
 }
 
-extension ArgumentedShellCommand where Self: ShellCommand {
+public extension ArgumentedShellCommand where Self: ShellCommand {
     var commands: [String] {
         [commandPath]
     }

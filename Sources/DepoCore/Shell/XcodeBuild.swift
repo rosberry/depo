@@ -36,16 +36,15 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         case archive
     }
 
-    static var keys: [AnyArgument<Settings>] {
-        [.init(\.target, "-target "),
-         .init(\.configuration, "-configuration "),
-         .init(\.isDefineModules, "defines_module=", { $0.yesOrNo }),
-         .init(\.sdk, "-sdk "),
-         .init(optionalKeyPath: \.arch, "-arch "),
-         .init(optionalKeyPath: \.isOnlyActiveArch, "only-active-arch=", { $0.yesOrNo }),
-         .init(\.isQuiet, "-quiet", { _ in "" }),
-         .init(\.actionType, "")]
-    }
+    public static let keys: [AnyArgument<Settings>] =
+            [.init(\.target, "-target "),
+             .init(\.configuration, "-configuration "),
+             .init(\.isDefineModules, "defines_module=", { $0.yesOrNo }),
+             .init(\.sdk, "-sdk "),
+             .init(optionalKeyPath: \.arch, "-arch "),
+             .init(optionalKeyPath: \.isOnlyActiveArch, "only-active-arch=", { $0.yesOrNo }),
+             .init(\.isQuiet, "-quiet", { _ in "" }),
+             .init(\.actionType, "")]
 
     public override init(commandPath: String = AppConfiguration.Path.Absolute.xcodebuild, shell: Shell) {
         super.init(commandPath: commandPath, shell: shell)
