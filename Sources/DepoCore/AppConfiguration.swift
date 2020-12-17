@@ -33,4 +33,5 @@ public enum AppConfiguration {
     }
 
     public static let podsInternalTargetsPrefix: String = "Pods"
+    public static let xcodeProjectExtension: String = "xcodeproj"
 }

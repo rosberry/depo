@@ -13,7 +13,7 @@ public final class MergePackageScript: ShellCommand {
     }
 
     private var lipo: Lipo {
-        Lipo()
+        Lipo(shell: shell)
     }
 
     public init(shell: Shell) {

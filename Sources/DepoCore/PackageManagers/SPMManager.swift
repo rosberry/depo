@@ -42,7 +42,7 @@ public final class SPMManager: ProgressObservable {
 
     private let swiftPackageCommand: SwiftPackageShellCommand
     private lazy var mergePackageScript: MergePackageScript = .init(shell: shell)
-    private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(shell: shell)
+    private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
 
     private let packageSwiftFileName = AppConfiguration.Name.packageSwift
     private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory

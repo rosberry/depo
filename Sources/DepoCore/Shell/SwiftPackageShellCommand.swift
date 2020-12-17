@@ -54,6 +54,11 @@ public final class SwiftPackageShellCommand: ShellCommand {
         try swiftPackageByJsoner(packageSwiftFilePath: packageSwiftFilePath)
     }
 
+    @discardableResult
+    public func generateXcodeproj() throws -> Shell.IO {
+        try shell("swift", "package", "generate-xcodeproj")
+    }
+
     public func spmVersion() throws -> String {
         let swiftVersionOutput: Shell.IO = try shell("swift", "package", "--version")
         let output = swiftVersionOutput.stdOut
