@@ -5,11 +5,16 @@
 import Foundation
 import Files
 
-public final class MergePackageScript: ShellCommand {
+public final class MergePackage: ShellCommand {
 
     enum Error: Swift.Error {
         case noFramework(path: String)
         case noSwiftModule(path: String)
+    }
+
+    public enum FrameworkKind: CaseIterable {
+        case fat
+        case xc
     }
 
     private var lipo: Lipo {
@@ -25,14 +30,48 @@ public final class MergePackageScript: ShellCommand {
     }
 
     @discardableResult
-    public func callAsFunction(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    public func make(_ frameworkKind: FrameworkKind, swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+        switch frameworkKind {
+        case .fat:
+            return try makeFatFramework(swiftFrameworkName: swiftFrameworkName, outputPath: outputPath)
+        case .xc:
+            return try makeXCFramework(swiftFrameworkName: swiftFrameworkName, outputPath: outputPath)
+        }
+    }
+
+    @discardableResult
+    public func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
         #warning("schema name is . -- wtf?")
         return try run(packageName: swiftFrameworkName, schemaName: ".", outputPath: outputPath, packageProductsPath: ".")
     }
 
     @discardableResult
-    public func callAsFunction(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+    public func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+        fatalError()
+    }
+
+    @discardableResult
+    public func make(_ frameworkKind: FrameworkKind,
+                     pod: Pod,
+                     settings: BuildSettings,
+                     outputPath: String,
+                     buildDir: String) throws -> Shell.IO {
+        switch frameworkKind {
+        case .fat:
+            return try makeFatFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
+        case .xc:
+            return try makeXCFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
+        }
+    }
+
+    @discardableResult
+    public func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
         try run(packageName: settings.productName, schemaName: pod.name, outputPath: outputPath, packageProductsPath: buildDir)
+    }
+
+    @discardableResult
+    public func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+        fatalError()
     }
 
     @discardableResult

@@ -16,9 +16,12 @@ extension SPMManager: HasUpdateCommand, HasBuildCommand {
 
         @Option(completion: .file())
         var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+
+        @Flag()
+        var frameworkKind: MergePackage.FrameworkKind = .fat
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, swiftCommandPath: options.swiftCommandPath)
+        self.init(depofile: depofile, swiftCommandPath: options.swiftCommandPath, frameworkKind: options.frameworkKind)
     }
 }

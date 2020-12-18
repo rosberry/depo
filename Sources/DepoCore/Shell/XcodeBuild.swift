@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import Files
 
 public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
@@ -56,6 +57,28 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
+    }
+
+    public func buildForDistribution(_ settings: Settings) throws -> Shell.IO {
+        let xcconfig = try xcConfigForDistributionBuild()
+        return try self(commands: exportCommand(xcconfig: xcconfig) + commands, settings)
+    }
+
+    public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
+        let frameworksArguments = frameworkPaths.reduce([]) { result, path in
+            result + ["-framework", path]
+        }
+        return try shell(commands + ["-output", path] + frameworksArguments)
+    }
+
+    private func xcConfigForDistributionBuild() throws -> File {
+        let name = "\(UUID().uuidString).xcconfig"
+        let content = "BUILD_LIBRARY_FOR_DISTRIBUTION=YES".data(using: .utf8) ?? Data()
+        return try Folder.temporary.createFile(named: name, contents: content)
+    }
+
+    private func exportCommand(xcconfig: File) -> [String] {
+        ["export", "XCODE_XCCONFIG_FILE=\(xcconfig.path)"]
     }
 }
 

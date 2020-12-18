@@ -24,6 +24,9 @@ extension AllPackagesManager: CLIPackageManager {
 
         @Option(completion: .file())
         var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+
+        @Flag()
+        var frameworkKind: MergePackage.FrameworkKind = .fat
     }
 
     convenience init(depofile: Depofile, options: Options) {
@@ -31,6 +34,7 @@ extension AllPackagesManager: CLIPackageManager {
                   platform: options.platform,
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,
-                  swiftCommandPath: options.swiftCommandPath)
+                  swiftCommandPath: options.swiftCommandPath,
+                  frameworkKind: options.frameworkKind)
     }
 }
