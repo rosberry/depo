@@ -50,6 +50,7 @@ public final class SPMManager: ProgressObservable {
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
     private let frameworkKind: MergePackage.FrameworkKind
     private var observer: ((State) -> Void)?
+    private let productExtensions: [String] = ["framework", "xcframework"]
 
     public init(depofile: Depofile, swiftCommandPath: String, frameworkKind: MergePackage.FrameworkKind) {
         self.packages = depofile.swiftPackages

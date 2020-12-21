@@ -25,8 +25,8 @@ public protocol ArgumentedShellCommand {
 
 public extension ArgumentedShellCommand {
     @discardableResult
-    func callAsFunction(commands: [String]? = nil, _ settings: Settings) throws -> Shell.IO {
-        try shell(commands ?? self.commands + settings.stringArguments(keys: Self.keys))
+    func callAsFunction(commands: [String]? = nil, _ settings: Settings, environment: [String: String]? = nil) throws -> Shell.IO {
+        try shell((commands ?? self.commands) + settings.stringArguments(keys: Self.keys))
     }
 }
 

@@ -37,7 +37,7 @@ public final class PodManager: ProgressObservable {
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
     private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
-    private let productExtensions: [String] = ["framework", "bundle"]
+    private let productExtensions: [String] = ["framework", "bundle", "xcframework"]
 
     private let pods: [Pod]
 

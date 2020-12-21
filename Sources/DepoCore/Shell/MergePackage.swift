@@ -18,7 +18,11 @@ public final class MergePackage: ShellCommand {
     }
 
     private var lipo: Lipo {
-        Lipo(shell: shell)
+        .init(shell: shell)
+    }
+
+    private var xcodebuild: XcodeBuild {
+        .init(shell: shell)
     }
 
     public init(shell: Shell) {
@@ -42,16 +46,18 @@ public final class MergePackage: ShellCommand {
     @discardableResult
     public func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
         #warning("schema name is . -- wtf?")
-        return try mergeProducts(kind: .fat,
-                                 packageName: swiftFrameworkName,
-                                 schemaName: ".",
-                                 outputPath: outputPath,
-                                 packageProductsPath: ".")
+        return try mergeFat(packageName: swiftFrameworkName,
+                            schemaName: ".",
+                            outputPath: outputPath,
+                            packageProductsPath: ".")
     }
 
     @discardableResult
     public func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
-        try mergeProducts(kind: .xc, packageName: swiftFrameworkName, schemaName: ".", outputPath: outputPath, packageProductsPath: ".")
+        try mergeXC(packageName: swiftFrameworkName,
+                    schemaName: ".",
+                    outputPath: outputPath,
+                    packageProductsPath: ".")
     }
 
     @discardableResult
@@ -70,40 +76,18 @@ public final class MergePackage: ShellCommand {
 
     @discardableResult
     public func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
-        try mergeProducts(kind: .fat,
-                          packageName: settings.productName,
-                          schemaName: pod.name,
-                          outputPath: outputPath,
-                          packageProductsPath: buildDir)
+        try mergeFat(packageName: settings.productName,
+                     schemaName: pod.name,
+                     outputPath: outputPath,
+                     packageProductsPath: buildDir)
     }
 
     @discardableResult
     public func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
-        try mergeProducts(kind: .xc,
-                          packageName: settings.productName,
-                          schemaName: pod.name,
-                          outputPath: outputPath,
-                          packageProductsPath: buildDir)
-    }
-
-    @discardableResult
-    private func mergeProducts(kind: MergePackage.FrameworkKind,
-                               packageName: String,
-                               schemaName: String,
-                               outputPath: String,
-                               packageProductsPath: String) throws -> Shell.IO {
-        switch kind {
-        case .fat:
-            return try mergeFat(packageName: packageName,
-                                schemaName: schemaName,
-                                outputPath: outputPath,
-                                packageProductsPath: packageProductsPath)
-        case .xc:
-            return try mergeXC(packageName: packageName,
-                               schemaName: schemaName,
-                               outputPath: outputPath,
-                               packageProductsPath: packageProductsPath)
-        }
+        try mergeXC(packageName: settings.productName,
+                    schemaName: pod.name,
+                    outputPath: outputPath,
+                    packageProductsPath: buildDir)
     }
 
     @discardableResult
@@ -128,7 +112,12 @@ public final class MergePackage: ShellCommand {
 
     @discardableResult
     private func mergeXC(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Shell.IO {
-        fatalError()
+        let outputXCFrameworkPath = "\(outputPath)/\(packageName).xcframework"
+        let deviceFrameworkPath = "\(packageProductsPath)/Release-iphoneos/\(schemaName)/\(packageName).framework"
+        let simulatorFrameworkPath = "\(packageProductsPath)/Release-iphonesimulator/\(schemaName)/\(packageName).framework"
+
+        return try xcodebuild.create(xcFrameworkAt: outputXCFrameworkPath,
+                                     fromFrameworksAtPaths: [deviceFrameworkPath, simulatorFrameworkPath])
     }
 
     private func copy(deviceFramework: Folder,

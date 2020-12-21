@@ -49,6 +49,20 @@ public final class Shell {
         }
     }
 
+    public func callAsFunction(_ command: String) throws -> IO {
+        observer?(.start(command: [command]))
+        let process = Process()
+        process.launchPath = "/bin/zsh"
+        process.arguments = ["-c", command]
+        let shellIO = try output(of: process, command: [command])
+        if shellIO.status == 0 {
+            return shellIO
+        }
+        else {
+            throw Error.failure(shellIO)
+        }
+    }
+
     public func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
         observer?(.start(command: [filePath] + arguments))
         let process = Process()

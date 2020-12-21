@@ -61,14 +61,14 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     public func buildForDistribution(_ settings: Settings) throws -> Shell.IO {
         let xcconfig = try xcConfigForDistributionBuild()
-        return try self(commands: exportCommand(xcconfig: xcconfig) + commands, settings)
+        return try shell(exportCommand(xcconfig: xcconfig) + " && " + (commands + settings.stringArguments(keys: Self.keys)).joined(separator: " "))
     }
 
     public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
         let frameworksArguments = frameworkPaths.reduce([]) { result, path in
             result + ["-framework", path]
         }
-        return try shell(commands + ["-output", path] + frameworksArguments)
+        return try shell(commands + ["-create-xcframework"] + ["-output", path] + frameworksArguments)
     }
 
     private func xcConfigForDistributionBuild() throws -> File {
@@ -77,8 +77,8 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         return try Folder.temporary.createFile(named: name, contents: content)
     }
 
-    private func exportCommand(xcconfig: File) -> [String] {
-        ["export", "XCODE_XCCONFIG_FILE=\(xcconfig.path)"]
+    private func exportCommand(xcconfig: File) -> String {
+        "export XCODE_XCCONFIG_FILE=\(xcconfig.path)"
     }
 }
 
@@ -122,7 +122,7 @@ extension XcodeBuild.Settings {
                             arch: .x86_64,
                             isOnlyActiveArch: false,
                             isQuiet: true,
-                            derivedDataPath: nil,
+                            derivedDataPath: derivedDataPath,
                             actionType: actionType)
     }
 
