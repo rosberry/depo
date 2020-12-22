@@ -59,6 +59,7 @@ public final class InitService: ProgressObservable {
         }
     }
 
+    @discardableResult
     public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
         self.observer = observer
         return self

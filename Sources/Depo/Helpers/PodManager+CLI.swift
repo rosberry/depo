@@ -18,7 +18,7 @@ extension PodManager: CLIPackageManager {
         var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
 
         @Flag()
-        var frameworkKind: MergePackage.FrameworkKind = .fat
+        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
     }
 
     convenience init(depofile: Depofile, options: Options) {

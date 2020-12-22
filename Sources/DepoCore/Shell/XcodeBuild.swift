@@ -31,6 +31,7 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
     }
 
     public enum Arch: String {
+        //swiftlint:disable:next identifier_name
         case x86_64
     }
 
@@ -61,7 +62,10 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     public func buildForDistribution(_ settings: Settings) throws -> Shell.IO {
         let xcconfig = try xcConfigForDistributionBuild()
-        return try shell(exportCommand(xcconfig: xcconfig) + " && " + (commands + settings.stringArguments(keys: Self.keys)).joined(separator: " "))
+        let command = exportCommand(xcconfig: xcconfig)
+                      + " && "
+                      + (commands + settings.stringArguments(keys: Self.keys)).joined(separator: " ")
+        return try shell(command)
     }
 
     public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
@@ -111,9 +115,9 @@ extension XcodeBuild.Settings {
     }
 
     static func simulator(scheme: String,
-                       configuration: XcodeBuild.Configuration = .release,
-                       derivedDataPath: String? = nil,
-                       actionType: XcodeBuild.ActionType? = nil) -> Self {
+                          configuration: XcodeBuild.Configuration = .release,
+                          derivedDataPath: String? = nil,
+                          actionType: XcodeBuild.ActionType? = nil) -> Self {
         XcodeBuild.Settings(target: nil,
                             scheme: scheme,
                             configuration: configuration,

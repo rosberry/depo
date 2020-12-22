@@ -26,6 +26,8 @@ extension PodManager.State: CustomStringConvertible {
             return "\(from) -> \(to)"
         case let .shell(state):
             return state.description
+        case let .merge(state):
+            return state.description
         }
     }
 }

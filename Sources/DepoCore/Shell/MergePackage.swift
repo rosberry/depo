@@ -7,17 +7,18 @@ import Files
 
 public final class MergePackage: ShellCommand {
 
-    enum Error: Swift.Error {
+    public enum Error: Swift.Error {
         case noFramework(path: String)
         case noSwiftModule(path: String)
         case badMove(tmpXCFrameworkPath: String, outputXCFrameworkPath: String)
     }
 
     public enum FrameworkKind: CaseIterable {
-        case fat
-        case xc
+        case fatFramework
+        case xcframework
     }
 
+    private var observer: ((State) -> Void)?
     private var lipo: Lipo {
         .init(shell: shell)
     }
@@ -36,16 +37,33 @@ public final class MergePackage: ShellCommand {
 
     @discardableResult
     public func make(_ frameworkKind: FrameworkKind, swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+        observer?(.makingSP(name: swiftFrameworkName, kind: frameworkKind, outputPath: outputPath))
         switch frameworkKind {
-        case .fat:
+        case .fatFramework:
             return try makeFatFramework(swiftFrameworkName: swiftFrameworkName, outputPath: outputPath)
-        case .xc:
+        case .xcframework:
             return try makeXCFramework(swiftFrameworkName: swiftFrameworkName, outputPath: outputPath)
         }
     }
 
     @discardableResult
-    public func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    //swiftlint:disable:next function_parameter_count
+    public func make(_ frameworkKind: FrameworkKind,
+                     pod: Pod,
+                     settings: BuildSettings,
+                     outputPath: String,
+                     buildDir: String) throws -> Shell.IO {
+        observer?(.makingPod(name: pod.name, kind: frameworkKind, outputPath: outputPath))
+        switch frameworkKind {
+        case .fatFramework:
+            return try makeFatFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
+        case .xcframework:
+            return try makeXCFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
+        }
+    }
+
+    @discardableResult
+    private func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
         #warning("schema name is . -- wtf?")
         return try mergeFat(packageName: swiftFrameworkName,
                             schemaName: ".",
@@ -54,7 +72,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    public func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    private func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
         try mergeXC(packageName: swiftFrameworkName,
                     schemaName: ".",
                     outputPath: outputPath,
@@ -62,21 +80,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    public func make(_ frameworkKind: FrameworkKind,
-                     pod: Pod,
-                     settings: BuildSettings,
-                     outputPath: String,
-                     buildDir: String) throws -> Shell.IO {
-        switch frameworkKind {
-        case .fat:
-            return try makeFatFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
-        case .xc:
-            return try makeXCFramework(pod: pod, settings: settings, outputPath: outputPath, buildDir: buildDir)
-        }
-    }
-
-    @discardableResult
-    public func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+    private func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
         try mergeFat(packageName: settings.productName,
                      schemaName: pod.name,
                      outputPath: outputPath,
@@ -84,7 +88,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    public func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+    private func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
         try mergeXC(packageName: settings.productName,
                     schemaName: pod.name,
                     outputPath: outputPath,
@@ -168,5 +172,18 @@ public final class MergePackage: ShellCommand {
         catch {
             throw Error.badMove(tmpXCFrameworkPath: tmpXCFrameworkPath, outputXCFrameworkPath: outputXCFrameworkPath)
         }
+    }
+}
+
+extension MergePackage: ProgressObservable {
+
+    public enum State {
+        case makingSP(name: String, kind: FrameworkKind, outputPath: String)
+        case makingPod(name: String, kind: FrameworkKind, outputPath: String)
+    }
+
+    public func subscribe(_ observer: @escaping (State) -> Void) -> MergePackage {
+        self.observer = observer
+        return self
     }
 }

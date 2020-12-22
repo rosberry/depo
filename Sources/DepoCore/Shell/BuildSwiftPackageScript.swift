@@ -48,10 +48,10 @@ public final class BuildSwiftPackageScript: ShellCommand {
                        config: XcodeBuild.Configuration) throws -> [Shell.IO] {
         let xcodebuild = self.xcodebuild
         switch frameworkKind {
-        case .fat:
+        case .fatFramework:
             return [try xcodebuild(.device(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath)),
                     try xcodebuild(.simulator(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath))]
-        case .xc:
+        case .xcframework:
             return [try xcodebuild.buildForDistribution(.device(scheme: scheme,
                                                                 configuration: config,
                                                                 derivedDataPath: derivedDataPath)),

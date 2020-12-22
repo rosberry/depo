@@ -17,6 +17,7 @@ public final class SPMManager: ProgressObservable {
         case processingPackage(SwiftPackage, path: String)
         case creatingPackageSwiftFile(path: String)
         case shell(state: Shell.State)
+        case merge(state: MergePackage.State)
     }
 
     public enum Error: Swift.Error {
@@ -41,7 +42,9 @@ public final class SPMManager: ProgressObservable {
     private let shell: Shell = .init()
 
     private let swiftPackageCommand: SwiftPackageShellCommand
-    private lazy var mergePackage: MergePackage = .init(shell: shell)
+    private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
+        self?.observer?(.merge(state: state))
+    }
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
 
     private let packageSwiftFileName = AppConfiguration.Name.packageSwift
@@ -130,7 +133,7 @@ public final class SPMManager: ProgressObservable {
     }
 
     private func buildPackageInCurrentDir(buildDir: String, like frameworkKind: MergePackage.FrameworkKind) throws {
-        try shell("chmod", "-R", "+rw", ".")
+        _ = try shell("chmod", "-R", "+rw", ".")
         guard let schema = try XcodeProjectList(shell: shell).schemes.first else {
             throw InternalError.noSchemaToBuild
         }

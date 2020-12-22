@@ -20,6 +20,7 @@ public final class PodManager: ProgressObservable {
         case processingPod(Pod)
         case movingPod(from: String, toFolder: String)
         case shell(state: Shell.State)
+        case merge(state: MergePackage.State)
     }
 
     public enum Error: Swift.Error {
@@ -44,7 +45,9 @@ public final class PodManager: ProgressObservable {
     private let shell: Shell = .init()
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
-    private lazy var mergePackage: MergePackage = .init(shell: shell)
+    private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
+        self?.observer?(.merge(state: state))
+    }
     private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile, podCommandPath: String, frameworkKind: MergePackage.FrameworkKind) {
@@ -198,9 +201,9 @@ public final class PodManager: ProgressObservable {
     @discardableResult
     private func build(pod: Pod, ofKind frameworkKind: MergePackage.FrameworkKind) throws -> [Shell.IO] {
         switch frameworkKind {
-        case .fat:
+        case .fatFramework:
             return try buildFatFramework(pod: pod)
-        case .xc:
+        case .xcframework:
             return try buildForXCFramework(pod: pod)
         }
     }
