@@ -10,6 +10,7 @@ public final class MergePackage: ShellCommand {
     enum Error: Swift.Error {
         case noFramework(path: String)
         case noSwiftModule(path: String)
+        case badMove(tmpXCFrameworkPath: String, outputXCFrameworkPath: String)
     }
 
     public enum FrameworkKind: CaseIterable {
@@ -112,12 +113,15 @@ public final class MergePackage: ShellCommand {
 
     @discardableResult
     private func mergeXC(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Shell.IO {
+        let tmpXCFrameworkPath = "\(Folder.temporary.path)/\(packageName).xcframework"
         let outputXCFrameworkPath = "\(outputPath)/\(packageName).xcframework"
         let deviceFrameworkPath = "\(packageProductsPath)/Release-iphoneos/\(schemaName)/\(packageName).framework"
         let simulatorFrameworkPath = "\(packageProductsPath)/Release-iphonesimulator/\(schemaName)/\(packageName).framework"
 
-        return try xcodebuild.create(xcFrameworkAt: outputXCFrameworkPath,
-                                     fromFrameworksAtPaths: [deviceFrameworkPath, simulatorFrameworkPath])
+        let result = try xcodebuild.create(xcFrameworkAt: tmpXCFrameworkPath,
+                                           fromFrameworksAtPaths: [deviceFrameworkPath, simulatorFrameworkPath])
+        try move(tmpXCFrameworkPath: tmpXCFrameworkPath, outputDirectoryPath: outputPath, outputXCFrameworkPath: outputXCFrameworkPath)
+        return result
     }
 
     private func copy(deviceFramework: Folder,
@@ -151,6 +155,18 @@ public final class MergePackage: ShellCommand {
     private func binary(_ name: String) -> (String) -> String {
         { frameworkPath in
             "\(frameworkPath)/\(name)"
+        }
+    }
+
+    private func move(tmpXCFrameworkPath: String, outputDirectoryPath: String, outputXCFrameworkPath: String) throws {
+        do {
+            try (try? Folder(path: outputXCFrameworkPath))?.delete()
+            let tmpXCFrameworkFolder = try Folder(path: tmpXCFrameworkPath)
+            let outputFolder = try Folder(path: outputDirectoryPath)
+            try tmpXCFrameworkFolder.move(to: outputFolder)
+        }
+        catch {
+            throw Error.badMove(tmpXCFrameworkPath: tmpXCFrameworkPath, outputXCFrameworkPath: outputXCFrameworkPath)
         }
     }
 }
