@@ -35,8 +35,8 @@ public protocol ShellCommandArguments {
 
 public extension ShellCommandArguments {
     func stringArguments(keys: [AnyArgument<Self>]) -> [String] {
-        keys.reduce([]) { acc, argument in
-            acc + argument.value(self)
+        keys.reduce([]) { result, argument in
+            result + argument.value(self)
         }
     }
 }

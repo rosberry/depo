@@ -7,7 +7,7 @@ import Files
 
 public final class SwiftPackageShellCommand: ShellCommand {
 
-    fileprivate struct JsonerOutputWrapper: Codable {
+    fileprivate struct SPOutputWrapper: Codable {
         let products: [Product]
         let targets: [Target]
         let dependencies: [Dependency]
@@ -62,11 +62,11 @@ public final class SwiftPackageShellCommand: ShellCommand {
     public func spmVersion() throws -> String {
         let swiftVersionOutput: Shell.IO = try shell("swift", "package", "--version")
         let output = swiftVersionOutput.stdOut
-        guard let range = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
-              let range2 = output[from: range.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
+        guard let keyRange = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
+              let valueRange = output[from: keyRange.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
             return ""
         }
-        return String(output[range2])
+        return String(output[valueRange])
     }
 
     private func swiftPackageByJsoner(packageSwiftFilePath: String) throws -> [SwiftPackage] {
@@ -77,11 +77,11 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> JsonerOutputWrapper {
+    private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> SPOutputWrapper {
         let output = try fmg.perform(atPath: path) {
             try shell("swift", "package", "dump-package")
         }
-        return try JSONDecoder().decode(JsonerOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
+        return try JSONDecoder().decode(SPOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
 
     private func swiftPackagesByRegex(file: File) throws -> [SwiftPackage] {
@@ -163,7 +163,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func versionConstraint(from req: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+    private func versionConstraint(from req: SPOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
         switch req.type {
         case .range:
             return upToVersionConstraint(from: req)
@@ -178,7 +178,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func upToVersionConstraint(from req: JsonerOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+    private func upToVersionConstraint(from req: SPOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
         guard let lowerBound = req.lowerBound,
               let upperBound = req.upperBound,
               let lowerBoundVersion = Version(string: lowerBound),
@@ -198,7 +198,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 }
 
-extension SwiftPackageShellCommand.JsonerOutputWrapper {
+extension SwiftPackageShellCommand.SPOutputWrapper {
     fileprivate struct Dependency: Codable {
         let name: String?
         let url: URL
@@ -222,7 +222,7 @@ extension SwiftPackageShellCommand.JsonerOutputWrapper {
     }
 }
 
-extension SwiftPackageShellCommand.JsonerOutputWrapper.Dependency {
+extension SwiftPackageShellCommand.SPOutputWrapper.Dependency {
     fileprivate struct Requirement: Codable {
 
         enum Kind: String, Codable {
