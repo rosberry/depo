@@ -22,6 +22,8 @@ extension SPMManager.State: CustomStringConvertible {
             return "creation Package.swift at \(path)"
         case let .shell(state):
             return state.description
+        case let .merge(state):
+            return state.description
         }
     }
 }

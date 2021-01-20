@@ -2,14 +2,7 @@
 //  Copyright © 2018 Rosberry. All rights reserved.
 //
 
-public extension Collection {
-
-    /// Returns collection of values at keyPaths of contained elements.
-    func map<T>(by keyPath: KeyPath<Element, T>) -> [T] {
-        map { innerElement -> T in
-            innerElement[keyPath: keyPath]
-        }
-    }
+public extension Sequence {
 
     /// Returns collection of elements that are having value at certain keypath equal to value at keypath of passed element.
     func filter<T: Equatable>(by keyPath: KeyPath<Element, T>, of element: Element) -> [Element] {
@@ -56,20 +49,6 @@ public extension Collection {
     /// Checks if collection contains element that has specific value at certain keypath.
     func contains<T: Equatable>(with value: T, at keyPath: KeyPath<Element, T>) -> Bool {
         contains { innerElement -> Bool in
-            innerElement[keyPath: keyPath] == value
-        }
-    }
-
-    /// Returns index of element in the collection that has value at certain keypath equal to value at keypath of passed element.
-    func index<T: Equatable>(by keyPath: KeyPath<Element, T>, of element: Element) -> Index? {
-        firstIndex { innerElement -> Bool in
-            innerElement[keyPath: keyPath] == element[keyPath: keyPath]
-        }
-    }
-
-    /// Returns index of element in the collection that has specific value at certain keypath.
-    func index<T: Equatable>(with value: T, at keyPath: KeyPath<Element, T>) -> Index? {
-        firstIndex { innerElement -> Bool in
             innerElement[keyPath: keyPath] == value
         }
     }
@@ -129,6 +108,30 @@ public extension Collection {
                                using comparator: (T, T) -> Bool = { f, s in f < s }) -> [Element] {
         sorted { first, second in
             comparator((first[keyPath: keyPath] ?? defaultValue), (second[keyPath: keyPath] ?? defaultValue))
+        }
+    }
+}
+
+public extension Collection {
+
+    /// Returns collection of values at keyPaths of contained elements.
+    func map<T>(by keyPath: KeyPath<Element, T>) -> [T] {
+        map { innerElement -> T in
+            innerElement[keyPath: keyPath]
+        }
+    }
+
+    /// Returns index of element in the collection that has value at certain keypath equal to value at keypath of passed element.
+    func index<T: Equatable>(by keyPath: KeyPath<Element, T>, of element: Element) -> Index? {
+        firstIndex { innerElement -> Bool in
+            innerElement[keyPath: keyPath] == element[keyPath: keyPath]
+        }
+    }
+
+    /// Returns index of element in the collection that has specific value at certain keypath.
+    func index<T: Equatable>(with value: T, at keyPath: KeyPath<Element, T>) -> Index? {
+        firstIndex { innerElement -> Bool in
+            innerElement[keyPath: keyPath] == value
         }
     }
 }

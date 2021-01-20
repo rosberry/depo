@@ -17,14 +17,17 @@ public final class PodShellCommand: ShellCommand {
         let roots: [RootObject]
     }
 
+    @discardableResult
     public func initialize() throws -> Shell.IO {
         try shell(commandPath, "init")
     }
 
+    @discardableResult
     public func install() throws -> Shell.IO {
         try shell(commandPath, "install")
     }
 
+    @discardableResult
     public func update() throws -> Shell.IO {
         try shell(commandPath, "update")
     }

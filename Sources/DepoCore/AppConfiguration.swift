@@ -23,15 +23,15 @@ public enum AppConfiguration {
         }
 
         public enum Absolute {
-            public static let buildPodShellScript: String = "/usr/local/bin/build_pod.sh"
             public static let buildSPShellScript: String = "/usr/local/bin/build_swift_package.sh"
-            public static let mergePackageShellScript: String = "/usr/local/bin/merge_package.sh"
-            public static let moveBuiltPodShellScript: String = "/usr/local/bin/move_built_pod.sh"
             public static let podCommandPath: String = "pod"
             public static let carthageCommandPath: String = "carthage"
             public static let swiftCommandPath: String = "swift"
+            public static let xcodebuild: String = "xcodebuild"
+            public static let lipo: String = "lipo"
         }
     }
 
     public static let podsInternalTargetsPrefix: String = "Pods"
+    public static let xcodeProjectExtension: String = "xcodeproj"
 }
