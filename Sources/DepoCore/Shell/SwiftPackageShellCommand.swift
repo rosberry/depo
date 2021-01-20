@@ -7,6 +7,8 @@ import Files
 
 public final class SwiftPackageShellCommand: ShellCommand {
 
+    typealias SPVersionConstraint = VersionConstraint<SwiftPackage.Operator>
+
     fileprivate struct SPOutputWrapper: Codable {
         let products: [Product]
         let targets: [Target]
@@ -163,7 +165,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func versionConstraint(from req: SPOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
+    private func versionConstraint(from req: SPOutputWrapper.Dependency.Requirement) -> SPVersionConstraint? {
         switch req.type {
         case .range:
             return upToVersionConstraint(from: req)
@@ -178,9 +180,9 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func upToVersionConstraint(from req: SPOutputWrapper.Dependency.Requirement) -> VersionConstraint<SwiftPackage.Operator>? {
-        guard let lowerBound = req.lowerBound,
-              let upperBound = req.upperBound,
+    private func upToVersionConstraint(from requirement: SPOutputWrapper.Dependency.Requirement) -> SPVersionConstraint? {
+        guard let lowerBound = requirement.lowerBound,
+              let upperBound = requirement.upperBound,
               let lowerBoundVersion = Version(string: lowerBound),
               let upperBoundVersion = Version(string: upperBound) else {
             return nil

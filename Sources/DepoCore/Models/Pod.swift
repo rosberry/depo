@@ -47,6 +47,7 @@ public struct Pod {
 
         init?(symbol: String) {
             typealias Context = (this: Self, symbol: String)
+            // swiftlint:disable:next unused_closure_parameter
             let contexts: [Context] = Self.allCases.map { `operator` in
                 (this: `operator`, symbol: `operator`.symbol)
             }
