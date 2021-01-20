@@ -11,14 +11,17 @@ extension PodManager: CLIPackageManager {
     struct Options: ParsableArguments, HasDepofileExtension {
 
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
+                completion: .list(DataCoder.Kind.allFlagsHelp))
         var depofileExtension: DataCoder.Kind = .defaultValue
 
-        @Option()
+        @Option(completion: .file())
         var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
+
+        @Flag()
+        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, podCommandPath: options.podCommandPath)
+        self.init(depofile: depofile, podCommandPath: options.podCommandPath, frameworkKind: options.frameworkKind)
     }
 }

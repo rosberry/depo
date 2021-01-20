@@ -32,14 +32,17 @@ public final class CarthageShellCommand: ShellCommand {
         }
     }
 
+    @discardableResult
     public func update(arguments: [BuildArgument]) throws -> Shell.IO {
         try carthage("update", arguments: arguments)
     }
 
+    @discardableResult
     public func bootstrap(arguments: [BuildArgument]) throws -> Shell.IO {
         try carthage("bootstrap", arguments: arguments)
     }
 
+    @discardableResult
     public func build() throws -> Shell.IO {
         try carthage("build", arguments: [])
     }

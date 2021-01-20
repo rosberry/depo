@@ -4,22 +4,22 @@
 
 import Foundation
 
-struct XcodeProject: Codable {
+public struct XcodeProjectList: Codable {
 
-    enum CustomError: Error {
-        case badData
+    public enum Error: Swift.Error {
+        case badOutput(shellIO: Shell.IO)
     }
 
     private struct List: Codable {
-        let project: XcodeProject
+        let project: XcodeProjectList
     }
 
-    let name: String
-    let configurations: [String]
-    let schemes: [String]
-    let targets: [String]
+    public let name: String
+    public let configurations: [String]
+    public let schemes: [String]
+    public let targets: [String]
 
-    init(name: String? = nil, decoder: JSONDecoder = .init(), shell: Shell = .init()) throws {
+    public init(name: String? = nil, decoder: JSONDecoder = .init(), shell: Shell = .init()) throws {
         let output: Shell.IO
         if let name = name {
             output = try shell("xcodebuild", "-list", "-json", "-project", name)
@@ -28,7 +28,7 @@ struct XcodeProject: Codable {
             output = try shell("xcodebuild", "-list", "-json")
         }
         guard let data = output.stdOut.data(using: .utf8) else {
-            throw CustomError.badData
+            throw Error.badOutput(shellIO: output)
         }
         self = try decoder.decode(List.self, from: data).project
     }

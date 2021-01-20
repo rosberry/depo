@@ -17,14 +17,17 @@ public final class PodShellCommand: ShellCommand {
         let roots: [RootObject]
     }
 
+    @discardableResult
     public func initialize() throws -> Shell.IO {
         try shell(commandPath, "init")
     }
 
+    @discardableResult
     public func install() throws -> Shell.IO {
         try shell(commandPath, "install")
     }
 
+    @discardableResult
     public func update() throws -> Shell.IO {
         try shell(commandPath, "update")
     }
@@ -54,10 +57,10 @@ public final class PodShellCommand: ShellCommand {
     private func version(from string: String) -> VersionConstraint<Pod.Operator>? {
         let version = string.split(separator: .init(" "))
         guard version.count == 2,
-              let op = Pod.Operator(symbol: String(version[0])) else {
+              let `operator` = Pod.Operator(symbol: String(version[0])) else {
             return nil
         }
-        return VersionConstraint<Pod.Operator>(operation: op, value: String(version[1]))
+        return VersionConstraint<Pod.Operator>(operation: `operator`, value: String(version[1]))
     }
 }
 

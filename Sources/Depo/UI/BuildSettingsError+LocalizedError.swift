@@ -8,10 +8,10 @@ import DepoCore
 extension BuildSettings.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case let .badOutput(io):
-            return "cannot parse output of \(io.command.spaceJoined)"
-        case let .badBuildSettings(missedKey, io):
-            return "cannot find key \(missedKey) in output of \"\(io.command.spaceJoined)\""
+        case let .badOutput(shellIO):
+            return "cannot parse output of \(shellIO.command.spaceJoined)"
+        case let .badBuildSettings(missedKey, shellIO):
+            return "cannot find key \(missedKey) in output of \"\(shellIO.command.spaceJoined)\""
         }
     }
 }

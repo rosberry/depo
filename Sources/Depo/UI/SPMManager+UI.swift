@@ -22,6 +22,8 @@ extension SPMManager.State: CustomStringConvertible {
             return "creation Package.swift at \(path)"
         case let .shell(state):
             return state.description
+        case let .merge(state):
+            return state.description
         }
     }
 }
@@ -34,12 +36,12 @@ extension SPMManager.Error: LocalizedError {
         case let .badSwiftPackageBuild(contexts):
             return """
                    bad swift package build:
-                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)"}.newLineJoined)
+                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
                    """
         case let .badSwiftPackageProceed(contexts):
             return """
                    bad proceeding of swift packages:
-                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)"}.newLineJoined)
+                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
                    """
         case .noDevelopmentTeam:
             return "development team is required for building swift packages"

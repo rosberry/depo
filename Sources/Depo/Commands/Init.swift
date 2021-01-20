@@ -11,17 +11,21 @@ final class Init: ParsableCommand {
 
     struct Options: ParsableArguments {
 
-        @Argument(help: "use relative paths")
+        @Argument(help: "use relative paths", completion: .file())
         var filePaths: [String] = []
 
-        @Option()
+        @Option(completion: .file())
         var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
 
-        @Option()
+        @Option(completion: .file())
         var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
 
-        @Option()
+        @Option(completion: .file())
         var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+    }
+
+    static var configuration: CommandConfiguration {
+        .init(commandName: "init", abstract: "create Depofile")
     }
 
     @OptionGroup()

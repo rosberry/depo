@@ -11,14 +11,17 @@ extension SPMManager: HasUpdateCommand, HasBuildCommand {
     struct Options: ParsableArguments, HasDepofileExtension {
 
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
+                completion: .list(DataCoder.Kind.allFlagsHelp))
         var depofileExtension: DataCoder.Kind = .defaultValue
 
-        @Option()
+        @Option(completion: .file())
         var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+
+        @Flag()
+        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, swiftCommandPath: options.swiftCommandPath)
+        self.init(depofile: depofile, swiftCommandPath: options.swiftCommandPath, frameworkKind: options.frameworkKind)
     }
 }

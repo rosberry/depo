@@ -26,9 +26,10 @@ public final class Shell {
         }
     }
 
-    private var observer: ((State) -> Void)? = nil
-    
-    public init() {}
+    private var observer: ((State) -> Void)?
+
+    public init() {
+    }
 
     public func callAsFunction(_ args: String...) throws -> IO {
         try callAsFunction(args)
@@ -39,12 +40,26 @@ public final class Shell {
         let process = Process()
         process.launchPath = "/usr/bin/env"
         process.arguments = args
-        let io = try output(of: process, command: args)
-        if io.status == 0 {
-            return io
+        let shellIO = try output(of: process, command: args)
+        if shellIO.status == 0 {
+            return shellIO
         }
         else {
-            throw Error.failure(io)
+            throw Error.failure(shellIO)
+        }
+    }
+
+    public func callAsFunction(_ command: String) throws -> IO {
+        observer?(.start(command: [command]))
+        let process = Process()
+        process.launchPath = "/bin/zsh"
+        process.arguments = ["-c", command]
+        let shellIO = try output(of: process, command: [command])
+        if shellIO.status == 0 {
+            return shellIO
+        }
+        else {
+            throw Error.failure(shellIO)
         }
     }
 
@@ -53,19 +68,19 @@ public final class Shell {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: filePath)
         process.arguments = arguments
-        let io = try output(of: process, command: [filePath] + arguments)
-        if io.status == 0 {
-            return io
+        let shellIO = try output(of: process, command: [filePath] + arguments)
+        if shellIO.status == 0 {
+            return shellIO
         }
         else {
-            throw Error.failure(io)
+            throw Error.failure(shellIO)
         }
     }
 
     private func output(of process: Process, command: [String]) throws -> IO {
         let stdOutPipe = Pipe()
         let stdErrPipe = Pipe()
-        let stdInFileHandle = FileHandle()
+        let stdInFileHandle = Pipe().fileHandleForReading
         process.standardOutput = stdOutPipe
         process.standardError = stdErrPipe
         process.standardInput = stdInFileHandle
@@ -109,5 +124,6 @@ extension Shell: Codable {
         self.init()
     }
 
-    public func encode(to encoder: Encoder) throws {}
+    public func encode(to encoder: Encoder) throws {
+    }
 }

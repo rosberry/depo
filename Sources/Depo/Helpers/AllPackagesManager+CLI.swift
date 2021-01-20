@@ -9,21 +9,24 @@ import ArgumentParser
 extension AllPackagesManager: CLIPackageManager {
     struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
-                help: "\(DataCoder.Kind.allFlagsHelp)")
+                completion: .list(DataCoder.Kind.allFlagsHelp))
         var depofileExtension: DataCoder.Kind = .defaultValue
 
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
-                help: "\(Platform.allFlagsHelp)")
+                completion: .list(Platform.allFlagsHelp))
         var platform: Platform = .defaultValue
 
-        @Option()
+        @Option(completion: .file())
         var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
 
-        @Option()
+        @Option(completion: .file())
         var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
 
-        @Option()
+        @Option(completion: .file())
         var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+
+        @Flag()
+        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
     }
 
     convenience init(depofile: Depofile, options: Options) {
@@ -31,6 +34,7 @@ extension AllPackagesManager: CLIPackageManager {
                   platform: options.platform,
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,
-                  swiftCommandPath: options.swiftCommandPath)
+                  swiftCommandPath: options.swiftCommandPath,
+                  frameworkKind: options.frameworkKind)
     }
 }

@@ -22,7 +22,11 @@ extension PodManager.State: CustomStringConvertible {
             return "building pod \(pod.name)"
         case let .processingPod(pod):
             return "processing pod \(pod.name)"
+        case let .movingPod(from, to):
+            return "\(from) -> \(to)"
         case let .shell(state):
+            return state.description
+        case let .merge(state):
             return state.description
         }
     }
@@ -36,12 +40,12 @@ extension PodManager.Error: LocalizedError {
         case let .badPodBuild(contexts):
             return """
                    bad pod build:
-                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
         case let .badPodMerge(contexts):
             return """
                    bad pod merge:
-                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)"}.newLineJoined)
+                   \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
         }
     }

@@ -6,15 +6,12 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Update<Command: HasUpdateCommand & ProgressObservable>: ParsableCommand where Command.Options: ParsableArguments {
+protocol Update: ParsableCommand {
+    associatedtype Command: HasUpdateCommand, ProgressObservable
+    var options: Command.Options { get }
+}
 
-    static var configuration: CommandConfiguration {
-        .init(commandName: "update")
-    }
-
-    @OptionGroup()
-    var options: Command.Options
-
+extension Update {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
         let command = Command(depofile: depofile, options: options).subscribe { state in

@@ -43,8 +43,11 @@ extension PackageManagerFileTest {
               targetName: "TestTarget",
               codesigningFolderPath: nil,
               platform: .tvos,
-              deploymentTarget: "test-deployment-target",
-              systemSwiftVersion: "test-swift-version")
+              deploymentTarget: "test-deployment-target")
+    }
+
+    var spmVersion: String {
+        "test-swift-version"
     }
 
     var pods: [Pod] {
@@ -112,7 +115,7 @@ extension PackageManagerFileTest {
     func compare<FileModel: CustomStringConvertible>(model: FileModel,
                                                      andLocalFile localFileName: String,
                                                      withLocalFileExt localFileExtension: String = "txt",
-                                                     in bundle: Bundle = .init(for: Self.self)) throws {
+                                                     in bundle: Bundle = .module) throws {
         let fileContent = try self.fileContent(name: localFileName, ext: localFileExtension, bundle: bundle)
         let modelDescription = model.description
         if fileContent != modelDescription {
@@ -120,7 +123,7 @@ extension PackageManagerFileTest {
         }
     }
 
-    func fileContent(name: String, ext: String, bundle: Bundle = .init(for: Self.self)) throws -> String {
+    func fileContent(name: String, ext: String, bundle: Bundle = .module) throws -> String {
         let url = try fileURL(name: name, ext: ext, bundle: bundle)
         guard let data = try? Data(contentsOf: url),
               let string = String(data: data, encoding: .utf8) else {
@@ -129,7 +132,7 @@ extension PackageManagerFileTest {
         return string
     }
 
-    func fileURL(name: String, ext: String, bundle: Bundle = .init(for: Self.self)) throws -> URL {
+    func fileURL(name: String, ext: String, bundle: Bundle = .module) throws -> URL {
         guard let url = bundle.url(forResource: name, withExtension: ext) else {
             throw ComparisonError.badFile(name: "\(name).\(ext)")
         }
