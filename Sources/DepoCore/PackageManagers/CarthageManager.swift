@@ -32,6 +32,9 @@ public final class CarthageManager: ProgressObservable {
     private var observer: ((State) -> Void)?
     private let cacheBuilds: Bool
     private let carthageArguments: String?
+    private var carthageArgs: [CarthageShellCommand.BuildArgument] {
+        [.platform(platform)] + cacheBuilds.mapTrue(to: CarthageShellCommand.BuildArgument.cacheBuilds).array
+    }
 
     public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
         self.carthageItems = depofile.carts
@@ -52,13 +55,13 @@ public final class CarthageManager: ProgressObservable {
     public func update() throws {
         observer?(.updating)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
-        try carthageShellCommand.update(arguments: [.platform(platform)])
+        try carthageShellCommand.update(arguments: carthageArgs)
     }
 
     public func install() throws {
         observer?(.installing)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
-        try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
+        try carthageShellCommand.bootstrap(arguments: carthageArgs)
     }
 
     public func build() throws {
@@ -72,5 +75,25 @@ public final class CarthageManager: ProgressObservable {
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)
         }
+        var t: Int? = 1
+    }
+}
+
+extension Bool {
+    func mapTrue<T>(to value: T) -> T? {
+        if self {
+            return value
+        }
+        else {
+            return nil
+        }
+    }
+}
+
+extension Optional {
+    var array: [Wrapped] {
+        map { wrapped in
+            [wrapped]
+        } ?? []
     }
 }

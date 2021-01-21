@@ -18,7 +18,7 @@ public final class CarthageShellCommand: ShellCommand {
             case let .platform(platform):
                 return platformArguments(platform: platform)
             case .cacheBuilds:
-                return ["--cache builds"]
+                return ["--cache-builds"]
             }
         }
 
