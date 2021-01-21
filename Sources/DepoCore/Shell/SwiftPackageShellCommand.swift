@@ -34,8 +34,8 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func update() throws -> Shell.IO {
-        try shell(commandPath, "package", "update")
+    public func update(args: [String]) throws -> Shell.IO {
+        try shell([commandPath, "package", "update"] + args)
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {

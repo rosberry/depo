@@ -81,7 +81,7 @@ public final class SPMManager: ProgressObservable {
         observer?(.updating)
         let buildSettings = try BuildSettings(shell: shell)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
-        try swiftPackageCommand.update()
+        try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(packages: packages,
                   like: frameworkKind,

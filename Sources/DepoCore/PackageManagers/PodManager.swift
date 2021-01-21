@@ -79,7 +79,7 @@ public final class PodManager: ProgressObservable {
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
-        try podShellCommand.install()
+        try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
@@ -91,7 +91,7 @@ public final class PodManager: ProgressObservable {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
-        try podShellCommand.update()
+        try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
         #warning("proceeding all pods seems redundant")

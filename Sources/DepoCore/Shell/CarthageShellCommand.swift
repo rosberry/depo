@@ -21,9 +21,7 @@ public final class CarthageShellCommand: ShellCommand {
             case .cacheBuilds:
                 return ["--cache-builds"]
             case let .custom(args):
-                return args.split(separator: " ").map { substring in
-                    String(substring)
-                }
+                return args.words
             }
         }
 
