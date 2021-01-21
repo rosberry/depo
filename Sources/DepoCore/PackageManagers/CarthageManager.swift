@@ -76,25 +76,5 @@ public final class CarthageManager: ProgressObservable {
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)
         }
-        var t: Int? = 1
-    }
-}
-
-extension Bool {
-    func mapTrue<T>(to value: T) -> T? {
-        if self {
-            return value
-        }
-        else {
-            return nil
-        }
-    }
-}
-
-extension Optional {
-    var array: [Wrapped] {
-        map { wrapped in
-            [wrapped]
-        } ?? []
     }
 }

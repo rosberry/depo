@@ -52,7 +52,11 @@ public final class PodManager: ProgressObservable {
     }
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, podCommandPath: String, frameworkKind: MergePackage.FrameworkKind, cacheBuilds: Bool, podArguments: String?) {
+    public init(depofile: Depofile,
+                podCommandPath: String,
+                frameworkKind: MergePackage.FrameworkKind,
+                cacheBuilds: Bool,
+                podArguments: String?) {
         self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind

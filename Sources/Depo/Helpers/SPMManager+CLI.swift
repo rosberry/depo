@@ -22,10 +22,10 @@ extension SPMManager: HasUpdateCommand, HasBuildCommand {
 
         @Flag()
         var cacheBuilds: Bool = false
-        
+
         @Option(name: [.customLong("swift-build-args"), .customShort(Character("s"))])
         var swiftBuildArguments: String?
-        
+
     }
 
     convenience init(depofile: Depofile, options: Options) {

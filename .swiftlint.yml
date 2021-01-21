@@ -5,7 +5,7 @@ excluded:
   - Pods
   - .build
   - Package.swift
-  - Sources/CartfileParser
+  - Sources/ThirtPartyDependencies
   - Tests
 
 # Rules

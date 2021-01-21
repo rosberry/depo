@@ -22,7 +22,7 @@ extension PodManager: CLIPackageManager {
 
         @Flag()
         var cacheBuilds: Bool = false
-        
+
         @Option(name: [.customLong("pod-args")])
         var podArguments: String?
     }

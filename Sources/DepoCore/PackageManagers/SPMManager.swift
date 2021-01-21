@@ -65,7 +65,7 @@ public final class SPMManager: ProgressObservable {
         self.packages = depofile.swiftPackages
         swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
-        self.cacheBuilds = cacheBuilds               
+        self.cacheBuilds = cacheBuilds
         self.swiftBuildArguments = swiftBuildArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
