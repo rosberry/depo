@@ -19,9 +19,19 @@ extension PodManager: CLIPackageManager {
 
         @Flag()
         var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+
+        @Flag()
+        var cacheBuilds: Bool = false
+        
+        @Option(name: [.customLong("pod-args")])
+        var podArguments: String?
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, podCommandPath: options.podCommandPath, frameworkKind: options.frameworkKind)
+        self.init(depofile: depofile,
+                  podCommandPath: options.podCommandPath,
+                  frameworkKind: options.frameworkKind,
+                  cacheBuilds: options.cacheBuilds,
+                  podArguments: options.podArguments)
     }
 }

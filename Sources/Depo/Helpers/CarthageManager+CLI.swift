@@ -19,9 +19,19 @@ extension CarthageManager: CLIPackageManager {
 
         @Option(completion: .file())
         var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
+
+        @Flag()
+        var cacheBuilds: Bool = false
+
+        @Option(name: [.customLong("carthage-args"), .customShort(Character("c"))])
+        var carthageArguments: String?
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, platform: options.platform, carthageCommandPath: options.carthageCommandPath)
+        self.init(depofile: depofile,
+                  platform: options.platform,
+                  carthageCommandPath: options.carthageCommandPath,
+                  cacheBuilds: options.cacheBuilds,
+                  carthageArguments: options.carthageArguments)
     }
 }

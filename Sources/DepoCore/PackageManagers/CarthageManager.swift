@@ -30,11 +30,15 @@ public final class CarthageManager: ProgressObservable {
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand
     private var observer: ((State) -> Void)?
+    private let cacheBuilds: Bool
+    private let carthageArguments: String?
 
-    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String) {
+    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
         self.carthageItems = depofile.carts
         self.platform = platform
         self.carthageShellCommand = .init(commandPath: carthageCommandPath, shell: shell)
+        self.cacheBuilds = cacheBuilds
+        self.carthageArguments = carthageArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }

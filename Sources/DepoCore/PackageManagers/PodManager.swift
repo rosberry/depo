@@ -45,15 +45,19 @@ public final class PodManager: ProgressObservable {
     private let shell: Shell = .init()
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
+    private let cacheBuilds: Bool
+    private let podArguments: String?
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
         self?.observer?(.merge(state: state))
     }
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, podCommandPath: String, frameworkKind: MergePackage.FrameworkKind) {
+    public init(depofile: Depofile, podCommandPath: String, frameworkKind: MergePackage.FrameworkKind, cacheBuilds: Bool, podArguments: String?) {
         self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
+        self.cacheBuilds = cacheBuilds
+        self.podArguments = podArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }

@@ -27,6 +27,18 @@ extension AllPackagesManager: CLIPackageManager {
 
         @Flag()
         var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+
+        @Flag()
+        var cacheBuilds: Bool = false
+
+        @Option(name: [.customLong("carthage-args"), .customShort(Character("c"))])
+        var carthageArguments: String?
+
+        @Option(name: [.customLong("pod-args")])
+        var podArguments: String?
+
+        @Option(name: [.customLong("swift-build-args"), .customShort(Character("s"))])
+        var swiftBuildArguments: String?
     }
 
     convenience init(depofile: Depofile, options: Options) {
@@ -35,6 +47,10 @@ extension AllPackagesManager: CLIPackageManager {
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,
                   swiftCommandPath: options.swiftCommandPath,
-                  frameworkKind: options.frameworkKind)
+                  frameworkKind: options.frameworkKind,
+                  cacheBuilds: options.cacheBuilds,
+                  carthageArguments: options.carthageArguments,
+                  podArguments: options.podArguments,
+                  swiftBuildArguments: options.swiftBuildArguments)
     }
 }
