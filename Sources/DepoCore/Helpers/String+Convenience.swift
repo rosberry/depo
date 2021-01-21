@@ -9,4 +9,10 @@ public extension String {
     subscript(from index: Index) -> Substring {
         self[index..<self.index(startIndex, offsetBy: count)]
     }
+
+    var words: [String] {
+        split(separator: " ").map { substring in
+            String(substring)
+        }
+    }
 }
