@@ -33,7 +33,8 @@ public final class CarthageManager: ProgressObservable {
     private let cacheBuilds: Bool
     private let carthageArguments: String?
     private var carthageArgs: [CarthageShellCommand.BuildArgument] {
-        [.platform(platform)] + cacheBuilds.mapTrue(to: CarthageShellCommand.BuildArgument.cacheBuilds).array
+        let cacheBuilds = self.cacheBuilds.mapTrue(to: CarthageShellCommand.BuildArgument.cacheBuilds).array
+        return cacheBuilds + [.platform(platform), .custom(args: carthageArguments ?? "")]
     }
 
     public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
@@ -66,7 +67,7 @@ public final class CarthageManager: ProgressObservable {
 
     public func build() throws {
         observer?(.building)
-        try carthageShellCommand.build()
+        try carthageShellCommand.build(arguments: carthageArgs)
     }
 
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
