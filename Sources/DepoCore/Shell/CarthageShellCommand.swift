@@ -14,7 +14,7 @@ public final class CarthageShellCommand: ShellCommand {
         case cacheBuilds
         case custom(args: String)
 
-        public var arguments: [String] {
+        public var strings: [String] {
             switch self {
             case let .platform(platform):
                 return platformArguments(platform: platform)
@@ -36,17 +36,17 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func update(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func update(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("update", arguments: arguments)
     }
 
     @discardableResult
-    public func bootstrap(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func bootstrap(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("bootstrap", arguments: arguments)
     }
 
     @discardableResult
-    public func build(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func build(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("build", arguments: arguments)
     }
 
@@ -58,11 +58,11 @@ public final class CarthageShellCommand: ShellCommand {
         try cartfile(url: try Folder.current.file(at: cartfilePath).url)
     }
 
-    private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Shell.IO {
-        let args: [String] = [commandPath, command] + arguments.reduce([]) { result, arg in
-            result + arg.arguments
+    private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Int32 {
+        let argumentsString = arguments.reduce("") { (result, argument) in
+            result + argument.strings.spaceJoined
         }
-        return try shell(args)
+        return try shell("\(commandPath) \(command) \(argumentsString)")
     }
 
     private func cartfile(from actualCartfile: CartfileParser.Cartfile) -> Cartfile {

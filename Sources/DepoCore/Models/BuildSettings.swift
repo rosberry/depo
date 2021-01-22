@@ -29,10 +29,7 @@ public struct BuildSettings {
     public let deploymentTarget: String?
 
     public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let command = ["xcodebuild", "-showBuildSettings", "-json"] + (targetName.map { target in
-            ["-target", target]
-        } ?? [])
-        let shellIO: Shell.IO = try shell(command)
+        let shellIO: Shell.IO = try shell(Self.command(targetName: targetName))
         guard let data = shellIO.stdOut.data(using: .utf8) else {
             throw Error.badOutput(shellIO: shellIO)
         }
@@ -106,5 +103,14 @@ public struct BuildSettings {
             throw InternalError.badExtract(missedKey: key, settings: settings)
         }
         return value
+    }
+
+    private static func command(targetName: String?) -> String {
+        if let targetName = targetName {
+            return "xcodebuild -showBuildSettings -json -target \(targetName)"
+        }
+        else {
+            return "xcodebuild -showBuildSettings -json"
+        }
     }
 }

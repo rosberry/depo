@@ -7,6 +7,8 @@ import Files
 
 public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
+    typealias Output = (File?, Int32)
+
     public struct Settings: ShellCommandArguments {
         let target: String?
         let scheme: String?
@@ -60,11 +62,11 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         try super.init(from: decoder)
     }
 
-    public func buildForDistribution(_ settings: Settings) throws -> Shell.IO {
+    public func buildForDistribution(settings: Settings) throws -> Shell.IO {
         let xcconfig = try xcConfigForDistributionBuild()
         let command = exportCommand(xcconfig: xcconfig)
                       + " && "
-                      + (commands + settings.stringArguments(keys: Self.keys)).joined(separator: " ")
+                      + "\(self.command) \(settings.stringArguments(keys: Self.keys).spaceJoined)"
         return try shell(command)
     }
 
@@ -72,7 +74,7 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         let frameworksArguments = frameworkPaths.reduce([]) { result, path in
             result + ["-framework", path]
         }
-        return try shell(commands + ["-create-xcframework"] + ["-output", path] + frameworksArguments)
+        return try shell("\(command) -create-xcframework -output \(path) \(frameworksArguments)")
     }
 
     private func xcConfigForDistributionBuild() throws -> File {

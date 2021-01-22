@@ -219,14 +219,14 @@ public final class PodManager: ProgressObservable {
     @discardableResult
     private func buildFatFramework(pod: Pod) throws -> [Shell.IO] {
         let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild(.device(target: pod.name)),
-                try xcodebuild(.simulator(target: pod.name))]
+        return [try xcodebuild(settings: .device(target: pod.name)),
+                try xcodebuild(settings: .simulator(target: pod.name))]
     }
 
     @discardableResult
     private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
         let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild.buildForDistribution(.device(target: pod.name)),
-                try xcodebuild.buildForDistribution(.simulator(target: pod.name))]
+        return [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
+                try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
     }
 }

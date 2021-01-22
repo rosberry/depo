@@ -21,8 +21,8 @@ public class Lipo: ShellCommand, ArgumentedShellCommand {
              .init(\.outputPath, "-output "),
              .init(\.executablePaths, "", { $0.joined(separator: " ") })]
 
-    public var commands: [String] {
-        ["xcrun", commandPath]
+    public var command: String {
+        "xcrun \(commandPath)"
     }
 
     public override init(commandPath: String = AppConfiguration.Path.Absolute.lipo, shell: Shell = .init()) {

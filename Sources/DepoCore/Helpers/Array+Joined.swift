@@ -4,7 +4,7 @@
 
 import Foundation
 
-extension Array where Element == String {
+public extension Array where Element == String {
     var spaceJoined: String {
         joined(separator: " ")
     }

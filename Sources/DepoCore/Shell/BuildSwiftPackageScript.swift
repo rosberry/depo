@@ -49,15 +49,15 @@ public final class BuildSwiftPackageScript: ShellCommand {
         let xcodebuild = self.xcodebuild
         switch frameworkKind {
         case .fatFramework:
-            return [try xcodebuild(.device(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath)),
-                    try xcodebuild(.simulator(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath))]
+            return [try xcodebuild(settings: .device(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath)),
+                    try xcodebuild(settings: .simulator(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath))]
         case .xcframework:
-            return [try xcodebuild.buildForDistribution(.device(scheme: scheme,
-                                                                configuration: config,
-                                                                derivedDataPath: derivedDataPath)),
-                    try xcodebuild.buildForDistribution(.simulator(scheme: scheme,
-                                                                   configuration: config,
-                                                                   derivedDataPath: derivedDataPath))]
+            return [try xcodebuild.buildForDistribution(settings: .device(scheme: scheme,
+                                                                          configuration: config,
+                                                                          derivedDataPath: derivedDataPath)),
+                try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
+                                                                         configuration: config,
+                                                                         derivedDataPath: derivedDataPath))]
         }
     }
 

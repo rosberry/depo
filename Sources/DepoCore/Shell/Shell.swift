@@ -8,6 +8,7 @@ public final class Shell {
 
     public enum Error: Swift.Error {
         case failure(IO)
+        case badStatusCode(Int32)
     }
 
     public struct IO {
@@ -31,21 +32,20 @@ public final class Shell {
     public init() {
     }
 
-    public func callAsFunction(_ args: String...) throws -> IO {
-        try callAsFunction(args)
-    }
-
-    public func callAsFunction(_ args: [String]) throws -> IO {
-        observer?(.start(command: args))
+    @discardableResult
+    public func callAsFunction(_ command: String) throws -> Int32 {
+        observer?(.start(command: [command]))
         let process = Process()
-        process.launchPath = "/usr/bin/env"
-        process.arguments = args
-        let shellIO = try output(of: process, command: args)
-        if shellIO.status == 0 {
-            return shellIO
+        process.launchPath = "/bin/zsh"
+        process.arguments = ["-c", command]
+        try process.run()
+        process.waitUntilExit()
+        let statusCode = process.terminationStatus
+        if statusCode == 0 {
+            return statusCode
         }
         else {
-            throw Error.failure(shellIO)
+            throw Error.badStatusCode(statusCode)
         }
     }
 
@@ -55,20 +55,6 @@ public final class Shell {
         process.launchPath = "/bin/zsh"
         process.arguments = ["-c", command]
         let shellIO = try output(of: process, command: [command])
-        if shellIO.status == 0 {
-            return shellIO
-        }
-        else {
-            throw Error.failure(shellIO)
-        }
-    }
-
-    public func callAsFunction(filePath: String, arguments: [String] = []) throws -> IO {
-        observer?(.start(command: [filePath] + arguments))
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: filePath)
-        process.arguments = arguments
-        let shellIO = try output(of: process, command: [filePath] + arguments)
         if shellIO.status == 0 {
             return shellIO
         }
@@ -125,5 +111,15 @@ extension Shell: Codable {
     }
 
     public func encode(to encoder: Encoder) throws {
+    }
+}
+
+fileprivate extension Either where Left == FileHandle, Right == Pipe {
+    var fileHandleForReading: FileHandle {
+        either(left: { left in
+            left
+        }, right: { right in
+            right.fileHandleForReading
+        })
     }
 }

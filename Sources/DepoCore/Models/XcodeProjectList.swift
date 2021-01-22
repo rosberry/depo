@@ -22,10 +22,10 @@ public struct XcodeProjectList: Codable {
     public init(name: String? = nil, decoder: JSONDecoder = .init(), shell: Shell = .init()) throws {
         let output: Shell.IO
         if let name = name {
-            output = try shell("xcodebuild", "-list", "-json", "-project", name)
+            output = try shell("xcodebuild -list -json -project \(name)")
         }
         else {
-            output = try shell("xcodebuild", "-list", "-json")
+            output = try shell("xcodebuild -list -json")
         }
         guard let data = output.stdOut.data(using: .utf8) else {
             throw Error.badOutput(shellIO: output)

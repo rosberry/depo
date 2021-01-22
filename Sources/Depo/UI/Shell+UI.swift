@@ -10,6 +10,8 @@ extension Shell.Error: LocalizedError {
         switch self {
         case let .failure(shellIO):
             return "\(shellIO)"
+        case let .badStatusCode(statusCode):
+            return "exits with \(statusCode) status code"
         }
     }
 }
