@@ -14,14 +14,10 @@ extension SPMManager.State: CustomStringConvertible {
             return string("==> ", color: .cyan) + "Building swift packages"
         case let .buildingPackage(package, path):
             return "Building \(string(package.name, color: .magenta)) at \(path)"
-        case .processing:
-            return string("==> ", color: .cyan) + "Processing swift packages"
-        case let .processingPackage(package, path):
-            return "Processing package \(package.name) at \(path)"
         case let .merging(framework, kind, outputPath):
             return "Making \(kind.description) from \(framework) -> \(outputPath)"
-        case let .doneProcessing(package):
-            return "Done with \(package.name)\n"
+        case let .done(package):
+            return "Done with \(string(package.name, color: .green))\n"
         case let .creatingPackageSwiftFile(path):
             return "Creating Package.swift at \(path)"
         case let .shell(state):
@@ -40,11 +36,6 @@ extension SPMManager.Error: LocalizedError {
         case let .badSwiftPackageBuild(contexts):
             return """
                    bad swift package build:
-                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
-                   """
-        case let .badSwiftPackageProceed(contexts):
-            return """
-                   bad proceeding of swift packages:
                    \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
                    """
         case .noDevelopmentTeam:

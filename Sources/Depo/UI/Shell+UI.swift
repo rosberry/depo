@@ -38,11 +38,6 @@ extension Shell.State: CustomStringConvertible {
     }
 
     private func description(of command: String, callKind: Shell.CallKind) -> String {
-        switch callKind {
-        case .loud:
-            return "Run \"\(command)\":"
-        case .silent:
-            return "Run \"\(command)\""
-        }
+        "> \(command)"
     }
 }
