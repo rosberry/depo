@@ -14,3 +14,14 @@ extension MergePackage.State: CustomStringConvertible {
         }
     }
 }
+
+extension MergePackage.FrameworkKind: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .fatFramework:
+            return "fat framework"
+        case .xcframework:
+            return "xcframework"
+        }
+    }
+}

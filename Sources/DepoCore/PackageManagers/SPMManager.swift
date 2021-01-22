@@ -15,6 +15,8 @@ public final class SPMManager: ProgressObservable {
         case buildingPackage(SwiftPackage, path: String)
         case processing
         case processingPackage(SwiftPackage, path: String)
+        case merging(framework: String, MergePackage.FrameworkKind, output: String)
+        case doneProcessing(SwiftPackage)
         case creatingPackageSwiftFile(path: String)
         case shell(state: Shell.State)
         case merge(state: MergePackage.State)
@@ -159,20 +161,11 @@ public final class SPMManager: ProgressObservable {
                          at buildPath: String,
                          to outputPath: String) throws {
         let projectPath = fmg.currentDirectoryPath
-        let failedPackages: [FailedContext] = try packages.compactMap { package in
-            let path = "./\(buildPath)/\(package.name)"
-            observer?(.processingPackage(package, path: path))
-            let deviceBuildDir = "\(path)/Release-iphoneos"
-            #warning("proceeding all swift packages seems redundant")
-            let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
-                dir.extension == "framework" ? dir.nameExcludingExtension : nil
-            }
+        let failedPackages: [FailedContext] = packages.compactMap { package in
             do {
-                try fmg.perform(atPath: path) {
-                    try frameworks.forEach { framework in
-                        try mergePackage.make(frameworkKind, swiftFrameworkName: framework, outputPath: "\(projectPath)/\(outputPath)")
-                    }
-                }
+                try merge(package: package,
+                          packageBuildsDirectoryPath: buildPath,
+                          mergedFrameworksDirectoryPath: "\(projectPath)/\(outputPath)")
                 return nil
             }
             catch {
@@ -182,5 +175,27 @@ public final class SPMManager: ProgressObservable {
         if !failedPackages.isEmpty {
             throw Error.badSwiftPackageProceed(contexts: failedPackages)
         }
+    }
+
+    private func merge(package: SwiftPackage, packageBuildsDirectoryPath: String, mergedFrameworksDirectoryPath: String) throws {
+        let path = "./\(packageBuildsDirectoryPath)/\(package.name)"
+        observer?(.processingPackage(package, path: path))
+        let deviceBuildDir = "\(path)/Release-iphoneos"
+        #warning("proceeding all swift packages seems redundant")
+        let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
+            dir.extension == "framework" ? dir.nameExcludingExtension : nil
+        }
+        do {
+            try fmg.perform(atPath: path) {
+                try frameworks.forEach { framework in
+                    observer?(.merging(framework: framework, frameworkKind, output: mergedFrameworksDirectoryPath))
+                    try mergePackage.make(frameworkKind, swiftFrameworkName: framework, outputPath: "\(mergedFrameworksDirectoryPath)")
+                }
+            }
+        }
+        catch {
+            throw error
+        }
+        observer?(.doneProcessing(package))
     }
 }

@@ -9,17 +9,21 @@ extension SPMManager.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .updating:
-            return "updating"
+            return string("==> ", color: .cyan) + "Updating swift packages"
         case .building:
-            return "building"
+            return string("==> ", color: .cyan) + "Building swift packages"
         case let .buildingPackage(package, path):
-            return "building package \(package.name) at \(path)"
+            return "Building \(string(package.name, color: .magenta)) at \(path)"
         case .processing:
-            return "processing"
+            return string("==> ", color: .cyan) + "Processing swift packages"
         case let .processingPackage(package, path):
-            return "processing package \(package.name) at \(path)"
+            return "Processing package \(package.name) at \(path)"
+        case let .merging(framework, kind, outputPath):
+            return "Making \(kind.description) from \(framework) -> \(outputPath)"
+        case let .doneProcessing(package):
+            return "Done with \(package.name)\n"
         case let .creatingPackageSwiftFile(path):
-            return "creation Package.swift at \(path)"
+            return "Creating Package.swift at \(path)"
         case let .shell(state):
             return state.description
         case let .merge(state):
