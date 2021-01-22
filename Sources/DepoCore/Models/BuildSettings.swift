@@ -24,6 +24,7 @@ public struct BuildSettings {
     public let productName: String
     public let swiftProjectVersion: String
     public let targetName: String
+    public let productType: ProductType
     public let codesigningFolderPath: URL?
     public let platform: Platform?
     public let deploymentTarget: String?
@@ -61,9 +62,11 @@ public struct BuildSettings {
         let productName = try extract("PRODUCT_NAME", settings)
         let swiftVersion = try extract("SWIFT_VERSION", settings)
         let targetName = try extract("TARGETNAME", settings)
+        let productType = try extract("PRODUCT_TYPE", settings)
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
+        self.productType = .init(rawValue: productType)
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
         if let platform = Self.platform(from: settings) {
             self.platform = platform
@@ -78,12 +81,14 @@ public struct BuildSettings {
     public init(productName: String,
                 swiftVersion: String,
                 targetName: String,
+                productType: ProductType,
                 codesigningFolderPath: URL?,
                 platform: Platform?,
                 deploymentTarget: String?) {
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
+        self.productType = productType
         self.codesigningFolderPath = codesigningFolderPath
         self.platform = platform
         self.deploymentTarget = deploymentTarget
