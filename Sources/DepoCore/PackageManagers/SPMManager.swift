@@ -38,7 +38,8 @@ public final class SPMManager: ProgressObservable {
 
     private let packages: [SwiftPackage]
     private let fmg: FileManager = .default
-    private let shell: Shell = .init()
+    private let shell: Shell
+    private let xcodebuild: XcodeBuild
 
     private let swiftPackageCommand: SwiftPackageShellCommand
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
@@ -67,6 +68,9 @@ public final class SPMManager: ProgressObservable {
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
                 swiftBuildArguments: String?) {
+        let shell = Shell()
+        self.shell = shell
+        self.xcodebuild = XcodeBuild(shell: shell)
         self.packages = depofile.swiftPackages
         swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
@@ -84,7 +88,7 @@ public final class SPMManager: ProgressObservable {
 
     public func update() throws {
         observer?(.updating)
-        let buildSettings = try BuildSettings(shell: shell)
+        let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
         try build()

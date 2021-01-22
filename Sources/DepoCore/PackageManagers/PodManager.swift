@@ -42,7 +42,8 @@ public final class PodManager: ProgressObservable {
 
     private let pods: [Pod]
 
-    private let shell: Shell = .init()
+    private let shell: Shell
+    private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
     private let cacheBuilds: Bool
@@ -57,6 +58,9 @@ public final class PodManager: ProgressObservable {
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
                 podArguments: String?) {
+        let shell = Shell()
+        self.shell = shell
+        self.xcodebuild = XcodeBuild(shell: shell)
         self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
@@ -78,7 +82,7 @@ public final class PodManager: ProgressObservable {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
@@ -90,7 +94,7 @@ public final class PodManager: ProgressObservable {
         let podFilePath = "./\(podFileName)"
         let podsProjectPath = "./\(podsDirectoryName)"
 
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
@@ -193,7 +197,7 @@ public final class PodManager: ProgressObservable {
                 return nil
             }
             return (Pod(name: targetName, versionConstraint: nil),
-                    try BuildSettings(targetName: targetName, shell: shell))
+                    try BuildSettings(target: targetName, xcodebuild: xcodebuild))
         }
     }
 
@@ -218,15 +222,13 @@ public final class PodManager: ProgressObservable {
 
     @discardableResult
     private func buildFatFramework(pod: Pod) throws -> [Shell.IO] {
-        let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild(settings: .device(target: pod.name)),
-                try xcodebuild(settings: .simulator(target: pod.name))]
+        [try xcodebuild(settings: .device(target: pod.name)),
+         try xcodebuild(settings: .simulator(target: pod.name))]
     }
 
     @discardableResult
     private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
-        let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
-                try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
+        [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
+         try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
     }
 }

@@ -77,6 +77,18 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         return try shell(silent: "\(command) -create-xcframework -output \(path) \(frameworksArguments)")
     }
 
+    public func showBuildSettings() throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand())
+    }
+
+    public func showBuildSettings(target: String) throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand(target: target))
+    }
+
+    public func showBuildSettings(scheme: String) throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand(scheme: scheme))
+    }
+
     private func xcConfigForDistributionBuild() throws -> File {
         let name = "\(UUID().uuidString).xcconfig"
         let content = "BUILD_LIBRARY_FOR_DISTRIBUTION=YES".data(using: .utf8) ?? Data()
@@ -85,6 +97,18 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     private func exportCommand(xcconfig: File) -> String {
         "export XCODE_XCCONFIG_FILE=\(xcconfig.path)"
+    }
+
+    private static func showBuildSettingsCommand() -> String {
+        "xcodebuild -showBuildSettings -json"
+    }
+
+    private static func showBuildSettingsCommand(target: String) -> String {
+        "xcodebuild -showBuildSettings -json -target \(target)"
+    }
+
+    private static func showBuildSettingsCommand(scheme: String) -> String {
+        "xcodebuild -showBuildSettings -json -scheme \(scheme)"
     }
 }
 

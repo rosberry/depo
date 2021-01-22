@@ -59,9 +59,7 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Int32 {
-        let argumentsString = arguments.reduce("") { (result, argument) in
-            result + argument.strings.spaceJoined
-        }
+        let argumentsString = arguments.map(\.strings.spaceJoined).joined(separator: " ")
         return try shell(loud: "\(commandPath) \(command) \(argumentsString)")
     }
 

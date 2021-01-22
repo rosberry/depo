@@ -17,7 +17,7 @@ public struct BuildSettings {
         case badExtract(missedKey: String, settings: [String: String])
     }
 
-    private struct ShellOutputWrapper: Codable {
+    private struct RawSettings: Codable {
         let buildSettings: [String: String]
     }
 
@@ -28,12 +28,26 @@ public struct BuildSettings {
     public let platform: Platform?
     public let deploymentTarget: String?
 
-    public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let shellIO: Shell.IO = try shell(silent: Self.command(targetName: targetName))
+    public init(xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
+        let shellIO: Shell.IO = try xcodebuild.showBuildSettings()
+        try self.init(shellIO: shellIO, decoder: decoder)
+    }
+
+    public init(target: String, xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
+        let shellIO: Shell.IO = try xcodebuild.showBuildSettings(target: target)
+        try self.init(shellIO: shellIO, decoder: decoder)
+    }
+
+    public init(scheme: String, xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
+        let shellIO: Shell.IO = try xcodebuild.showBuildSettings(scheme: scheme)
+        try self.init(shellIO: shellIO, decoder: decoder)
+    }
+
+    private init(shellIO: Shell.IO, decoder: JSONDecoder) throws {
         guard let data = shellIO.stdOut.data(using: .utf8) else {
             throw Error.badOutput(shellIO: shellIO)
         }
-        let buildSettings = (try decoder.decode([ShellOutputWrapper].self, from: data)).first?.buildSettings ?? [:]
+        let buildSettings = (try decoder.decode([RawSettings].self, from: data)).first?.buildSettings ?? [:]
         do {
             try self.init(settings: buildSettings)
         }
@@ -103,14 +117,5 @@ public struct BuildSettings {
             throw InternalError.badExtract(missedKey: key, settings: settings)
         }
         return value
-    }
-
-    private static func command(targetName: String?) -> String {
-        if let targetName = targetName {
-            return "xcodebuild -showBuildSettings -json -target \(targetName)"
-        }
-        else {
-            return "xcodebuild -showBuildSettings -json"
-        }
     }
 }
