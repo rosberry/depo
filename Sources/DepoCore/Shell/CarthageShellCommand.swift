@@ -62,7 +62,7 @@ public final class CarthageShellCommand: ShellCommand {
         let argumentsString = arguments.reduce("") { (result, argument) in
             result + argument.strings.spaceJoined
         }
-        return try shell("\(commandPath) \(command) \(argumentsString)")
+        return try shell(loud: "\(commandPath) \(command) \(argumentsString)")
     }
 
     private func cartfile(from actualCartfile: CartfileParser.Cartfile) -> Cartfile {

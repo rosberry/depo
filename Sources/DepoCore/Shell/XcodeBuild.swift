@@ -67,14 +67,14 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         let command = exportCommand(xcconfig: xcconfig)
                       + " && "
                       + "\(self.command) \(settings.stringArguments(keys: Self.keys).spaceJoined)"
-        return try shell(command)
+        return try shell(silent: command)
     }
 
     public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
         let frameworksArguments = frameworkPaths.reduce([]) { result, path in
             result + ["-framework", path]
         }
-        return try shell("\(command) -create-xcframework -output \(path) \(frameworksArguments)")
+        return try shell(silent: "\(command) -create-xcframework -output \(path) \(frameworksArguments)")
     }
 
     private func xcConfigForDistributionBuild() throws -> File {

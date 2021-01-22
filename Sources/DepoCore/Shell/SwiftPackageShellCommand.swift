@@ -35,7 +35,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     @discardableResult
     public func update(args: [String]) throws -> Shell.IO {
-        try shell("\(commandPath) package update \(args.spaceJoined)")
+        try shell(silent: "\(commandPath) package update \(args.spaceJoined)")
     }
 
     public func packageSwift(buildSettings: BuildSettings, path: String) throws -> PackageSwift {
@@ -58,11 +58,11 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     @discardableResult
     public func generateXcodeproj() throws -> Shell.IO {
-        try shell("\(commandPath) package generate-xcodeproj")
+        try shell(silent: "\(commandPath) package generate-xcodeproj")
     }
 
     public func spmVersion() throws -> String {
-        let swiftVersionOutput: Shell.IO = try shell("\(commandPath) package --version")
+        let swiftVersionOutput: Shell.IO = try shell(silent: "\(commandPath) package --version")
         let output = swiftVersionOutput.stdOut
         guard let keyRange = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
               let valueRange = output[from: keyRange.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
@@ -81,7 +81,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> SPOutputWrapper {
         let output: Shell.IO = try fmg.perform(atPath: path) {
-            try shell("\(commandPath) package dump-package")
+            try shell(silent: "\(commandPath) package dump-package")
         }
         return try JSONDecoder().decode(SPOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
     }
@@ -124,7 +124,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
             try? file.delete()
         }
 
-        let output: Shell.IO = try shell("perl \(file.path)")
+        let output: Shell.IO = try shell(silent: "perl \(file.path)")
         return output.stdOut.split(separator: Character("\n")).map { substrings in
             String(substrings)
         }

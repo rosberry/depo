@@ -141,7 +141,7 @@ public final class SPMManager: ProgressObservable {
     }
 
     private func buildPackageInCurrentDir(buildDir: String, like frameworkKind: MergePackage.FrameworkKind) throws {
-        let _: Int32 = try shell("chmod -R +rw .")
+        let _: Int32 = try shell(loud: "chmod -R +rw .")
         guard let schema = try XcodeProjectList(shell: shell).schemes.first else {
             throw InternalError.noSchemaToBuild
         }

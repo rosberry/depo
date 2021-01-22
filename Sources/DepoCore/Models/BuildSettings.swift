@@ -29,7 +29,7 @@ public struct BuildSettings {
     public let deploymentTarget: String?
 
     public init(targetName: String? = nil, shell: Shell = .init(), decoder: JSONDecoder = .init()) throws {
-        let shellIO: Shell.IO = try shell(Self.command(targetName: targetName))
+        let shellIO: Shell.IO = try shell(silent: Self.command(targetName: targetName))
         guard let data = shellIO.stdOut.data(using: .utf8) else {
             throw Error.badOutput(shellIO: shellIO)
         }

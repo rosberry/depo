@@ -34,7 +34,7 @@ public final class Shell {
     }
 
     @discardableResult
-    public func callAsFunction(_ command: String) throws -> Int32 {
+    public func callAsFunction(loud command: String) throws -> Int32 {
         observer?(.start(command: [command]))
         let process = Process()
         Self.processCreationHandler?(process)
@@ -51,7 +51,7 @@ public final class Shell {
         }
     }
 
-    public func callAsFunction(_ command: String) throws -> IO {
+    public func callAsFunction(silent command: String) throws -> IO {
         observer?(.start(command: [command]))
         let process = Process()
         Self.processCreationHandler?(process)
