@@ -27,6 +27,7 @@ public final class Shell {
         }
     }
 
+    public static var processCreationHandler: ((Process) -> Void)?
     private var observer: ((State) -> Void)?
 
     public init() {
@@ -36,6 +37,7 @@ public final class Shell {
     public func callAsFunction(_ command: String) throws -> Int32 {
         observer?(.start(command: [command]))
         let process = Process()
+        Self.processCreationHandler?(process)
         process.launchPath = "/bin/zsh"
         process.arguments = ["-c", command]
         try process.run()
@@ -52,6 +54,7 @@ public final class Shell {
     public func callAsFunction(_ command: String) throws -> IO {
         observer?(.start(command: [command]))
         let process = Process()
+        Self.processCreationHandler?(process)
         process.launchPath = "/bin/zsh"
         process.arguments = ["-c", command]
         let shellIO = try output(of: process, command: [command])
