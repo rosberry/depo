@@ -14,7 +14,7 @@ public final class CarthageManager: ProgressObservable {
         case shell(state: Shell.State)
     }
 
-    public enum Error: LocalizedError {
+    public enum Error: Swift.Error {
         case badCartfile(path: String)
     }
 

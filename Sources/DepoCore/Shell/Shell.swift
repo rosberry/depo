@@ -8,7 +8,7 @@ public final class Shell {
 
     public enum Error: Swift.Error {
         case failure(IO)
-        case badStatusCode(Int32)
+        case badStatusCode(String, Int32)
     }
 
     public struct IO {
@@ -27,6 +27,11 @@ public final class Shell {
         }
     }
 
+    public enum CallKind {
+        case loud
+        case silent
+    }
+
     public static var processCreationHandler: ((Process) -> Void)?
     private var observer: ((State) -> Void)?
 
@@ -35,7 +40,7 @@ public final class Shell {
 
     @discardableResult
     public func callAsFunction(loud command: String) throws -> Int32 {
-        observer?(.start(command: [command]))
+        observer?(.start(command: command, kind: .loud))
         let process = Process()
         Self.processCreationHandler?(process)
         process.launchPath = "/bin/zsh"
@@ -47,12 +52,12 @@ public final class Shell {
             return statusCode
         }
         else {
-            throw Error.badStatusCode(statusCode)
+            throw Error.badStatusCode(command, statusCode)
         }
     }
 
     public func callAsFunction(silent command: String) throws -> IO {
-        observer?(.start(command: [command]))
+        observer?(.start(command: command, kind: .silent))
         let process = Process()
         Self.processCreationHandler?(process)
         process.launchPath = "/bin/zsh"
@@ -98,7 +103,7 @@ public final class Shell {
 extension Shell: ProgressObservable {
 
     public enum State {
-        case start(command: [String])
+        case start(command: String, kind: CallKind)
     }
 
     @discardableResult
