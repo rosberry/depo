@@ -14,13 +14,15 @@ public final class PodManager: ProgressObservable {
         case installing
         case updating
         case building
-        case processing
         case creatingPodfile(path: String)
-        case buildingPod(Pod)
-        case processingPod(Pod)
+        case buildingPod(Pod, MergePackage.FrameworkKind, at: String)
+        case processingPod(Pod, MergePackage.FrameworkKind, outputPath: String)
         case movingPod(from: String, toFolder: String)
+        case doneBuilding(Pod)
+        case buildingFailed(Pod)
+        case doneProcessing(Pod, MergePackage.FrameworkKind)
+        case processingFailed(Pod, MergePackage.FrameworkKind)
         case shell(state: Shell.State)
-        case merge(state: MergePackage.State)
     }
 
     public enum Error: Swift.Error {
@@ -50,7 +52,7 @@ public final class PodManager: ProgressObservable {
     private let cacheBuilds: Bool
     private let podArguments: String?
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
-        self?.observer?(.merge(state: state))
+        //self?.observer?(.merge(state: state))
     }
     private var observer: ((State) -> Void)?
 
@@ -131,12 +133,14 @@ public final class PodManager: ProgressObservable {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let buildErrors = pods.reduce([FailedContext]()) { result, pod in
-            observer?(.buildingPod(pod))
+            observer?(.buildingPod(pod, frameworkKind, at: path))
             do {
                 try build(pod: pod, ofKind: frameworkKind)
+                observer?(.doneBuilding(pod))
                 return result
             }
             catch {
+                observer?(.buildingFailed(pod))
                 return result + [(error, pod)]
             }
         }
@@ -151,12 +155,14 @@ public final class PodManager: ProgressObservable {
         FileManager.default.changeCurrentDirectoryPath(path)
         let proceedErrors: [FailedContext] = try allSchemes().compactMap { schema in
             let (pod, settings) = schema
-            observer?(.processingPod(pod))
+            observer?(.processingPod(pod, frameworkKind, outputPath: outputPath))
             do {
                 try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)", frameworkKind: frameworkKind)
+                observer?(.doneProcessing(pod, frameworkKind))
                 return nil
             }
             catch {
+                observer?(.processingFailed(pod, frameworkKind))
                 return (error, pod)
             }
         }

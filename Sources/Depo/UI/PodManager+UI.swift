@@ -9,24 +9,28 @@ extension PodManager.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .installing:
-            return "installing"
+            return string("==> ", color: .cyan) + "Installing pods"
         case .updating:
-            return "updating"
+            return string("==> ", color: .cyan) + "Updating pods"
         case .building:
-            return "building"
-        case .processing:
-            return "processing"
+            return string("==> ", color: .cyan) + "Building pods"
         case let .creatingPodfile(path):
-            return "creating podfile at \(path)"
-        case let .buildingPod(pod):
-            return "building pod \(pod.name)"
-        case let .processingPod(pod):
-            return "processing pod \(pod.name)"
+            return "Creating Podfile at \(path)"
+        case let .buildingPod(pod, kind, buildPath):
+            return "Building \(string(pod.name, color: .magenta)) at \(buildPath)"
+        case let .processingPod(pod, kind, outputPath):
+            return "Making \(kind) from \(string(pod.name, color: .magenta)) -> \(outputPath)"
         case let .movingPod(from, to):
             return "\(from) -> \(to)"
+        case let .doneBuilding(pod):
+            return "Done building \(string(pod.name, color: .green))\n"
+        case let .doneProcessing(pod, kind):
+            return "\(kind) is made from \(string(pod.name, color: .green))\n"
+        case let .buildingFailed(pod):
+            return "Got error while building \(string(pod.name, color: .red))\n"
+        case let .processingFailed(pod, kind):
+            return "Got error while making \(kind) from \(string(pod.name, color: .red))\n"
         case let .shell(state):
-            return state.description
-        case let .merge(state):
             return state.description
         }
     }
