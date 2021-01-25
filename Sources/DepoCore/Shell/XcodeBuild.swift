@@ -79,8 +79,8 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
     }
 
     public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
-        let frameworksArguments = frameworkPaths.reduce([]) { result, path in
-            result + ["-framework", path]
+        let frameworksArguments = frameworkPaths.reduce("") { result, path in
+            result + "-framework \(path) "
         }
         return try shell(silent: "\(command) -create-xcframework -output \(path) \(frameworksArguments)")
     }

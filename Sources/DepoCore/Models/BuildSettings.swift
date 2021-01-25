@@ -24,7 +24,7 @@ public struct BuildSettings {
     public let productName: String
     public let swiftProjectVersion: String
     public let targetName: String
-    public let productType: ProductType
+    public let productType: ProductType?
     public let codesigningFolderPath: URL?
     public let platform: Platform?
     public let deploymentTarget: String?
@@ -63,7 +63,7 @@ public struct BuildSettings {
         let productName = try extract("PRODUCT_NAME", settings)
         let swiftVersion = try extract("SWIFT_VERSION", settings)
         let targetName = try extract("TARGETNAME", settings)
-        let productType = try extract("PRODUCT_TYPE", settings)
+        let productType = settings["PRODUCT_TYPE",default: ""]
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
