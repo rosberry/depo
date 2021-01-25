@@ -18,6 +18,8 @@ extension SPMManager.State: CustomStringConvertible {
             return "Making \(kind.description) from \(framework) -> \(outputPath)"
         case let .done(package):
             return "Done with \(string(package.name, color: .green))\n"
+        case let .doneWithError(package, error):
+            return "Got error while building \(string(package.name, color: .red))\n"
         case let .creatingPackageSwiftFile(path):
             return "Creating Package.swift at \(path)"
         case let .shell(state):

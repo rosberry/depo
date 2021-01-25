@@ -15,6 +15,7 @@ public final class SPMManager: ProgressObservable {
         case buildingPackage(SwiftPackage, path: String)
         case merging(framework: String, MergePackage.FrameworkKind, output: String)
         case done(SwiftPackage)
+        case doneWithError(SwiftPackage, Swift.Error)
         case creatingPackageSwiftFile(path: String)
         case shell(state: Shell.State)
         case merge(state: MergePackage.State)
@@ -132,6 +133,7 @@ public final class SPMManager: ProgressObservable {
                 return nil
             }
             catch {
+                observer?(.doneWithError(package, error))
                 return (error, package)
             }
         }
@@ -194,6 +196,6 @@ public final class SPMManager: ProgressObservable {
     }
 
     private func shouldBuild(settings: BuildSettings) -> Bool {
-        settings.productType == .framework && settings.platform == .ios
+        settings.productType == .framework && settings.supportedPlatforms.contains(.ios)
     }
 }
