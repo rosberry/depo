@@ -7,6 +7,8 @@ import Files
 
 public final class BuildSwiftPackageScript: ShellCommand {
 
+    public typealias BuildContext = (scheme: String, settings: BuildSettings)
+
     private var xcodebuild: XcodeBuild {
         .init(shell: shell)
     }
@@ -23,7 +25,10 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     @discardableResult
-    public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind, buildDir: String, scheme: String) throws -> [Shell.IO] {
+    public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind,
+                               context: BuildContext,
+                               buildDir: String) throws -> [Shell.IO] {
+        let (scheme ,settings) = context
         try generateXcodeprojectIfNeeded()
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release

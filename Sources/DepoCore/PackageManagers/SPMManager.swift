@@ -158,15 +158,18 @@ public final class SPMManager: ProgressObservable {
 
     private func buildPackageInCurrentDir(buildDir: String, like frameworkKind: MergePackage.FrameworkKind) throws {
         let _: Int32 = try shell(loud: "chmod -R +rw .")
-        guard let schema = try XcodeProjectList(shell: shell).schemes.first else {
-            throw InternalError.noSchemaToBuild
+        let contexts = try XcodeProjectList(shell: shell).schemes.compactMap { scheme -> BuildSwiftPackageScript.BuildContext? in
+            guard let settings = try? BuildSettings(scheme: scheme, xcodebuild: xcodebuild) else {
+                return nil
+            }
+            return settings.productType == .framework ? (scheme, settings) : nil
         }
-        try build(schemes: [schema], like: frameworkKind, buildDir: buildDir)
+        try build(contexts: contexts, like: frameworkKind, buildDir: buildDir)
     }
 
-    private func build(schemes: [String], like frameworkKind: MergePackage.FrameworkKind, buildDir: String) throws {
-        try schemes.forEach { scheme in
-            try buildSwiftPackageScript(like: frameworkKind, buildDir: buildDir, scheme: scheme)
+    private func build(contexts: [BuildSwiftPackageScript.BuildContext], like frameworkKind: MergePackage.FrameworkKind, buildDir: String) throws {
+        try contexts.forEach { context in
+            try buildSwiftPackageScript(like: frameworkKind, context: context, buildDir: buildDir)
         }
     }
 
