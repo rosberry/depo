@@ -27,6 +27,7 @@ public final class PodManager: ProgressObservable {
         case badPodfile(path: String)
         case badPodBuild(contexts: [FailedContext])
         case badPodMerge(contexts: [FailedContext])
+        case noTargetsToBuild
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -191,7 +192,7 @@ public final class PodManager: ProgressObservable {
     }
 
     private func allSchemes() throws -> [(Pod, BuildSettings)] {
-        let project = try XcodeProjectList(shell: shell)
+        let project = try xcodebuild.listProject()
         return try project.targets.compactMap { targetName in
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil

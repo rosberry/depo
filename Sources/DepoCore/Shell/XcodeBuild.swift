@@ -46,6 +46,10 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         case archive
     }
 
+    public enum Error: Swift.Error {
+        case badOutput(shellIO: Shell.IO)
+    }
+
     public static let keys: [AnyArgument<Settings>] =
             [.init(optionalKeyPath: \.target, "-target "),
              .init(optionalKeyPath: \.scheme, "-scheme "),
@@ -91,6 +95,42 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     public func showBuildSettings(scheme: String) throws -> Shell.IO {
         try shell(silent: Self.showBuildSettingsCommand(scheme: scheme))
+    }
+
+    public func listProject(name: String? = nil, decoder: JSONDecoder = .init()) throws -> XcodeList.Project {
+        struct OutputWrapper: Codable {
+            let project: XcodeList.Project
+        }
+
+        let output: Shell.IO
+        if let name = name {
+            output = try shell(silent: "xcodebuild -list -json -project \(name)")
+        }
+        else {
+            output = try shell(silent: "xcodebuild -list -json")
+        }
+        guard let data = output.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(shellIO: output)
+        }
+        return try decoder.decode(OutputWrapper.self, from: data).project
+    }
+
+    public func listWorkspace(name: String? = nil, decoder: JSONDecoder = .init()) throws -> XcodeList.Workspace {
+        struct OutputWrapper: Codable {
+            let workspace: XcodeList.Workspace
+        }
+
+        let output: Shell.IO
+        if let name = name {
+            output = try shell(silent: "xcodebuild -list -json -workspace \(name)")
+        }
+        else {
+            output = try shell(silent: "xcodebuild -list -json")
+        }
+        guard let data = output.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(shellIO: output)
+        }
+        return try decoder.decode(OutputWrapper.self, from: data).workspace
     }
 
     private func xcConfigForDistributionBuild() throws -> File {

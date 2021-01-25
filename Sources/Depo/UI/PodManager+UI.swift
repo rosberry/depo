@@ -47,6 +47,8 @@ extension PodManager.Error: LocalizedError {
                    bad pod merge:
                    \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
+        case .noTargetsToBuild:
+            return "project has no targets to build"
         }
     }
 }

@@ -158,7 +158,7 @@ public final class SPMManager: ProgressObservable {
 
     private func buildPackageInCurrentDir(buildDir: String, like frameworkKind: MergePackage.FrameworkKind) throws {
         let _: Int32 = try shell(loud: "chmod -R +rw .")
-        let contexts = try XcodeProjectList(shell: shell).schemes.compactMap { scheme -> BuildSwiftPackageScript.BuildContext? in
+        let contexts = try xcodebuild.listProject().schemes.compactMap { scheme -> BuildSwiftPackageScript.BuildContext? in
             guard let settings = try? BuildSettings(scheme: scheme, xcodebuild: xcodebuild) else {
                 return nil
             }
