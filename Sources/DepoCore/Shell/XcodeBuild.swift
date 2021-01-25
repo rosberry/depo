@@ -22,9 +22,13 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         let actionType: ActionType?
     }
 
-    public enum Configuration: String {
+    public enum Configuration: String, CustomStringConvertible {
         case release = "Release"
         case debug = "Debug"
+
+        public var description: String {
+            self.rawValue
+        }
     }
 
     public enum SDK: String {
