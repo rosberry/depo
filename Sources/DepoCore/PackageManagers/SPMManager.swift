@@ -162,7 +162,7 @@ public final class SPMManager: ProgressObservable {
             guard let settings = try? BuildSettings(scheme: scheme, xcodebuild: xcodebuild) else {
                 return nil
             }
-            return settings.productType == .framework ? (scheme, settings) : nil
+            return shouldBuild(settings: settings)  ? (scheme, settings) : nil
         }
         try build(contexts: contexts, like: frameworkKind, buildDir: buildDir)
     }
@@ -191,5 +191,9 @@ public final class SPMManager: ProgressObservable {
         catch {
             throw error
         }
+    }
+
+    private func shouldBuild(settings: BuildSettings) -> Bool {
+        settings.productType == .framework && settings.platform == .ios
     }
 }

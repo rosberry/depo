@@ -10,7 +10,7 @@ import CartfileParser
 public final class CarthageShellCommand: ShellCommand {
 
     public enum BuildArgument {
-        case platform(Platform)
+        case platform(Platform?)
         case cacheBuilds
         case custom(args: String)
 
@@ -25,11 +25,11 @@ public final class CarthageShellCommand: ShellCommand {
             }
         }
 
-        private func platformArguments(platform: Platform) -> [String] {
+        private func platformArguments(platform: Platform?) -> [String] {
             switch platform {
-            case .all:
+            case .none:
                 return []
-            default:
+            case let .some(platform):
                 return ["--platform", platform.rawValue]
             }
         }

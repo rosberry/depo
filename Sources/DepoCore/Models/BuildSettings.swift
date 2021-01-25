@@ -28,6 +28,7 @@ public struct BuildSettings {
     public let codesigningFolderPath: URL?
     public let platform: Platform?
     public let deploymentTarget: String?
+    public let supportedPlatforms: Set<Platform>
 
     public init(xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
         let shellIO: Shell.IO = try xcodebuild.showBuildSettings()
@@ -76,6 +77,7 @@ public struct BuildSettings {
             self.platform = nil
             self.deploymentTarget = nil
         }
+        self.supportedPlatforms = Self.supportedPlatforms(from: settings)
     }
 
     public init(productName: String,
@@ -84,7 +86,8 @@ public struct BuildSettings {
                 productType: ProductType,
                 codesigningFolderPath: URL?,
                 platform: Platform?,
-                deploymentTarget: String?) {
+                deploymentTarget: String?,
+                supportedPlatforms: Set<Platform>) {
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
@@ -92,6 +95,7 @@ public struct BuildSettings {
         self.codesigningFolderPath = codesigningFolderPath
         self.platform = platform
         self.deploymentTarget = deploymentTarget
+        self.supportedPlatforms = supportedPlatforms
     }
 
     private static func platform(from settings: [String: String]) -> Platform? {
@@ -111,10 +115,24 @@ public struct BuildSettings {
             prefix = "TVOS_"
         case .watchos:
             prefix = "WATCHOS_"
-        case .all:
-            prefix = ""
         }
         return "\(prefix)DEPLOYMENT_TARGET"
+    }
+
+    private static func supportedPlatforms(from settings: [String: String]) -> Set<Platform> {
+        if let supportedPlatforms = settings["SUPPORTED_PLATFORMS"] {
+            let platforms = supportedPlatforms.split(separator: Character(" ")).compactMap { substring -> Platform? in
+                Platform(key: String(substring))
+            }
+            return Set(platforms)
+        }
+        else if let platformStringValue = settings["PLATFORM_NAME"],
+                let platform = Platform(key: platformStringValue) {
+            return Set([platform])
+        }
+        else {
+            return []
+        }
     }
 
     private static func extract(key: String, from settings: [String: String]) throws -> String {
