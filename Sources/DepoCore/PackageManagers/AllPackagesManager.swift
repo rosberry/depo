@@ -101,5 +101,4 @@ public final class AllPackagesManager: ProgressObservable {
             spmManager.build
         }
     }
-
 }
