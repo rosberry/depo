@@ -4,7 +4,7 @@
 
 import Foundation
 
-public final class AllPackagesManager: ProgressObservable {
+public final class AllPackagesManager: ProgressObservable, HasAllCommands {
 
     public enum State {
         case podManager(PodManager.State)
@@ -14,32 +14,35 @@ public final class AllPackagesManager: ProgressObservable {
 
     private let depofile: Depofile
     private let platform: Platform
-    private var podManager: PodManager {
-        PodManager(depofile: depofile,
-                   podCommandPath: podCommandPath,
-                   frameworkKind: frameworkKind,
-                   cacheBuilds: cacheBuilds,
-                   podArguments: podArguments).subscribe { [weak self] state in
+    private var podManager: ConditionalPackageManager<PodManager> {
+        let manager = PodManager(depofile: depofile,
+                                 podCommandPath: podCommandPath,
+                                 frameworkKind: frameworkKind,
+                                 cacheBuilds: cacheBuilds,
+                                 podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
+        return conditional(manager: manager, keyPath: \.pods.isEmpty.not)
     }
-    private var carthageManager: CarthageManager {
-        CarthageManager(depofile: depofile,
-                        platform: platform,
-                        carthageCommandPath: carthageCommandPath,
-                        cacheBuilds: cacheBuilds,
-                        carthageArguments: carthageArguments).subscribe { [weak self] state in
+    private var carthageManager: ConditionalPackageManager<CarthageManager> {
+        let manager = CarthageManager(depofile: depofile,
+                                      platform: platform,
+                                      carthageCommandPath: carthageCommandPath,
+                                      cacheBuilds: cacheBuilds,
+                                      carthageArguments: carthageArguments).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
+        return conditional(manager: manager, keyPath: \.carts.isEmpty.not)
     }
-    private var spmManager: SPMManager {
-        SPMManager(depofile: depofile,
-                   swiftCommandPath: swiftCommandPath,
-                   frameworkKind: frameworkKind,
-                   cacheBuilds: cacheBuilds,
-                   swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
+    private var spmManager: ConditionalPackageManager<SPMManager> {
+        let manager = SPMManager(depofile: depofile,
+                                 swiftCommandPath: swiftCommandPath,
+                                 frameworkKind: frameworkKind,
+                                 cacheBuilds: cacheBuilds,
+                                 swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
+        return conditional(manager: manager, keyPath: \.swiftPackages.isEmpty.not)
     }
     private var observer: ((State) -> Void)?
     private let podCommandPath: String
@@ -100,5 +103,9 @@ public final class AllPackagesManager: ProgressObservable {
             carthageManager.build
             spmManager.build
         }
+    }
+
+    private func conditional<Manager>(manager: Manager, keyPath: KeyPath<Depofile, Bool>) -> ConditionalPackageManager<Manager> {
+        .init(wrappedValue: manager, root: depofile, keyPath: keyPath)
     }
 }

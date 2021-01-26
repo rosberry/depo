@@ -25,24 +25,24 @@ extension ConditionalPackageManager {
     }
 }
 
-extension ConditionalPackageManager where PackageManager: HasUpdateCommand {
-    func updateIfPossible() throws {
+extension ConditionalPackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
+    func update() throws {
         try doIfPossible {
             try wrappedValue.update()
         }
     }
 }
 
-extension ConditionalPackageManager where PackageManager: HasBuildCommand {
-    func buildIfPossible() throws {
+extension ConditionalPackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
+    func build() throws {
         try doIfPossible {
             try wrappedValue.build()
         }
     }
 }
 
-extension ConditionalPackageManager where PackageManager: HasInstallCommand {
-    func installIfPossible() throws {
+extension ConditionalPackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
+    func install() throws {
         try doIfPossible {
             try wrappedValue.install()
         }

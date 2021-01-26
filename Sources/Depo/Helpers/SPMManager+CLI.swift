@@ -6,29 +6,30 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension SPMManager: HasUpdateCommand, HasBuildCommand {
+extension SPMManager: HasDepofileInit {
 
-    struct Options: ParsableArguments, HasDepofileExtension {
+    public struct Options: ParsableArguments, HasDepofileExtension {
 
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
-        var depofileExtension: DataCoder.Kind = .defaultValue
+        public var depofileExtension: DataCoder.Kind = .defaultValue
 
         @Option(completion: .file())
-        var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
+        public var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
 
         @Flag()
-        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+        public var frameworkKind: MergePackage.FrameworkKind = .fatFramework
 
         @Flag()
-        var cacheBuilds: Bool = false
+        public var cacheBuilds: Bool = false
 
         @Option(name: [.customLong("swift-build-args"), .customShort(Character("s"))])
-        var swiftBuildArguments: String?
+        public var swiftBuildArguments: String?
 
+        public init() {}
     }
 
-    convenience init(depofile: Depofile, options: Options) {
+    public convenience init(depofile: Depofile, options: Options) {
         self.init(depofile: depofile,
                   swiftCommandPath: options.swiftCommandPath,
                   frameworkKind: options.frameworkKind,

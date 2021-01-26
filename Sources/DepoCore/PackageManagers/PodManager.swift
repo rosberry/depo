@@ -6,7 +6,7 @@ import Foundation
 import Yams
 import Files
 
-public final class PodManager: ProgressObservable {
+public final class PodManager: ProgressObservable, HasAllCommands {
 
     public typealias FailedContext = (Swift.Error, Pod)
 

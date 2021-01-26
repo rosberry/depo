@@ -5,7 +5,7 @@
 import Foundation
 import Files
 
-public final class SPMManager: ProgressObservable {
+public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
 
     public typealias FailedContext = (Swift.Error, SwiftPackage)
 

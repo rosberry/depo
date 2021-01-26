@@ -4,7 +4,7 @@
 
 import Foundation
 
-public final class CarthageManager: ProgressObservable {
+public final class CarthageManager: ProgressObservable, HasAllCommands {
 
     public enum State {
         case updating
