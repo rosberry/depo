@@ -67,7 +67,7 @@ public struct BuildSettings {
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName
-        self.productType = .init(rawValue: productType)
+        self.productType = productType.isEmpty ? nil : ProductType(rawValue: productType)
         self.codesigningFolderPath = URL(string: settings["CODESIGNING_FOLDER_PATH", default: ""])
         if let platform = Self.platform(from: settings) {
             self.platform = platform

@@ -20,6 +20,7 @@ public final class PodManager: ProgressObservable {
         case processingPod(Pod)
         case movingPod(Pod, outputPath: String)
         case making(MergePackage.FrameworkKind, Pod, outputPath: String)
+        case skipProceed(target: String)
         case doneBuilding(Pod)
         case buildingFailed(Pod)
         case doneProcessing(Pod)
@@ -149,8 +150,8 @@ public final class PodManager: ProgressObservable {
     private func proceedAllPods(at path: String, frameworkKind: MergePackage.FrameworkKind, to outputPath: String) throws {
         let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let proceedErrors: [FailedContext] = try allSchemes().compactMap { schema in
-            let (pod, settings) = schema
+        let proceedErrors: [FailedContext] = try allBuildContexts().compactMap { context in
+            let (pod, settings) = context
             observer?(.processingPod(pod))
             do {
                 try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)", frameworkKind: frameworkKind)
@@ -194,14 +195,18 @@ public final class PodManager: ProgressObservable {
         productExtensions.contains(with: folder.extension ?? "", at: \.self)
     }
 
-    private func allSchemes() throws -> [(Pod, BuildSettings)] {
+    private func allBuildContexts() throws -> [(Pod, BuildSettings)] {
         let project = try xcodebuild.listProject()
         return try project.targets.compactMap { targetName in
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil
             }
-            return (Pod(name: targetName, versionConstraint: nil),
-                    try BuildSettings(target: targetName, xcodebuild: xcodebuild))
+            let settings = try BuildSettings(target: targetName, xcodebuild: xcodebuild)
+            guard shouldProceedPod(with: settings) else {
+                observer?(.skipProceed(target: targetName))
+                return nil
+            }
+            return (Pod(name: targetName, versionConstraint: nil), settings)
         }
     }
 
@@ -234,5 +239,9 @@ public final class PodManager: ProgressObservable {
     private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
         [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
          try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
+    }
+
+    private func shouldProceedPod(with settings: BuildSettings) -> Bool {
+        settings.productType == nil || settings.productType == .framework
     }
 }

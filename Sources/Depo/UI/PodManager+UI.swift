@@ -34,6 +34,8 @@ extension PodManager.State: CustomStringConvertible {
             return "Got error while building \(string(pod.name, color: .red))\n"
         case let .processingFailed(pod):
             return "Got error while processing \(string(pod.name, color: .red))\n"
+        case let .skipProceed(targetName):
+            return "Skipping target \"\(string(targetName, color: .yellow))\""
         case let .shell(state):
             return state.description
         }
