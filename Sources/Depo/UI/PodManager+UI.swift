@@ -14,22 +14,26 @@ extension PodManager.State: CustomStringConvertible {
             return string("==> ", color: .cyan) + "Updating pods"
         case .building:
             return string("==> ", color: .cyan) + "Building pods"
+        case .processing:
+            return string("==> ", color: .cyan) + "Processing pods"
         case let .creatingPodfile(path):
             return "Creating Podfile at \(path)"
         case let .buildingPod(pod, kind, buildPath):
             return "Building \(string(pod.name, color: .magenta)) at \(buildPath)"
-        case let .processingPod(pod, kind, outputPath):
-            return "Making \(kind) from \(string(pod.name, color: .magenta)) -> \(outputPath)"
-        case let .movingPod(from, to):
-            return "\(from) -> \(to)"
+        case let .processingPod(pod):
+            return "Processing \(string(pod.name, color: .magenta))"
+        case let .making(kind, pod, outputPath):
+            return "Making \(kind) from \(pod.name) -> \(outputPath)"
+        case let .movingPod(pod, outputPath):
+            return "Moving built \(pod.name) to \(outputPath)"
         case let .doneBuilding(pod):
             return "Done building \(string(pod.name, color: .green))\n"
-        case let .doneProcessing(pod, kind):
-            return "\(kind) is made from \(string(pod.name, color: .green))\n"
+        case let .doneProcessing(pod):
+            return "Done processing \(string(pod.name, color: .green))\n"
         case let .buildingFailed(pod):
             return "Got error while building \(string(pod.name, color: .red))\n"
-        case let .processingFailed(pod, kind):
-            return "Got error while making \(kind) from \(string(pod.name, color: .red))\n"
+        case let .processingFailed(pod):
+            return "Got error while processing \(string(pod.name, color: .red))\n"
         case let .shell(state):
             return state.description
         }
