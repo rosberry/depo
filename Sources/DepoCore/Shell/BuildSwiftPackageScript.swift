@@ -28,7 +28,7 @@ public final class BuildSwiftPackageScript: ShellCommand {
     public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind,
                                context: BuildContext,
                                buildDir: String) throws -> [Shell.IO] {
-        let (scheme ,settings) = context
+        let (scheme, _) = context
         try generateXcodeprojectIfNeeded()
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release

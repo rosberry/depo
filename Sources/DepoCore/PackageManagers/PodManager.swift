@@ -16,7 +16,7 @@ public final class PodManager: ProgressObservable {
         case building
         case processing
         case creatingPodfile(path: String)
-        case buildingPod(Pod, MergePackage.FrameworkKind, at: String)
+        case buildingPod(Pod, MergePackage.FrameworkKind, buildPath: String)
         case processingPod(Pod)
         case movingPod(Pod, outputPath: String)
         case making(MergePackage.FrameworkKind, Pod, outputPath: String)
@@ -54,9 +54,7 @@ public final class PodManager: ProgressObservable {
     private let frameworkKind: MergePackage.FrameworkKind
     private let cacheBuilds: Bool
     private let podArguments: String?
-    private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
-        //self?.observer?(.merge(state: state))
-    }
+    private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile,
@@ -103,7 +101,7 @@ public final class PodManager: ProgressObservable {
 
     public func build() throws {
         let podsProjectPath = "./\(podsDirectoryName)"
-        
+
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
         observer?(.processing)
@@ -130,7 +128,7 @@ public final class PodManager: ProgressObservable {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let buildErrors = pods.reduce([FailedContext]()) { result, pod in
-            observer?(.buildingPod(pod, frameworkKind, at: path))
+            observer?(.buildingPod(pod, frameworkKind, buildPath: path))
             do {
                 try build(pod: pod, ofKind: frameworkKind)
                 observer?(.doneBuilding(pod))

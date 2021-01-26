@@ -43,9 +43,7 @@ public final class SPMManager: ProgressObservable {
     private let xcodebuild: XcodeBuild
 
     private let swiftPackageCommand: SwiftPackageShellCommand
-    private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
-        // self?.observer?(.merge(state: state))
-    }
+    private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
 
     private let packageSwiftFileName = AppConfiguration.Name.packageSwift
@@ -115,6 +113,7 @@ public final class SPMManager: ProgressObservable {
         }
     }
 
+    // swiftlint:disable:next function_parameter_count
     private func build(packages: [SwiftPackage],
                        like frameworkKind: MergePackage.FrameworkKind,
                        at packagesSourcesPath: String,
@@ -169,7 +168,9 @@ public final class SPMManager: ProgressObservable {
         try build(contexts: contexts, like: frameworkKind, buildDir: buildDir)
     }
 
-    private func build(contexts: [BuildSwiftPackageScript.BuildContext], like frameworkKind: MergePackage.FrameworkKind, buildDir: String) throws {
+    private func build(contexts: [BuildSwiftPackageScript.BuildContext],
+                       like frameworkKind: MergePackage.FrameworkKind,
+                       buildDir: String) throws {
         try contexts.forEach { context in
             try buildSwiftPackageScript(like: frameworkKind, context: context, buildDir: buildDir)
         }

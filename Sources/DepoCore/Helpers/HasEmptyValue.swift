@@ -7,7 +7,7 @@ public protocol HasEmptyValue {
 }
 
 extension Array: HasEmptyValue {
-    public static var emptyValue: Array<Element> {
+    public static var emptyValue: [Element] {
         []
     }
 }

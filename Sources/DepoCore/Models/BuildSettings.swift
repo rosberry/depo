@@ -63,7 +63,7 @@ public struct BuildSettings {
         let productName = try extract("PRODUCT_NAME", settings)
         let swiftVersion = try extract("SWIFT_VERSION", settings)
         let targetName = try extract("TARGETNAME", settings)
-        let productType = settings["PRODUCT_TYPE",default: ""]
+        let productType = settings["PRODUCT_TYPE", default: ""]
         self.productName = productName
         self.swiftProjectVersion = swiftVersion
         self.targetName = targetName

@@ -38,7 +38,7 @@ public enum Platform: String, HasDefaultValue, CaseIterable, RawRepresentable, C
             return "watchos"
         }
     }
-    
+
     public init?(key: String) {
         switch key {
         case Self.mac.deviceKey,
