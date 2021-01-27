@@ -5,7 +5,9 @@
 import Foundation
 import Files
 
-struct XcodeCLTVersion {}
+struct XcodeCLTVersion {
+}
+
 struct Package {
     let name: String
     let version: String
@@ -15,7 +17,7 @@ public protocol Cacher {
     associatedtype PackageID
 
     var packages: [PackageID] { get }
-    
+
     func save(buildURL: URL, packageID: PackageID) throws
     func get(packageID: PackageID) throws -> URL
     func delete(packageID: PackageID) throws
@@ -56,12 +58,13 @@ public struct GitCacher: Cacher {
         self.packages = []
     }
 
-    public func setupRepository() throws {
+    public func setupRepository(remoteURL: URL?) throws {
         try fmg.perform(atPath: gitRepoURL.path) {
             try git.initialize()
             try Folder.current.createFile(named: ".gitkeep")
             try git.add(".")
             try git.commit(message: "Initial commit")
+            try addRemoteIfNeeded(url: remoteURL)
         }
     }
 
@@ -116,10 +119,6 @@ public struct GitCacher: Cacher {
         }
     }
 
-    private func pushIfPossible() {
-
-    }
-
     private func findFrameworkInCurrentDir() -> URL {
         let frameworks = Folder.current.subfolders.filter(by: "framework", at: \.extension)
         guard let framework = frameworks.first,
@@ -128,4 +127,16 @@ public struct GitCacher: Cacher {
         }
         return framework.url
     }
+
+    private func addRemoteIfNeeded(url: URL?) throws {
+        guard let url = url else {
+            return
+        }
+        try git.remote.add(name: "origin", url: url)
+    }
+
+    private func pushIfPossible() {
+
+    }
+
 }
