@@ -17,6 +17,8 @@ final class Git: ShellCommand {
         self
     }
     private(set) lazy var remote: Remote = .init(commandPath: "\(commandPath) remote", shell: shell)
+    static let masterBranchName: String = "master"
+    static let remoteName: String = "origin"
 
     convenience init() {
         self.init(commandPath: "git")
@@ -27,7 +29,7 @@ final class Git: ShellCommand {
     }
 
     public func createBranch(name: String) throws {
-        let _: Int32 = try git("branch \(name) master")
+        let _: Int32 = try git("branch \(name) \(Self.masterBranchName)")
     }
 
     public func delete(branch: String) throws {
@@ -42,6 +44,10 @@ final class Git: ShellCommand {
         let _: Int32 = try git("commit -m \"\(message)\"")
     }
 
+    public func push(remote: String, branch: String) throws {
+        let _: Int32 = try git("push \(remote) \(branch)")
+    }
+
     public func currentBranch() throws -> String {
         let output: Shell.IO = try git("rev-parse --abbrev-ref HEAD")
         return output.stdOut.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -54,5 +60,16 @@ final class Git: ShellCommand {
 
     public func initialize() throws {
         let _: Int32 = try git("init")
+    }
+
+    public func branches() throws -> [String] {
+        let output: Shell.IO = try git("show-ref --heads | cut -d/ -f3-")
+        return output.stdOut.split(separator: Character("\n")).map { substring in
+            String(substring)
+        }
+    }
+
+    public func clone(url: URL, to outputDirName: String = "", branchName: String) throws {
+        let _: Int32 = try git("clone \(url.absoluteString) \(outputDirName) --branch=\(branchName) --depth=1 --single-branch")
     }
 }
