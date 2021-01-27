@@ -6,9 +6,17 @@ import Foundation
 
 final class Git: ShellCommand {
 
+    final class Remote: ShellCommand {
+
+        public func add(name: String, url: URL) throws {
+            let _: Int32 = try self("add \(name) \(url.absoluteString)")
+        }
+    }
+
     var git: Self {
         self
     }
+    private(set) lazy var remote: Remote = .init(commandPath: "\(commandPath) remote", shell: shell)
 
     convenience init() {
         self.init(commandPath: "git")
