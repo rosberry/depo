@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import Files
 
 struct XcodeCLTVersion {}
 struct Package {
@@ -15,9 +16,9 @@ public protocol Cacher {
 
     var packages: [PackageID] { get }
     
-    func save(buildURL: URL, packageID: PackageID)
-    func get(packageID: PackageID) -> URL
-    func delete(packageID: PackageID)
+    func save(buildURL: URL, packageID: PackageID) throws
+    func get(packageID: PackageID) throws -> URL
+    func delete(packageID: PackageID) throws
 }
 
 public struct GitCacher: Cacher {
@@ -27,72 +28,71 @@ public struct GitCacher: Cacher {
         let name: String
         let version: String
         let xcodebuildVersion: XcodeCLTVersion
-        public let description: String = ""
+        public var description: String {
+            "\(name)"
+        }
+
+        public init(name: String) {
+            self.name = name
+            self.version = ""
+            self.xcodebuildVersion = .init()
+        }
     }
 
     private let gitRepoURL: URL
     private let fmg: FileManager = .default
     private let git: Git = .init(commandPath: "git")
     
-    init(gitRepoURL: URL) {
+    public init(gitRepoURL: URL) {
         self.gitRepoURL = gitRepoURL
         self.packages = []
     }
 
-    public func save(buildURL: URL, packageID: PackageID) {
-        fmg.perform(atPath: gitRepoURL.absoluteString) {
-            git.createBranch(name: packageID.description)
-            copyToCurrent(url: buildURL)
-            stageEverything()
-            commit(message: packageID.description)
+    public func save(buildURL: URL, packageID: PackageID) throws {
+        try fmg.perform(atPath: gitRepoURL.path) {
+            try git.createBranch(name: packageID.description)
+            try git.checkout(packageID.description)
+            try copyToCurrent(url: buildURL)
+            try git.add(".")
+            try git.commit(message: packageID.description)
             pushIfPossible()
         }
     }
 
-    public func get(packageID: PackageID) -> URL {
-        fmg.perform(atPath: gitRepoURL.absoluteString) {
-            git.checkout(packageID.description)
+    public func get(packageID: PackageID) throws -> URL {
+        try fmg.perform(atPath: gitRepoURL.path) {
+            try git.checkout(packageID.description)
             return findFrameworkInCurrentDir()
         }
     }
 
-    public func delete(packageID: PackageID) {
-        fmg.perform(atPath: gitRepoURL.absoluteString) {
-            git.checkout("master")
-            git.delete(branch: packageID.description)
+    public func delete(packageID: PackageID) throws {
+        try fmg.perform(atPath: gitRepoURL.path) {
+            try git.checkout("master")
+            try git.delete(branch: packageID.description)
         }
     }
-    
-    private func createBranch(name: String) {
-        
-    }
 
-    private func copyToCurrent(url: URL) {
-
-    }
-
-    private func stageEverything() {
-
-    }
-
-    private func commit(message: String) {
-
+    private func copyToCurrent(url: URL) throws {
+        if let folder = try? Folder(path: url.path) {
+            try folder.copy(to: Folder.current)
+        }
+        else {
+            let file = try File(path: url.path)
+            try file.copy(to: Folder.current)
+        }
     }
 
     private func pushIfPossible() {
 
     }
 
-    private func branchName(from packageID: PackageID) -> String {
-        fatalError()
-    }
-
-    private func checkout(branch: String) {
-
-    }
-
     private func findFrameworkInCurrentDir() -> URL {
-        fatalError()
+        let frameworks = Folder.current.subfolders.filter(by: "framework", at: \.extension)
+        guard let framework = frameworks.first,
+              frameworks.count == 1 else {
+            fatalError("multiple frameworks")
+        }
+        return framework.url
     }
 }
-

@@ -6,15 +6,27 @@ import Foundation
 
 final class Git: ShellCommand {
 
-    public func checkout(_ gitReference: String) {
-
+    convenience init() {
+        self.init(commandPath: "git")
     }
 
-    public func createBranch(name: String) {
-
+    public func checkout(_ gitReference: String) throws {
+        let _: Int32 = try self("checkout \(gitReference)")
     }
 
-    public func delete(branch: String) {
+    public func createBranch(name: String) throws {
+        let _: Int32 = try self("branch \(name) master")
+    }
 
+    public func delete(branch: String) throws {
+        let _: Int32 = try self("branch -D \(branch)")
+    }
+
+    public func add(_ items: String) throws {
+        let _: Int32 = try self("add \(items)")
+    }
+
+    public func commit(message: String) throws {
+        let _: Int32 = try self("commit -m \"\(message)\"")
     }
 }

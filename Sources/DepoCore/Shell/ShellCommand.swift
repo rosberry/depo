@@ -12,6 +12,14 @@ public class ShellCommand: Codable {
         self.commandPath = commandPath
         self.shell = shell
     }
+
+    public func callAsFunction(_ args: String) throws -> Shell.IO {
+        try shell(silent: "\(commandPath) \(args)")
+    }
+
+    public func callAsFunction(_ args: String) throws -> Int32 {
+        try shell(loud: "\(commandPath) \(args)")
+    }
 }
 
 public protocol ArgumentedShellCommand {
