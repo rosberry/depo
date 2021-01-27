@@ -5,7 +5,7 @@
 import Foundation
 import Files
 
-extension Folder {
+public extension Folder {
     var allSubfolders: [Folder] {
         Array(subfolders) + subfolders.reduce([]) { result, subfolder in
             result + subfolder.allSubfolders
@@ -23,7 +23,7 @@ extension Folder {
     }
 }
 
-extension Folder.ChildSequence {
+public extension Folder.ChildSequence {
     func copy(to folder: Folder) throws {
         try forEach { try $0.copy(to: folder) }
     }

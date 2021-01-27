@@ -29,4 +29,14 @@ final class Git: ShellCommand {
     public func commit(message: String) throws {
         let _: Int32 = try self("commit -m \"\(message)\"")
     }
+
+    public func currentBranch() throws -> String {
+        let output: Shell.IO = try self("rev-parse --abbrev-ref HEAD")
+        return output.stdOut.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    public func hasChanges() throws -> Bool {
+        let output: Shell.IO = try self("status -s")
+        return !output.stdOut.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 }

@@ -21,6 +21,10 @@ public protocol Cacher {
     func delete(packageID: PackageID) throws
 }
 
+public enum CacherError<PackageID>: Error {
+    case noChangesToSave(packageID: PackageID)
+}
+
 public struct GitCacher: Cacher {
     public var packages: [PackageID]
 
@@ -39,22 +43,28 @@ public struct GitCacher: Cacher {
         }
     }
 
+    public enum Error: Swift.Error {
+        case unableToCheckoutOrCreate(branch: String)
+    }
+
     private let gitRepoURL: URL
     private let fmg: FileManager = .default
     private let git: Git = .init(commandPath: "git")
-    
+
     public init(gitRepoURL: URL) {
         self.gitRepoURL = gitRepoURL
         self.packages = []
     }
 
     public func save(buildURL: URL, packageID: PackageID) throws {
+        let packageBranch = packageID.description
         try fmg.perform(atPath: gitRepoURL.path) {
-            try git.createBranch(name: packageID.description)
-            try git.checkout(packageID.description)
+            try checkoutBranchAndCreateIfNeeded(name: packageBranch)
+            try Folder.current.deleteContents()
             try copyToCurrent(url: buildURL)
+            try throwIfNoChanges(packageID: packageID)
             try git.add(".")
-            try git.commit(message: packageID.description)
+            try git.commit(message: packageBranch)
             pushIfPossible()
         }
     }
@@ -70,6 +80,20 @@ public struct GitCacher: Cacher {
         try fmg.perform(atPath: gitRepoURL.path) {
             try git.checkout("master")
             try git.delete(branch: packageID.description)
+        }
+    }
+
+    private func checkoutBranchAndCreateIfNeeded(name: String) throws {
+        try? git.createBranch(name: name)
+        try? git.checkout(name)
+        guard try git.currentBranch() == name else {
+            throw Error.unableToCheckoutOrCreate(branch: name)
+        }
+    }
+
+    private func throwIfNoChanges(packageID: PackageID) throws {
+        guard try git.hasChanges() else {
+            throw CacherError.noChangesToSave(packageID: packageID)
         }
     }
 
