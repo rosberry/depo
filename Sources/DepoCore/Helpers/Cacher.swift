@@ -56,6 +56,15 @@ public struct GitCacher: Cacher {
         self.packages = []
     }
 
+    public func setupRepository() throws {
+        try fmg.perform(atPath: gitRepoURL.path) {
+            try git.initialize()
+            try Folder.current.createFile(named: ".gitkeep")
+            try git.add(".")
+            try git.commit(message: "Initial commit")
+        }
+    }
+
     public func save(buildURL: URL, packageID: PackageID) throws {
         let packageBranch = packageID.description
         try fmg.perform(atPath: gitRepoURL.path) {
