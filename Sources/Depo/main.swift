@@ -103,10 +103,23 @@ struct Cacher: ParsableCommand {
         }
     }
 
+    struct Packages: ParsableCommand {
+
+        @Option(name: .shortAndLong)
+        var gitRepoURL: String
+
+        func run() throws {
+            let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
+            let cacher = GitCacher(gitRepoURL: gitRepoURL)
+            print(try cacher.packageIDS().map(by: \.description).joined(separator: "\n"))
+        }
+    }
+
     static let configuration: CommandConfiguration = .init(subcommands: [Save.self,
                                                                          Get.self,
                                                                          Setup.self,
-                                                                         Update.self])
+                                                                         Update.self,
+                                                                         Packages.self])
 
     static func url(string: String) throws -> URL {
         guard let url = URL(string: string) else {

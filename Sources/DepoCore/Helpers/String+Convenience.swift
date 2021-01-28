@@ -15,4 +15,10 @@ public extension String {
             String(substring)
         }
     }
+
+    var lines: [String] {
+        split(separator: "\n").map { substring in
+            String(substring)
+        }
+    }
 }

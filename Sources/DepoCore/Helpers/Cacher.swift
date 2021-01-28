@@ -16,6 +16,7 @@ struct Package {
 public protocol Cacher {
     associatedtype PackageID
 
+    func packageIDS() throws -> [PackageID]
     func save(buildURL: URL, packageID: PackageID) throws
     func update(buildURL: URL, packageID: PackageID) throws
     func get(packageID: PackageID) throws -> URL
@@ -74,6 +75,16 @@ public struct GitCacher: Cacher {
             try git.add(".")
             try git.commit(message: "Initial commit")
             try addRemoteIfNeeded(url: remoteURL)
+        }
+    }
+
+    public func packageIDS() throws -> [PackageID] {
+        let uuid = UUID().uuidString
+        try git.clone(url: gitRepoURL, to: uuid, branchName: Git.masterBranchName)
+        return try fmg.perform(atPath: uuid) { () -> [String] in
+            try git.remoteBranches()
+        }.map { remoteBranch -> PackageID in
+            PackageID(stringLiteral: remoteBranch)
         }
     }
 

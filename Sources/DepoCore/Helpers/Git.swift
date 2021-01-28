@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class Git: ShellCommand {
+public final class Git: ShellCommand {
 
     final class Remote: ShellCommand {
 
@@ -31,7 +31,7 @@ final class Git: ShellCommand {
     static let masterBranchName: String = "master"
     static let defaultRemoteName: String = "origin"
 
-    convenience init() {
+    public convenience init() {
         self.init(commandPath: "git")
     }
 
@@ -79,9 +79,12 @@ final class Git: ShellCommand {
 
     public func branches() throws -> [String] {
         let output: Shell.IO = try git("show-ref --heads | cut -d/ -f3-")
-        return output.stdOut.split(separator: Character("\n")).map { substring in
-            String(substring)
-        }
+        return output.stdOut.lines
+    }
+
+    public func remoteBranches() throws -> [String] {
+        let output: Shell.IO = try git("ls-remote --heads --quiet | cut -d/ -f3-")
+        return output.stdOut.lines
     }
 
     public func clone(url: URL, to outputDirName: String = "", branchName: String) throws {
