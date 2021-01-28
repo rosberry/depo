@@ -80,7 +80,7 @@ public struct GitCacher: Cacher {
         try? Folder.current.subfolder(at: packageID.description).delete()
         try git.clone(url: gitRepoURL, to: packageID.description, branchName: packageID.description)
         return try fmg.perform(atPath: "./\(packageID.description)") {
-            try findFrameworkInCurrentDir()
+            Folder.current.url
         }
     }
 
@@ -130,15 +130,6 @@ public struct GitCacher: Cacher {
         guard try git.hasChanges() else {
             throw CacherError.noChangesToSave(packageID: packageID)
         }
-    }
-
-    private func findFrameworkInCurrentDir() throws -> URL {
-        let frameworks = Folder.current.subfolders.filter(by: "framework", at: \.extension)
-        guard let framework = frameworks.first,
-              frameworks.count == 1 else {
-            throw Error.multipleFrameworks(path: fmg.currentDirectoryPath)
-        }
-        return framework.url
     }
 
     private func addRemoteIfNeeded(url: URL?) throws {

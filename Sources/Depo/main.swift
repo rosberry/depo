@@ -103,7 +103,10 @@ struct Cacher: ParsableCommand {
         }
     }
 
-    static let configuration: CommandConfiguration = .init(subcommands: [Save.self, Get.self, Setup.self, Update.self])
+    static let configuration: CommandConfiguration = .init(subcommands: [Save.self,
+                                                                         Get.self,
+                                                                         Setup.self,
+                                                                         Update.self])
 
     static func url(string: String) throws -> URL {
         guard let url = URL(string: string) else {
@@ -120,7 +123,6 @@ Cacher.main()
 
 //let cacher = GitCacher(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
 //print(try cacher.get(packageID: .init(name: "Framezilla")))
-// try cacher.save(buildURL: URL(string: "/Users/vz/Developer/frameworks-store.bak/Framezilla.framework")!, packageID: .init(name: "Framezilla"))
 
 // print(try cacher.packageIDs())
 
