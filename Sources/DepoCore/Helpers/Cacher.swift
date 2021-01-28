@@ -17,6 +17,7 @@ public protocol Cacher {
     associatedtype PackageID
 
     func save(buildURL: URL, packageID: PackageID) throws
+    func update(buildURL: URL, packageID: PackageID) throws
     func get(packageID: PackageID) throws -> URL
 }
 
@@ -76,6 +77,7 @@ public struct GitCacher: Cacher {
     }
 
     public func get(packageID: PackageID) throws -> URL {
+        try? Folder.current.subfolder(at: packageID.description).delete()
         try git.clone(url: gitRepoURL, to: packageID.description, branchName: packageID.description)
         return try fmg.perform(atPath: "./\(packageID.description)") {
             try findFrameworkInCurrentDir()
@@ -83,39 +85,47 @@ public struct GitCacher: Cacher {
     }
 
     public func save(buildURL: URL, packageID: PackageID) throws {
-        try git.clone(url: gitRepoURL, to: packageID.description, branchName: Git.masterBranchName)
-        try fmg.perform(atPath: packageID.description) {
-            try checkoutBranchAndCreateIfNeeded(name: packageID.description)
+        let id = packageID.description
+        try? Folder.current.subfolder(named: id).delete()
+        try git.clone(url: gitRepoURL, to: id, branchName: Git.masterBranchName)
+        try fmg.perform(atPath: id) {
+            try git.createBranch(name: id)
+            try git.checkout(id)
             try Folder.current.deleteContents()
             try copyToCurrent(url: buildURL)
             try throwIfNoChanges(packageID: packageID)
             try git.add(".")
-            try git.commit(message: packageID.description)
+            try git.commit(message: id)
             try pushIfPossible(packageID: packageID)
         }
     }
 
-    // MARK: copy paster
-    private func checkoutBranchAndCreateIfNeeded(name: String) throws {
-        try? git.createBranch(name: name)
-        try? git.checkout(name)
-        guard try git.currentBranch() == name else {
-            throw Error.unableToCheckoutOrCreate(branch: name)
+    public func update(buildURL: URL, packageID: PackageID) throws {
+        let id = packageID.description
+        try? Folder.current.subfolder(named: id).delete()
+        try git.clone(url: gitRepoURL, to: id, branchName: id)
+        try fmg.perform(atPath: id) {
+            try Folder.current.deleteContents()
+            try copyToCurrent(url: buildURL)
+            try throwIfNoChanges(packageID: packageID)
+            try git.add(".")
+            try git.commit(message: id)
+            try pushIfPossible(packageID: packageID)
         }
     }
 
-    // copy paste
     private func copyToCurrent(url: URL) throws {
-        if let folder = try? Folder(path: url.path) {
+        let string = url.absoluteString
+        let absolutePath = (string as NSString).isAbsolutePath ? string : Folder.current.path + string
+        if let folder = try? Folder(path: absolutePath) {
             try folder.copy(to: Folder.current)
         }
         else {
-            let file = try File(path: url.path)
+            let file = try File(path: absolutePath)
             try file.copy(to: Folder.current)
         }
     }
 
-    // copy paste
     private func throwIfNoChanges(packageID: PackageID) throws {
         guard try git.hasChanges() else {
             throw CacherError.noChangesToSave(packageID: packageID)
