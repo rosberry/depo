@@ -19,6 +19,7 @@ public protocol Cacher {
     func save(buildURL: URL, packageID: PackageID) throws
     func update(buildURL: URL, packageID: PackageID) throws
     func get(packageID: PackageID) throws -> URL
+    func delete(packageID: PackageID) throws
 }
 
 public enum CacherError<PackageID>: Error {
@@ -77,7 +78,8 @@ public struct GitCacher: Cacher {
     }
 
     public func get(packageID: PackageID) throws -> URL {
-        try? Folder.current.subfolder(at: packageID.description).delete()
+        let id = packageID.description
+        try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: packageID.description, branchName: packageID.description)
         return try fmg.perform(atPath: "./\(packageID.description)") {
             Folder.current.url
@@ -86,7 +88,10 @@ public struct GitCacher: Cacher {
 
     public func save(buildURL: URL, packageID: PackageID) throws {
         let id = packageID.description
-        try? Folder.current.subfolder(named: id).delete()
+        defer {
+            try? deleteFolder(name: id)
+        }
+        try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: id, branchName: Git.masterBranchName)
         try fmg.perform(atPath: id) {
             try git.createBranch(name: id)
@@ -102,7 +107,10 @@ public struct GitCacher: Cacher {
 
     public func update(buildURL: URL, packageID: PackageID) throws {
         let id = packageID.description
-        try? Folder.current.subfolder(named: id).delete()
+        defer {
+            try? deleteFolder(name: id)
+        }
+        try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: id, branchName: id)
         try fmg.perform(atPath: id) {
             try Folder.current.deleteContents()
@@ -111,6 +119,18 @@ public struct GitCacher: Cacher {
             try git.add(".")
             try git.commit(message: id)
             try pushIfPossible(packageID: packageID)
+        }
+    }
+
+    public func delete(packageID: PackageID) throws {
+        let id = packageID.description
+        defer {
+            try? deleteFolder(name: id)
+        }
+        try? deleteFolder(name: id)
+        try git.clone(url: gitRepoURL, to: id, branchName: id)
+        try fmg.perform(atPath: id) {
+            try git.delete(remoteBranch: id)
         }
     }
 
@@ -146,6 +166,10 @@ public struct GitCacher: Cacher {
             throw Error.multipleRemotes(path: fmg.currentDirectoryPath)
         }
         try git.push(remote: remote, branch: packageID.description)
+    }
+
+    private func deleteFolder(name: String) throws {
+        try Folder.current.subfolder(named: name).delete()
     }
 }
 

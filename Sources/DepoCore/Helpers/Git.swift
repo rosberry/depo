@@ -47,6 +47,10 @@ final class Git: ShellCommand {
         let _: Int32 = try git("branch -D \(branch)")
     }
 
+    public func delete(remoteBranch: String) throws {
+        let _: Int32 = try git("push \(Self.defaultRemoteName) --delete \(remoteBranch)")
+    }
+
     public func add(_ items: String) throws {
         let _: Int32 = try git("add \(items)")
     }
