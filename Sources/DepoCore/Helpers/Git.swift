@@ -8,8 +8,19 @@ final class Git: ShellCommand {
 
     final class Remote: ShellCommand {
 
+        var gitRemote: Self {
+            self
+        }
+
         public func add(name: String, url: URL) throws {
-            let _: Int32 = try self("add \(name) \(url.absoluteString)")
+            let _: Int32 = try gitRemote("add \(name) \(url.absoluteString)")
+        }
+
+        public func callAsFunction() throws -> [String] {
+            let output: Shell.IO = try gitRemote("")
+            return output.stdOut.split(separator: Character("\n")).map { substring in
+                String(substring)
+            }
         }
     }
 
@@ -18,7 +29,7 @@ final class Git: ShellCommand {
     }
     private(set) lazy var remote: Remote = .init(commandPath: "\(commandPath) remote", shell: shell)
     static let masterBranchName: String = "master"
-    static let remoteName: String = "origin"
+    static let defaultRemoteName: String = "origin"
 
     convenience init() {
         self.init(commandPath: "git")
