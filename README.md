@@ -23,11 +23,16 @@ cd Depo
 make
 ```
 
-## Example
+## Usage
+### Example
 ```
 depo init <PATH_TO_CARTFILE> <PATH_TO_PODFILE> <PATH_TO_PACKAGE_SWIFT>
 depo install
 ```
+
+### Depofile
+Depofile is a file, which compose Cartfile, Podfile and Package.swift. For each file there is a section: carts, pods and swiftPackages. Each section has items, and for example items from 'swiftPackages' section should have `name` `url` and `version` -- as they have it in original Package.swift. For more information look at [Depofile Example](./DepofileExample.yaml)
+
 
 ## Documentation
 ```
