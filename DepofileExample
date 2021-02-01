@@ -1,0 +1,41 @@
+# carthage section
+carts:
+  # binary | githib | git
+  - kind: github
+    # identifier as in Cartfile -- github repo name, binary url or git repo url
+    identifier: rosberry/Base-iOS
+    # version is optional, as in Cartfile
+    version:
+      # equal | greaterOrEqual | compatible | gitReference
+      operation: gitReference
+      # commit, branch or version
+      value: master
+
+  # without version
+  - kind: github
+    identifier: rosberry/CollectionViewTools
+
+# pods section
+pods:
+  # name as in Podfile
+  - name: CollectionViewTools
+    # version is optional, as in Podfile
+    version:
+      # equal | greater | greaterOrEqual | lower | lowerOrEqual | compatible
+      operation: equal
+      value: 1.0.0
+
+  # without version
+  - name: Imp
+
+# spm section
+swiftPackages:
+  # name of dependency, as in Package.swift
+  - name: Networking-iOS
+  # url to dependency sources  
+    url: https://github.com/rosberry/Networking-iOS
+  # version is mandatory
+    version:
+      # exact | upToNextMinor | upToNextMajor | branch | revision
+      operation: branch
+      value: master
