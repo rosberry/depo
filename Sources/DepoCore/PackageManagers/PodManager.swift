@@ -57,7 +57,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile,
+    public init(pods: [Pod],
                 podCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
@@ -65,7 +65,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
-        self.pods = depofile.pods
+        self.pods = pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
         self.cacheBuilds = cacheBuilds

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public typealias CLIPackageManager = HasAllCommands & HasDepofileInit
+public typealias CLIPackageManager = HasAllCommands & HasPackagesInit
 public typealias HasAllCommands = HasInstallCommand & HasUpdateCommand & HasBuildCommand
 
 public protocol HasDepofileExtension {
@@ -15,10 +15,17 @@ public protocol HasCacheBuildsFlag {
     var cacheBuilds: Bool { get }
 }
 
-public protocol HasDepofileInit {
-    associatedtype Options: HasDepofileExtension
+public protocol HasDepofileKeyPath {
+    associatedtype ValueType
 
-    init(depofile: Depofile, options: Options)
+    static var depofileKeyPath: KeyPath<Depofile, ValueType> { get }
+}
+
+public protocol HasPackagesInit {
+    associatedtype Options: HasDepofileExtension
+    associatedtype Packages
+
+    init(packages: Packages, options: Options)
 }
 
 public protocol HasUpdateCommand {

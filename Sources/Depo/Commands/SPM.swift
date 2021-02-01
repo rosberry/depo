@@ -15,6 +15,8 @@ final class SPM: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [SwiftPackage]> = \.swiftPackages
     }
 
     final class SPMBuild: Build {
@@ -23,6 +25,8 @@ final class SPM: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [SwiftPackage]> = \.swiftPackages
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "SPM wrapper",

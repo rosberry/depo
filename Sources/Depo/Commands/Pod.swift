@@ -6,7 +6,7 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-final class Pod: ParsableCommand {
+final class PodCommand: ParsableCommand {
 
     final class PodUpdate: Update {
         typealias Command = PodManager
@@ -15,6 +15,8 @@ final class Pod: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
     final class PodInstall: Install {
@@ -24,6 +26,8 @@ final class Pod: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
     final class PodBuild: Build {
@@ -32,6 +36,8 @@ final class Pod: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Pod wrapper",

@@ -46,15 +46,17 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
 
-    private let packageSwiftFileName = AppConfiguration.Name.packageSwift
-    private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory
+    private let packageSwiftFileName      = AppConfiguration.Name.packageSwift
+    private let packageSwiftDirName       = AppConfiguration.Path.Relative.packageSwiftDirectory
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
-    private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+    private let outputDirName             = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+
     private let frameworkKind: MergePackage.FrameworkKind
     private let cacheBuilds: Bool
     private let swiftBuildArguments: String?
     private var observer: ((State) -> Void)?
     private let productExtensions: [String] = ["framework", "xcframework"]
+
     private var buildsOutputDirectoryPath: String {
         "\(fmg.currentDirectoryPath)/\(packageSwiftBuildsDirName)"
     }
@@ -62,7 +64,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         "\(fmg.currentDirectoryPath)/\(outputDirName)"
     }
 
-    public init(depofile: Depofile,
+    public init(swiftPackages: [SwiftPackage],
                 swiftCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
@@ -70,7 +72,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
-        self.packages = depofile.swiftPackages
+        self.packages = swiftPackages
         swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
         self.cacheBuilds = cacheBuilds

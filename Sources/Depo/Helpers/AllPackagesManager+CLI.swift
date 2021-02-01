@@ -6,7 +6,10 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension AllPackagesManager: HasDepofileInit {
+extension AllPackagesManager: HasPackagesInit {
+
+    public typealias Packages = Depofile
+
     public struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
@@ -43,8 +46,8 @@ extension AllPackagesManager: HasDepofileInit {
         public init() {}
     }
 
-    public convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile,
+    public convenience init(packages: Packages, options: Options) {
+        self.init(depofile: packages,
                   platform: options.platform,
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,

@@ -6,15 +6,15 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-protocol Install: ParsableCommand {
-    associatedtype Command: HasInstallCommand, HasDepofileInit, ProgressObservable
+protocol Install: ParsableCommand, HasDepofileKeyPath {
+    associatedtype Command: HasInstallCommand, HasPackagesInit, ProgressObservable
     var options: Command.Options { get }
 }
 
-extension Install {
+extension Install where ValueType == Command.Packages {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
-        let command = Command(depofile: depofile, options: options).subscribe { state in
+        let command = Command(packages: depofile[keyPath: Self.depofileKeyPath], options: options).subscribe { state in
             print(state)
         }
         try command.install()

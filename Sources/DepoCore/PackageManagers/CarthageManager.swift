@@ -37,8 +37,8 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return cacheBuilds + [.platform(platform), .custom(args: carthageArguments ?? "")]
     }
 
-    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
-        self.carthageItems = depofile.carts
+    public init(carthageItems: [CarthageItem], platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
+        self.carthageItems = carthageItems
         self.platform = platform
         self.carthageShellCommand = .init(commandPath: carthageCommandPath, shell: shell)
         self.cacheBuilds = cacheBuilds

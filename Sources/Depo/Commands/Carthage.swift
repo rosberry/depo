@@ -14,6 +14,8 @@ final class Carthage: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [CarthageItem]> = \.carts
     }
 
     final class CarthageInstall: Install {
@@ -22,6 +24,8 @@ final class Carthage: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [CarthageItem]> = \.carts
     }
 
     final class CarthageBuild: Build {
@@ -30,6 +34,8 @@ final class Carthage: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [CarthageItem]> = \.carts
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Carthage wrapper",

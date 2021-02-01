@@ -15,6 +15,8 @@ final class Depo: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
     }
 
     final class AllUpdate: Update {
@@ -24,6 +26,8 @@ final class Depo: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
     }
 
     final class AllBuild: Build {
@@ -33,6 +37,8 @@ final class Depo: ParsableCommand {
 
         @OptionGroup()
         var options: Command.Options
+
+        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",
@@ -41,7 +47,7 @@ final class Depo: ParsableCommand {
                                                                          AllUpdate.self,
                                                                          AllInstall.self,
                                                                          AllBuild.self,
-                                                                         Pod.self,
+                                                                         PodCommand.self,
                                                                          Carthage.self,
                                                                          SPM.self],
                                                            defaultSubcommand: AllInstall.self)

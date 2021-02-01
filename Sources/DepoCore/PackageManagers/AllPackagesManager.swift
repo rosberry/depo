@@ -15,7 +15,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     private let depofile: Depofile
     private let platform: Platform
     private var podManager: ConditionalPackageManager<PodManager> {
-        let manager = PodManager(depofile: depofile,
+        let manager = PodManager(pods: depofile.pods,
                                  podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
@@ -25,7 +25,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return conditional(manager: manager, keyPath: \.pods.isEmpty.not)
     }
     private var carthageManager: ConditionalPackageManager<CarthageManager> {
-        let manager = CarthageManager(depofile: depofile,
+        let manager = CarthageManager(carthageItems: depofile.carts,
                                       platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
@@ -35,7 +35,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return conditional(manager: manager, keyPath: \.carts.isEmpty.not)
     }
     private var spmManager: ConditionalPackageManager<SPMManager> {
-        let manager = SPMManager(depofile: depofile,
+        let manager = SPMManager(swiftPackages: depofile.swiftPackages,
                                  swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
