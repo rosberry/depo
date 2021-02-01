@@ -46,13 +46,14 @@ OPTIONS:
   -h, --help              Show help information.
 
 SUBCOMMANDS:
-  init
-  update
-  install (default)
-  build
-  pod
-  carthage
-  spm
+  init                    create Depofile
+  update                  run update for all package managers
+  install (default)       run install for all package managers
+  build                   run build for all package managers
+  pod                     Pod wrapper
+  carthage                Carthage wrapper
+  spm                     SPM wrapper
+  example                 prints example of Depofile
 
   See 'depo help <subcommand>' for detailed help.
 ```
