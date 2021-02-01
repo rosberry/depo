@@ -60,9 +60,9 @@ public final class BuildSwiftPackageScript: ShellCommand {
             return [try xcodebuild.buildForDistribution(settings: .device(scheme: scheme,
                                                                           configuration: config,
                                                                           derivedDataPath: derivedDataPath)),
-                try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
-                                                                         configuration: config,
-                                                                         derivedDataPath: derivedDataPath))]
+                    try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
+                                                                             configuration: config,
+                                                                             derivedDataPath: derivedDataPath))]
         }
     }
 

@@ -8,9 +8,11 @@ public typealias CLIPackageManager = HasAllCommands & HasDepofileInit
 public typealias HasAllCommands = HasInstallCommand & HasUpdateCommand & HasBuildCommand
 
 public protocol HasDepofileExtension {
-    var depofileExtension: DataCoder.Kind {
-        get
-    }
+    var depofileExtension: DataCoder.Kind { get }
+}
+
+public protocol HasCacheBuildsFlag {
+    var cacheBuilds: Bool { get }
 }
 
 public protocol HasDepofileInit {
