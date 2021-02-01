@@ -8,11 +8,6 @@ import Files
 struct XcodeCLTVersion {
 }
 
-struct Package {
-    let name: String
-    let version: String
-}
-
 public protocol Cacher {
     associatedtype PackageID
 
@@ -25,6 +20,10 @@ public protocol Cacher {
 
 public enum CacherError<PackageID>: Error {
     case noChangesToSave(packageID: PackageID)
+}
+
+public protocol GitIdentifiablePackage {
+    var packageID: GitCacher.PackageID { get }
 }
 
 public struct GitCacher: Cacher {
