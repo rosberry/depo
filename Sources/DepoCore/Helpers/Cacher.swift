@@ -73,6 +73,9 @@ public struct GitCacher: Cacher {
 
     public func packageIDS() throws -> [PackageID] {
         let uuid = UUID().uuidString
+        defer {
+            try? deleteFolder(name: uuid)
+        }
         try git.clone(url: gitRepoURL, to: uuid, branchName: Git.masterBranchName)
         return try fmg.perform(atPath: uuid) { () -> [String] in
             try git.remoteBranches()
