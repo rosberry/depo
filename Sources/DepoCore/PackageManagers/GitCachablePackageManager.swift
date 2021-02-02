@@ -9,6 +9,7 @@ import PathKit
 public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: GitIdentifiablePackage>: CanOutputPackages where PackageManager.Packages == [T] {
 
     public typealias Packages = PackageManager.Packages
+    private typealias SortedPackages = (toBuild: Packages, fromCache: Packages)
 
     public var outputPath: String {
         wrappedValue.outputPath
@@ -22,34 +23,49 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: Gi
     }
 
     private func checkCacheAndRun(action: (Packages) throws -> Void, packages: Packages) throws {
-        let cachedPackages = try cacher.packageIDS()
-        let (toBuild, fromCache) = packages.reduce((PackageManager.Packages(), PackageManager.Packages())) { result, package in
+        let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
+        let cachedPackageURLs = try fromCache.map { package in
+            try cacher.get(packageID: package.packageID)
+        }
+        try process(urlsOfCachedBuilds: cachedPackageURLs)
+        try action(toBuild)
+    }
+
+    private func sort(packages: Packages, cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
+        packages.reduce((PackageManager.Packages(), PackageManager.Packages())) { result, package in
             let (toBuild, fromCache) = result
-            if cachedPackages.contains(with: package.packageID, at: \.self) {
+            if cachedPackageIDs.contains(with: package.packageID, at: \.self) {
                 return (toBuild, fromCache + [package])
             }
             else {
                 return (toBuild + [package], fromCache)
             }
         }
-        let cachedPackageURLs = try fromCache.map { package in
-            try cacher.get(packageID: package.packageID)
+    }
+
+    private func createIfNeeded(path: Path) throws -> Path {
+        if !path.exists {
+            try path.mkpath()
         }
-        let output = Path(outputPath)
-        if !output.exists {
-            try output.mkpath()
-        }
-        for url in cachedPackageURLs {
+        return path
+    }
+
+    private func process(urlsOfCachedBuilds urls: [URL]) throws {
+        let outputPath = try createIfNeeded(path: Path(self.outputPath))
+        for url in urls {
             let path = Path(url.path)
-            let content = path.glob("*")
-            for children in content {
-                let newPath = Path(outputPath + children.lastComponent)
-                try? newPath.delete()
-                try children.move(newPath)
-            }
+            try moveContents(of: path, to: outputPath)
             try path.delete()
         }
-        try action(toBuild)
+    }
+
+    private func moveContents(of path: Path, to outputPath: Path) throws {
+        let content = path.glob("*")
+        for item in content {
+            let newPath = outputPath + item.lastComponent
+            try? newPath.delete()
+            try item.move(newPath)
+        }
     }
 }
 
