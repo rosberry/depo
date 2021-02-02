@@ -6,11 +6,15 @@ import Foundation
 
 public final class AllPackagesManager: ProgressObservable, HasAllCommands {
 
+    public typealias Packages = Depofile
+
     public enum State {
         case podManager(PodManager.State)
         case carthageManager(CarthageManager.State)
         case spmManager(SPMManager.State)
     }
+
+    public let outputPath: String = ""
 
     private let platform: Platform
     private var podManager: ConditionalPackageManager<PodManager, PodManager.Packages> {
@@ -108,8 +112,10 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
     }
 
-    private func conditional<Manager, Root>(manager: Manager,
-                                            keyPath: KeyPath<Root, Bool>) -> ConditionalPackageManager<Manager, Root> {
+    private func conditional<Manager, Root>(
+      manager: Manager,
+      keyPath: KeyPath<Root, Bool>
+    ) -> ConditionalPackageManager<Manager, Root> {
         .init(wrappedValue: manager, keyPath: keyPath)
     }
 }

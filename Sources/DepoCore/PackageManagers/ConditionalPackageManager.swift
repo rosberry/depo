@@ -3,7 +3,11 @@
 //
 
 @propertyWrapper
-struct ConditionalPackageManager<PackageManager, Root> {
+struct ConditionalPackageManager<PackageManager: CanOutputPackages, Root>: CanOutputPackages {
+
+    typealias Packages = PackageManager.Packages
+
+    let outputPath: String = ""
 
     let wrappedValue: PackageManager
     let keyPath: KeyPath<Root, Bool>

@@ -5,9 +5,6 @@
 import Foundation
 import Files
 
-struct XcodeCLTVersion {
-}
-
 public protocol Cacher {
     associatedtype PackageID
 
@@ -28,13 +25,12 @@ public protocol GitIdentifiablePackage {
 
 public struct GitCacher: Cacher {
 
-    public struct PackageID: CustomStringConvertible, ExpressibleByStringLiteral {
+    public struct PackageID: CustomStringConvertible, ExpressibleByStringLiteral, Equatable {
 
         public typealias StringLiteralType = String
 
         let name: String
         let version: String
-        let xcodebuildVersion: XcodeCLTVersion
         public var description: String {
             "\(name)"
         }
@@ -42,13 +38,11 @@ public struct GitCacher: Cacher {
         public init(name: String) {
             self.name = name
             self.version = ""
-            self.xcodebuildVersion = .init()
         }
 
         public init(stringLiteral value: StringLiteralType) {
             self.name = value
             self.version = ""
-            self.xcodebuildVersion = .init()
         }
     }
 

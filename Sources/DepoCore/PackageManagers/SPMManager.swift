@@ -38,6 +38,8 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         case packages
     }
 
+    public let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+
     private let fmg: FileManager = .default
     private let shell: Shell
     private let xcodebuild: XcodeBuild

@@ -26,6 +26,7 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
 
     private let cartfileName: String = AppConfiguration.Name.cartfile
 
+    public let outputPath: String = "Carthage/Build/iOS"
     private let platform: Platform
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand

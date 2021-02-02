@@ -42,6 +42,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         case pods
     }
 
+    public let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
