@@ -9,7 +9,7 @@ import DepoCore
 final class Carthage: ParsableCommand {
 
     final class CarthageUpdate: Update {
-        typealias Command = CarthageManager
+        typealias Command = GitCachablePackageManager<CarthageManager, CarthageItem>
         static let  configuration: CommandConfiguration = .init(commandName: "update", abstract: "run carthage update")
 
         @OptionGroup()
@@ -19,7 +19,7 @@ final class Carthage: ParsableCommand {
     }
 
     final class CarthageInstall: Install {
-        typealias Command = CarthageManager
+        typealias Command = GitCachablePackageManager<CarthageManager, CarthageItem>
         static let  configuration: CommandConfiguration = .init(commandName: "install", abstract: "run carthage bootstrap")
 
         @OptionGroup()
@@ -29,7 +29,7 @@ final class Carthage: ParsableCommand {
     }
 
     final class CarthageBuild: Build {
-        typealias Command = CarthageManager
+        typealias Command = GitCachablePackageManager<CarthageManager, CarthageItem>
         static let  configuration: CommandConfiguration = .init(commandName: "build", abstract: "run carthage build")
 
         @OptionGroup()

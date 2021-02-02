@@ -6,20 +6,24 @@ import Foundation
 import Files
 
 @propertyWrapper
-struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages where PackageManager.Packages == [GitIdentifiablePackage] {
+public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: GitIdentifiablePackage>: CanOutputPackages where PackageManager.Packages == [T] {
 
-    typealias Packages = PackageManager.Packages
+    public typealias Packages = PackageManager.Packages
 
-    var outputPath: String {
+    public var outputPath: String {
         wrappedValue.outputPath
     }
 
-    let wrappedValue: PackageManager
-    let cacher: GitCacher = .init(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
+    public let wrappedValue: PackageManager
+    public let cacher: GitCacher = .init(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
+
+    public init(wrappedValue: PackageManager) {
+        self.wrappedValue = wrappedValue
+    }
 
     private func checkCacheAndRun(action: (Packages) throws -> Void, packages: Packages) throws {
         let cachedPackages = try cacher.packageIDS()
-        let (toBuild, fromCache) = packages.reduce(([GitIdentifiablePackage](), [GitIdentifiablePackage]())) { result, package in
+        let (toBuild, fromCache) = packages.reduce((PackageManager.Packages(), PackageManager.Packages())) { result, package in
             let (toBuild, fromCache) = result
             if cachedPackages.contains(with: package.packageID, at: \.self) {
                 return (toBuild, fromCache + [package])
@@ -33,26 +37,43 @@ struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPa
         }
         let outputFolder = try Folder(path: outputPath)
         for url in cachedPackageURLs {
-            try Folder(path: url.absoluteString).copyContents(to: outputFolder)
+            try Folder(path: url.path).copyContents(to: outputFolder)
         }
         try action(toBuild)
     }
 }
 
 extension GitCachablePackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
-    func update(packages: Packages) throws {
+    public func update(packages: Packages) throws {
         try checkCacheAndRun(action: wrappedValue.update, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
-    func install(packages: Packages) throws {
+    public func install(packages: Packages) throws {
         try checkCacheAndRun(action: wrappedValue.install, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
-    func build(packages: Packages) throws {
+    public func build(packages: Packages) throws {
         try checkCacheAndRun(action: wrappedValue.build, packages: packages)
+    }
+}
+
+extension GitCachablePackageManager: HasOptionsInit where PackageManager: HasOptionsInit {
+    public typealias Options = PackageManager.Options
+
+    public init(options: PackageManager.Options) {
+        self.wrappedValue = PackageManager(options: options)
+    }
+}
+
+extension GitCachablePackageManager: ProgressObservable where PackageManager: ProgressObservable {
+    public typealias State = PackageManager.State
+
+    public func subscribe(_ observer: @escaping (PackageManager.State) -> Void) -> Self {
+        _ = wrappedValue.subscribe(observer)
+        return self
     }
 }

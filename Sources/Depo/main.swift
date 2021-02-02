@@ -25,7 +25,7 @@ source.setEventHandler {
 }
 source.resume()
 
-// Depo.main()
+Depo.main()
 
 struct Cacher: ParsableCommand {
 
@@ -129,7 +129,7 @@ struct Cacher: ParsableCommand {
     }
 }
 
-Cacher.main()
+// Cacher.main()
 
 //print(Folder.current.url.absoluteString)
 //print(try Folder.current.subfolder(at: "/Users").url.absoluteString)
