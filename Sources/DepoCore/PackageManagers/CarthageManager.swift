@@ -6,6 +6,7 @@ import Foundation
 
 public final class CarthageManager: ProgressObservable, HasAllCommands {
 
+    public typealias Packages = [CarthageItem]
     public enum State {
         case updating
         case installing
@@ -25,7 +26,6 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
 
     private let cartfileName: String = AppConfiguration.Name.cartfile
 
-    private let carthageItems: [CarthageItem]
     private let platform: Platform
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand
@@ -37,8 +37,10 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return cacheBuilds + [.platform(platform), .custom(args: carthageArguments ?? "")]
     }
 
-    public init(carthageItems: [CarthageItem], platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
-        self.carthageItems = carthageItems
+    public init(platform: Platform,
+                carthageCommandPath: String,
+                cacheBuilds: Bool,
+                carthageArguments: String?) {
         self.platform = platform
         self.carthageShellCommand = .init(commandPath: carthageCommandPath, shell: shell)
         self.cacheBuilds = cacheBuilds
@@ -53,19 +55,19 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update() throws {
+    public func update(packages: Packages) throws {
         observer?(.updating)
-        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.update(arguments: carthageArgs)
     }
 
-    public func install() throws {
+    public func install(packages: Packages) throws {
         observer?(.installing)
-        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.bootstrap(arguments: carthageArgs)
     }
 
-    public func build() throws {
+    public func build(packages: Packages) throws {
         observer?(.building)
         try carthageShellCommand.build(arguments: carthageArgs)
     }

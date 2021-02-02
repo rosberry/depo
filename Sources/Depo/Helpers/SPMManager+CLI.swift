@@ -6,9 +6,7 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension SPMManager: HasPackagesInit {
-
-    public typealias Packages = [SwiftPackage]
+extension SPMManager: HasOptionsInit {
 
     public struct Options: ParsableArguments, HasDepofileExtension {
 
@@ -31,9 +29,8 @@ extension SPMManager: HasPackagesInit {
         public init() {}
     }
 
-    public convenience init(packages: Packages, options: Options) {
-        self.init(swiftPackages: packages,
-                  swiftCommandPath: options.swiftCommandPath,
+    public convenience init(options: Options) {
+        self.init(swiftCommandPath: options.swiftCommandPath,
                   frameworkKind: options.frameworkKind,
                   cacheBuilds: options.cacheBuilds,
                   swiftBuildArguments: options.swiftBuildArguments)

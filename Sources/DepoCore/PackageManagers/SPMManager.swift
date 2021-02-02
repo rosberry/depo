@@ -7,6 +7,7 @@ import Files
 
 public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
 
+    public typealias Packages = [SwiftPackage]
     public typealias FailedContext = (Swift.Error, SwiftPackage)
 
     public enum State {
@@ -37,7 +38,6 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         case packages
     }
 
-    private let packages: [SwiftPackage]
     private let fmg: FileManager = .default
     private let shell: Shell
     private let xcodebuild: XcodeBuild
@@ -64,16 +64,14 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         "\(fmg.currentDirectoryPath)/\(outputDirName)"
     }
 
-    public init(swiftPackages: [SwiftPackage],
-                swiftCommandPath: String,
+    public init(swiftCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
                 swiftBuildArguments: String?) {
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
-        self.packages = swiftPackages
-        swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
+        self.swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
         self.cacheBuilds = cacheBuilds
         self.swiftBuildArguments = swiftBuildArguments
@@ -87,15 +85,15 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         return self
     }
 
-    public func update() throws {
+    public func update(packages: Packages) throws {
         observer?(.updating)
         let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
-        try build()
+        try build(packages: packages)
     }
 
-    public func build() throws {
+    public func build(packages: Packages) throws {
         observer?(.building)
         try build(packages: packages,
                   like: frameworkKind,

@@ -7,16 +7,16 @@ import ArgumentParser
 import DepoCore
 
 protocol Update: ParsableCommand, HasDepofileKeyPath {
-    associatedtype Command: HasUpdateCommand, HasPackagesInit, ProgressObservable
+    associatedtype Command: HasUpdateCommand, HasOptionsInit, ProgressObservable
     var options: Command.Options { get }
 }
 
 extension Update where ValueType == Command.Packages {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
-        let command = Command(packages: depofile[keyPath: Self.depofileKeyPath], options: options).subscribe { state in
+        let command = Command(options: options).subscribe { state in
             print(state)
         }
-        try command.update()
+        try command.update(packages: depofile[keyPath: Self.depofileKeyPath])
     }
 }

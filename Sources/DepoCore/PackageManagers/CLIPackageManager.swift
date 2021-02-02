@@ -4,7 +4,7 @@
 
 import Foundation
 
-public typealias CLIPackageManager = HasAllCommands & HasPackagesInit
+public typealias CLIPackageManager = HasAllCommands & HasOptionsInit
 public typealias HasAllCommands = HasInstallCommand & HasUpdateCommand & HasBuildCommand
 
 public protocol HasDepofileExtension {
@@ -21,21 +21,26 @@ public protocol HasDepofileKeyPath {
     static var depofileKeyPath: KeyPath<Depofile, ValueType> { get }
 }
 
-public protocol HasPackagesInit {
+public protocol HasOptionsInit {
     associatedtype Options: HasDepofileExtension
-    associatedtype Packages
 
-    init(packages: Packages, options: Options)
+    init(options: Options)
 }
 
 public protocol HasUpdateCommand {
-    func update() throws
+    associatedtype Packages
+
+    func update(packages: Packages) throws
 }
 
 public protocol HasInstallCommand {
-    func install() throws
+    associatedtype Packages
+
+    func install(packages: Packages) throws
 }
 
 public protocol HasBuildCommand {
-    func build() throws
+    associatedtype Packages
+
+    func build(packages: Packages) throws
 }

@@ -6,9 +6,7 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension PodManager: HasPackagesInit {
-
-    public typealias Packages = [Pod]
+extension PodManager: HasOptionsInit {
 
     public struct Options: ParsableArguments, HasDepofileExtension {
 
@@ -31,9 +29,8 @@ extension PodManager: HasPackagesInit {
         public init() {}
     }
 
-    public convenience init(packages: Packages, options: Options) {
-        self.init(pods: packages,
-                  podCommandPath: options.podCommandPath,
+    public convenience init(options: Options) {
+        self.init(podCommandPath: options.podCommandPath,
                   frameworkKind: options.frameworkKind,
                   cacheBuilds: options.cacheBuilds,
                   podArguments: options.podArguments)

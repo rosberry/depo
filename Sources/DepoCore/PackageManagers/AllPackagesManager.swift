@@ -12,37 +12,33 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         case spmManager(SPMManager.State)
     }
 
-    private let depofile: Depofile
     private let platform: Platform
-    private var podManager: ConditionalPackageManager<PodManager> {
-        let manager = PodManager(pods: depofile.pods,
-                                 podCommandPath: podCommandPath,
+    private var podManager: ConditionalPackageManager<PodManager, PodManager.Packages> {
+        let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
                                  podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
-        return conditional(manager: manager, keyPath: \.pods.isEmpty.not)
+        return conditional(manager: manager, keyPath: \PodManager.Packages.isEmpty.not)
     }
-    private var carthageManager: ConditionalPackageManager<CarthageManager> {
-        let manager = CarthageManager(carthageItems: depofile.carts,
-                                      platform: platform,
+    private var carthageManager: ConditionalPackageManager<CarthageManager, CarthageManager.Packages> {
+        let manager = CarthageManager(platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
                                       carthageArguments: carthageArguments).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
-        return conditional(manager: manager, keyPath: \.carts.isEmpty.not)
+        return conditional(manager: manager, keyPath: \CarthageManager.Packages.isEmpty.not)
     }
-    private var spmManager: ConditionalPackageManager<SPMManager> {
-        let manager = SPMManager(swiftPackages: depofile.swiftPackages,
-                                 swiftCommandPath: swiftCommandPath,
+    private var spmManager: ConditionalPackageManager<SPMManager, SPMManager.Packages> {
+        let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
-        return conditional(manager: manager, keyPath: \.swiftPackages.isEmpty.not)
+        return conditional(manager: manager, keyPath: \SPMManager.Packages.isEmpty.not)
     }
     private var observer: ((State) -> Void)?
     private let podCommandPath: String
@@ -54,8 +50,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     private let podArguments: String?
     private let swiftBuildArguments: String?
 
-    public init(depofile: Depofile,
-                platform: Platform,
+    public init(platform: Platform,
                 podCommandPath: String,
                 carthageCommandPath: String,
                 swiftCommandPath: String,
@@ -64,7 +59,6 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
                 carthageArguments: String?,
                 podArguments: String?,
                 swiftBuildArguments: String?) {
-        self.depofile = depofile
         self.platform = platform
         self.podCommandPath = podCommandPath
         self.carthageCommandPath = carthageCommandPath
@@ -81,31 +75,41 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update() throws {
+    public func update(packages: Depofile) throws {
+        let podUpdate: () throws -> Void      = { try self.podManager.update(packages: packages.pods) }
+        let carthageUpdate: () throws -> Void = { try self.carthageManager.update(packages: packages.carts) }
+        let spmUpdate: () throws -> Void      = { try self.spmManager.update(packages: packages.swiftPackages) }
         try CommandRunner.runIndependently {
-            podManager.update
-            carthageManager.update
-            spmManager.update
+            podUpdate
+            carthageUpdate
+            spmUpdate
         }
     }
 
-    public func install() throws {
+    public func install(packages: Depofile) throws {
+        let podInstall: () throws -> Void      = { try self.podManager.install(packages: packages.pods) }
+        let carthageInstall: () throws -> Void = { try self.carthageManager.install(packages: packages.carts) }
+        let spmUpdate: () throws -> Void       = { try self.spmManager.update(packages: packages.swiftPackages) }
         try CommandRunner.runIndependently {
-            podManager.install
-            carthageManager.install
-            spmManager.update
+            podInstall
+            carthageInstall
+            spmUpdate
         }
     }
 
-    public func build() throws {
+    public func build(packages: Depofile) throws {
+        let podBuild: () throws -> Void      = { try self.podManager.build(packages: packages.pods) }
+        let carthageBuild: () throws -> Void = { try self.carthageManager.build(packages: packages.carts) }
+        let spmBuild: () throws -> Void      = { try self.spmManager.build(packages: packages.swiftPackages) }
         try CommandRunner.runIndependently {
-            podManager.build
-            carthageManager.build
-            spmManager.build
+            podBuild
+            carthageBuild
+            spmBuild
         }
     }
 
-    private func conditional<Manager>(manager: Manager, keyPath: KeyPath<Depofile, Bool>) -> ConditionalPackageManager<Manager> {
-        .init(wrappedValue: manager, root: depofile, keyPath: keyPath)
+    private func conditional<Manager, Root>(manager: Manager,
+                                            keyPath: KeyPath<Root, Bool>) -> ConditionalPackageManager<Manager, Root> {
+        .init(wrappedValue: manager, keyPath: keyPath)
     }
 }

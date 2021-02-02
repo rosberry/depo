@@ -6,7 +6,7 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension AllPackagesManager: HasPackagesInit {
+extension AllPackagesManager: HasOptionsInit {
 
     public typealias Packages = Depofile
 
@@ -46,9 +46,8 @@ extension AllPackagesManager: HasPackagesInit {
         public init() {}
     }
 
-    public convenience init(packages: Packages, options: Options) {
-        self.init(depofile: packages,
-                  platform: options.platform,
+    public convenience init(options: Options) {
+        self.init(platform: options.platform,
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,
                   swiftCommandPath: options.swiftCommandPath,

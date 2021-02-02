@@ -6,9 +6,7 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension CarthageManager: HasPackagesInit {
-
-    public typealias Packages = [CarthageItem]
+extension CarthageManager: HasOptionsInit {
 
     public struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
@@ -31,9 +29,8 @@ extension CarthageManager: HasPackagesInit {
         public init() {}
     }
 
-    public convenience init(packages: Packages, options: Options) {
-        self.init(carthageItems: packages,
-                  platform: options.platform,
+    public convenience init(options: Options) {
+        self.init(platform: options.platform,
                   carthageCommandPath: options.carthageCommandPath,
                   cacheBuilds: options.cacheBuilds,
                   carthageArguments: options.carthageArguments)
