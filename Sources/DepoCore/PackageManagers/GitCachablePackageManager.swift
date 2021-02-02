@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import Files
+import PathKit
 
 @propertyWrapper
 public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: GitIdentifiablePackage>: CanOutputPackages where PackageManager.Packages == [T] {
@@ -35,9 +35,19 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: Gi
         let cachedPackageURLs = try fromCache.map { package in
             try cacher.get(packageID: package.packageID)
         }
-        let outputFolder = try Folder(path: outputPath)
+        let output = Path(outputPath)
+        if !output.exists {
+            try output.mkpath()
+        }
         for url in cachedPackageURLs {
-            try Folder(path: url.path).copyContents(to: outputFolder)
+            let path = Path(url.path)
+            let content = path.glob("*")
+            for children in content {
+                let newPath = Path(outputPath + children.lastComponent)
+                try? newPath.delete()
+                try children.move(newPath)
+            }
+            try path.delete()
         }
         try action(toBuild)
     }
