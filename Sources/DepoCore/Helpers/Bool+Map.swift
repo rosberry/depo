@@ -4,11 +4,6 @@
 
 extension Bool {
     func mapTrue<T>(to value: T) -> T? {
-        if self {
-            return value
-        }
-        else {
-            return nil
-        }
+        self ? value : nil
     }
 }

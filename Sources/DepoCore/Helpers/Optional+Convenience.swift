@@ -9,12 +9,6 @@ public extension Optional {
         } ?? []
     }
 
-    func map<T>(keyPath: KeyPath<Wrapped, T>) -> T? {
-        map { wrapped in
-            wrapped[keyPath: keyPath]
-        }
-    }
-
     func mapOrDefault<T: HasDefaultValue>(keyPath: KeyPath<Wrapped, T>) -> T {
         map { wrapped in
             wrapped[keyPath: keyPath]
