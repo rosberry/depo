@@ -8,7 +8,9 @@ import Files
 public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
 
     public typealias Packages = [SwiftPackage]
-    public typealias FailedContext = (Swift.Error, SwiftPackage)
+    public typealias SuccessContext = (SwiftPackage, [MergePackage.Output])
+    public typealias FailureContext = FailureWrapper<SwiftPackage, Swift.Error>
+    public typealias BuildResult = Result<SuccessContext, FailureContext>
 
     public enum State {
         case updating
@@ -24,7 +26,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
 
     public enum Error: Swift.Error {
         case badPackageSwiftFile(path: String)
-        case badSwiftPackageBuild(contexts: [FailedContext])
+        case badSwiftPackageBuild(contexts: [FailureContext])
         case noDevelopmentTeam
         case noSchemaToBuild(package: SwiftPackage)
     }
@@ -120,26 +122,22 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
                        like frameworkKind: MergePackage.FrameworkKind,
                        at packagesSourcesPath: String,
                        buildsOutputDirectoryPath: String,
-                       mergedBuildsOutputDirectoryPath: String) throws {
-        let failedPackages = packages.compactMap { package -> FailedContext? in
+                       mergedBuildsOutputDirectoryPath: String) -> [BuildResult] {
+        packages.map { package -> BuildResult in
             do {
                 try build(package: package,
                           packagesSourcesDirectoryRelativePath: packagesSourcesPath,
                           packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
                           frameworkKind: frameworkKind)
-                try merge(package: package,
-                          packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
-                          mergedFrameworksDirectoryPath: mergedBuildsOutputDirectoryPath)
+                let mergeOutputs = try merge(package: package,
+                                             packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
+                                             mergedFrameworksDirectoryPath: mergedBuildsOutputDirectoryPath)
                 observer?(.done(package))
-                return nil
+                return .success((package, mergeOutputs))
             }
             catch {
-                observer?(.doneWithError(package, error))
-                return (error, package)
+                return .failure(.init(error: error, value: package))
             }
-        }
-        if !failedPackages.isEmpty {
-            throw Error.badSwiftPackageBuild(contexts: failedPackages)
         }
     }
 
@@ -178,7 +176,9 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         }
     }
 
-    private func merge(package: SwiftPackage, packagesBuildsDirectoryRelativePath: String, mergedFrameworksDirectoryPath: String) throws {
+    private func merge(package: SwiftPackage,
+                       packagesBuildsDirectoryRelativePath: String,
+                       mergedFrameworksDirectoryPath: String) throws -> [MergePackage.Output] {
         let path = "\(packagesBuildsDirectoryRelativePath)/\(package.name)"
         let deviceBuildDir = "\(path)/Release-iphoneos"
         #warning("proceeding all swift packages seems redundant")
@@ -186,10 +186,12 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
             dir.extension == "framework" ? dir.nameExcludingExtension : nil
         }
         do {
-            try fmg.perform(atPath: path) {
-                try frameworks.forEach { framework in
+            return try fmg.perform(atPath: path) {
+                try frameworks.map { framework -> MergePackage.Output in
                     observer?(.merging(framework: framework, frameworkKind, output: mergedFrameworksDirectoryPath))
-                    try mergePackage.make(frameworkKind, swiftFrameworkName: framework, outputPath: "\(mergedFrameworksDirectoryPath)")
+                    return try mergePackage.make(frameworkKind,
+                                                 swiftFrameworkName: framework,
+                                                 outputPath: "\(mergedFrameworksDirectoryPath)")
                 }
             }
         }

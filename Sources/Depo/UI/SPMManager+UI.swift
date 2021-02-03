@@ -38,7 +38,9 @@ extension SPMManager.Error: LocalizedError {
         case let .badSwiftPackageBuild(contexts):
             return """
                    bad swift package build:
-                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
+                   \(contexts.map { context in
+                         "\(context.error.localizedDescription) for \(context.value.name)"
+                     }.newLineJoined)
                    """
         case .noDevelopmentTeam:
             return "development team is required for building swift packages"
