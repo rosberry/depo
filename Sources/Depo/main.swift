@@ -45,9 +45,9 @@ struct Cacher: ParsableCommand {
         var buildURLs: [String]
 
         func run() throws {
-            let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
+            let gitRepoURL = try URL.throwingInit(string: self.gitRepoURL)
             let buildURLs = try self.buildURLs.map { buildURL in
-                try Cacher.url(string: Path(buildURL).absolute().string)
+                try URL.throwingInit(string: Path(buildURL).absolute().string)
             }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
             try cacher.save(buildURLs: buildURLs, packageID: .init(name: packageName))
@@ -66,9 +66,9 @@ struct Cacher: ParsableCommand {
         var buildURLs: [String]
 
         func run() throws {
-            let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
+            let gitRepoURL = try URL.throwingInit(string: self.gitRepoURL)
             let buildURLs = try self.buildURLs.map { buildURL in
-                try Cacher.url(string: Path(buildURL).absolute().string)
+                try URL.throwingInit(string: Path(buildURL).absolute().string)
             }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
             try cacher.update(buildURLs: buildURLs, packageID: .init(name: packageName))
@@ -84,7 +84,7 @@ struct Cacher: ParsableCommand {
         var packageName: String
 
         func run() throws {
-            let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
+            let gitRepoURL = try URL.throwingInit(string: self.gitRepoURL)
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
             let url = try cacher.get(packageID: .init(name: packageName))
             print(url)
@@ -100,8 +100,8 @@ struct Cacher: ParsableCommand {
         var remoteGitRepoURL: String?
 
         func run() throws {
-            let localGitRepoURL = try Cacher.url(string: self.localGitRepoURL)
-            let remoteGitRepoURL = try? Cacher.url(string: self.remoteGitRepoURL ?? "")
+            let localGitRepoURL = try URL.throwingInit(string: self.localGitRepoURL)
+            let remoteGitRepoURL = try? URL.throwingInit(string: self.remoteGitRepoURL ?? "")
             let cacher = GitCacher(gitRepoURL: localGitRepoURL)
             try cacher.setupRepository(at: localGitRepoURL, remoteURL: remoteGitRepoURL)
         }
@@ -113,7 +113,7 @@ struct Cacher: ParsableCommand {
         var gitRepoURL: String
 
         func run() throws {
-            let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
+            let gitRepoURL = try URL.throwingInit(string: self.gitRepoURL)
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
             print(try cacher.packageIDS().map(by: \.description).joined(separator: "\n"))
         }
@@ -124,13 +124,6 @@ struct Cacher: ParsableCommand {
                                                                          Setup.self,
                                                                          Update.self,
                                                                          Packages.self])
-
-    static func url(string: String) throws -> URL {
-        guard let url = URL(string: string) else {
-            throw Error.invalidURL(string: string)
-        }
-        return url
-    }
 }
 
 // Cacher.main()

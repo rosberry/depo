@@ -23,13 +23,26 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
         self.wrappedValue = wrappedValue
     }
 
-    private func checkCacheAndRun<T>(action: ([Package]) throws -> T, packages: [Package]) throws -> T {
+    private func checkCacheAndRun(action: ([Package]) throws -> [BuildResult],
+                                  packages: [Package]) throws -> [BuildResult] {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
         let cachedPackageURLs = try fromCache.map { package in
             try cacher.get(packageID: package.packageID)
         }
         try process(urlsOfCachedBuilds: cachedPackageURLs)
-        return try action(toBuild)
+        let outputs = try action(toBuild)
+        try cache(builds: outputs)
+        return outputs
+    }
+
+    private func cache(builds: [BuildResult]) throws {
+        let (successBuilds, _) = separate(builds)
+        for (package, paths) in successBuilds {
+            let urls = try paths.map { path in
+                try URL.throwingInit(string: path)
+            }
+            try cacher.save(buildURLs: urls, packageID: package.packageID)
+        }
     }
 
     private func sort(packages: [Package], cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
