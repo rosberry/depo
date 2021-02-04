@@ -7,6 +7,11 @@ import Foundation
 public typealias CLIPackageManager = HasAllCommands & HasOptionsInit
 public typealias HasAllCommands = HasInstallCommand & HasUpdateCommand & HasBuildCommand
 
+public typealias PackagesOutput<Package> = [PackageOutput<Package>]
+public typealias PackageOutput<Package> = Result<SuccessBuild<Package>, FailureBuild<Package>>
+public typealias SuccessBuild<Package> = (Package, [String])
+public typealias FailureBuild<Package> = FailureWrapper<Package, Swift.Error>
+
 public protocol HasDepofileExtension {
     var depofileExtension: DataCoder.Kind { get }
 }
@@ -35,13 +40,13 @@ public protocol CanOutputPackages {
 }
 
 public protocol HasUpdateCommand: CanOutputPackages {
-    func update(packages: [Package]) throws
+    func update(packages: [Package]) throws -> PackagesOutput<Package>
 }
 
 public protocol HasInstallCommand: CanOutputPackages {
-    func install(packages: [Package]) throws
+    func install(packages: [Package]) throws -> PackagesOutput<Package>
 }
 
 public protocol HasBuildCommand: CanOutputPackages {
-    func build(packages: [Package]) throws
+    func build(packages: [Package]) throws -> PackagesOutput<Package>
 }

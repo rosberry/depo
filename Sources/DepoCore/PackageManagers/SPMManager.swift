@@ -8,9 +8,7 @@ import Files
 public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
 
     public typealias Package = SwiftPackage
-    public typealias SuccessContext = (SwiftPackage, [MergePackage.Output])
-    public typealias FailureContext = FailureWrapper<SwiftPackage, Swift.Error>
-    public typealias BuildResult = Result<SuccessContext, FailureContext>
+    public typealias BuildResult = PackageOutput<Package>
 
     public enum State {
         case updating
@@ -26,7 +24,6 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
 
     public enum Error: Swift.Error {
         case badPackageSwiftFile(path: String)
-        case badSwiftPackageBuild(contexts: [FailureContext])
         case noDevelopmentTeam
         case noSchemaToBuild(package: SwiftPackage)
     }
@@ -89,21 +86,21 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         return self
     }
 
-    public func update(packages: [Package]) throws {
+    public func update(packages: [Package]) throws -> [BuildResult] {
         observer?(.updating)
         let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
-        try build(packages: packages)
+        return try build(packages: packages)
     }
 
-    public func build(packages: [Package]) throws {
+    public func build(packages: [Package]) throws -> [BuildResult] {
         observer?(.building)
-        try build(packages: packages,
-                  like: frameworkKind,
-                  at: packageSwiftDirName,
-                  buildsOutputDirectoryPath: buildsOutputDirectoryPath,
-                  mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
+        return try build(packages: packages,
+                         like: frameworkKind,
+                         at: packageSwiftDirName,
+                         buildsOutputDirectoryPath: buildsOutputDirectoryPath,
+                         mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
@@ -133,7 +130,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
                                              packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
                                              mergedFrameworksDirectoryPath: mergedBuildsOutputDirectoryPath)
                 observer?(.done(package))
-                return .success((package, mergeOutputs))
+                return .success((package, mergeOutputs.map(by: \.mergedFrameworkPath)))
             }
             catch {
                 return .failure(.init(error: error, value: package))

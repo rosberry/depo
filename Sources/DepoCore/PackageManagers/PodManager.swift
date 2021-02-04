@@ -9,6 +9,7 @@ import Files
 public final class PodManager: ProgressObservable, HasAllCommands {
 
     public typealias Package = Pod
+    public typealias BuildResult = PackageOutput<Package>
 
     public typealias FailedContext = (Swift.Error, Pod)
 
@@ -79,32 +80,33 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func install(packages: [Package]) throws {
+    public func install(packages: [Package]) throws -> [BuildResult] {
         observer?(.installing)
         let podFilePath = "./\(podFileName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
-        try build(packages: packages)
+        return try build(packages: packages)
     }
 
-    public func update(packages: [Package]) throws {
+    public func update(packages: [Package]) throws -> [BuildResult] {
         let podFilePath = "./\(podFileName)"
 
         observer?(.updating)
         try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
-        try build(packages: packages)
+        return try build(packages: packages)
     }
 
-    public func build(packages: [Package]) throws {
+    public func build(packages: [Package]) throws -> [BuildResult] {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         observer?(.building)
         try build(pods: packages, frameworkKind: frameworkKind, at: podsProjectPath)
         observer?(.processing)
         try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
+        return []
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {

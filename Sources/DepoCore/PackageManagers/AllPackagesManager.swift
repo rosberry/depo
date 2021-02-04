@@ -7,6 +7,7 @@ import Foundation
 public final class AllPackagesManager: ProgressObservable, HasAllCommands {
 
     public typealias Package = Depofile
+    public typealias BuildResult = PackageOutput<Package>
 
     public enum State {
         case podManager(PodManager.State)
@@ -79,7 +80,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update(packages: [Package]) throws {
+    public func update(packages: [Package]) throws -> [BuildResult] {
         let depofile = try packages.single()
         let podUpdate: () throws -> Void      = { try self.podManager.update(packages: depofile.pods) }
         let carthageUpdate: () throws -> Void = { try self.carthageManager.update(packages: depofile.carts) }
@@ -89,9 +90,10 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
             carthageUpdate
             spmUpdate
         }
+        return []
     }
 
-    public func install(packages: [Package]) throws {
+    public func install(packages: [Package]) throws -> [BuildResult] {
         let depofile = try packages.single()
         let podInstall: () throws -> Void      = { try self.podManager.install(packages: depofile.pods) }
         let carthageInstall: () throws -> Void = { try self.carthageManager.install(packages: depofile.carts) }
@@ -101,9 +103,10 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
             carthageInstall
             spmUpdate
         }
+        return []
     }
 
-    public func build(packages: [Package]) throws {
+    public func build(packages: [Package]) throws -> [BuildResult] {
         let depofile = try packages.single()
         let podBuild: () throws -> Void      = { try self.podManager.build(packages: depofile.pods) }
         let carthageBuild: () throws -> Void = { try self.carthageManager.build(packages: depofile.carts) }
@@ -113,6 +116,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
             carthageBuild
             spmBuild
         }
+        return []
     }
 
     private func conditional<Manager, Root>(

@@ -9,6 +9,7 @@ import PathKit
 public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages where PackageManager.Package: GitIdentifiablePackage {
 
     public typealias Package = PackageManager.Package
+    public typealias BuildResult = PackageOutput<Package>
     private typealias SortedPackages = (toBuild: [Package], fromCache: [Package])
 
     public var outputPath: String {
@@ -22,13 +23,13 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
         self.wrappedValue = wrappedValue
     }
 
-    private func checkCacheAndRun(action: ([Package]) throws -> Void, packages: [Package]) throws {
+    private func checkCacheAndRun<T>(action: ([Package]) throws -> T, packages: [Package]) throws -> T {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
         let cachedPackageURLs = try fromCache.map { package in
             try cacher.get(packageID: package.packageID)
         }
         try process(urlsOfCachedBuilds: cachedPackageURLs)
-        try action(toBuild)
+        return try action(toBuild)
     }
 
     private func sort(packages: [Package], cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
@@ -70,19 +71,19 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
 }
 
 extension GitCachablePackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
-    public func update(packages: [Package]) throws {
+    public func update(packages: [Package]) throws -> [BuildResult] {
         try checkCacheAndRun(action: wrappedValue.update, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
-    public func install(packages: [Package]) throws {
+    public func install(packages: [Package]) throws -> [BuildResult] {
         try checkCacheAndRun(action: wrappedValue.install, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
-    public func build(packages: [Package]) throws {
+    public func build(packages: [Package]) throws -> [BuildResult] {
         try checkCacheAndRun(action: wrappedValue.build, packages: packages)
     }
 }
