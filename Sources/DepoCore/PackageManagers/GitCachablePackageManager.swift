@@ -6,10 +6,10 @@ import Foundation
 import PathKit
 
 @propertyWrapper
-public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: GitIdentifiablePackage>: CanOutputPackages where PackageManager.Packages == [T] {
+public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages where PackageManager.Package: GitIdentifiablePackage {
 
-    public typealias Packages = PackageManager.Packages
-    private typealias SortedPackages = (toBuild: Packages, fromCache: Packages)
+    public typealias Package = PackageManager.Package
+    private typealias SortedPackages = (toBuild: [Package], fromCache: [Package])
 
     public var outputPath: String {
         wrappedValue.outputPath
@@ -22,7 +22,7 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: Gi
         self.wrappedValue = wrappedValue
     }
 
-    private func checkCacheAndRun(action: (Packages) throws -> Void, packages: Packages) throws {
+    private func checkCacheAndRun(action: ([Package]) throws -> Void, packages: [Package]) throws {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
         let cachedPackageURLs = try fromCache.map { package in
             try cacher.get(packageID: package.packageID)
@@ -31,8 +31,8 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: Gi
         try action(toBuild)
     }
 
-    private func sort(packages: Packages, cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
-        packages.reduce((PackageManager.Packages(), PackageManager.Packages())) { result, package in
+    private func sort(packages: [Package], cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
+        packages.reduce(([Package](), [Package]())) { result, package in
             let (toBuild, fromCache) = result
             if cachedPackageIDs.contains(with: package.packageID, at: \.self) {
                 return (toBuild, fromCache + [package])
@@ -70,19 +70,19 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages, T: Gi
 }
 
 extension GitCachablePackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
-    public func update(packages: Packages) throws {
+    public func update(packages: [Package]) throws {
         try checkCacheAndRun(action: wrappedValue.update, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
-    public func install(packages: Packages) throws {
+    public func install(packages: [Package]) throws {
         try checkCacheAndRun(action: wrappedValue.install, packages: packages)
     }
 }
 
 extension GitCachablePackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
-    public func build(packages: Packages) throws {
+    public func build(packages: [Package]) throws {
         try checkCacheAndRun(action: wrappedValue.build, packages: packages)
     }
 }

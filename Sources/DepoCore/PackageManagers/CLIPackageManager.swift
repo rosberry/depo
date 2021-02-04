@@ -29,19 +29,19 @@ public protocol HasOptionsInit {
 
 public protocol CanOutputPackages {
 
-    associatedtype Packages
+    associatedtype Package
 
     var outputPath: String { get }
 }
 
 public protocol HasUpdateCommand: CanOutputPackages {
-    func update(packages: Packages) throws
+    func update(packages: [Package]) throws
 }
 
 public protocol HasInstallCommand: CanOutputPackages {
-    func install(packages: Packages) throws
+    func install(packages: [Package]) throws
 }
 
 public protocol HasBuildCommand: CanOutputPackages {
-    func build(packages: Packages) throws
+    func build(packages: [Package]) throws
 }

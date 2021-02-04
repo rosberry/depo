@@ -5,7 +5,7 @@
 @propertyWrapper
 struct ConditionalPackageManager<PackageManager: CanOutputPackages, Root>: CanOutputPackages {
 
-    typealias Packages = PackageManager.Packages
+    typealias Package = PackageManager.Package
 
     let outputPath: String = ""
 
@@ -20,24 +20,24 @@ struct ConditionalPackageManager<PackageManager: CanOutputPackages, Root>: CanOu
     }
 }
 
-extension ConditionalPackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand, Root == PackageManager.Packages {
-    func update(packages: PackageManager.Packages) throws {
+extension ConditionalPackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand, Root == [Package] {
+    func update(packages: [Package]) throws {
         try doIfPossible(root: packages) {
             try wrappedValue.update(packages: packages)
         }
     }
 }
 
-extension ConditionalPackageManager: HasBuildCommand where PackageManager: HasBuildCommand, Root == PackageManager.Packages {
-    func build(packages: PackageManager.Packages) throws {
+extension ConditionalPackageManager: HasBuildCommand where PackageManager: HasBuildCommand, Root == [Package] {
+    func build(packages: [Package]) throws {
         try doIfPossible(root: packages) {
             try wrappedValue.build(packages: packages)
         }
     }
 }
 
-extension ConditionalPackageManager: HasInstallCommand where PackageManager: HasInstallCommand, Root == PackageManager.Packages {
-    func install(packages: PackageManager.Packages) throws {
+extension ConditionalPackageManager: HasInstallCommand where PackageManager: HasInstallCommand, Root == [Package] {
+    func install(packages: [Package]) throws {
         try doIfPossible(root: packages) {
             try wrappedValue.install(packages: packages)
         }

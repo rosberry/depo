@@ -7,7 +7,7 @@ import Files
 
 public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
 
-    public typealias Packages = [SwiftPackage]
+    public typealias Package = SwiftPackage
     public typealias SuccessContext = (SwiftPackage, [MergePackage.Output])
     public typealias FailureContext = FailureWrapper<SwiftPackage, Swift.Error>
     public typealias BuildResult = Result<SuccessContext, FailureContext>
@@ -89,7 +89,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         return self
     }
 
-    public func update(packages: Packages) throws {
+    public func update(packages: [Package]) throws {
         observer?(.updating)
         let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
@@ -97,7 +97,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         try build(packages: packages)
     }
 
-    public func build(packages: Packages) throws {
+    public func build(packages: [Package]) throws {
         observer?(.building)
         try build(packages: packages,
                   like: frameworkKind,

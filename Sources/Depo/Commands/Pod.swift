@@ -9,7 +9,7 @@ import DepoCore
 final class PodCommand: ParsableCommand {
 
     final class PodUpdate: Update {
-        typealias Command = GitCachablePackageManager<PodManager, Pod>
+        typealias Command = GitCachablePackageManager<PodManager>
 
         static let configuration: CommandConfiguration = .init(commandName: "update", abstract: "run pod update and build pods")
 
@@ -20,7 +20,7 @@ final class PodCommand: ParsableCommand {
     }
 
     final class PodInstall: Install {
-        typealias Command = GitCachablePackageManager<PodManager, Pod>
+        typealias Command = GitCachablePackageManager<PodManager>
 
         static let configuration: CommandConfiguration = .init(commandName: "install", abstract: "run pod install and build pods")
 
@@ -31,7 +31,7 @@ final class PodCommand: ParsableCommand {
     }
 
     final class PodBuild: Build {
-        typealias Command = GitCachablePackageManager<PodManager, Pod>
+        typealias Command = GitCachablePackageManager<PodManager>
         static let configuration: CommandConfiguration = .init(commandName: "build", abstract: "build pods")
 
         @OptionGroup()

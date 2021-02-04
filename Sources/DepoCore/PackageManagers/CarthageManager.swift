@@ -6,7 +6,7 @@ import Foundation
 
 public final class CarthageManager: ProgressObservable, HasAllCommands {
 
-    public typealias Packages = [CarthageItem]
+    public typealias Package = CarthageItem
     public enum State {
         case updating
         case installing
@@ -56,19 +56,19 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update(packages: Packages) throws {
+    public func update(packages: [Package]) throws {
         observer?(.updating)
         try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.update(arguments: carthageArgs)
     }
 
-    public func install(packages: Packages) throws {
+    public func install(packages: [Package]) throws {
         observer?(.installing)
         try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.bootstrap(arguments: carthageArgs)
     }
 
-    public func build(packages: Packages) throws {
+    public func build(packages: [Package]) throws {
         observer?(.building)
         try carthageShellCommand.build(arguments: carthageArgs)
     }

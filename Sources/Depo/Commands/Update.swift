@@ -11,7 +11,7 @@ protocol Update: ParsableCommand, HasDepofileKeyPath {
     var options: Command.Options { get }
 }
 
-extension Update where ValueType == Command.Packages {
+extension Update where ValueType == [Command.Package] {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
         let command = Command(options: options).subscribe { state in

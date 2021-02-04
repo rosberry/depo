@@ -9,7 +9,7 @@ import DepoCore
 final class SPM: ParsableCommand {
 
     final class SPMUpdate: Update {
-        typealias Command = GitCachablePackageManager<SPMManager, SwiftPackage>
+        typealias Command = GitCachablePackageManager<SPMManager>
         static let configuration: CommandConfiguration = .init(commandName: "update",
                                                                abstract: "run swift package update and build swift packages")
 
@@ -20,7 +20,7 @@ final class SPM: ParsableCommand {
     }
 
     final class SPMBuild: Build {
-        typealias Command = GitCachablePackageManager<SPMManager, SwiftPackage>
+        typealias Command = GitCachablePackageManager<SPMManager>
         static let configuration: CommandConfiguration = .init(commandName: "build", abstract: "build swift packages")
 
         @OptionGroup()

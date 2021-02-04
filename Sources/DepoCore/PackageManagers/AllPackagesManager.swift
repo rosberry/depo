@@ -6,7 +6,7 @@ import Foundation
 
 public final class AllPackagesManager: ProgressObservable, HasAllCommands {
 
-    public typealias Packages = Depofile
+    public typealias Package = Depofile
 
     public enum State {
         case podManager(PodManager.State)
@@ -17,32 +17,32 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     public let outputPath: String = ""
 
     private let platform: Platform
-    private var podManager: ConditionalPackageManager<PodManager, PodManager.Packages> {
+    private var podManager: ConditionalPackageManager<PodManager, [PodManager.Package]> {
         let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
                                  podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
-        return conditional(manager: manager, keyPath: \PodManager.Packages.isEmpty.not)
+        return conditional(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var carthageManager: ConditionalPackageManager<CarthageManager, CarthageManager.Packages> {
+    private var carthageManager: ConditionalPackageManager<CarthageManager, [CarthageManager.Package]> {
         let manager = CarthageManager(platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
                                       carthageArguments: carthageArguments).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
-        return conditional(manager: manager, keyPath: \CarthageManager.Packages.isEmpty.not)
+        return conditional(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var spmManager: ConditionalPackageManager<SPMManager, SPMManager.Packages> {
+    private var spmManager: ConditionalPackageManager<SPMManager, [SPMManager.Package]> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  cacheBuilds: cacheBuilds,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
-        return conditional(manager: manager, keyPath: \SPMManager.Packages.isEmpty.not)
+        return conditional(manager: manager, keyPath: \.isEmpty.not)
     }
     private var observer: ((State) -> Void)?
     private let podCommandPath: String
@@ -79,10 +79,11 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update(packages: Depofile) throws {
-        let podUpdate: () throws -> Void      = { try self.podManager.update(packages: packages.pods) }
-        let carthageUpdate: () throws -> Void = { try self.carthageManager.update(packages: packages.carts) }
-        let spmUpdate: () throws -> Void      = { try self.spmManager.update(packages: packages.swiftPackages) }
+    public func update(packages: [Package]) throws {
+        let depofile = try packages.single()
+        let podUpdate: () throws -> Void      = { try self.podManager.update(packages: depofile.pods) }
+        let carthageUpdate: () throws -> Void = { try self.carthageManager.update(packages: depofile.carts) }
+        let spmUpdate: () throws -> Void      = { try self.spmManager.update(packages: depofile.swiftPackages) }
         try CommandRunner.runIndependently {
             podUpdate
             carthageUpdate
@@ -90,10 +91,11 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
     }
 
-    public func install(packages: Depofile) throws {
-        let podInstall: () throws -> Void      = { try self.podManager.install(packages: packages.pods) }
-        let carthageInstall: () throws -> Void = { try self.carthageManager.install(packages: packages.carts) }
-        let spmUpdate: () throws -> Void       = { try self.spmManager.update(packages: packages.swiftPackages) }
+    public func install(packages: [Package]) throws {
+        let depofile = try packages.single()
+        let podInstall: () throws -> Void      = { try self.podManager.install(packages: depofile.pods) }
+        let carthageInstall: () throws -> Void = { try self.carthageManager.install(packages: depofile.carts) }
+        let spmUpdate: () throws -> Void       = { try self.spmManager.update(packages: depofile.swiftPackages) }
         try CommandRunner.runIndependently {
             podInstall
             carthageInstall
@@ -101,10 +103,11 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
     }
 
-    public func build(packages: Depofile) throws {
-        let podBuild: () throws -> Void      = { try self.podManager.build(packages: packages.pods) }
-        let carthageBuild: () throws -> Void = { try self.carthageManager.build(packages: packages.carts) }
-        let spmBuild: () throws -> Void      = { try self.spmManager.build(packages: packages.swiftPackages) }
+    public func build(packages: [Package]) throws {
+        let depofile = try packages.single()
+        let podBuild: () throws -> Void      = { try self.podManager.build(packages: depofile.pods) }
+        let carthageBuild: () throws -> Void = { try self.carthageManager.build(packages: depofile.carts) }
+        let spmBuild: () throws -> Void      = { try self.spmManager.build(packages: depofile.swiftPackages) }
         try CommandRunner.runIndependently {
             podBuild
             carthageBuild

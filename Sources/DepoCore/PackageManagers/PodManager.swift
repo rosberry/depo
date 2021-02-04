@@ -8,7 +8,7 @@ import Files
 
 public final class PodManager: ProgressObservable, HasAllCommands {
 
-    public typealias Packages = [Pod]
+    public typealias Package = Pod
 
     public typealias FailedContext = (Swift.Error, Pod)
 
@@ -79,7 +79,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func install(packages: Packages) throws {
+    public func install(packages: [Package]) throws {
         observer?(.installing)
         let podFilePath = "./\(podFileName)"
 
@@ -89,7 +89,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         try build(packages: packages)
     }
 
-    public func update(packages: Packages) throws {
+    public func update(packages: [Package]) throws {
         let podFilePath = "./\(podFileName)"
 
         observer?(.updating)
@@ -98,7 +98,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         try build(packages: packages)
     }
 
-    public func build(packages: Packages) throws {
+    public func build(packages: [Package]) throws {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         observer?(.building)
