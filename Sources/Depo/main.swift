@@ -39,16 +39,18 @@ struct Cacher: ParsableCommand {
         var gitRepoURL: String
 
         @Option(name: .shortAndLong)
-        var buildURL: String
-
-        @Option(name: .shortAndLong)
         var packageName: String
+
+        @Argument
+        var buildURLs: [String]
 
         func run() throws {
             let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
-            let buildURL = try Cacher.url(string: Path(self.buildURL).absolute().string)
+            let buildURLs = try self.buildURLs.map { buildURL in
+                try Cacher.url(string: Path(buildURL).absolute().string)
+            }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
-            try cacher.save(buildURL: buildURL, packageID: .init(name: packageName))
+            try cacher.save(buildURLs: buildURLs, packageID: .init(name: packageName))
         }
     }
 
@@ -58,16 +60,18 @@ struct Cacher: ParsableCommand {
         var gitRepoURL: String
 
         @Option(name: .shortAndLong)
-        var buildURL: String
-
-        @Option(name: .shortAndLong)
         var packageName: String
+
+        @Argument
+        var buildURLs: [String]
 
         func run() throws {
             let gitRepoURL = try Cacher.url(string: self.gitRepoURL)
-            let buildURL = try Cacher.url(string: Path(self.buildURL).absolute().string)
+            let buildURLs = try self.buildURLs.map { buildURL in
+                try Cacher.url(string: Path(buildURL).absolute().string)
+            }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
-            try cacher.update(buildURL: buildURL, packageID: .init(name: packageName))
+            try cacher.update(buildURLs: buildURLs, packageID: .init(name: packageName))
         }
     }
 

@@ -9,8 +9,8 @@ public protocol Cacher {
     associatedtype PackageID
 
     func packageIDS() throws -> [PackageID]
-    func save(buildURL: URL, packageID: PackageID) throws
-    func update(buildURL: URL, packageID: PackageID) throws
+    func save(buildURLs: [URL], packageID: PackageID) throws
+    func update(buildURLs: [URL], packageID: PackageID) throws
     func get(packageID: PackageID) throws -> URL
     func delete(packageID: PackageID) throws
 }
@@ -93,7 +93,7 @@ public struct GitCacher: Cacher {
         }
     }
 
-    public func save(buildURL: URL, packageID: PackageID) throws {
+    public func save(buildURLs: [URL], packageID: PackageID) throws {
         let id = packageID.description
         defer {
             try? deleteFolder(name: id)
@@ -104,7 +104,7 @@ public struct GitCacher: Cacher {
             try git.createBranch(name: id)
             try git.checkout(id)
             try Folder.current.deleteContents()
-            try copyToCurrent(url: buildURL)
+            try copyToCurrent(urls: buildURLs)
             try throwIfNoChanges(packageID: packageID)
             try git.add(".")
             try git.commit(message: id)
@@ -112,7 +112,7 @@ public struct GitCacher: Cacher {
         }
     }
 
-    public func update(buildURL: URL, packageID: PackageID) throws {
+    public func update(buildURLs: [URL], packageID: PackageID) throws {
         let id = packageID.description
         defer {
             try? deleteFolder(name: id)
@@ -121,7 +121,7 @@ public struct GitCacher: Cacher {
         try git.clone(url: gitRepoURL, to: id, branchName: id)
         try fmg.perform(atPath: id) {
             try Folder.current.deleteContents()
-            try copyToCurrent(url: buildURL)
+            try copyToCurrent(urls: buildURLs)
             try throwIfNoChanges(packageID: packageID)
             try git.add(".")
             try git.commit(message: id)
@@ -138,6 +138,12 @@ public struct GitCacher: Cacher {
         try git.clone(url: gitRepoURL, to: id, branchName: id)
         try fmg.perform(atPath: id) {
             try git.delete(remoteBranch: id)
+        }
+    }
+
+    private func copyToCurrent(urls: [URL]) throws {
+        for url in urls {
+            try copyToCurrent(url: url)
         }
     }
 
