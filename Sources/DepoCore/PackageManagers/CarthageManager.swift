@@ -30,11 +30,19 @@ public final class CarthageManager: ProgressObservable {
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand
     private var observer: ((State) -> Void)?
+    private let cacheBuilds: Bool
+    private let carthageArguments: String?
+    private var carthageArgs: [CarthageShellCommand.BuildArgument] {
+        let cacheBuilds = self.cacheBuilds.mapTrue(to: CarthageShellCommand.BuildArgument.cacheBuilds).array
+        return cacheBuilds + [.platform(platform), .custom(args: carthageArguments ?? "")]
+    }
 
-    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String) {
+    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
         self.carthageItems = depofile.carts
         self.platform = platform
         self.carthageShellCommand = .init(commandPath: carthageCommandPath, shell: shell)
+        self.cacheBuilds = cacheBuilds
+        self.carthageArguments = carthageArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }
@@ -48,18 +56,18 @@ public final class CarthageManager: ProgressObservable {
     public func update() throws {
         observer?(.updating)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
-        try carthageShellCommand.update(arguments: [.platform(platform)])
+        try carthageShellCommand.update(arguments: carthageArgs)
     }
 
     public func install() throws {
         observer?(.installing)
         try createCartfile(at: "./\(cartfileName)", with: carthageItems)
-        try carthageShellCommand.bootstrap(arguments: [.platform(platform)])
+        try carthageShellCommand.bootstrap(arguments: carthageArgs)
     }
 
     public func build() throws {
         observer?(.building)
-        try carthageShellCommand.build()
+        try carthageShellCommand.build(arguments: carthageArgs)
     }
 
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {

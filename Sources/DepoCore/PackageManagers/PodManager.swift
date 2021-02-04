@@ -45,15 +45,23 @@ public final class PodManager: ProgressObservable {
     private let shell: Shell = .init()
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
+    private let cacheBuilds: Bool
+    private let podArguments: String?
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
         self?.observer?(.merge(state: state))
     }
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile, podCommandPath: String, frameworkKind: MergePackage.FrameworkKind) {
+    public init(depofile: Depofile,
+                podCommandPath: String,
+                frameworkKind: MergePackage.FrameworkKind,
+                cacheBuilds: Bool,
+                podArguments: String?) {
         self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
+        self.cacheBuilds = cacheBuilds
+        self.podArguments = podArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }
@@ -71,7 +79,7 @@ public final class PodManager: ProgressObservable {
 
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
-        try podShellCommand.install()
+        try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
         try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
@@ -83,7 +91,7 @@ public final class PodManager: ProgressObservable {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
-        try podShellCommand.update()
+        try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
         #warning("proceeding all pods seems redundant")

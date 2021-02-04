@@ -11,18 +11,14 @@ public struct AnyArgument<Root> {
     init<T>(optionalKeyPath: KeyPath<Root, T?>, _ key: String, _ map: @escaping (T) -> String = { "\($0)" }) {
         value = { root in
             root[keyPath: optionalKeyPath].map { value in
-                (key + map(value)).split(separator: " ").map { substring in
-                    String(substring)
-                }
+                (key + map(value)).words
             } ?? []
         }
     }
 
     init<T>(_ keyPath: KeyPath<Root, T>, _ key: String, _ map: @escaping (T) -> String = { "\($0)" }) {
         value = { root -> [String] in
-            (key + map(root[keyPath: keyPath])).split(separator: " ").map { substring in
-                String(substring)
-            }
+            (key + map(root[keyPath: keyPath])).words
         }
     }
 }

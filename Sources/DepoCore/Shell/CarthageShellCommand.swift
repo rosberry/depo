@@ -12,13 +12,16 @@ public final class CarthageShellCommand: ShellCommand {
     public enum BuildArgument {
         case platform(Platform)
         case cacheBuilds
+        case custom(args: String)
 
         public var arguments: [String] {
             switch self {
             case let .platform(platform):
                 return platformArguments(platform: platform)
             case .cacheBuilds:
-                return ["--cache builds"]
+                return ["--cache-builds"]
+            case let .custom(args):
+                return args.words
             }
         }
 
@@ -43,8 +46,8 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func build() throws -> Shell.IO {
-        try carthage("build", arguments: [])
+    public func build(arguments: [BuildArgument]) throws -> Shell.IO {
+        try carthage("build", arguments: arguments)
     }
 
     public func cartfile(url: URL) throws -> Cartfile {

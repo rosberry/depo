@@ -23,13 +23,13 @@ public final class PodShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func install() throws -> Shell.IO {
-        try shell(commandPath, "install")
+    public func install(args: [String]) throws -> Shell.IO {
+        try shell([commandPath, "install"] + args)
     }
 
     @discardableResult
-    public func update() throws -> Shell.IO {
-        try shell(commandPath, "update")
+    public func update(args: [String]) throws -> Shell.IO {
+        try shell([commandPath, "update"] + args)
     }
 
     public func podfile(buildSettings: BuildSettings, podfilePath: String) throws -> PodFile {

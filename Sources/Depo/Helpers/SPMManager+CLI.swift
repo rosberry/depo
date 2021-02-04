@@ -19,9 +19,20 @@ extension SPMManager: HasUpdateCommand, HasBuildCommand {
 
         @Flag()
         var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+
+        @Flag()
+        var cacheBuilds: Bool = false
+
+        @Option(name: [.customLong("swift-build-args"), .customShort(Character("s"))])
+        var swiftBuildArguments: String?
+
     }
 
     convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile, swiftCommandPath: options.swiftCommandPath, frameworkKind: options.frameworkKind)
+        self.init(depofile: depofile,
+                  swiftCommandPath: options.swiftCommandPath,
+                  frameworkKind: options.frameworkKind,
+                  cacheBuilds: options.cacheBuilds,
+                  swiftBuildArguments: options.swiftBuildArguments)
     }
 }

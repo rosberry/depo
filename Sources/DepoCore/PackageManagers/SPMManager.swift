@@ -52,13 +52,21 @@ public final class SPMManager: ProgressObservable {
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
     private let frameworkKind: MergePackage.FrameworkKind
+    private let cacheBuilds: Bool
+    private let swiftBuildArguments: String?
     private var observer: ((State) -> Void)?
     private let productExtensions: [String] = ["framework", "xcframework"]
 
-    public init(depofile: Depofile, swiftCommandPath: String, frameworkKind: MergePackage.FrameworkKind) {
+    public init(depofile: Depofile,
+                swiftCommandPath: String,
+                frameworkKind: MergePackage.FrameworkKind,
+                cacheBuilds: Bool,
+                swiftBuildArguments: String?) {
         self.packages = depofile.swiftPackages
         swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
+        self.cacheBuilds = cacheBuilds
+        self.swiftBuildArguments = swiftBuildArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }
@@ -73,7 +81,7 @@ public final class SPMManager: ProgressObservable {
         observer?(.updating)
         let buildSettings = try BuildSettings(shell: shell)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
-        try swiftPackageCommand.update()
+        try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
         observer?(.building)
         try build(packages: packages,
                   like: frameworkKind,
