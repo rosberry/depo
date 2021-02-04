@@ -6,28 +6,30 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension PodManager: CLIPackageManager {
+extension PodManager: HasDepofileInit {
 
-    struct Options: ParsableArguments, HasDepofileExtension {
+    public struct Options: ParsableArguments, HasDepofileExtension {
 
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
-        var depofileExtension: DataCoder.Kind = .defaultValue
+        public var depofileExtension: DataCoder.Kind = .defaultValue
 
         @Option(completion: .file())
-        var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
+        public var podCommandPath: String = AppConfiguration.Path.Absolute.podCommandPath
 
         @Flag()
-        var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+        public var frameworkKind: MergePackage.FrameworkKind = .fatFramework
 
         @Flag()
-        var cacheBuilds: Bool = false
+        public var cacheBuilds: Bool = false
 
         @Option(name: [.customLong("pod-args")])
-        var podArguments: String?
+        public var podArguments: String?
+
+        public init() {}
     }
 
-    convenience init(depofile: Depofile, options: Options) {
+    public convenience init(depofile: Depofile, options: Options) {
         self.init(depofile: depofile,
                   podCommandPath: options.podCommandPath,
                   frameworkKind: options.frameworkKind,

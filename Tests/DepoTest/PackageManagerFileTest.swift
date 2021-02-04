@@ -41,6 +41,7 @@ extension PackageManagerFileTest {
         .init(productName: "Test",
               swiftVersion: "test-xcode-swift-version",
               targetName: "TestTarget",
+              productType: .framework,
               codesigningFolderPath: nil,
               platform: .tvos,
               deploymentTarget: "test-deployment-target")

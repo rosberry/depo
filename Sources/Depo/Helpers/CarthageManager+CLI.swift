@@ -6,28 +6,30 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension CarthageManager: CLIPackageManager {
+extension CarthageManager: HasDepofileInit {
 
-    struct Options: HasDepofileExtension, ParsableArguments {
+    public struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
-        var depofileExtension: DataCoder.Kind = .defaultValue
+        public var depofileExtension: DataCoder.Kind = .defaultValue
 
         @Option(name: [.customLong("platform"), .customShort(Character("p"))],
                 completion: .list(Platform.allFlagsHelp))
-        var platform: Platform = .defaultValue
+        public var platform: Platform = .defaultValue
 
         @Option(completion: .file())
-        var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
+        public var carthageCommandPath: String = AppConfiguration.Path.Absolute.carthageCommandPath
 
         @Flag()
-        var cacheBuilds: Bool = false
+        public var cacheBuilds: Bool = false
 
         @Option(name: [.customLong("carthage-args"), .customShort(Character("c"))])
-        var carthageArguments: String?
+        public var carthageArguments: String?
+
+        public init() {}
     }
 
-    convenience init(depofile: Depofile, options: Options) {
+    public convenience init(depofile: Depofile, options: Options) {
         self.init(depofile: depofile,
                   platform: options.platform,
                   carthageCommandPath: options.carthageCommandPath,

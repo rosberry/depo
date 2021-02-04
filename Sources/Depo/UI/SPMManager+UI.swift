@@ -9,17 +9,19 @@ extension SPMManager.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .updating:
-            return "updating"
+            return string("==> ", color: .cyan) + "Updating swift packages"
         case .building:
-            return "building"
+            return string("==> ", color: .cyan) + "Building swift packages"
         case let .buildingPackage(package, path):
-            return "building package \(package.name) at \(path)"
-        case .processing:
-            return "processing"
-        case let .processingPackage(package, path):
-            return "processing package \(package.name) at \(path)"
+            return "Building \(string(package.name, color: .magenta)) at \(path)"
+        case let .merging(framework, kind, outputPath):
+            return "Making \(kind.description) from \(framework) -> \(outputPath)"
+        case let .done(package):
+            return "Done with \(string(package.name, color: .green))\n"
+        case let .doneWithError(package, error):
+            return "Got error while building \(string(package.name, color: .red))\n"
         case let .creatingPackageSwiftFile(path):
-            return "creation Package.swift at \(path)"
+            return "Creating Package.swift at \(path)"
         case let .shell(state):
             return state.description
         case let .merge(state):
@@ -36,11 +38,6 @@ extension SPMManager.Error: LocalizedError {
         case let .badSwiftPackageBuild(contexts):
             return """
                    bad swift package build:
-                   \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
-                   """
-        case let .badSwiftPackageProceed(contexts):
-            return """
-                   bad proceeding of swift packages:
                    \(contexts.map { (error, package) in "\(error.localizedDescription) for \(package.name)" }.newLineJoined)
                    """
         case .noDevelopmentTeam:

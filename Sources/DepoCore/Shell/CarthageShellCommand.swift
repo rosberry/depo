@@ -10,11 +10,11 @@ import CartfileParser
 public final class CarthageShellCommand: ShellCommand {
 
     public enum BuildArgument {
-        case platform(Platform)
+        case platform(Platform?)
         case cacheBuilds
         case custom(args: String)
 
-        public var arguments: [String] {
+        public var strings: [String] {
             switch self {
             case let .platform(platform):
                 return platformArguments(platform: platform)
@@ -25,28 +25,28 @@ public final class CarthageShellCommand: ShellCommand {
             }
         }
 
-        private func platformArguments(platform: Platform) -> [String] {
+        private func platformArguments(platform: Platform?) -> [String] {
             switch platform {
-            case .all:
+            case .none:
                 return []
-            default:
+            case let .some(platform):
                 return ["--platform", platform.rawValue]
             }
         }
     }
 
     @discardableResult
-    public func update(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func update(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("update", arguments: arguments)
     }
 
     @discardableResult
-    public func bootstrap(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func bootstrap(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("bootstrap", arguments: arguments)
     }
 
     @discardableResult
-    public func build(arguments: [BuildArgument]) throws -> Shell.IO {
+    public func build(arguments: [BuildArgument]) throws -> Int32 {
         try carthage("build", arguments: arguments)
     }
 
@@ -58,11 +58,9 @@ public final class CarthageShellCommand: ShellCommand {
         try cartfile(url: try Folder.current.file(at: cartfilePath).url)
     }
 
-    private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Shell.IO {
-        let args: [String] = [commandPath, command] + arguments.reduce([]) { result, arg in
-            result + arg.arguments
-        }
-        return try shell(args)
+    private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Int32 {
+        let argumentsString = arguments.map(\.strings.spaceJoined).joined(separator: " ")
+        return try shell(loud: "\(commandPath) \(command) \(argumentsString)")
     }
 
     private func cartfile(from actualCartfile: CartfileParser.Cartfile) -> Cartfile {

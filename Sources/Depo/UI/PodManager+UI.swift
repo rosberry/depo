@@ -9,24 +9,34 @@ extension PodManager.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .installing:
-            return "installing"
+            return string("==> ", color: .cyan) + "Installing pods"
         case .updating:
-            return "updating"
+            return string("==> ", color: .cyan) + "Updating pods"
         case .building:
-            return "building"
+            return string("==> ", color: .cyan) + "Building pods"
         case .processing:
-            return "processing"
+            return string("==> ", color: .cyan) + "Processing pods"
         case let .creatingPodfile(path):
-            return "creating podfile at \(path)"
-        case let .buildingPod(pod):
-            return "building pod \(pod.name)"
+            return "Creating Podfile at \(path)"
+        case let .buildingPod(pod, kind, buildPath):
+            return "Building \(string(pod.name, color: .magenta)) at \(buildPath)"
         case let .processingPod(pod):
-            return "processing pod \(pod.name)"
-        case let .movingPod(from, to):
-            return "\(from) -> \(to)"
+            return "Processing \(string(pod.name, color: .magenta))"
+        case let .making(kind, pod, outputPath):
+            return "Making \(kind) from \(pod.name) -> \(outputPath)"
+        case let .movingPod(pod, outputPath):
+            return "Moving built \(pod.name) to \(outputPath)"
+        case let .doneBuilding(pod):
+            return "Done building \(string(pod.name, color: .green))\n"
+        case let .doneProcessing(pod):
+            return "Done processing \(string(pod.name, color: .green))\n"
+        case let .buildingFailed(pod):
+            return "Got error while building \(string(pod.name, color: .red))\n"
+        case let .processingFailed(pod):
+            return "Got error while processing \(string(pod.name, color: .red))\n"
+        case let .skipProceed(targetName):
+            return "Skipping target \"\(string(targetName, color: .yellow))\""
         case let .shell(state):
-            return state.description
-        case let .merge(state):
             return state.description
         }
     }
@@ -47,6 +57,8 @@ extension PodManager.Error: LocalizedError {
                    bad pod merge:
                    \(contexts.map { (error, pod) in "\(error.localizedDescription) for \(pod.name)" }.newLineJoined)
                    """
+        case .noTargetsToBuild:
+            return "project has no targets to build"
         }
     }
 }

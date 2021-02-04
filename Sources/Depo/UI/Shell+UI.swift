@@ -10,13 +10,15 @@ extension Shell.Error: LocalizedError {
         switch self {
         case let .failure(shellIO):
             return "\(shellIO)"
+        case let .badStatusCode(command, statusCode):
+            return "\"\(command)\" exits with \(statusCode) status code"
         }
     }
 }
 
 extension Shell.IO: CustomStringConvertible {
     public var description: String {
-        "\(command.spaceJoined) exits with \(status) status code" +
+        "\"\(command.spaceJoined)\" exits with \(status) status code" +
         fileDescriptorsDescription
     }
 
@@ -30,8 +32,12 @@ extension Shell.IO: CustomStringConvertible {
 extension Shell.State: CustomStringConvertible {
     public var description: String {
         switch self {
-        case let .start(command):
-            return command.spaceJoined
+        case let .start(command, callKind):
+            return description(of: command, callKind: callKind)
         }
+    }
+
+    private func description(of command: String, callKind: Shell.CallKind) -> String {
+        "> \(command)"
     }
 }

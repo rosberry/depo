@@ -19,14 +19,14 @@ public protocol ArgumentedShellCommand {
     associatedtype Settings: ShellCommandArguments
 
     static var keys: [AnyArgument<Settings>] { get }
-    var commands: [String] { get }
+    var command: String { get }
     var shell: Shell { get }
 }
 
 public extension ArgumentedShellCommand {
     @discardableResult
-    func callAsFunction(commands: [String]? = nil, _ settings: Settings, environment: [String: String]? = nil) throws -> Shell.IO {
-        try shell((commands ?? self.commands) + settings.stringArguments(keys: Self.keys))
+    func callAsFunction(_ command: String? = nil, settings: Settings) throws -> Shell.IO {
+        try shell(silent: "\(command ?? self.command) \(settings.stringArguments(keys: Self.keys).spaceJoined)")
     }
 }
 
@@ -42,7 +42,7 @@ public extension ShellCommandArguments {
 }
 
 public extension ArgumentedShellCommand where Self: ShellCommand {
-    var commands: [String] {
-        [commandPath]
+    var command: String {
+        commandPath
     }
 }

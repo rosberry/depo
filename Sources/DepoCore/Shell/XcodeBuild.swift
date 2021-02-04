@@ -7,6 +7,8 @@ import Files
 
 public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
+    typealias Output = (File?, Int32)
+
     public struct Settings: ShellCommandArguments {
         let target: String?
         let scheme: String?
@@ -20,9 +22,13 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         let actionType: ActionType?
     }
 
-    public enum Configuration: String {
+    public enum Configuration: String, CustomStringConvertible {
         case release = "Release"
         case debug = "Debug"
+
+        public var description: String {
+            self.rawValue
+        }
     }
 
     public enum SDK: String {
@@ -38,6 +44,10 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
     public enum ActionType: String {
         case build
         case archive
+    }
+
+    public enum Error: Swift.Error {
+        case badOutput(shellIO: Shell.IO)
     }
 
     public static let keys: [AnyArgument<Settings>] =
@@ -60,19 +70,67 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         try super.init(from: decoder)
     }
 
-    public func buildForDistribution(_ settings: Settings) throws -> Shell.IO {
+    public func buildForDistribution(settings: Settings) throws -> Shell.IO {
         let xcconfig = try xcConfigForDistributionBuild()
         let command = exportCommand(xcconfig: xcconfig)
                       + " && "
-                      + (commands + settings.stringArguments(keys: Self.keys)).joined(separator: " ")
-        return try shell(command)
+                      + "\(self.command) \(settings.stringArguments(keys: Self.keys).spaceJoined)"
+        return try shell(silent: command)
     }
 
     public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
-        let frameworksArguments = frameworkPaths.reduce([]) { result, path in
-            result + ["-framework", path]
+        let frameworksArguments = frameworkPaths.reduce("") { result, path in
+            result + "-framework \(path) "
         }
-        return try shell(commands + ["-create-xcframework"] + ["-output", path] + frameworksArguments)
+        return try shell(silent: "\(command) -create-xcframework -output \(path) \(frameworksArguments)")
+    }
+
+    public func showBuildSettings() throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand())
+    }
+
+    public func showBuildSettings(target: String) throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand(target: target))
+    }
+
+    public func showBuildSettings(scheme: String) throws -> Shell.IO {
+        try shell(silent: Self.showBuildSettingsCommand(scheme: scheme))
+    }
+
+    public func listProject(name: String? = nil, decoder: JSONDecoder = .init()) throws -> XcodeList.Project {
+        struct OutputWrapper: Codable {
+            let project: XcodeList.Project
+        }
+
+        let output: Shell.IO
+        if let name = name {
+            output = try shell(silent: "xcodebuild -list -json -project \(name)")
+        }
+        else {
+            output = try shell(silent: "xcodebuild -list -json")
+        }
+        guard let data = output.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(shellIO: output)
+        }
+        return try decoder.decode(OutputWrapper.self, from: data).project
+    }
+
+    public func listWorkspace(name: String? = nil, decoder: JSONDecoder = .init()) throws -> XcodeList.Workspace {
+        struct OutputWrapper: Codable {
+            let workspace: XcodeList.Workspace
+        }
+
+        let output: Shell.IO
+        if let name = name {
+            output = try shell(silent: "xcodebuild -list -json -workspace \(name)")
+        }
+        else {
+            output = try shell(silent: "xcodebuild -list -json")
+        }
+        guard let data = output.stdOut.data(using: .utf8) else {
+            throw Error.badOutput(shellIO: output)
+        }
+        return try decoder.decode(OutputWrapper.self, from: data).workspace
     }
 
     private func xcConfigForDistributionBuild() throws -> File {
@@ -83,6 +141,18 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     private func exportCommand(xcconfig: File) -> String {
         "export XCODE_XCCONFIG_FILE=\(xcconfig.path)"
+    }
+
+    private static func showBuildSettingsCommand() -> String {
+        "xcodebuild -showBuildSettings -json"
+    }
+
+    private static func showBuildSettingsCommand(target: String) -> String {
+        "xcodebuild -showBuildSettings -json -target \(target)"
+    }
+
+    private static func showBuildSettingsCommand(scheme: String) -> String {
+        "xcodebuild -showBuildSettings -json -scheme \(scheme)"
     }
 }
 

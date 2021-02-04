@@ -107,8 +107,8 @@ public final class MergePackage: ShellCommand {
         let outputFramework = try copy(deviceFramework: deviceFramework,
                                        toOutputFrameworkLocation: outputFrameworkPath,
                                        outputLocation: outputPath)
-        let output = try lipo(.init(outputPath: binary(outputFrameworkPath),
-                                    executablePaths: [binary(deviceFrameworkPath), binary(simulatorFrameworkPath)]))
+        let output = try lipo(settings: .init(outputPath: binary(outputFrameworkPath),
+                                              executablePaths: [binary(deviceFrameworkPath), binary(simulatorFrameworkPath)]))
         try moveSimulatorsSwiftSubmooduleToFatFramework(simulatorFrameworkPath,
                                                         packageName,
                                                         fatFramework: outputFramework)

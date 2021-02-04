@@ -7,6 +7,8 @@ import Files
 
 public final class BuildSwiftPackageScript: ShellCommand {
 
+    public typealias BuildContext = (scheme: String, settings: BuildSettings)
+
     private var xcodebuild: XcodeBuild {
         .init(shell: shell)
     }
@@ -23,7 +25,10 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     @discardableResult
-    public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind, buildDir: String, scheme: String) throws -> [Shell.IO] {
+    public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind,
+                               context: BuildContext,
+                               buildDir: String) throws -> [Shell.IO] {
+        let (scheme, _) = context
         try generateXcodeprojectIfNeeded()
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release
@@ -49,15 +54,15 @@ public final class BuildSwiftPackageScript: ShellCommand {
         let xcodebuild = self.xcodebuild
         switch frameworkKind {
         case .fatFramework:
-            return [try xcodebuild(.device(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath)),
-                    try xcodebuild(.simulator(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath))]
+            return [try xcodebuild(settings: .device(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath)),
+                    try xcodebuild(settings: .simulator(scheme: scheme, configuration: config, derivedDataPath: derivedDataPath))]
         case .xcframework:
-            return [try xcodebuild.buildForDistribution(.device(scheme: scheme,
-                                                                configuration: config,
-                                                                derivedDataPath: derivedDataPath)),
-                    try xcodebuild.buildForDistribution(.simulator(scheme: scheme,
-                                                                   configuration: config,
-                                                                   derivedDataPath: derivedDataPath))]
+            return [try xcodebuild.buildForDistribution(settings: .device(scheme: scheme,
+                                                                          configuration: config,
+                                                                          derivedDataPath: derivedDataPath)),
+                try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
+                                                                         configuration: config,
+                                                                         derivedDataPath: derivedDataPath))]
         }
     }
 

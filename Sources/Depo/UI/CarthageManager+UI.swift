@@ -9,15 +9,24 @@ extension CarthageManager.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .updating:
-            return "starts updating carthage"
+            return string("==> ", color: .cyan) + "Start updating carthage"
         case .installing:
-            return "starts installing carthage"
+            return string("==> ", color: .cyan) + "Start installing carthage"
         case .building:
-            return "starts building carthage"
+            return string("==> ", color: .cyan) + "Start building carthage"
         case let .creatingCartfile(path):
-            return "creating cartfile at \(path)"
+            return "Creating cartfile at \(path)"
         case let .shell(state):
             return state.description
+        }
+    }
+}
+
+extension CarthageManager.Error: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .badCartfile(path):
+            return "unable to create Cartfile at \(path)"
         }
     }
 }

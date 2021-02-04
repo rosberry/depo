@@ -7,7 +7,7 @@ import ArgumentParser
 import DepoCore
 
 protocol Update: ParsableCommand {
-    associatedtype Command: HasUpdateCommand, ProgressObservable
+    associatedtype Command: HasUpdateCommand, HasDepofileInit, ProgressObservable
     var options: Command.Options { get }
 }
 

@@ -6,7 +6,7 @@ import Foundation
 import Yams
 import Files
 
-public final class PodManager: ProgressObservable {
+public final class PodManager: ProgressObservable, HasAllCommands {
 
     public typealias FailedContext = (Swift.Error, Pod)
 
@@ -16,17 +16,23 @@ public final class PodManager: ProgressObservable {
         case building
         case processing
         case creatingPodfile(path: String)
-        case buildingPod(Pod)
+        case buildingPod(Pod, MergePackage.FrameworkKind, buildPath: String)
         case processingPod(Pod)
-        case movingPod(from: String, toFolder: String)
+        case movingPod(Pod, outputPath: String)
+        case making(MergePackage.FrameworkKind, Pod, outputPath: String)
+        case skipProceed(target: String)
+        case doneBuilding(Pod)
+        case buildingFailed(Pod)
+        case doneProcessing(Pod)
+        case processingFailed(Pod)
         case shell(state: Shell.State)
-        case merge(state: MergePackage.State)
     }
 
     public enum Error: Swift.Error {
         case badPodfile(path: String)
         case badPodBuild(contexts: [FailedContext])
         case badPodMerge(contexts: [FailedContext])
+        case noTargetsToBuild
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -42,14 +48,13 @@ public final class PodManager: ProgressObservable {
 
     private let pods: [Pod]
 
-    private let shell: Shell = .init()
+    private let shell: Shell
+    private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
     private let cacheBuilds: Bool
     private let podArguments: String?
-    private lazy var mergePackage: MergePackage = MergePackage(shell: shell).subscribe { [weak self] state in
-        self?.observer?(.merge(state: state))
-    }
+    private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
     public init(depofile: Depofile,
@@ -57,6 +62,9 @@ public final class PodManager: ProgressObservable {
                 frameworkKind: MergePackage.FrameworkKind,
                 cacheBuilds: Bool,
                 podArguments: String?) {
+        let shell = Shell()
+        self.shell = shell
+        self.xcodebuild = XcodeBuild(shell: shell)
         self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
@@ -75,34 +83,28 @@ public final class PodManager: ProgressObservable {
     public func install() throws {
         observer?(.installing)
         let podFilePath = "./\(podFileName)"
-        let podsProjectPath = "./\(podsDirectoryName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
-        observer?(.building)
-        try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
-        try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
+        try build()
     }
 
     public func update() throws {
-        observer?(.updating)
         let podFilePath = "./\(podFileName)"
-        let podsProjectPath = "./\(podsDirectoryName)"
 
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(shell: shell))
+        observer?(.updating)
+        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
-        observer?(.building)
-        try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
-        #warning("proceeding all pods seems redundant")
-        try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
+        try build()
     }
 
     public func build() throws {
-        observer?(.building)
         let podsProjectPath = "./\(podsDirectoryName)"
 
+        observer?(.building)
         try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
+        observer?(.processing)
         try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
     }
 
@@ -126,12 +128,14 @@ public final class PodManager: ProgressObservable {
         let currentPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
         let buildErrors = pods.reduce([FailedContext]()) { result, pod in
-            observer?(.buildingPod(pod))
+            observer?(.buildingPod(pod, frameworkKind, buildPath: path))
             do {
                 try build(pod: pod, ofKind: frameworkKind)
+                observer?(.doneBuilding(pod))
                 return result
             }
             catch {
+                observer?(.buildingFailed(pod))
                 return result + [(error, pod)]
             }
         }
@@ -144,14 +148,16 @@ public final class PodManager: ProgressObservable {
     private func proceedAllPods(at path: String, frameworkKind: MergePackage.FrameworkKind, to outputPath: String) throws {
         let projectPath = FileManager.default.currentDirectoryPath
         FileManager.default.changeCurrentDirectoryPath(path)
-        let proceedErrors: [FailedContext] = try allSchemes().compactMap { schema in
-            let (pod, settings) = schema
+        let proceedErrors: [FailedContext] = try allBuildContexts().compactMap { context in
+            let (pod, settings) = context
             observer?(.processingPod(pod))
             do {
                 try proceed(pod: pod, with: settings, to: "\(projectPath)/\(outputPath)", frameworkKind: frameworkKind)
+                observer?(.doneProcessing(pod))
                 return nil
             }
             catch {
+                observer?(.processingFailed(pod))
                 return (error, pod)
             }
         }
@@ -164,19 +170,20 @@ public final class PodManager: ProgressObservable {
     private func proceed(pod: Pod, with settings: BuildSettings, to outputPath: String, frameworkKind: MergePackage.FrameworkKind) throws {
         switch kind(for: pod, with: settings) {
         case .common:
+            observer?(.making(frameworkKind, pod, outputPath: outputPath))
             try mergePackage.make(frameworkKind, pod: pod, settings: settings, outputPath: outputPath, buildDir: "../build")
         case .builtFramework:
-            try move(builtPod: pod)
+            observer?(.movingPod(pod, outputPath: outputPath))
+            try move(builtPod: pod, outputPath: outputPath)
         case .unknown:
             break
         }
     }
 
-    private func move(builtPod pod: Pod) throws {
-        let outputFolder = try Folder(path: "Build/iOS")
+    private func move(builtPod pod: Pod, outputPath: String) throws {
+        let outputFolder = try Folder(path: outputPath)
         let podBuildProductsDirectory = try Folder(path: pod.name)
         for subFolder in podBuildProductsDirectory.allSubfolders where isProduct(subFolder) {
-            observer?(.movingPod(from: subFolder.path, toFolder: outputFolder.path))
             try? outputFolder.subfolder(named: subFolder.name).delete()
             try subFolder.copy(to: outputFolder)
         }
@@ -186,14 +193,18 @@ public final class PodManager: ProgressObservable {
         productExtensions.contains(with: folder.extension ?? "", at: \.self)
     }
 
-    private func allSchemes() throws -> [(Pod, BuildSettings)] {
-        let project = try XcodeProjectList(shell: shell)
+    private func allBuildContexts() throws -> [(Pod, BuildSettings)] {
+        let project = try xcodebuild.listProject()
         return try project.targets.compactMap { targetName in
             guard !targetName.starts(with: podsInternalTargetsPrefix) else {
                 return nil
             }
-            return (Pod(name: targetName, versionConstraint: nil),
-                    try BuildSettings(targetName: targetName, shell: shell))
+            let settings = try BuildSettings(target: targetName, xcodebuild: xcodebuild)
+            guard shouldProceedPod(with: settings) else {
+                observer?(.skipProceed(target: targetName))
+                return nil
+            }
+            return (Pod(name: targetName, versionConstraint: nil), settings)
         }
     }
 
@@ -218,15 +229,17 @@ public final class PodManager: ProgressObservable {
 
     @discardableResult
     private func buildFatFramework(pod: Pod) throws -> [Shell.IO] {
-        let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild(.device(target: pod.name)),
-                try xcodebuild(.simulator(target: pod.name))]
+        [try xcodebuild(settings: .device(target: pod.name)),
+         try xcodebuild(settings: .simulator(target: pod.name))]
     }
 
     @discardableResult
     private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
-        let xcodebuild = XcodeBuild(shell: shell)
-        return [try xcodebuild.buildForDistribution(.device(target: pod.name)),
-                try xcodebuild.buildForDistribution(.simulator(target: pod.name))]
+        [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
+         try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
+    }
+
+    private func shouldProceedPod(with settings: BuildSettings) -> Bool {
+        settings.productType == nil || settings.productType == .framework
     }
 }
