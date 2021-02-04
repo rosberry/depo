@@ -29,7 +29,10 @@ public final class BuildSwiftPackageScript: ShellCommand {
                                context: BuildContext,
                                buildDir: String) throws -> [Shell.IO] {
         let (scheme, _) = context
-        try generateXcodeprojectIfNeeded()
+        let xcodeProjectCreationOutput = try generateXcodeprojectIfNeeded()
+        defer {
+            try? deleteXcodeprojectIfCreated(creationOutput: xcodeProjectCreationOutput)
+        }
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release
         let xcodebuildOutputs = try build(like: frameworkKind, scheme: scheme, derivedDataPath: derivedDataPath, config: config)
@@ -39,12 +42,27 @@ public final class BuildSwiftPackageScript: ShellCommand {
 
     @discardableResult
     private func generateXcodeprojectIfNeeded() throws -> Shell.IO? {
-        if !Folder.current.subfolders.contains(with: AppConfiguration.xcodeProjectExtension, at: \.extension) {
+        if xcodeprojects().isEmpty {
             return try swiftPackageCommand.generateXcodeproj()
         }
         else {
             return nil
         }
+    }
+
+    @discardableResult
+    private func deleteXcodeprojectIfCreated(creationOutput: Shell.IO?) throws {
+        guard creationOutput != nil else {
+            return
+        }
+        for xcodeproject in xcodeprojects() {
+            try xcodeproject.delete()
+        }
+    }
+
+    private func xcodeprojects() -> [Folder] {
+
+        Folder.current.subfolders.filter(by: AppConfiguration.xcodeProjectExtension, at: \.extension)
     }
 
     private func build(like frameworkKind: MergePackage.FrameworkKind,
