@@ -54,21 +54,18 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
-    private let cacheBuilds: Bool
     private let podArguments: String?
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
     public init(podCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
-                cacheBuilds: Bool,
                 podArguments: String?) {
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
-        self.cacheBuilds = cacheBuilds
         self.podArguments = podArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))

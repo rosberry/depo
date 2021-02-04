@@ -32,7 +32,6 @@ extension SPMManager: HasOptionsInit {
     public convenience init(options: Options) {
         self.init(swiftCommandPath: options.swiftCommandPath,
                   frameworkKind: options.frameworkKind,
-                  cacheBuilds: options.cacheBuilds,
                   swiftBuildArguments: options.swiftBuildArguments)
     }
 }

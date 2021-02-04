@@ -32,7 +32,6 @@ extension PodManager: HasOptionsInit {
     public convenience init(options: Options) {
         self.init(podCommandPath: options.podCommandPath,
                   frameworkKind: options.frameworkKind,
-                  cacheBuilds: options.cacheBuilds,
                   podArguments: options.podArguments)
     }
 }

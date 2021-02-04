@@ -53,7 +53,6 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
     private let outputDirName             = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
     private let frameworkKind: MergePackage.FrameworkKind
-    private let cacheBuilds: Bool
     private let swiftBuildArguments: String?
     private var observer: ((State) -> Void)?
     private let productExtensions: [String] = ["framework", "xcframework"]
@@ -67,14 +66,12 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
 
     public init(swiftCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
-                cacheBuilds: Bool,
                 swiftBuildArguments: String?) {
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
         self.swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
-        self.cacheBuilds = cacheBuilds
         self.swiftBuildArguments = swiftBuildArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))

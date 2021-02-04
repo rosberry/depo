@@ -35,8 +35,13 @@ public final class BuildSwiftPackageScript: ShellCommand {
         }
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release
-        let xcodebuildOutputs = try build(like: frameworkKind, scheme: scheme, derivedDataPath: derivedDataPath, config: config)
-        try moveSwiftPackageBuildProductsToRightPlace(buildDir: buildDir, config: config, derivedDataPath: derivedDataPath)
+        let xcodebuildOutputs = try build(like: frameworkKind,
+                                          scheme: scheme,
+                                          derivedDataPath: derivedDataPath,
+                                          config: config)
+        try moveSwiftPackageBuildProductsToRightPlace(buildDir: buildDir,
+                                                      config: config,
+                                                      derivedDataPath: derivedDataPath)
         return xcodebuildOutputs
     }
 
@@ -61,7 +66,6 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     private func xcodeprojects() -> [Folder] {
-
         Folder.current.subfolders.filter(by: AppConfiguration.xcodeProjectExtension, at: \.extension)
     }
 

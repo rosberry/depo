@@ -21,7 +21,6 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     private var podManager: ConditionalPackageManager<PodManager, [PodManager.Package]> {
         let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
-                                 cacheBuilds: cacheBuilds,
                                  podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
@@ -39,7 +38,6 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     private var spmManager: ConditionalPackageManager<SPMManager, [SPMManager.Package]> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
-                                 cacheBuilds: cacheBuilds,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
