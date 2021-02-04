@@ -121,7 +121,7 @@ public struct BuildSettings {
 
     private static func supportedPlatforms(from settings: [String: String]) -> Set<Platform> {
         if let supportedPlatforms = settings["SUPPORTED_PLATFORMS"] {
-            let platforms = supportedPlatforms.split(separator: Character(" ")).compactMap { substring -> Platform? in
+            let platforms = supportedPlatforms.split(separator: " ").compactMap { substring -> Platform? in
                 Platform(key: String(substring))
             }
             return Set(platforms)
