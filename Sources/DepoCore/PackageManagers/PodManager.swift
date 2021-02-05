@@ -178,12 +178,15 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         }
     }
 
-    private func move(builtPod pod: Pod, outputPath: String) throws {
+    private func move(builtPod pod: Pod, outputPath: String) throws -> [String] {
         let outputFolder = try Folder(path: outputPath)
-        let podBuildProductsDirectory = try Folder(path: pod.name)
-        for subFolder in podBuildProductsDirectory.allSubfolders where isProduct(subFolder) {
-            try? outputFolder.subfolder(named: subFolder.name).delete()
-            try subFolder.copy(to: outputFolder)
+        return try Folder(path: pod.name).allSubfolders.compactMap { subfolder -> String? in
+            guard isProduct(subfolder) else {
+                return nil
+            }
+            try? outputFolder.subfolder(named: subfolder.name).delete()
+            try subfolder.copy(to: outputFolder)
+            return subfolder.path
         }
     }
 
