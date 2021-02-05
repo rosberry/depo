@@ -13,7 +13,7 @@ final class Example: ParsableCommand {
     private lazy var shell: Shell = Shell()
 
     func run() throws {
-        let exampleURL = "https://raw.githubusercontent.com/rosberry/depo/master/DepofileExample.yaml"
+        let exampleURL = "https://raw.githubusercontent.com/rosberry/depo/\(Depo.configuration.version)/DepofileExample.yaml"
         let output = try shell(silent: "curl \(exampleURL)")
         print(output.stdOut)
     }
