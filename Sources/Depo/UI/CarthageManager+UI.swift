@@ -14,6 +14,8 @@ extension CarthageManager.State: CustomStringConvertible {
             return string("==> ", color: .cyan) + "Start installing carthage"
         case .building:
             return string("==> ", color: .cyan) + "Start building carthage"
+        case .downloadingSources:
+            return ""
         case let .creatingCartfile(path):
             return "Creating cartfile at \(path)"
         case let .shell(state):

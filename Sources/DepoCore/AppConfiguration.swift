@@ -20,6 +20,8 @@ public enum AppConfiguration {
             public static let packageSwiftDirectory: String = ".build/checkouts"
             public static let packageSwiftBuildsDirectory: String = ".build/builds"
             public static let packageSwiftOutputDirectory: String = "SPM/Build/iOS"
+            public static let carthageBuildDirectory: String = "Carthage/Build"
+            public static let carthageIosBuildDirectory: String = "Carthage/Build/iOS"
         }
 
         public enum Absolute {

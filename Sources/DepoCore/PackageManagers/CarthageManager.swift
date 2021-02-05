@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import PathKit
 
 public final class CarthageManager: ProgressObservable, HasAllCommands {
 
@@ -13,6 +14,7 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         case updating
         case installing
         case building
+        case downloadingSources
         case creatingCartfile(path: String)
         case shell(state: Shell.State)
     }
@@ -27,8 +29,12 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
     }
 
     private let cartfileName: String = AppConfiguration.Name.cartfile
+    private let carthageBuildPath: String = AppConfiguration.Path.Relative.carthageBuildDirectory
+    private var carthageBackupBuildPath: String {
+        self.carthageBuildPath + ".bak"
+    }
 
-    public let outputPath: String = "./Carthage/Build/iOS/"
+    public let outputPath: String = AppConfiguration.Path.Relative.carthageIosBuildDirectory
     private let platform: Platform
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand
@@ -84,5 +90,29 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)
         }
+    }
+
+    private func buildForGitCachablePackageManager(packages: [Package]) throws -> [BuildResult] {
+        renameOldCarthageBuildIfExists()
+        for package in packages where package.kind == .github {
+            let packageArg = package.identifier.split(separator: " ")
+            try carthageShellCommand.build(arguments: carthageArgs + [.custom(args: package.identifier)])
+        }
+        return []
+    }
+
+    private func updateSources() throws {
+        observer?(.downloadingSources)
+        try carthageShellCommand.update(arguments: [.custom(args: "--no-build")])
+    }
+
+    private func bootstrapSources() throws {
+        observer?(.downloadingSources)
+        try carthageShellCommand.bootstrap(arguments: [.custom(args: "--no-build")])
+    }
+
+    private func renameOldCarthageBuildIfExists() {
+        let carthageBuildDir = Path(carthageBuildPath)
+        try? carthageBuildDir.move(Path(carthageBackupBuildPath))
     }
 }
