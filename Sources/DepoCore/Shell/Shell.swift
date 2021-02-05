@@ -122,12 +122,3 @@ extension Shell: Codable {
     }
 }
 
-fileprivate extension Either where Left == FileHandle, Right == Pipe {
-    var fileHandleForReading: FileHandle {
-        either(left: { left in
-            left
-        }, right: { right in
-            right.fileHandleForReading
-        })
-    }
-}
