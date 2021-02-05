@@ -18,7 +18,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     public let outputPath: String = ""
 
     private let platform: Platform
-    private var podManager: ConditionalPackageManager<PodManager, [PodManager.Package]> {
+    private var podManager: ConditionalPackageManager<PodManager> {
         let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  podArguments: podArguments).subscribe { [weak self] state in
@@ -26,7 +26,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
         return conditional(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var carthageManager: ConditionalPackageManager<CarthageManager, [CarthageManager.Package]> {
+    private var carthageManager: ConditionalPackageManager<CarthageManager> {
         let manager = CarthageManager(platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
@@ -35,7 +35,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
         return conditional(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var spmManager: ConditionalPackageManager<SPMManager, [SPMManager.Package]> {
+    private var spmManager: ConditionalPackageManager<SPMManager> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
@@ -117,10 +117,10 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return []
     }
 
-    private func conditional<Manager, Root>(
+    private func conditional<Manager: CanOutputPackages>(
       manager: Manager,
-      keyPath: KeyPath<Root, Bool>
-    ) -> ConditionalPackageManager<Manager, Root> {
+      keyPath: KeyPath<[Manager.Package], Bool>
+    ) -> ConditionalPackageManager<Manager> {
         .init(wrappedValue: manager, keyPath: keyPath)
     }
 }
