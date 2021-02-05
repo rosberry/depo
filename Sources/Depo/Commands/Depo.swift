@@ -49,6 +49,7 @@ final class Depo: ParsableCommand {
                                                                          AllBuild.self,
                                                                          PodCommand.self,
                                                                          Carthage.self,
-                                                                         SPM.self],
+                                                                         SPM.self,
+                                                                         Cacher.self],
                                                            defaultSubcommand: AllInstall.self)
 }
