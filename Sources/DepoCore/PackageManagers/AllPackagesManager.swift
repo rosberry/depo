@@ -8,6 +8,8 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
 
     public typealias Package = Depofile
     public typealias BuildResult = PackageOutput<Package>
+    typealias PackageManager<SourceManager: CanOutputPackages> = GitCachablePackageManager<ConditionalPackageManager<SourceManager>>
+      where SourceManager.Package: GitIdentifiablePackage
 
     public enum State {
         case podManager(PodManager.State)
@@ -18,30 +20,30 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     public let outputPath: String = ""
 
     private let platform: Platform
-    private var podManager: ConditionalPackageManager<PodManager> {
+    private var podManager: PackageManager<PodManager> {
         let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
-        return conditional(manager: manager, keyPath: \.isEmpty.not)
+        return packageManager(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var carthageManager: ConditionalPackageManager<CarthageManager> {
+    private var carthageManager: PackageManager<CarthageManager> {
         let manager = CarthageManager(platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
                                       carthageArguments: carthageArguments).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
-        return conditional(manager: manager, keyPath: \.isEmpty.not)
+        return packageManager(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var spmManager: ConditionalPackageManager<SPMManager> {
+    private var spmManager: PackageManager<SPMManager> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
-        return conditional(manager: manager, keyPath: \.isEmpty.not)
+        return packageManager(manager: manager, keyPath: \.isEmpty.not)
     }
     private var observer: ((State) -> Void)?
     private let podCommandPath: String
@@ -117,10 +119,13 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return []
     }
 
-    private func conditional<Manager: CanOutputPackages>(
+    private func packageManager<Manager: CanOutputPackages>(
       manager: Manager,
       keyPath: KeyPath<[Manager.Package], Bool>
-    ) -> ConditionalPackageManager<Manager> {
-        .init(wrappedValue: manager, keyPath: keyPath)
+    ) -> PackageManager<Manager>
+      where Manager.Package: GitIdentifiablePackage {
+        let conditionalPM = ConditionalPackageManager(wrappedValue: manager, keyPath: keyPath)
+        let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM)
+        return gitCachablePM
     }
 }
