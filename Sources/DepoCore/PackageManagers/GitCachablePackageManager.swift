@@ -17,17 +17,19 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
     }
 
     public let wrappedValue: PackageManager
+    public let xcodeVersion: XcodeBuild.Version?
     public let cacher: GitCacher = .init(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
 
-    public init(wrappedValue: PackageManager) {
+    public init(wrappedValue: PackageManager, xcodebuildVersion: XcodeBuild.Version?) {
         self.wrappedValue = wrappedValue
+        self.xcodeVersion = xcodebuildVersion
     }
 
     private func checkCacheAndRun(action: ([Package]) throws -> [BuildResult],
                                   packages: [Package]) throws -> [BuildResult] {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
         let cachedPackageURLs = try fromCache.map { package in
-            try cacher.get(packageID: package.packageID)
+            try cacher.get(packageID: package.packageID(xcodeVersion: xcodeVersion))
         }
         try process(urlsOfCachedBuilds: cachedPackageURLs)
         let outputs = try action(toBuild)
@@ -41,14 +43,14 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
             let urls = try paths.map { path in
                 try URL.throwingInit(string: path)
             }
-            try cacher.save(buildURLs: urls, packageID: package.packageID)
+            try cacher.save(buildURLs: urls, packageID: package.packageID(xcodeVersion: xcodeVersion))
         }
     }
 
     private func sort(packages: [Package], cachedPackageIDs: [GitCacher.PackageID]) throws -> SortedPackages {
         packages.reduce(([Package](), [Package]())) { result, package in
             let (toBuild, fromCache) = result
-            if cachedPackageIDs.contains(with: package.packageID, at: \.self) {
+            if cachedPackageIDs.contains(with: package.packageID(xcodeVersion: xcodeVersion), at: \.self) {
                 return (toBuild, fromCache + [package])
             }
             else {
@@ -106,6 +108,7 @@ extension GitCachablePackageManager: HasOptionsInit where PackageManager: HasOpt
 
     public init(options: PackageManager.Options) {
         self.wrappedValue = PackageManager(options: options)
+        self.xcodeVersion = try? XcodeBuild(shell: .init()).version()
     }
 }
 

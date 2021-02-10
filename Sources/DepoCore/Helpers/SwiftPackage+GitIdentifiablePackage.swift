@@ -3,7 +3,7 @@
 //
 
 extension SwiftPackage: GitIdentifiablePackage {
-    public var packageID: GitCacher.PackageID {
+    public func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID {
         .init(name: self.name)
     }
 }

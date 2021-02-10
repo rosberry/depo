@@ -6,7 +6,7 @@ import Files
 import Foundation
 
 public protocol GitIdentifiablePackage {
-    var packageID: GitCacher.PackageID { get }
+    func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID
 }
 
 public struct GitCacher: Cacher {

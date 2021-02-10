@@ -3,7 +3,7 @@
 //
 
 extension CarthageItem: GitIdentifiablePackage {
-    public var packageID: GitCacher.PackageID {
+    public func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID {
         .init(name: String(self.identifier.split(separator: "/")[1]))
     }
 }

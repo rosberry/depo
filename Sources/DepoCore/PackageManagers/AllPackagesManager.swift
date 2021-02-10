@@ -54,6 +54,9 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     private let carthageArguments: String?
     private let podArguments: String?
     private let swiftBuildArguments: String?
+    private let xcodebuildVersion: XcodeBuild.Version? = {
+        try? XcodeBuild(shell: .init()).version()
+    }()
 
     public init(platform: Platform,
                 podCommandPath: String,
@@ -125,7 +128,8 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     ) -> PackageManager<Manager>
       where Manager.Package: GitIdentifiablePackage {
         let conditionalPM = ConditionalPackageManager(wrappedValue: manager, keyPath: keyPath)
-        let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM)
+        let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM,
+                                                      xcodebuildVersion: xcodebuildVersion)
         return gitCachablePM
     }
 }

@@ -75,6 +75,20 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         try super.init(from: decoder)
     }
 
+    public static func version(shell: Shell) throws -> Version {
+        let output = try shell(silent: "xcodebuild -version")
+        let stdOut = output.stdOut
+        guard let xcodeVersionStartIndex = stdOut.range(of: #"Xcode "#, options: .regularExpression)?.upperBound,
+              let buildVersionStartIndex = stdOut.range(of: #"Build version "#, options: .regularExpression)?.upperBound,
+              let xcodeVersionLineLastIndex = stdOut[from: xcodeVersionStartIndex].firstIndex(of: "\n"),
+              let buildVersionLineLastIndex = stdOut[from: buildVersionStartIndex].firstIndex(of: "\n") else {
+            throw Error.badOutput(shellIO: output)
+        }
+        let xcodeVersion = String(stdOut[xcodeVersionStartIndex..<xcodeVersionLineLastIndex])
+        let buildVersion = String(stdOut[buildVersionStartIndex..<buildVersionLineLastIndex])
+        return .init(xcodeVersion: xcodeVersion, buildVersion: buildVersion)
+    }
+
     public func buildForDistribution(settings: Settings) throws -> Shell.IO {
         let xcconfig = try xcConfigForDistributionBuild()
         let command = exportCommand(xcconfig: xcconfig)
@@ -139,17 +153,7 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
     }
 
     public func version() throws -> Version {
-        let output = try shell(silent: "xcodebuild -version")
-        let stdOut = output.stdOut
-        guard let xcodeVersionStartIndex = stdOut.range(of: #"Xcode "#, options: .regularExpression)?.upperBound,
-              let buildVersionStartIndex = stdOut.range(of: #"Build version "#, options: .regularExpression)?.upperBound,
-              let xcodeVersionLineLastIndex = stdOut[from: xcodeVersionStartIndex].firstIndex(of: "\n"),
-              let buildVersionLineLastIndex = stdOut[from: buildVersionStartIndex].firstIndex(of: "\n") else {
-            throw Error.badOutput(shellIO: output)
-        }
-        let xcodeVersion = String(stdOut[xcodeVersionStartIndex..<xcodeVersionLineLastIndex])
-        let buildVersion = String(stdOut[buildVersionStartIndex..<buildVersionLineLastIndex])
-        return .init(xcodeVersion: xcodeVersion, buildVersion: buildVersion)
+        try Self.version(shell: shell)
     }
 
     private func xcConfigForDistributionBuild() throws -> File {
