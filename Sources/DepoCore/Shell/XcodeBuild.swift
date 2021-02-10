@@ -50,6 +50,11 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         case badOutput(shellIO: Shell.IO)
     }
 
+    public struct Version {
+        let xcodeVersion: String
+        let buildVersion: String
+    }
+
     public static let keys: [AnyArgument<Settings>] =
             [.init(optionalKeyPath: \.target, "-target "),
              .init(optionalKeyPath: \.scheme, "-scheme "),
@@ -131,6 +136,20 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
             throw Error.badOutput(shellIO: output)
         }
         return try decoder.decode(OutputWrapper.self, from: data).workspace
+    }
+
+    public func version() throws -> Version {
+        let output = try shell(silent: "xcodebuild -version")
+        let stdOut = output.stdOut
+        guard let xcodeVersionStartIndex = stdOut.range(of: #"Xcode "#, options: .regularExpression)?.upperBound,
+              let buildVersionStartIndex = stdOut.range(of: #"Build version "#, options: .regularExpression)?.upperBound,
+              let xcodeVersionLineLastIndex = stdOut[from: xcodeVersionStartIndex].firstIndex(of: "\n"),
+              let buildVersionLineLastIndex = stdOut[from: buildVersionStartIndex].firstIndex(of: "\n") else {
+            throw Error.badOutput(shellIO: output)
+        }
+        let xcodeVersion = String(stdOut[xcodeVersionStartIndex..<xcodeVersionLineLastIndex])
+        let buildVersion = String(stdOut[buildVersionStartIndex..<buildVersionLineLastIndex])
+        return .init(xcodeVersion: xcodeVersion, buildVersion: buildVersion)
     }
 
     private func xcConfigForDistributionBuild() throws -> File {
