@@ -17,12 +17,14 @@ public struct GitCacher: Cacher {
 
         public let description: String
 
-        public init(name: String) {
-            description = name
-        }
-
-        public init(xbVersion: String, name: String, version: String) {
-            description = "\(xbVersion)/\(name)/\(version)"
+        public init(xbVersion: String?, name: String, version: String?) {
+            let xbVersion = xbVersion.map { value in
+                "\(value)/"
+            } ?? ""
+            let version = version.map { value in
+                "/\(value)"
+            } ?? ""
+            self.init(stringLiteral: "\(xbVersion)\(name)\(version)")
         }
 
         public init(stringLiteral value: StringLiteralType) {

@@ -4,6 +4,8 @@
 
 extension SwiftPackage: GitIdentifiablePackage {
     public func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID {
-        .init(name: self.name)
+        .init(xbVersion: xcodeVersion?.xcodeVersion,
+              name: name,
+              version: versionConstraint?.value)
     }
 }
