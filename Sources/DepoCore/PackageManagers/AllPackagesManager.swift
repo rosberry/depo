@@ -20,7 +20,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
     public let outputPath: String = ""
 
     private let platform: Platform
-    private var podManager: PackageManager<PodManager> {
+    private var podManager: AnyPackageManager<Pod> {
         let manager = PodManager(podCommandPath: podCommandPath,
                                  frameworkKind: frameworkKind,
                                  podArguments: podArguments).subscribe { [weak self] state in
@@ -28,7 +28,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
         return packageManager(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var carthageManager: PackageManager<CarthageManager> {
+    private var carthageManager: AnyPackageManager<CarthageItem> {
         let manager = CarthageManager(platform: platform,
                                       carthageCommandPath: carthageCommandPath,
                                       cacheBuilds: cacheBuilds,
@@ -37,7 +37,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         }
         return packageManager(manager: manager, keyPath: \.isEmpty.not)
     }
-    private var spmManager: PackageManager<SPMManager> {
+    private var spmManager: AnyPackageManager<SwiftPackage> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
                                  frameworkKind: frameworkKind,
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
@@ -122,14 +122,49 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return []
     }
 
-    private func packageManager<Manager: CanOutputPackages>(
+    private func packageManager<Manager: HasAllCommands>(
       manager: Manager,
       keyPath: KeyPath<[Manager.Package], Bool>
-    ) -> PackageManager<Manager>
+    ) -> AnyPackageManager<Manager.Package>
       where Manager.Package: GitIdentifiablePackage {
         let conditionalPM = ConditionalPackageManager(wrappedValue: manager, keyPath: keyPath)
-        let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM,
-                                                      xcodebuildVersion: xcodebuildVersion)
-        return gitCachablePM
+        fatalError()
+        if cacheBuilds {
+            let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM,
+                                                          xcodebuildVersion: xcodebuildVersion)
+            return .init(outputPath: gitCachablePM.outputPath,
+                         buildClosure: gitCachablePM.build,
+                         installClosure: gitCachablePM.install,
+                         updateClosure: gitCachablePM.update)
+        }
+        else {
+            return .init(outputPath: conditionalPM.outputPath,
+                         buildClosure: conditionalPM.build,
+                         installClosure: conditionalPM.install,
+                         updateClosure: conditionalPM.update)
+        }
+    }
+
+    private func packageManager<Manager: HasBuildCommand & HasUpdateCommand>(
+            manager: Manager,
+            keyPath: KeyPath<[Manager.Package], Bool>
+    ) -> AnyPackageManager<Manager.Package>
+            where Manager.Package: GitIdentifiablePackage {
+        let conditionalPM = ConditionalPackageManager(wrappedValue: manager, keyPath: keyPath)
+        fatalError()
+        if cacheBuilds {
+            let gitCachablePM = GitCachablePackageManager(wrappedValue: conditionalPM,
+                                                          xcodebuildVersion: xcodebuildVersion)
+            return .init(outputPath: gitCachablePM.outputPath,
+                         buildClosure: gitCachablePM.build,
+                         installClosure: gitCachablePM.update,
+                         updateClosure: gitCachablePM.update)
+        }
+        else {
+            return .init(outputPath: conditionalPM.outputPath,
+                         buildClosure: conditionalPM.build,
+                         installClosure: conditionalPM.update,
+                         updateClosure: conditionalPM.update)
+        }
     }
 }
