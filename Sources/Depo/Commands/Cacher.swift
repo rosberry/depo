@@ -18,8 +18,8 @@ struct Cacher: ParsableCommand {
         @Option(name: .shortAndLong)
         var gitRepoURL: String
 
-        @Option(name: .shortAndLong)
-        var packageName: String
+        @Option(name: .shortAndLong, help: "will be used as branch name")
+        var packageIdentifier: String
 
         @Argument
         var buildURLs: [String]
@@ -30,7 +30,7 @@ struct Cacher: ParsableCommand {
                 try URL.throwingInit(string: Path(buildURL).absolute().string)
             }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
-            try cacher.save(buildURLs: buildURLs, packageID: .init(name: packageName))
+            try cacher.save(buildURLs: buildURLs, packageID: .init(stringLiteral: packageIdentifier))
         }
     }
 
@@ -39,8 +39,8 @@ struct Cacher: ParsableCommand {
         @Option(name: .shortAndLong)
         var gitRepoURL: String
 
-        @Option(name: .shortAndLong)
-        var packageName: String
+        @Option(name: .shortAndLong, help: "will be used as branch name")
+        var packageIdentifier: String
 
         @Argument
         var buildURLs: [String]
@@ -51,7 +51,7 @@ struct Cacher: ParsableCommand {
                 try URL.throwingInit(string: Path(buildURL).absolute().string)
             }
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
-            try cacher.update(buildURLs: buildURLs, packageID: .init(name: packageName))
+            try cacher.update(buildURLs: buildURLs, packageID: .init(stringLiteral: packageIdentifier))
         }
     }
 
@@ -60,13 +60,13 @@ struct Cacher: ParsableCommand {
         @Option(name: .shortAndLong)
         var gitRepoURL: String
 
-        @Option(name: .shortAndLong)
-        var packageName: String
+        @Option(name: .shortAndLong, help: "will be used as branch name")
+        var packageIdentifier: String
 
         func run() throws {
             let gitRepoURL = try URL.throwingInit(string: self.gitRepoURL)
             let cacher = GitCacher(gitRepoURL: gitRepoURL)
-            let url = try cacher.get(packageID: .init(name: packageName))
+            let url = try cacher.get(packageID: .init(stringLiteral: packageIdentifier))
             print(url)
         }
     }
