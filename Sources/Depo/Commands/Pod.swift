@@ -9,33 +9,33 @@ import DepoCore
 final class PodCommand: ParsableCommand {
 
     final class PodUpdate: Update {
-        typealias Command = GitCachablePackageManager<PodManager>
+        typealias Manager = GitCachablePackageManager<PodManager>
 
         static let configuration: CommandConfiguration = .init(commandName: "update", abstract: "run pod update and build pods")
 
         @OptionGroup()
-        var options: Command.Options
+        var options: Manager.Options
 
         static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
     final class PodInstall: Install {
-        typealias Command = GitCachablePackageManager<PodManager>
+        typealias Manager = GitCachablePackageManager<PodManager>
 
         static let configuration: CommandConfiguration = .init(commandName: "install", abstract: "run pod install and build pods")
 
         @OptionGroup()
-        var options: Command.Options
+        var options: Manager.Options
 
         static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
     final class PodBuild: Build {
-        typealias Command = GitCachablePackageManager<PodManager>
+        typealias Manager = GitCachablePackageManager<PodManager>
         static let configuration: CommandConfiguration = .init(commandName: "build", abstract: "build pods")
 
         @OptionGroup()
-        var options: Command.Options
+        var options: Manager.Options
 
         static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
