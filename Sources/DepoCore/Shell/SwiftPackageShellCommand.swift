@@ -34,7 +34,7 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func update(args: [String]) throws -> Shell.IO {
+    public func update(args: [String]) throws -> String {
         try shell(silent: "\(commandPath) package update \(args.spaceJoined)")
     }
 
@@ -57,13 +57,12 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func generateXcodeproj() throws -> Shell.IO {
+    public func generateXcodeproj() throws -> String {
         try shell(silent: "\(commandPath) package generate-xcodeproj")
     }
 
     public func spmVersion() throws -> String {
-        let swiftVersionOutput: Shell.IO = try shell(silent: "\(commandPath) package --version")
-        let output = swiftVersionOutput.stdOut
+        let output = try shell(silent: "\(commandPath) package --version")
         guard let keyRange = output.range(of: #"Swift Package Manager - Swift "#, options: .regularExpression),
               let valueRange = output[from: keyRange.upperBound].range(of: #"([^\s]+)"#, options: .regularExpression) else {
             return ""
@@ -80,10 +79,10 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 
     private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> SPOutputWrapper {
-        let output: Shell.IO = try fmg.perform(atPath: path) {
+        let output: String = try fmg.perform(atPath: path) {
             try shell(silent: "\(commandPath) package dump-package")
         }
-        return try JSONDecoder().decode(SPOutputWrapper.self, from: output.stdOut.data(using: .utf8) ?? Data())
+        return try JSONDecoder().decode(SPOutputWrapper.self, from: output.data(using: .utf8) ?? Data())
     }
 
     private func swiftPackagesByRegex(file: File) throws -> [SwiftPackage] {
@@ -124,8 +123,8 @@ public final class SwiftPackageShellCommand: ShellCommand {
             try? file.delete()
         }
 
-        let output: Shell.IO = try shell(silent: "perl \(file.path)")
-        return output.stdOut.split(separator: Character("\n")).map { substrings in
+        let output = try shell(silent: "perl \(file.path)")
+        return output.split(separator: Character("\n")).map { substrings in
             String(substrings)
         }
     }

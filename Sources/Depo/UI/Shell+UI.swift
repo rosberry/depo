@@ -7,25 +7,18 @@ import DepoCore
 
 extension Shell.Error: LocalizedError {
     public var errorDescription: String? {
-        switch self {
-        case let .failure(shellIO):
-            return "\(shellIO)"
-        case let .badStatusCode(command, statusCode):
-            return "\"\(command)\" exits with \(statusCode) status code"
-        }
+        description
     }
 }
 
-extension Shell.IO: CustomStringConvertible {
+extension Shell.Error: CustomStringConvertible {
     public var description: String {
-        "\"\(command.spaceJoined)\" exits with \(status) status code" +
-        fileDescriptorsDescription
-    }
-
-    private var fileDescriptorsDescription: String {
-        (stdOut.isEmpty ? "" : "\nstdOut: \n\(stdOut)") +
-        (stdIn.isEmpty ? "" : "\nstdIn: \n\(stdIn)") +
-        (stdErr.isEmpty ? "" : "\nstdErr: \n\(stdErr)")
+        return """
+               Shell encountered an error
+               Status code: \(terminationStatus)
+               Message: "\(message ?? "")"
+               Output: "\(output ?? "")"
+               """
     }
 }
 

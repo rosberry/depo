@@ -27,12 +27,8 @@ public final class BuildSwiftPackageScript: ShellCommand {
     @discardableResult
     public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind,
                                context: BuildContext,
-                               buildDir: String) throws -> [Shell.IO] {
+                               buildDir: String) throws -> [String] {
         let (scheme, _) = context
-        let xcodeProjectCreationOutput = try generateXcodeprojectIfNeeded()
-        defer {
-            try? deleteXcodeprojectIfCreated(creationOutput: xcodeProjectCreationOutput)
-        }
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release
         let xcodebuildOutputs = try build(like: frameworkKind,
@@ -46,7 +42,7 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     @discardableResult
-    private func generateXcodeprojectIfNeeded() throws -> Shell.IO? {
+    func generateXcodeprojectIfNeeded() throws -> String? {
         if xcodeprojects().isEmpty {
             return try swiftPackageCommand.generateXcodeproj()
         }
@@ -56,7 +52,7 @@ public final class BuildSwiftPackageScript: ShellCommand {
     }
 
     @discardableResult
-    private func deleteXcodeprojectIfCreated(creationOutput: Shell.IO?) throws {
+    func deleteXcodeprojectIfCreated(creationOutput: String?) throws {
         guard creationOutput != nil else {
             return
         }
@@ -72,7 +68,7 @@ public final class BuildSwiftPackageScript: ShellCommand {
     private func build(like frameworkKind: MergePackage.FrameworkKind,
                        scheme: String,
                        derivedDataPath: String,
-                       config: XcodeBuild.Configuration) throws -> [Shell.IO] {
+                       config: XcodeBuild.Configuration) throws -> [String] {
         let xcodebuild = self.xcodebuild
         switch frameworkKind {
         case .fatFramework:

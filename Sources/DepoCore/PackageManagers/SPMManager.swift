@@ -143,6 +143,10 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         observer?(.buildingPackage(package, path: path))
         try fmg.perform(atPath: path) {
             do {
+                let xcodeProjectCreationOutput = try buildSwiftPackageScript.generateXcodeprojectIfNeeded()
+                defer {
+                    try? buildSwiftPackageScript.deleteXcodeprojectIfCreated(creationOutput: xcodeProjectCreationOutput)
+                }
                 try buildPackageInCurrentDir(buildDir: packagesBuildsDirectoryRelativePath, like: frameworkKind)
             }
             catch InternalError.noSchemaToBuild {
@@ -153,7 +157,8 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
 
     private func buildPackageInCurrentDir(buildDir: String, like frameworkKind: MergePackage.FrameworkKind) throws {
         let _: Int32 = try shell(loud: "chmod -R +rw .")
-        let contexts = try xcodebuild.listProject().schemes.compactMap { scheme -> BuildSwiftPackageScript.BuildContext? in
+        let contexts = try xcodebuild.schemes().compactMap { scheme -> BuildSwiftPackageScript.BuildContext? in
+            print(#function)
             guard let settings = try? BuildSettings(scheme: scheme, xcodebuild: xcodebuild) else {
                 return nil
             }

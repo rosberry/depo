@@ -47,7 +47,7 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
     }
 
     public enum Error: Swift.Error {
-        case badOutput(shellIO: Shell.IO)
+        case badOutput(shellOutput: String)
     }
 
     public struct Version {
@@ -77,19 +77,18 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     public static func version(shell: Shell) throws -> Version {
         let output = try shell(silent: "xcodebuild -version")
-        let stdOut = output.stdOut
-        guard let xcodeVersionStartIndex = stdOut.range(of: #"Xcode "#, options: .regularExpression)?.upperBound,
-              let buildVersionStartIndex = stdOut.range(of: #"Build version "#, options: .regularExpression)?.upperBound,
-              let xcodeVersionLineLastIndex = stdOut[from: xcodeVersionStartIndex].firstIndex(of: "\n"),
-              let buildVersionLineLastIndex = stdOut[from: buildVersionStartIndex].firstIndex(of: "\n") else {
-            throw Error.badOutput(shellIO: output)
+        guard let xcodeVersionStartIndex = output.range(of: #"Xcode "#, options: .regularExpression)?.upperBound,
+              let buildVersionStartIndex = output.range(of: #"Build version "#, options: .regularExpression)?.upperBound,
+              let xcodeVersionLineLastIndex = output[from: xcodeVersionStartIndex].firstIndex(of: "\n"),
+              let buildVersionLineLastIndex = output[from: buildVersionStartIndex].firstIndex(of: "\n") else {
+            throw Error.badOutput(shellOutput: output)
         }
-        let xcodeVersion = String(stdOut[xcodeVersionStartIndex..<xcodeVersionLineLastIndex])
-        let buildVersion = String(stdOut[buildVersionStartIndex..<buildVersionLineLastIndex])
+        let xcodeVersion = String(output[xcodeVersionStartIndex..<xcodeVersionLineLastIndex])
+        let buildVersion = String(output[buildVersionStartIndex..<buildVersionLineLastIndex])
         return .init(xcodeVersion: xcodeVersion, buildVersion: buildVersion)
     }
 
-    public func buildForDistribution(settings: Settings) throws -> Shell.IO {
+    public func buildForDistribution(settings: Settings) throws -> String {
         let xcconfig = try xcConfigForDistributionBuild()
         let command = exportCommand(xcconfig: xcconfig)
                       + " && "
@@ -97,23 +96,28 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         return try shell(silent: command)
     }
 
-    public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> Shell.IO {
+    public func create(xcFrameworkAt path: String, fromFrameworksAtPaths frameworkPaths: [String]) throws -> String {
         let frameworksArguments = frameworkPaths.reduce("") { result, path in
             result + "-framework \(path) "
         }
         return try shell(silent: "\(command) -create-xcframework -output \(path) \(frameworksArguments)")
     }
 
-    public func showBuildSettings() throws -> Shell.IO {
+    public func showBuildSettings() throws -> String {
         try shell(silent: Self.showBuildSettingsCommand())
     }
 
-    public func showBuildSettings(target: String) throws -> Shell.IO {
+    public func showBuildSettings(target: String) throws -> String {
         try shell(silent: Self.showBuildSettingsCommand(target: target))
     }
 
-    public func showBuildSettings(scheme: String) throws -> Shell.IO {
+    public func showBuildSettings(scheme: String) throws -> String {
         try shell(silent: Self.showBuildSettingsCommand(scheme: scheme))
+    }
+
+    public func schemes(decoder: JSONDecoder = .init()) throws -> [String] {
+        let output = try shell(silent: "xcodebuild -list -json")
+        return try schemes(fromOutput: output)
     }
 
     public func listProject(name: String? = nil, decoder: JSONDecoder = .init()) throws -> XcodeList.Project {
@@ -121,15 +125,15 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
             let project: XcodeList.Project
         }
 
-        let output: Shell.IO
+        let output: String
         if let name = name {
             output = try shell(silent: "xcodebuild -list -json -project \(name)")
         }
         else {
             output = try shell(silent: "xcodebuild -list -json")
         }
-        guard let data = output.stdOut.data(using: .utf8) else {
-            throw Error.badOutput(shellIO: output)
+        guard let data = output.data(using: .utf8) else {
+            throw Error.badOutput(shellOutput: output)
         }
         return try decoder.decode(OutputWrapper.self, from: data).project
     }
@@ -139,15 +143,15 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
             let workspace: XcodeList.Workspace
         }
 
-        let output: Shell.IO
+        let output: String
         if let name = name {
             output = try shell(silent: "xcodebuild -list -json -workspace \(name)")
         }
         else {
             output = try shell(silent: "xcodebuild -list -json")
         }
-        guard let data = output.stdOut.data(using: .utf8) else {
-            throw Error.badOutput(shellIO: output)
+        guard let data = output.data(using: .utf8) else {
+            throw Error.badOutput(shellOutput: output)
         }
         return try decoder.decode(OutputWrapper.self, from: data).workspace
     }
@@ -176,6 +180,16 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
     private static func showBuildSettingsCommand(scheme: String) -> String {
         "xcodebuild -showBuildSettings -json -scheme \(scheme)"
+    }
+
+    private func schemes(fromOutput: String) throws -> [String] {
+        guard let data = fromOutput.data(using: .utf8),
+              let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let entry = (json["project"] ?? json["workspace"]) as? [String: Any],
+              let schemes = entry["schemes"] as? [String] else {
+            return []
+        }
+        return schemes
     }
 }
 

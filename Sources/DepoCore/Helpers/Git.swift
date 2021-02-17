@@ -17,8 +17,8 @@ public final class Git: ShellCommand {
         }
 
         public func callAsFunction() throws -> [String] {
-            let output: Shell.IO = try gitRemote("")
-            return output.stdOut.split(separator: Character("\n")).map { substring in
+            let output: String = try gitRemote("")
+            return output.split(separator: Character("\n")).map { substring in
                 String(substring)
             }
         }
@@ -64,13 +64,13 @@ public final class Git: ShellCommand {
     }
 
     public func currentBranch() throws -> String {
-        let output: Shell.IO = try git("rev-parse --abbrev-ref HEAD")
-        return output.stdOut.trimmingCharacters(in: .whitespacesAndNewlines)
+        let output: String = try git("rev-parse --abbrev-ref HEAD")
+        return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     public func hasChanges() throws -> Bool {
-        let output: Shell.IO = try git("status -s")
-        return !output.stdOut.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let output: String = try git("status -s")
+        return !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     public func initialize() throws {
@@ -78,13 +78,13 @@ public final class Git: ShellCommand {
     }
 
     public func branches() throws -> [String] {
-        let output: Shell.IO = try git("show-ref --heads | cut -d/ -f3-")
-        return output.stdOut.lines
+        let output: String = try git("show-ref --heads | cut -d/ -f3-")
+        return output.lines
     }
 
     public func remoteBranches() throws -> [String] {
-        let output: Shell.IO = try git("ls-remote --heads --quiet | cut -d/ -f3-")
-        return output.stdOut.lines
+        let output: String = try git("ls-remote --heads --quiet | cut -d/ -f3-")
+        return output.lines
     }
 
     public func clone(url: URL, to outputDirName: String = "", branchName: String) throws {

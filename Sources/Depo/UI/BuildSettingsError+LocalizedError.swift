@@ -9,9 +9,9 @@ extension BuildSettings.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case let .badOutput(shellIO):
-            return "cannot parse output of \(shellIO.command.spaceJoined)"
+            return "cannot parse output of \(shellIO)"
         case let .badBuildSettings(missedKey, shellIO):
-            return "cannot find key \(missedKey) in output of \"\(shellIO.command.spaceJoined)\""
+            return "cannot find key \(missedKey) in output of \"\(shellIO)\""
         }
     }
 }

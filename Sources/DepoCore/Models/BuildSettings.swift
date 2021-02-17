@@ -9,8 +9,8 @@ import Foundation
 public struct BuildSettings {
 
     public enum Error: Swift.Error {
-        case badOutput(shellIO: Shell.IO)
-        case badBuildSettings(missedKey: String, shellIO: Shell.IO)
+        case badOutput(shellOutput: String)
+        case badBuildSettings(missedKey: String, shellOutput: String)
     }
 
     private enum InternalError: Swift.Error {
@@ -31,30 +31,31 @@ public struct BuildSettings {
     public let supportedPlatforms: Set<Platform>
 
     public init(xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
-        let shellIO: Shell.IO = try xcodebuild.showBuildSettings()
-        try self.init(shellIO: shellIO, decoder: decoder)
+        let shellIO = try xcodebuild.showBuildSettings()
+        try self.init(shellOutput: shellIO, decoder: decoder)
     }
 
     public init(target: String, xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
-        let shellIO: Shell.IO = try xcodebuild.showBuildSettings(target: target)
-        try self.init(shellIO: shellIO, decoder: decoder)
+        let shellIO = try xcodebuild.showBuildSettings(target: target)
+        try self.init(shellOutput: shellIO, decoder: decoder)
     }
 
     public init(scheme: String, xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
-        let shellIO: Shell.IO = try xcodebuild.showBuildSettings(scheme: scheme)
-        try self.init(shellIO: shellIO, decoder: decoder)
+        print(#function, scheme)
+        let shellIO = try xcodebuild.showBuildSettings(scheme: scheme)
+        try self.init(shellOutput: shellIO, decoder: decoder)
     }
 
-    private init(shellIO: Shell.IO, decoder: JSONDecoder) throws {
-        guard let data = shellIO.stdOut.data(using: .utf8) else {
-            throw Error.badOutput(shellIO: shellIO)
+    private init(shellOutput: String, decoder: JSONDecoder) throws {
+        guard let data = shellOutput.data(using: .utf8) else {
+            throw Error.badOutput(shellOutput: shellOutput)
         }
         let buildSettings = (try decoder.decode([RawSettings].self, from: data)).first?.buildSettings ?? [:]
         do {
             try self.init(settings: buildSettings)
         }
         catch let InternalError.badExtract(missedKey, _) {
-            throw Error.badBuildSettings(missedKey: missedKey, shellIO: shellIO)
+            throw Error.badBuildSettings(missedKey: missedKey, shellOutput: shellOutput)
         }
     }
 

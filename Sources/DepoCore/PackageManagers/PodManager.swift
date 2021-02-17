@@ -219,7 +219,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     }
 
     @discardableResult
-    private func build(pod: Pod, ofKind frameworkKind: MergePackage.FrameworkKind) throws -> [Shell.IO] {
+    private func build(pod: Pod, ofKind frameworkKind: MergePackage.FrameworkKind) throws -> [String] {
         switch frameworkKind {
         case .fatFramework:
             return try buildFatFramework(pod: pod)
@@ -229,13 +229,13 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     }
 
     @discardableResult
-    private func buildFatFramework(pod: Pod) throws -> [Shell.IO] {
+    private func buildFatFramework(pod: Pod) throws -> [String] {
         [try xcodebuild(settings: .device(target: pod.name)),
          try xcodebuild(settings: .simulator(target: pod.name))]
     }
 
     @discardableResult
-    private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
+    private func buildForXCFramework(pod: Pod) throws -> [String] {
         [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
          try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
     }

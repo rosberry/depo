@@ -13,7 +13,7 @@ public class ShellCommand: Codable {
         self.shell = shell
     }
 
-    public func callAsFunction(_ args: String) throws -> Shell.IO {
+    public func callAsFunction(_ args: String) throws -> String {
         try shell(silent: "\(commandPath) \(args)")
     }
 
@@ -33,7 +33,7 @@ public protocol ArgumentedShellCommand {
 
 public extension ArgumentedShellCommand {
     @discardableResult
-    func callAsFunction(_ command: String? = nil, settings: Settings) throws -> Shell.IO {
+    func callAsFunction(_ command: String? = nil, settings: Settings) throws -> String {
         try shell(silent: "\(command ?? self.command) \(settings.stringArguments(keys: Self.keys).spaceJoined)")
     }
 }
