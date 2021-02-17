@@ -16,7 +16,7 @@ final class Depo: ParsableCommand {
         @OptionGroup()
         var options: Manager.Options
 
-        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
+        public static let depofileKeyPath: KeyPath<Depofile, [Depofile]> = \.array
     }
 
     final class AllUpdate: Update {
@@ -27,7 +27,7 @@ final class Depo: ParsableCommand {
         @OptionGroup()
         var options: Manager.Options
 
-        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
+        public static let depofileKeyPath: KeyPath<Depofile, [Depofile]> = \.array
     }
 
     final class AllBuild: Build {
@@ -38,7 +38,7 @@ final class Depo: ParsableCommand {
         @OptionGroup()
         var options: Manager.Options
 
-        public static let depofileKeyPath: KeyPath<Depofile, Depofile> = \.self
+        public static let depofileKeyPath: KeyPath<Depofile, [Depofile]> = \.array
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "Main",

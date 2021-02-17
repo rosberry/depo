@@ -21,3 +21,4 @@ extension Install where ValueType == [Manager.Package] {
         try wrapper(manager: manager, cacheBuilds: options.cacheBuilds).install(packages: depofile[keyPath: Self.depofileKeyPath])
     }
 }
+
