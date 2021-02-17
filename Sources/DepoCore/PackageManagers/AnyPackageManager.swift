@@ -4,22 +4,22 @@
 
 import Foundation
 
-struct AnyPackageManager<Package>: CanOutputPackages, HasAllCommands {
+public struct AnyPackageManager<Package>: CanOutputPackages, HasAllCommands {
 
-    let outputPath: String
+    public let outputPath: String
     let buildClosure: ([Package]) throws -> PackagesOutput<Package>
     let installClosure: ([Package]) throws -> PackagesOutput<Package>
     let updateClosure: ([Package]) throws -> PackagesOutput<Package>
 
-    func install(packages: [Package]) throws -> PackagesOutput<Package> {
+    public func install(packages: [Package]) throws -> PackagesOutput<Package> {
         try installClosure(packages)
     }
 
-    func update(packages: [Package]) throws -> PackagesOutput<Package> {
+    public func update(packages: [Package]) throws -> PackagesOutput<Package> {
         try updateClosure(packages)
     }
 
-    func build(packages: [Package]) throws -> PackagesOutput<Package> {
+    public func build(packages: [Package]) throws -> PackagesOutput<Package> {
         try buildClosure(packages)
     }
 }

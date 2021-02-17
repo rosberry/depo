@@ -46,3 +46,9 @@ extension Depofile: Codable {
         swiftPackages = try container.decodeIfPresent([SwiftPackage].self, forKey: .swiftPackages) ?? []
     }
 }
+
+extension Depofile: GitIdentifiablePackage {
+    public func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID {
+        ""
+    }
+}

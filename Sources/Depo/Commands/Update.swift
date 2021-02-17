@@ -7,7 +7,7 @@ import ArgumentParser
 import DepoCore
 
 protocol Update: ParsableCommand, HasDepofileKeyPath {
-    associatedtype Manager: HasUpdateCommand, HasOptionsInit, ProgressObservable
+    associatedtype Manager: HasUpdateCommand, HasOptionsInit, ProgressObservable where Manager.Package: GitIdentifiablePackage
     var options: Manager.Options { get }
 }
 
@@ -17,6 +17,7 @@ extension Update where ValueType == [Manager.Package] {
         let manager = Manager(options: options).subscribe { state in
             print(state)
         }
-        try manager.update(packages: depofile[keyPath: Self.depofileKeyPath])
+        let wrapper = PackageManagerWrapper()
+        try wrapper(manager: manager, cacheBuilds: options.cacheBuilds).update(packages: depofile[keyPath: Self.depofileKeyPath])
     }
 }

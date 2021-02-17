@@ -14,6 +14,7 @@ public typealias FailureBuild<Package> = FailureWrapper<Package, Swift.Error>
 
 public protocol HasDepofileExtension {
     var depofileExtension: DataCoder.Kind { get }
+    var cacheBuilds: Bool { get }
 }
 
 public protocol HasCacheBuildsFlag {

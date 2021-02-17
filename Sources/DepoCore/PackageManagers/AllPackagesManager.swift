@@ -27,7 +27,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
                                  podArguments: podArguments).subscribe { [weak self] state in
             self?.observer?(.podManager(state))
         }
-        return wrapper(manager: manager, keyPath: \.isEmpty.not, cacheBuilds: cacheBuilds)
+        return wrapper(manager: manager, cacheBuilds: cacheBuilds)
     }
     private var carthageManager: AnyPackageManager<CarthageItem> {
         let manager = CarthageManager(platform: platform,
@@ -36,7 +36,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
                                       carthageArguments: carthageArguments).subscribe { [weak self] state in
             self?.observer?(.carthageManager(state))
         }
-        return wrapper(manager: manager, keyPath: \.isEmpty.not, cacheBuilds: cacheBuilds)
+        return wrapper(manager: manager, cacheBuilds: cacheBuilds)
     }
     private var spmManager: AnyPackageManager<SwiftPackage> {
         let manager = SPMManager(swiftCommandPath: swiftCommandPath,
@@ -44,7 +44,7 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
                                  swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
             self?.observer?(.spmManager(state))
         }
-        return wrapper(manager: manager, keyPath: \.isEmpty.not, cacheBuilds: cacheBuilds)
+        return wrapper(manager: manager, cacheBuilds: cacheBuilds)
     }
     private var observer: ((State) -> Void)?
     private let podCommandPath: String

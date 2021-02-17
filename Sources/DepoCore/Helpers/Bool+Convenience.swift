@@ -4,7 +4,7 @@
 
 import Foundation
 
-extension Bool {
+public extension Bool {
     var not: Self {
         !self
     }
