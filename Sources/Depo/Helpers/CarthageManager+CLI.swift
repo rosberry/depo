@@ -29,8 +29,9 @@ extension CarthageManager: HasOptionsInit {
         public init() {}
     }
 
-    public convenience init(options: Options) {
-        self.init(platform: options.platform,
+    public convenience init(depofile: Depofile, options: Options) {
+        self.init(packages: depofile.carts,
+                  platform: options.platform,
                   carthageCommandPath: options.carthageCommandPath,
                   cacheBuilds: options.cacheBuilds,
                   carthageArguments: options.carthageArguments)

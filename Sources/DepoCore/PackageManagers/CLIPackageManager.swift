@@ -26,17 +26,6 @@ public extension PackageManager {
     }
 }
 
-public protocol HasDepofileExtension {
-    var depofileExtension: DataCoder.Kind { get }
-    var cacheBuilds: Bool { get }
-}
-
 public protocol HasCacheBuildsFlag {
     var cacheBuilds: Bool { get }
-}
-
-public protocol HasOptionsInit {
-    associatedtype Options: HasDepofileExtension
-
-    init(options: Options)
 }
