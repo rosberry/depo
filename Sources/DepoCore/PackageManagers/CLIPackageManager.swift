@@ -12,11 +12,18 @@ public typealias FailureBuild<Package> = FailureWrapper<Package, Swift.Error>
 public protocol PackageManager {
     associatedtype Package
 
-    var outputPath: String { get }
+    var packages: [Package] { get }
+    static var outputPath: String { get }
 
     func update() throws -> PackagesOutput<Package>
     func install() throws -> PackagesOutput<Package>
     func build() throws -> PackagesOutput<Package>
+}
+
+public extension PackageManager {
+    func eraseToAny() -> AnyPackageManager<Package> {
+        .init(packageManager: self)
+    }
 }
 
 public protocol HasDepofileExtension {

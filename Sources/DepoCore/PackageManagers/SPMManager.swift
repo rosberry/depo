@@ -37,9 +37,9 @@ public final class SPMManager: ProgressObservable, PackageManager {
         case packages
     }
 
-    public let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+    public static let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
-    private let packages: [Package]
+    public let packages: [Package]
     private let fmg: FileManager = .default
     private let shell: Shell
     private let xcodebuild: XcodeBuild

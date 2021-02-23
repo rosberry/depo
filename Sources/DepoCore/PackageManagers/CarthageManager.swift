@@ -34,8 +34,8 @@ public final class CarthageManager: ProgressObservable, PackageManager {
         self.carthageBuildPath + ".bak"
     }
 
-    public let outputPath: String = AppConfiguration.Path.Relative.carthageIosBuildDirectory
-    private let packages: [Package]
+    static public let outputPath: String = AppConfiguration.Path.Relative.carthageIosBuildDirectory
+    public let packages: [Package]
     private let platform: Platform
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand

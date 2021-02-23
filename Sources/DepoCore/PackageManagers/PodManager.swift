@@ -43,14 +43,14 @@ public final class PodManager: ProgressObservable, PackageManager {
         case pods
     }
 
-    public let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
+    static public let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
     private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let productExtensions: [String] = ["framework", "bundle", "xcframework"]
 
-    private let packages: [Package]
+    public let packages: [Package]
     private let shell: Shell
     private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
@@ -87,7 +87,7 @@ public final class PodManager: ProgressObservable, PackageManager {
         try podInitIfNeeded(podFilePath: podFilePath)
         try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
-        return try build(packages: packages)
+        return try build()
     }
 
     public func update() throws -> [BuildResult] {
@@ -96,7 +96,7 @@ public final class PodManager: ProgressObservable, PackageManager {
         observer?(.updating)
         try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
-        return try build(packages: packages)
+        return try build()
     }
 
     public func build() throws -> [BuildResult] {
