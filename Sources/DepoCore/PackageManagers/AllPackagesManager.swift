@@ -4,12 +4,10 @@
 
 import Foundation
 
-public final class AllPackagesManager: ProgressObservable, HasAllCommands {
+public final class AllPackagesManager: ProgressObservable, PackageManager {
 
     public typealias Package = Depofile
     public typealias BuildResult = PackageOutput<Package>
-    typealias PackageManager<SourceManager: CanOutputPackages> = GitCachablePackageManager<ConditionalPackageManager<SourceManager>>
-            where SourceManager.Package: GitIdentifiablePackage
 
     public enum State {
         case podManager(PodManager.State)

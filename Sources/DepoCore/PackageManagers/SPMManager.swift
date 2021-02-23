@@ -5,7 +5,7 @@
 import Foundation
 import Files
 
-public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCommand {
+public final class SPMManager: ProgressObservable, PackageManager {
 
     public typealias Package = SwiftPackage
     public typealias BuildResult = PackageOutput<Package>
@@ -39,6 +39,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
 
     public let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
+    private let packages: [Package]
     private let fmg: FileManager = .default
     private let shell: Shell
     private let xcodebuild: XcodeBuild
@@ -47,10 +48,10 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
 
-    private let packageSwiftFileName      = AppConfiguration.Name.packageSwift
-    private let packageSwiftDirName       = AppConfiguration.Path.Relative.packageSwiftDirectory
+    private let packageSwiftFileName = AppConfiguration.Name.packageSwift
+    private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
-    private let outputDirName             = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
+    private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
     private let frameworkKind: MergePackage.FrameworkKind
     private let swiftBuildArguments: String?
@@ -64,9 +65,11 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         "\(fmg.currentDirectoryPath)/\(outputDirName)"
     }
 
-    public init(swiftCommandPath: String,
+    public init(packages: [Package],
+                swiftCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
                 swiftBuildArguments: String?) {
+        self.packages = packages
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
@@ -83,21 +86,25 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
         return self
     }
 
-    public func update(packages: [Package]) throws -> [BuildResult] {
+    public func install() throws -> PackagesOutput<Package> {
+        fatalError("install() has not been implemented")
+    }
+
+    public func update() throws -> [BuildResult] {
         observer?(.updating)
         let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
         try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
         try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
-        return try build(packages: packages)
+        return try build()
     }
 
-    public func build(packages: [Package]) throws -> [BuildResult] {
+    public func build() throws -> [BuildResult] {
         observer?(.building)
-        return try build(packages: packages,
-                         like: frameworkKind,
-                         at: packageSwiftDirName,
-                         buildsOutputDirectoryPath: buildsOutputDirectoryPath,
-                         mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
+        return build(packages: packages,
+                     like: frameworkKind,
+                     at: packageSwiftDirName,
+                     buildsOutputDirectoryPath: buildsOutputDirectoryPath,
+                     mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
     }
 
     private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
@@ -162,7 +169,7 @@ public final class SPMManager: ProgressObservable, HasUpdateCommand, HasBuildCom
             guard let settings = try? BuildSettings(scheme: scheme, xcodebuild: xcodebuild) else {
                 return nil
             }
-            return shouldBuild(settings: settings)  ? (scheme, settings) : nil
+            return shouldBuild(settings: settings) ? (scheme, settings) : nil
         }
         try build(contexts: contexts, like: frameworkKind, buildDir: buildDir)
     }

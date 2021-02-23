@@ -6,7 +6,7 @@ import Foundation
 import Yams
 import Files
 
-public final class PodManager: ProgressObservable, HasAllCommands {
+public final class PodManager: ProgressObservable, PackageManager {
 
     public typealias Package = Pod
     public typealias BuildResult = PackageOutput<Package>
@@ -50,6 +50,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let productExtensions: [String] = ["framework", "bundle", "xcframework"]
 
+    private let packages: [Package]
     private let shell: Shell
     private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
@@ -58,9 +59,11 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(podCommandPath: String,
+    public init(packages: [Package],
+                podCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
                 podArguments: String?) {
+        self.packages = packages
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
@@ -77,7 +80,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func install(packages: [Package]) throws -> [BuildResult] {
+    public func install() throws -> [BuildResult] {
         observer?(.installing)
         let podFilePath = "./\(podFileName)"
 
@@ -87,7 +90,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return try build(packages: packages)
     }
 
-    public func update(packages: [Package]) throws -> [BuildResult] {
+    public func update() throws -> [BuildResult] {
         let podFilePath = "./\(podFileName)"
 
         observer?(.updating)
@@ -96,7 +99,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return try build(packages: packages)
     }
 
-    public func build(packages: [Package]) throws -> [BuildResult] {
+    public func build() throws -> [BuildResult] {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         observer?(.building)
