@@ -12,6 +12,7 @@ public typealias FailureBuild<Package> = FailureWrapper<Package, Swift.Error>
 public protocol PackageManager {
     associatedtype Package
 
+    static var keyPath: KeyPath<Depofile, [Package]> { get }
     var packages: [Package] { get }
     static var outputPath: String { get }
 

@@ -5,7 +5,9 @@
 import Foundation
 
 public struct AnyPackageManager<Package>: PackageManager {
-
+    static public var keyPath: KeyPath<Depofile, [Package]> {
+        fatalError()
+    }
     static public var outputPath: String {
         ""
     }

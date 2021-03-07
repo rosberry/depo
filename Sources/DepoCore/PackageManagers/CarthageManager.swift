@@ -34,6 +34,7 @@ public final class CarthageManager: ProgressObservable, PackageManager {
         self.carthageBuildPath + ".bak"
     }
 
+    public static let keyPath: KeyPath<Depofile, [Package]> = \.carts
     static public let outputPath: String = AppConfiguration.Path.Relative.carthageIosBuildDirectory
     public let packages: [Package]
     private let platform: Platform

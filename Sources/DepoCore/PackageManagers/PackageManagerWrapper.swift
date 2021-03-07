@@ -20,7 +20,7 @@ public struct PackageManagerWrapper {
     ) -> AnyPackageManager<PM.Package>
             where PM.Package: GitIdentifiablePackage {
         let conditionalPMFactory = { packages in
-            ConditionalPackageManager(packages: packages, packageManagerFactory: factory, keyPath: keyPath)
+            ConditionalPackageManager(packages: packages, packageManagerFactory: factory, conditionKeyPath: keyPath)
         }
         if cacheBuilds {
             let gitCachablePM = GitCachablePackageManager(packages: packages,

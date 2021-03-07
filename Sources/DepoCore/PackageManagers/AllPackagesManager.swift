@@ -5,6 +5,9 @@
 import Foundation
 
 public final class AllPackagesManager: ProgressObservable, PackageManager {
+    public static var keyPath: KeyPath<Depofile, [Depofile]> {
+        \.array
+    }
 
     public typealias Package = Depofile
     public typealias BuildResult = PackageOutput<Package>

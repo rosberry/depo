@@ -14,16 +14,19 @@ struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
     static var outputPath: String {
         PM.outputPath
     }
+    static var keyPath: KeyPath<Depofile, [PM.Package]> {
+        fatalError()
+    }
     let packages: [Package]
     let packageManagerFactory: ([PM.Package]) -> PM
-    let keyPath: KeyPath<[Package], Bool>
+    let conditionKeyPath: KeyPath<[Package], Bool>
 
     private var wrappedValue: PM {
         packageManagerFactory(packages)
     }
 
     private func doIfNeeded<T>(action: () throws -> T) throws -> T {
-        guard packages[keyPath: keyPath] else {
+        guard packages[keyPath: conditionKeyPath] else {
             throw Error.noPackages
         }
         return try action()

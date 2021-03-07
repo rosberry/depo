@@ -6,18 +6,21 @@ import Foundation
 import ArgumentParser
 import DepoCore
 
-protocol Build: ParsableCommand, HasDepofileKeyPath {
-    associatedtype Manager: HasBuildCommand, HasOptionsInit, ProgressObservable where Manager.Package: GitIdentifiablePackage
+protocol Build: ParsableCommand {
+    associatedtype Manager: PackageManager, HasOptionsInit, ProgressObservable where Manager.Package: GitIdentifiablePackage
     var options: Manager.Options { get }
 }
 
-extension Build where ValueType == [Manager.Package] {
+extension Build  {
     func run() throws {
         let depofile = try Depofile(decoder: options.depofileExtension.coder)
-        let manager = Manager(options: options).subscribe { state in
-            print(state)
-        }
         let wrapper = PackageManagerWrapper()
-        try wrapper(manager: manager, cacheBuilds: options.cacheBuilds).build(packages: depofile[keyPath: Self.depofileKeyPath])
+        let packages: [Manager.Package] = depofile[keyPath: Manager.keyPath]
+        let manager = wrapper.wrap(packages: packages, cacheBuilds: options.cacheBuilds) { packages in
+            Manager(depofile: depofile, options: options).subscribe { state in
+                print(state)
+            }
+        }
+        _ = try manager.build()
     }
 }

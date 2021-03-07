@@ -43,7 +43,8 @@ public final class PodManager: ProgressObservable, PackageManager {
         case pods
     }
 
-    static public let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
+    public static let keyPath: KeyPath<Depofile, [Package]> = \.pods
+    public static let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory

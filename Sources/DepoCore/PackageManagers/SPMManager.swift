@@ -37,6 +37,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
         case packages
     }
 
+    public static let keyPath: KeyPath<Depofile, [Package]> = \.swiftPackages
     public static let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
     public let packages: [Package]

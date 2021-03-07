@@ -14,6 +14,9 @@ public struct GitCachablePackageManager<PM: PackageManager>: PackageManager wher
     public static var outputPath: String {
         PM.outputPath
     }
+    public static var keyPath: KeyPath<Depofile, [PM.Package]> {
+        PM.keyPath
+    }
 
     public let packages: [Package]
     public let packageManagerFactory: ([Package]) -> PM
