@@ -29,8 +29,9 @@ extension SPMManager: HasOptionsInit {
         public init() {}
     }
 
-    public convenience init(options: Options) {
-        self.init(swiftCommandPath: options.swiftCommandPath,
+    public convenience init(depofile: Depofile, options: Options) {
+        self.init(packages: depofile.swiftPackages,
+                  swiftCommandPath: options.swiftCommandPath,
                   frameworkKind: options.frameworkKind,
                   swiftBuildArguments: options.swiftBuildArguments)
     }

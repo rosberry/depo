@@ -5,35 +5,39 @@
 import Foundation
 import PathKit
 
-@propertyWrapper
-public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages
-    where PackageManager.Package: GitIdentifiablePackage {
+public struct GitCachablePackageManager<PM: PackageManager>: PackageManager where PM.Package: GitIdentifiablePackage {
 
-    public typealias Package = PackageManager.Package
+    public typealias Package = PM.Package
     public typealias BuildResult = PackageOutput<Package>
     private typealias SortedPackages = (toBuild: [Package], fromCache: [Package])
 
-    public var outputPath: String {
-        wrappedValue.outputPath
+    public static var outputPath: String {
+        PM.outputPath
+    }
+    public static var keyPath: KeyPath<Depofile, [PM.Package]> {
+        PM.keyPath
     }
 
-    public let wrappedValue: PackageManager
+    public let packages: [Package]
+    public let packageManagerFactory: ([Package]) -> PM
     public let xcodeVersion: XcodeBuild.Version?
     public let cacher: GitCacher = .init(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
 
-    public init(wrappedValue: PackageManager, xcodebuildVersion: XcodeBuild.Version?) {
-        self.wrappedValue = wrappedValue
+    public init(packages: [Package],
+                packageManagerFactory: @escaping ([Package]) -> PM,
+                xcodebuildVersion: XcodeBuild.Version?) {
+        self.packages = packages
+        self.packageManagerFactory = packageManagerFactory
         self.xcodeVersion = xcodebuildVersion
     }
 
-    private func checkCacheAndRun(action: ([Package]) throws -> [BuildResult],
-                                  packages: [Package]) throws -> [BuildResult] {
+    private func checkCacheAndRun(action: (PM) throws -> [BuildResult]) throws -> [BuildResult] {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
         let cachedPackageURLs = try fromCache.map { package in
             try cacher.get(packageID: package.packageID(xcodeVersion: xcodeVersion))
         }
         try process(urlsOfCachedBuilds: cachedPackageURLs)
-        let outputs = try action(toBuild)
+        let outputs = try action(packageManagerFactory(toBuild))
         try cache(builds: outputs)
         return outputs
     }
@@ -68,7 +72,7 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
     }
 
     private func process(urlsOfCachedBuilds urls: [URL]) throws {
-        let outputPath = try createIfNeeded(path: Path(self.outputPath))
+        let outputPath = try createIfNeeded(path: Path(Self.outputPath))
         for url in urls {
             let path = Path(url.path)
             try moveContents(of: path, to: outputPath)
@@ -84,40 +88,22 @@ public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanO
             try item.move(newPath)
         }
     }
-}
 
-extension GitCachablePackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
-    public func update(packages: [Package]) throws -> [BuildResult] {
-        try checkCacheAndRun(action: wrappedValue.update, packages: packages)
+    public func update() throws -> PackagesOutput<PM.Package> {
+        try checkCacheAndRun { packageManager in
+            try packageManager.update()
+        }
     }
-}
 
-extension GitCachablePackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
-    public func install(packages: [Package]) throws -> [BuildResult] {
-        try checkCacheAndRun(action: wrappedValue.install, packages: packages)
+    public func install() throws -> PackagesOutput<PM.Package> {
+        try checkCacheAndRun { packageManager in
+            try packageManager.install()
+        }
     }
-}
 
-extension GitCachablePackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
-    public func build(packages: [Package]) throws -> [BuildResult] {
-        try checkCacheAndRun(action: wrappedValue.build, packages: packages)
-    }
-}
-
-extension GitCachablePackageManager: HasOptionsInit where PackageManager: HasOptionsInit {
-    public typealias Options = PackageManager.Options
-
-    public init(options: PackageManager.Options) {
-        self.wrappedValue = PackageManager(options: options)
-        self.xcodeVersion = try? XcodeBuild(shell: .init()).version()
-    }
-}
-
-extension GitCachablePackageManager: ProgressObservable where PackageManager: ProgressObservable {
-    public typealias State = PackageManager.State
-
-    public func subscribe(_ observer: @escaping (PackageManager.State) -> Void) -> Self {
-        _ = wrappedValue.subscribe(observer)
-        return self
+    public func build() throws -> PackagesOutput<PM.Package> {
+        try checkCacheAndRun { packageManager in
+            try packageManager.build()
+        }
     }
 }

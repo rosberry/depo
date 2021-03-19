@@ -46,8 +46,9 @@ extension AllPackagesManager: HasOptionsInit {
         public init() {}
     }
 
-    public convenience init(options: Options) {
-        self.init(platform: options.platform,
+    public convenience init(depofile: Depofile, options: Options) {
+        self.init(depofile: depofile,
+                  platform: options.platform,
                   podCommandPath: options.podCommandPath,
                   carthageCommandPath: options.carthageCommandPath,
                   swiftCommandPath: options.swiftCommandPath,

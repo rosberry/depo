@@ -29,8 +29,9 @@ extension PodManager: HasOptionsInit {
         public init() {}
     }
 
-    public convenience init(options: Options) {
-        self.init(podCommandPath: options.podCommandPath,
+    public convenience init(depofile: Depofile, options: Options) {
+        self.init(packages: depofile.pods,
+                  podCommandPath: options.podCommandPath,
                   frameworkKind: options.frameworkKind,
                   podArguments: options.podArguments)
     }

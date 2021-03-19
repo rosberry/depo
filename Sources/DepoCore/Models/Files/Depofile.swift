@@ -52,3 +52,9 @@ extension Depofile: GitIdentifiablePackage {
         ""
     }
 }
+#warning("hack for AllPackageManager.keyPath")
+extension Depofile {
+    var array: [Depofile] {
+        [self]
+    }
+}
