@@ -40,7 +40,8 @@ final class PodCommand: ParsableCommand {
         static let depofileKeyPath: KeyPath<Depofile, [Pod]> = \.pods
     }
 
-    static let configuration: CommandConfiguration = .init(abstract: "Pod wrapper",
+    static let configuration: CommandConfiguration = .init(commandName: "pod",
+                                                           abstract: "Pod wrapper",
                                                            subcommands: [PodUpdate.self,
                                                                          PodInstall.self,
                                                                          PodBuild.self],

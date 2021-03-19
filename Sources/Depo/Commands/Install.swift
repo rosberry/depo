@@ -24,4 +24,3 @@ extension Install {
         _ = try manager.install()
     }
 }
-
