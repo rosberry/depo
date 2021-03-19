@@ -30,7 +30,6 @@ final class PackageSwiftFileTest: XCTestCase, PackageManagerFileTest {
     func testActualPackageSwiftToModel() {
         expectNoThrow(try {
             let url = try fileURL(name: "PackageSwiftWithDeps", ext: "txt")
-            print(url.absoluteStringWithoutScheme)
             let parsedPackageSwift = try self.parsedPackageSwift(path: url.absoluteStringWithoutScheme)
             let packageSwift = PackageSwift(projectBuildSettings: projectSettings, spmVersion: spmVersion, packages: swiftPackages)
             XCTAssertEqual(packageSwift.description, parsedPackageSwift.description)

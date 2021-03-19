@@ -106,7 +106,7 @@ extension PodShellCommand.PodIpcJsonOutput.RootObject.Children {
                 self.version = ""
             }
             else {
-                fatalError("nothing")
+                fatalError("cannot parse such Podfile")
             }
         }
     }

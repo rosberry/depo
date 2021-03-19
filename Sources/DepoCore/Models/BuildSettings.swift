@@ -5,7 +5,6 @@
 import Foundation
 
 #warning("public init(settings:) should be replaced by Codable")
-
 public struct BuildSettings {
 
     public enum Error: Swift.Error {
@@ -41,7 +40,6 @@ public struct BuildSettings {
     }
 
     public init(scheme: String, xcodebuild: XcodeBuild, decoder: JSONDecoder = .init()) throws {
-        print(#function, scheme)
         let shellIO = try xcodebuild.showBuildSettings(scheme: scheme)
         try self.init(shellOutput: shellIO, decoder: decoder)
     }
