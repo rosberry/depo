@@ -6,7 +6,8 @@ import Foundation
 import PathKit
 
 @propertyWrapper
-public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages where PackageManager.Package: GitIdentifiablePackage {
+public struct GitCachablePackageManager<PackageManager: CanOutputPackages>: CanOutputPackages
+    where PackageManager.Package: GitIdentifiablePackage {
 
     public typealias Package = PackageManager.Package
     public typealias BuildResult = PackageOutput<Package>
