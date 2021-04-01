@@ -6,6 +6,10 @@ import Foundation
 
 public struct PackageManagerWrapper {
 
+    enum Error: Swift.Error {
+        case cacheBuildsButNoCacheURL
+    }
+
     private let xcodebuildVersion: XcodeBuild.Version? = {
         try? XcodeBuild(shell: .init()).version()
     }()
@@ -16,16 +20,21 @@ public struct PackageManagerWrapper {
             packages: [PM.Package],
             keyPath: KeyPath<[PM.Package], Bool> = \.isEmpty.not,
             cacheBuilds: Bool,
+            cacheURL: URL?,
             factory: @escaping ([PM.Package]) -> PM
-    ) -> AnyPackageManager<PM.Package>
+    ) throws -> AnyPackageManager<PM.Package>
             where PM.Package: GitIdentifiablePackage {
         let conditionalPMFactory = { packages in
             ConditionalPackageManager(packages: packages, packageManagerFactory: factory, conditionKeyPath: keyPath)
         }
         if cacheBuilds {
+            guard let cacheURL = cacheURL else {
+                throw Error.cacheBuildsButNoCacheURL
+            }
             let gitCachablePM = GitCachablePackageManager(packages: packages,
                                                           packageManagerFactory: conditionalPMFactory,
-                                                          xcodebuildVersion: xcodebuildVersion)
+                                                          xcodebuildVersion: xcodebuildVersion,
+                                                          cacheURL: cacheURL)
             return gitCachablePM.eraseToAny()
         }
         else {

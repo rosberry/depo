@@ -21,14 +21,16 @@ public struct GitCachablePackageManager<PM: PackageManager>: PackageManager wher
     public let packages: [Package]
     public let packageManagerFactory: ([Package]) -> PM
     public let xcodeVersion: XcodeBuild.Version?
-    public let cacher: GitCacher = .init(gitRepoURL: URL(string: "git@github.com:zhvrnkov/frameworks-store.git")!)
+    public let cacher: GitCacher
 
     public init(packages: [Package],
                 packageManagerFactory: @escaping ([Package]) -> PM,
-                xcodebuildVersion: XcodeBuild.Version?) {
+                xcodebuildVersion: XcodeBuild.Version?,
+                cacheURL: URL) {
         self.packages = packages
         self.packageManagerFactory = packageManagerFactory
         self.xcodeVersion = xcodebuildVersion
+        cacher = .init(gitRepoURL: cacheURL)
     }
 
     private func checkCacheAndRun(action: (PM) throws -> [BuildResult]) throws -> [BuildResult] {
