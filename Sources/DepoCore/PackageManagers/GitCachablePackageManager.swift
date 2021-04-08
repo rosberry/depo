@@ -35,16 +35,23 @@ public struct GitCachablePackageManager<PM: PackageManager>: PackageManager wher
 
     private func checkCacheAndRun(action: (PM) throws -> [BuildResult]) throws -> [BuildResult] {
         let (toBuild, fromCache) = try sort(packages: packages, cachedPackageIDs: try cacher.packageIDS())
-        let cachedPackageURLs = try fromCache.map { package in
-            try cacher.get(packageID: package.packageID(xcodeVersion: xcodeVersion))
+        let cachedPackageURLs = try fromCache.map { package -> URL in
+            let id = package.packageID(xcodeVersion: xcodeVersion)
+            return try cacher.get(packageID: id)
         }
         try process(urlsOfCachedBuilds: cachedPackageURLs)
+        guard !toBuild.isEmpty else {
+            return []
+        }
         let outputs = try action(packageManagerFactory(toBuild))
         try cache(builds: outputs)
         return outputs
     }
 
     private func cache(builds: [BuildResult]) throws {
+        guard !builds.isEmpty else {
+            return
+        }
         let (successBuilds, _) = separate(builds)
         for (package, paths) in successBuilds {
             let urls = try paths.map { path in
