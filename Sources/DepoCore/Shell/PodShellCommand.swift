@@ -18,17 +18,17 @@ public final class PodShellCommand: ShellCommand {
     }
 
     @discardableResult
-    public func initialize() throws -> Shell.IO {
+    public func initialize() throws -> String {
         try shell(silent: "\(commandPath) init")
     }
 
     @discardableResult
-    public func install(args: [String]) throws -> Shell.IO {
+    public func install(args: [String]) throws -> String {
         try shell(silent: "\(commandPath) install \(args.spaceJoined)")
     }
 
     @discardableResult
-    public func update(args: [String]) throws -> Shell.IO {
+    public func update(args: [String]) throws -> String {
         try shell(silent: "\(commandPath) update \(args.spaceJoined)")
     }
 
@@ -37,8 +37,8 @@ public final class PodShellCommand: ShellCommand {
     }
 
     public func pods(podfilePath: String) throws -> [Pod] {
-        let output: Shell.IO = try shell(silent: "\(commandPath) ipc podfile-json \(podfilePath)")
-        let podfileJson = output.stdOut.data(using: .utf8) ?? Data()
+        let output = try shell(silent: "\(commandPath) ipc podfile-json \(podfilePath)")
+        let podfileJson = output.data(using: .utf8) ?? Data()
         let model = try JSONDecoder().decode(PodIpcJsonOutput.self, from: podfileJson)
         return pods(from: model)
     }
@@ -106,7 +106,7 @@ extension PodShellCommand.PodIpcJsonOutput.RootObject.Children {
                 self.version = ""
             }
             else {
-                fatalError("nothing")
+                fatalError("cannot parse such Podfile")
             }
         }
     }

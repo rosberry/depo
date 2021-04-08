@@ -11,17 +11,20 @@ public struct Depofile {
     }
 
     private enum CodingKeys: String, CodingKey {
+        case cacheURL
         case pods
         case swiftPackages
         case carts
     }
 
+    public let cacheURL: URL?
     public let pods: [Pod]
     public let carts: [CarthageItem]
     public let swiftPackages: [SwiftPackage]
     public static let defaultPath: String = "./\(AppConfiguration.Name.config)"
 
     public init(pods: [Pod], carts: [CarthageItem], swiftPackages: [SwiftPackage]) {
+        self.cacheURL = nil
         self.pods = pods
         self.carts = carts
         self.swiftPackages = swiftPackages
@@ -41,8 +44,21 @@ extension Depofile: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        cacheURL = try container.decodeIfPresent(URL.self, forKey: .cacheURL)
         pods = try container.decodeIfPresent([Pod].self, forKey: .pods) ?? []
         carts = try container.decodeIfPresent([CarthageItem].self, forKey: .carts) ?? []
         swiftPackages = try container.decodeIfPresent([SwiftPackage].self, forKey: .swiftPackages) ?? []
+    }
+}
+
+extension Depofile: GitIdentifiablePackage {
+    public func packageID(xcodeVersion: XcodeBuild.Version?) -> GitCacher.PackageID {
+        ""
+    }
+}
+#warning("hack for AllPackageManager.keyPath")
+extension Depofile {
+    var array: [Depofile] {
+        [self]
     }
 }

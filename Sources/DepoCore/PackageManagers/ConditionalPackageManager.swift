@@ -2,49 +2,52 @@
 // Copyright © 2020 Rosberry. All rights reserved.
 //
 
-@propertyWrapper
-struct ConditionalPackageManager<PackageManager> {
+struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
 
-    let wrappedValue: PackageManager
-    let condition: () -> Bool
-
-    private func doIfPossible(action: () throws -> Void) throws {
-        guard condition() else {
-            return
-        }
-        try action()
+    public enum Error: Swift.Error {
+        case noPackages
     }
-}
 
-extension ConditionalPackageManager {
-    init<R>(wrappedValue: PackageManager, root: R, keyPath: KeyPath<R, Bool>) {
-        self.wrappedValue = wrappedValue
-        self.condition = {
-            root[keyPath: keyPath]
+    typealias Package = PM.Package
+    typealias BuildResult = PackageOutput<Package>
+
+    static var outputPath: String {
+        PM.outputPath
+    }
+    static var keyPath: KeyPath<Depofile, [PM.Package]> {
+        fatalError()
+    }
+    let packages: [Package]
+    let packageManagerFactory: ([PM.Package]) -> PM
+    let conditionKeyPath: KeyPath<[Package], Bool>
+
+    private var wrappedValue: PM {
+        packageManagerFactory(packages)
+    }
+
+    private func doIfNeeded<T>(action: () throws -> T) throws -> T {
+        guard packages[keyPath: conditionKeyPath] else {
+            throw Error.noPackages
+        }
+        return try action()
+    }
+
+    func update() throws -> PackagesOutput<PM.Package> {
+        try doIfNeeded {
+            try wrappedValue.update()
         }
     }
-}
 
-extension ConditionalPackageManager: HasUpdateCommand where PackageManager: HasUpdateCommand {
-    func update() throws {
-        try doIfPossible {
+    func install() throws -> PackagesOutput<PM.Package> {
+        try doIfNeeded {
+            try wrappedValue.update()
+        }
+    }
+
+    func build() throws -> PackagesOutput<PM.Package> {
+        try doIfNeeded {
             try wrappedValue.update()
         }
     }
 }
 
-extension ConditionalPackageManager: HasBuildCommand where PackageManager: HasBuildCommand {
-    func build() throws {
-        try doIfPossible {
-            try wrappedValue.build()
-        }
-    }
-}
-
-extension ConditionalPackageManager: HasInstallCommand where PackageManager: HasInstallCommand {
-    func install() throws {
-        try doIfPossible {
-            try wrappedValue.install()
-        }
-    }
-}

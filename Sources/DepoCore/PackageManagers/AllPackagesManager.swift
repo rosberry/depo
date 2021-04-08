@@ -4,7 +4,13 @@
 
 import Foundation
 
-public final class AllPackagesManager: ProgressObservable, HasAllCommands {
+public final class AllPackagesManager: ProgressObservable, PackageManager {
+    public static var keyPath: KeyPath<Depofile, [Depofile]> {
+        \.array
+    }
+
+    public typealias Package = Depofile
+    public typealias BuildResult = PackageOutput<Package>
 
     public enum State {
         case podManager(PodManager.State)
@@ -12,38 +18,15 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         case spmManager(SPMManager.State)
     }
 
+    static public let outputPath: String = "."
+
+    public var packages: [Depofile] {
+        [depofile]
+    }
     private let depofile: Depofile
     private let platform: Platform
-    private var podManager: ConditionalPackageManager<PodManager> {
-        let manager = PodManager(depofile: depofile,
-                                 podCommandPath: podCommandPath,
-                                 frameworkKind: frameworkKind,
-                                 cacheBuilds: cacheBuilds,
-                                 podArguments: podArguments).subscribe { [weak self] state in
-            self?.observer?(.podManager(state))
-        }
-        return conditional(manager: manager, keyPath: \.pods.isEmpty.not)
-    }
-    private var carthageManager: ConditionalPackageManager<CarthageManager> {
-        let manager = CarthageManager(depofile: depofile,
-                                      platform: platform,
-                                      carthageCommandPath: carthageCommandPath,
-                                      cacheBuilds: cacheBuilds,
-                                      carthageArguments: carthageArguments).subscribe { [weak self] state in
-            self?.observer?(.carthageManager(state))
-        }
-        return conditional(manager: manager, keyPath: \.carts.isEmpty.not)
-    }
-    private var spmManager: ConditionalPackageManager<SPMManager> {
-        let manager = SPMManager(depofile: depofile,
-                                 swiftCommandPath: swiftCommandPath,
-                                 frameworkKind: frameworkKind,
-                                 cacheBuilds: cacheBuilds,
-                                 swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
-            self?.observer?(.spmManager(state))
-        }
-        return conditional(manager: manager, keyPath: \.swiftPackages.isEmpty.not)
-    }
+    private let wrapper: PackageManagerWrapper = .init()
+
     private var observer: ((State) -> Void)?
     private let podCommandPath: String
     private let carthageCommandPath: String
@@ -81,31 +64,81 @@ public final class AllPackagesManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update() throws {
+    public func update() throws -> [BuildResult] {
+        let podUpdate: () throws -> Void = { _ = try self.podManager().update() }
+        let carthageUpdate: () throws -> Void = { _ = try self.carthageManager().update() }
+        let spmUpdate: () throws -> Void = { _ = try self.spmManager().update() }
         try CommandRunner.runIndependently {
-            podManager.update
-            carthageManager.update
-            spmManager.update
+            podUpdate
+            carthageUpdate
+            spmUpdate
+        }
+        return []
+    }
+
+    public func install() throws -> [BuildResult] {
+        let podInstall: () throws -> Void = { _ = try self.podManager().install() }
+        let carthageInstall: () throws -> Void = { _ = try self.carthageManager().install() }
+        let spmUpdate: () throws -> Void = { _ = try self.spmManager().install() }
+        try CommandRunner.runIndependently {
+            podInstall
+            carthageInstall
+            spmUpdate
+        }
+        return []
+    }
+
+    public func build() throws -> [BuildResult] {
+        let podBuild: () throws -> Void = { _ = try self.podManager().build() }
+        let carthageBuild: () throws -> Void = { _ = try self.carthageManager().build() }
+        let spmBuild: () throws -> Void = { _ = try self.spmManager().build() }
+        try CommandRunner.runIndependently {
+            podBuild
+            carthageBuild
+            spmBuild
+        }
+        return []
+    }
+}
+
+extension AllPackagesManager {
+    private func podManager() throws -> AnyPackageManager<Pod> {
+        try wrapper.wrap(packages: depofile.pods,
+                         cacheBuilds: cacheBuilds,
+                         cacheURL: depofile.cacheURL) { [unowned self] packages in
+            PodManager(packages: packages,
+                       podCommandPath: self.podCommandPath,
+                       frameworkKind: self.frameworkKind,
+                       podArguments: self.podArguments).subscribe { [weak self] state in
+                self?.observer?(.podManager(state))
+            }
         }
     }
 
-    public func install() throws {
-        try CommandRunner.runIndependently {
-            podManager.install
-            carthageManager.install
-            spmManager.update
+    private func carthageManager() throws -> AnyPackageManager<CarthageItem> {
+        try wrapper.wrap(packages: depofile.carts,
+                         cacheBuilds: cacheBuilds,
+                         cacheURL: depofile.cacheURL) { [unowned self] packages in
+            CarthageManager(packages: packages,
+                            platform: platform,
+                            carthageCommandPath: carthageCommandPath,
+                            cacheBuilds: cacheBuilds,
+                            carthageArguments: carthageArguments).subscribe { [weak self] state in
+                self?.observer?(.carthageManager(state))
+            }
         }
     }
 
-    public func build() throws {
-        try CommandRunner.runIndependently {
-            podManager.build
-            carthageManager.build
-            spmManager.build
+    private func spmManager() throws -> AnyPackageManager<SwiftPackage> {
+        try wrapper.wrap(packages: depofile.swiftPackages,
+                         cacheBuilds: cacheBuilds,
+                         cacheURL: depofile.cacheURL) { [unowned self] packages in
+            SPMManager(packages: packages,
+                       swiftCommandPath: swiftCommandPath,
+                       frameworkKind: frameworkKind,
+                       swiftBuildArguments: swiftBuildArguments).subscribe { [weak self] state in
+                self?.observer?(.spmManager(state))
+            }
         }
-    }
-
-    private func conditional<Manager>(manager: Manager, keyPath: KeyPath<Depofile, Bool>) -> ConditionalPackageManager<Manager> {
-        .init(wrappedValue: manager, root: depofile, keyPath: keyPath)
     }
 }

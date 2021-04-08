@@ -27,19 +27,23 @@ public final class BuildSwiftPackageScript: ShellCommand {
     @discardableResult
     public func callAsFunction(like frameworkKind: MergePackage.FrameworkKind,
                                context: BuildContext,
-                               buildDir: String) throws -> [Shell.IO] {
+                               buildDir: String) throws -> [String] {
         let (scheme, _) = context
-        try generateXcodeprojectIfNeeded()
         let derivedDataPath = "build"
         let config = XcodeBuild.Configuration.release
-        let xcodebuildOutputs = try build(like: frameworkKind, scheme: scheme, derivedDataPath: derivedDataPath, config: config)
-        try moveSwiftPackageBuildProductsToRightPlace(buildDir: buildDir, config: config, derivedDataPath: derivedDataPath)
+        let xcodebuildOutputs = try build(like: frameworkKind,
+                                          scheme: scheme,
+                                          derivedDataPath: derivedDataPath,
+                                          config: config)
+        try moveSwiftPackageBuildProductsToRightPlace(buildDir: buildDir,
+                                                      config: config,
+                                                      derivedDataPath: derivedDataPath)
         return xcodebuildOutputs
     }
 
     @discardableResult
-    private func generateXcodeprojectIfNeeded() throws -> Shell.IO? {
-        if !Folder.current.subfolders.contains(with: AppConfiguration.xcodeProjectExtension, at: \.extension) {
+    func generateXcodeprojectIfNeeded() throws -> String? {
+        if xcodeprojects().isEmpty {
             return try swiftPackageCommand.generateXcodeproj()
         }
         else {
@@ -47,10 +51,24 @@ public final class BuildSwiftPackageScript: ShellCommand {
         }
     }
 
+    @discardableResult
+    func deleteXcodeprojectIfCreated(creationOutput: String?) throws {
+        guard creationOutput != nil else {
+            return
+        }
+        for xcodeproject in xcodeprojects() {
+            try xcodeproject.delete()
+        }
+    }
+
+    private func xcodeprojects() -> [Folder] {
+        Folder.current.subfolders.filter(by: AppConfiguration.xcodeProjectExtension, at: \.extension)
+    }
+
     private func build(like frameworkKind: MergePackage.FrameworkKind,
                        scheme: String,
                        derivedDataPath: String,
-                       config: XcodeBuild.Configuration) throws -> [Shell.IO] {
+                       config: XcodeBuild.Configuration) throws -> [String] {
         let xcodebuild = self.xcodebuild
         switch frameworkKind {
         case .fatFramework:
@@ -60,9 +78,9 @@ public final class BuildSwiftPackageScript: ShellCommand {
             return [try xcodebuild.buildForDistribution(settings: .device(scheme: scheme,
                                                                           configuration: config,
                                                                           derivedDataPath: derivedDataPath)),
-                try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
-                                                                         configuration: config,
-                                                                         derivedDataPath: derivedDataPath))]
+                    try xcodebuild.buildForDistribution(settings: .simulator(scheme: scheme,
+                                                                             configuration: config,
+                                                                             derivedDataPath: derivedDataPath))]
         }
     }
 

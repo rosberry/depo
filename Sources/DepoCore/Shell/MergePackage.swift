@@ -18,6 +18,10 @@ public final class MergePackage: ShellCommand {
         case xcframework
     }
 
+    public struct Output {
+        public let mergedFrameworkPath: String
+    }
+
     private var observer: ((State) -> Void)?
     private var lipo: Lipo {
         .init(shell: shell)
@@ -36,7 +40,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    public func make(_ frameworkKind: FrameworkKind, swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    public func make(_ frameworkKind: FrameworkKind, swiftFrameworkName: String, outputPath: String) throws -> Output {
         observer?(.makingSP(name: swiftFrameworkName, kind: frameworkKind, outputPath: outputPath))
         switch frameworkKind {
         case .fatFramework:
@@ -52,7 +56,7 @@ public final class MergePackage: ShellCommand {
                      pod: Pod,
                      settings: BuildSettings,
                      outputPath: String,
-                     buildDir: String) throws -> Shell.IO {
+                     buildDir: String) throws -> Output {
         observer?(.makingPod(name: pod.name, kind: frameworkKind, outputPath: outputPath))
         switch frameworkKind {
         case .fatFramework:
@@ -63,7 +67,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    private func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    private func makeFatFramework(swiftFrameworkName: String, outputPath: String) throws -> Output {
         #warning("schema name is . -- wtf?")
         return try mergeFat(packageName: swiftFrameworkName,
                             schemaName: ".",
@@ -72,7 +76,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    private func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Shell.IO {
+    private func makeXCFramework(swiftFrameworkName: String, outputPath: String) throws -> Output {
         try mergeXC(packageName: swiftFrameworkName,
                     schemaName: ".",
                     outputPath: outputPath,
@@ -80,7 +84,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    private func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+    private func makeFatFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Output {
         try mergeFat(packageName: settings.productName,
                      schemaName: pod.name,
                      outputPath: outputPath,
@@ -88,7 +92,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    private func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Shell.IO {
+    private func makeXCFramework(pod: Pod, settings: BuildSettings, outputPath: String, buildDir: String) throws -> Output {
         try mergeXC(packageName: settings.productName,
                     schemaName: pod.name,
                     outputPath: outputPath,
@@ -96,7 +100,7 @@ public final class MergePackage: ShellCommand {
     }
 
     @discardableResult
-    private func mergeFat(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Shell.IO {
+    private func mergeFat(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Output {
         let outputFrameworkPath = "\(outputPath)/\(packageName).framework"
         let deviceFrameworkPath = "\(packageProductsPath)/Release-iphoneos/\(schemaName)/\(packageName).framework"
         let simulatorFrameworkPath = "\(packageProductsPath)/Release-iphonesimulator/\(schemaName)/\(packageName).framework"
@@ -112,11 +116,11 @@ public final class MergePackage: ShellCommand {
         try moveSimulatorsSwiftSubmooduleToFatFramework(simulatorFrameworkPath,
                                                         packageName,
                                                         fatFramework: outputFramework)
-        return output
+        return .init(mergedFrameworkPath: outputFrameworkPath)
     }
 
     @discardableResult
-    private func mergeXC(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Shell.IO {
+    private func mergeXC(packageName: String, schemaName: String, outputPath: String, packageProductsPath: String) throws -> Output {
         let tmpXCFrameworkPath = "\(Folder.temporary.path)/\(packageName).xcframework"
         let outputXCFrameworkPath = "\(outputPath)/\(packageName).xcframework"
         let deviceFrameworkPath = "\(packageProductsPath)/Release-iphoneos/\(schemaName)/\(packageName).framework"
@@ -125,7 +129,7 @@ public final class MergePackage: ShellCommand {
         let result = try xcodebuild.create(xcFrameworkAt: tmpXCFrameworkPath,
                                            fromFrameworksAtPaths: [deviceFrameworkPath, simulatorFrameworkPath])
         try move(tmpXCFrameworkPath: tmpXCFrameworkPath, outputDirectoryPath: outputPath, outputXCFrameworkPath: outputXCFrameworkPath)
-        return result
+        return .init(mergedFrameworkPath: outputXCFrameworkPath)
     }
 
     private func copy(deviceFramework: Folder,

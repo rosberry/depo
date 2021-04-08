@@ -3,13 +3,18 @@
 //
 
 import Foundation
+import PathKit
 
-public final class CarthageManager: ProgressObservable, HasAllCommands {
+public final class CarthageManager: ProgressObservable, PackageManager {
+
+    public typealias Package = CarthageItem
+    public typealias BuildResult = PackageOutput<Package>
 
     public enum State {
         case updating
         case installing
         case building
+        case downloadingSources
         case creatingCartfile(path: String)
         case shell(state: Shell.State)
     }
@@ -24,8 +29,14 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
     }
 
     private let cartfileName: String = AppConfiguration.Name.cartfile
+    private let carthageBuildPath: String = AppConfiguration.Path.Relative.carthageBuildDirectory
+    private var carthageBackupBuildPath: String {
+        self.carthageBuildPath + ".bak"
+    }
 
-    private let carthageItems: [CarthageItem]
+    public static let keyPath: KeyPath<Depofile, [Package]> = \.carts
+    static public let outputPath: String = AppConfiguration.Path.Relative.carthageIosBuildDirectory
+    public let packages: [Package]
     private let platform: Platform
     private let shell: Shell = .init()
     private let carthageShellCommand: CarthageShellCommand
@@ -37,8 +48,12 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return cacheBuilds + [.platform(platform), .custom(args: carthageArguments ?? "")]
     }
 
-    public init(depofile: Depofile, platform: Platform, carthageCommandPath: String, cacheBuilds: Bool, carthageArguments: String?) {
-        self.carthageItems = depofile.carts
+    public init(packages: [Package],
+                platform: Platform,
+                carthageCommandPath: String,
+                cacheBuilds: Bool,
+                carthageArguments: String?) {
+        self.packages = packages
         self.platform = platform
         self.carthageShellCommand = .init(commandPath: carthageCommandPath, shell: shell)
         self.cacheBuilds = cacheBuilds
@@ -53,21 +68,24 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func update() throws {
+    public func update() throws -> [BuildResult] {
         observer?(.updating)
-        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.update(arguments: carthageArgs)
+        return []
     }
 
-    public func install() throws {
+    public func install() throws -> [BuildResult] {
         observer?(.installing)
-        try createCartfile(at: "./\(cartfileName)", with: carthageItems)
+        try createCartfile(at: "./\(cartfileName)", with: packages)
         try carthageShellCommand.bootstrap(arguments: carthageArgs)
+        return []
     }
 
-    public func build() throws {
+    public func build() throws -> [BuildResult] {
         observer?(.building)
         try carthageShellCommand.build(arguments: carthageArgs)
+        return []
     }
 
     private func createCartfile(at cartfilePath: String, with items: [CarthageItem]) throws {
@@ -76,5 +94,29 @@ public final class CarthageManager: ProgressObservable, HasAllCommands {
         if !FileManager.default.createFile(atPath: cartfilePath, contents: content) {
             throw Error.badCartfile(path: cartfilePath)
         }
+    }
+
+    private func buildForGitCachablePackageManager(packages: [Package]) throws -> [BuildResult] {
+        renameOldCarthageBuildIfExists()
+        for package in packages where package.kind == .github {
+            let packageArg = package.identifier.split(separator: " ")
+            try carthageShellCommand.build(arguments: carthageArgs + [.custom(args: package.identifier)])
+        }
+        return []
+    }
+
+    private func updateSources() throws {
+        observer?(.downloadingSources)
+        try carthageShellCommand.update(arguments: [.custom(args: "--no-build")])
+    }
+
+    private func bootstrapSources() throws {
+        observer?(.downloadingSources)
+        try carthageShellCommand.bootstrap(arguments: [.custom(args: "--no-build")])
+    }
+
+    private func renameOldCarthageBuildIfExists() {
+        let carthageBuildDir = Path(carthageBuildPath)
+        try? carthageBuildDir.move(Path(carthageBackupBuildPath))
     }
 }

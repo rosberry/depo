@@ -6,7 +6,7 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension PodManager: HasDepofileInit {
+extension PodManager: HasOptionsInit {
 
     public struct Options: ParsableArguments, HasDepofileExtension {
 
@@ -30,10 +30,9 @@ extension PodManager: HasDepofileInit {
     }
 
     public convenience init(depofile: Depofile, options: Options) {
-        self.init(depofile: depofile,
+        self.init(packages: depofile.pods,
                   podCommandPath: options.podCommandPath,
                   frameworkKind: options.frameworkKind,
-                  cacheBuilds: options.cacheBuilds,
                   podArguments: options.podArguments)
     }
 }

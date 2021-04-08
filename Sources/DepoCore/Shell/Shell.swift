@@ -6,24 +6,15 @@ import Foundation
 
 public final class Shell {
 
-    public enum Error: Swift.Error {
-        case failure(IO)
-        case badStatusCode(String, Int32)
-    }
-
-    public struct IO {
-        public let stdOut: String
-        public let stdErr: String
-        public let stdIn: String
-        public let status: Int32
-        public let command: [String]
-
-        fileprivate init(stdOut: String, stdErr: String, stdIn: String, status: Int32, command: [String]) {
-            self.stdOut = stdOut
-            self.stdErr = stdErr
-            self.stdIn = stdIn
-            self.status = status
-            self.command = command
+    public struct Error: Swift.Error {
+        public let terminationStatus: Int32
+        public let errorData: Data?
+        public let outputData: Data?
+        public var message: String? {
+            errorData?.shellOutput()
+        }
+        public var output: String? {
+            outputData?.shellOutput()
         }
     }
 
@@ -52,45 +43,58 @@ public final class Shell {
             return statusCode
         }
         else {
-            throw Error.badStatusCode(command, statusCode)
+            throw Error(terminationStatus: statusCode, errorData: nil, outputData: nil)
         }
     }
 
-    public func callAsFunction(silent command: String) throws -> IO {
+    public func callAsFunction(silent command: String) throws -> String {
         observer?(.start(command: command, kind: .silent))
         let process = Process()
         Self.processCreationHandler?(process)
         process.launchPath = "/bin/zsh"
         process.arguments = ["-c", command]
-        let shellIO = try output(of: process, command: [command])
-        if shellIO.status == 0 {
-            return shellIO
-        }
-        else {
-            throw Error.failure(shellIO)
-        }
+        return try output(of: process, command: [command])
     }
 
-    private func output(of process: Process, command: [String]) throws -> IO {
+    private func output(of process: Process, command: [String]) throws -> String {
         let stdOutPipe = Pipe()
         let stdErrPipe = Pipe()
-        let stdInFileHandle = Pipe().fileHandleForReading
         process.standardOutput = stdOutPipe
         process.standardError = stdErrPipe
-        process.standardInput = stdInFileHandle
+
+        var outputData = Data()
+        let outputQueue = DispatchQueue(label: "zsh-output-queue")
+        stdOutPipe.fileHandleForReading.readabilityHandler = { handler in
+            let data = handler.availableData
+            outputQueue.async {
+                outputData.append(data)
+            }
+        }
+
+        var errorData = Data()
+        stdErrPipe.fileHandleForReading.readabilityHandler = { handler in
+            let data = handler.availableData
+            outputQueue.async {
+                errorData.append(data)
+            }
+        }
+
         try process.run()
         process.waitUntilExit()
-        let handlersStrings = [stdOutPipe.fileHandleForReading,
-                               stdErrPipe.fileHandleForReading,
-                               stdInFileHandle].map { handler -> String in
-            let outputData = handler.readDataToEndOfFile()
-            return String(data: outputData, encoding: .utf8) ?? ""
+
+        stdOutPipe.fileHandleForReading.readabilityHandler = nil
+        stdErrPipe.fileHandleForReading.readabilityHandler = nil
+
+        return try outputQueue.sync {
+            if process.terminationStatus != 0 {
+                throw Error(terminationStatus: process.terminationStatus,
+                            errorData: errorData,
+                            outputData: outputData)
+            }
+            else {
+                return outputData.shellOutput()
+            }
         }
-        return IO(stdOut: handlersStrings[0],
-                  stdErr: handlersStrings[1],
-                  stdIn: handlersStrings[2],
-                  status: process.terminationStatus,
-                  command: command)
     }
 
     private func terminationStatus(of process: Process) -> Int32 {
@@ -122,3 +126,17 @@ extension Shell: Codable {
     }
 }
 
+private extension Data {
+    func shellOutput() -> String {
+        guard let output = String(data: self, encoding: .utf8) else {
+            return ""
+        }
+
+        guard !output.hasSuffix("\n") else {
+            let endIndex = output.index(before: output.endIndex)
+            return String(output[..<endIndex])
+        }
+
+        return output
+    }
+}

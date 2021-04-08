@@ -4,6 +4,9 @@
 
 import Foundation
 import DepoCore
+import Files
+import ArgumentParser
+import PathKit
 
 var processes: [Process] = []
 

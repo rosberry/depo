@@ -6,7 +6,10 @@ import Foundation
 import Yams
 import Files
 
-public final class PodManager: ProgressObservable, HasAllCommands {
+public final class PodManager: ProgressObservable, PackageManager {
+
+    public typealias Package = Pod
+    public typealias BuildResult = PackageOutput<Package>
 
     public typealias FailedContext = (Swift.Error, Pod)
 
@@ -40,35 +43,33 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         case pods
     }
 
+    public static let keyPath: KeyPath<Depofile, [Package]> = \.pods
+    public static let outputPath: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let podsInternalTargetsPrefix: String = AppConfiguration.podsInternalTargetsPrefix
     private let podFileName: String = AppConfiguration.Name.podfile
     private let podsDirectoryName: String = AppConfiguration.Name.podsDirectory
     private let podsOutputDirectoryName: String = AppConfiguration.Path.Relative.podsOutputDirectory
     private let productExtensions: [String] = ["framework", "bundle", "xcframework"]
 
-    private let pods: [Pod]
-
+    public let packages: [Package]
     private let shell: Shell
     private let xcodebuild: XcodeBuild
     private let podShellCommand: PodShellCommand
     private let frameworkKind: MergePackage.FrameworkKind
-    private let cacheBuilds: Bool
     private let podArguments: String?
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private var observer: ((State) -> Void)?
 
-    public init(depofile: Depofile,
+    public init(packages: [Package],
                 podCommandPath: String,
                 frameworkKind: MergePackage.FrameworkKind,
-                cacheBuilds: Bool,
                 podArguments: String?) {
+        self.packages = packages
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
-        self.pods = depofile.pods
         self.podShellCommand = .init(commandPath: podCommandPath, shell: shell)
         self.frameworkKind = frameworkKind
-        self.cacheBuilds = cacheBuilds
         self.podArguments = podArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
@@ -80,32 +81,33 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         return self
     }
 
-    public func install() throws {
+    public func install() throws -> [BuildResult] {
         observer?(.installing)
         let podFilePath = "./\(podFileName)"
 
         try podInitIfNeeded(podFilePath: podFilePath)
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
+        try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.install(args: podArguments.mapOrEmpty(keyPath: \.words))
-        try build()
+        return try build()
     }
 
-    public func update() throws {
+    public func update() throws -> [BuildResult] {
         let podFilePath = "./\(podFileName)"
 
         observer?(.updating)
-        try createPodfile(at: podFilePath, with: pods, buildSettings: .init(xcodebuild: xcodebuild))
+        try createPodfile(at: podFilePath, with: packages, buildSettings: .init(xcodebuild: xcodebuild))
         try podShellCommand.update(args: podArguments.mapOrEmpty(keyPath: \.words))
-        try build()
+        return try build()
     }
 
-    public func build() throws {
+    public func build() throws -> [BuildResult] {
         let podsProjectPath = "./\(podsDirectoryName)"
 
         observer?(.building)
-        try build(pods: pods, frameworkKind: frameworkKind, at: podsProjectPath)
+        try build(pods: packages, frameworkKind: frameworkKind, at: podsProjectPath)
         observer?(.processing)
         try proceedAllPods(at: podsProjectPath, frameworkKind: frameworkKind, to: podsOutputDirectoryName)
+        return []
     }
 
     private func podInitIfNeeded(podFilePath: String) throws {
@@ -180,12 +182,15 @@ public final class PodManager: ProgressObservable, HasAllCommands {
         }
     }
 
-    private func move(builtPod pod: Pod, outputPath: String) throws {
+    private func move(builtPod pod: Pod, outputPath: String) throws -> [String] {
         let outputFolder = try Folder(path: outputPath)
-        let podBuildProductsDirectory = try Folder(path: pod.name)
-        for subFolder in podBuildProductsDirectory.allSubfolders where isProduct(subFolder) {
-            try? outputFolder.subfolder(named: subFolder.name).delete()
-            try subFolder.copy(to: outputFolder)
+        return try Folder(path: pod.name).allSubfolders.compactMap { subfolder -> String? in
+            guard isProduct(subfolder) else {
+                return nil
+            }
+            try? outputFolder.subfolder(named: subfolder.name).delete()
+            try subfolder.copy(to: outputFolder)
+            return subfolder.path
         }
     }
 
@@ -218,7 +223,7 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     }
 
     @discardableResult
-    private func build(pod: Pod, ofKind frameworkKind: MergePackage.FrameworkKind) throws -> [Shell.IO] {
+    private func build(pod: Pod, ofKind frameworkKind: MergePackage.FrameworkKind) throws -> [String] {
         switch frameworkKind {
         case .fatFramework:
             return try buildFatFramework(pod: pod)
@@ -228,13 +233,13 @@ public final class PodManager: ProgressObservable, HasAllCommands {
     }
 
     @discardableResult
-    private func buildFatFramework(pod: Pod) throws -> [Shell.IO] {
+    private func buildFatFramework(pod: Pod) throws -> [String] {
         [try xcodebuild(settings: .device(target: pod.name)),
          try xcodebuild(settings: .simulator(target: pod.name))]
     }
 
     @discardableResult
-    private func buildForXCFramework(pod: Pod) throws -> [Shell.IO] {
+    private func buildForXCFramework(pod: Pod) throws -> [String] {
         [try xcodebuild.buildForDistribution(settings: .device(target: pod.name)),
          try xcodebuild.buildForDistribution(settings: .simulator(target: pod.name))]
     }

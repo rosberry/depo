@@ -9,20 +9,24 @@ import DepoCore
 final class SPM: ParsableCommand {
 
     final class SPMUpdate: Update {
-        typealias Command = SPMManager
+        typealias Manager = SPMManager
         static let configuration: CommandConfiguration = .init(commandName: "update",
                                                                abstract: "run swift package update and build swift packages")
 
         @OptionGroup()
-        var options: Command.Options
+        var options: Manager.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [SwiftPackage]> = \.swiftPackages
     }
 
     final class SPMBuild: Build {
-        typealias Command = SPMManager
+        typealias Manager = SPMManager
         static let configuration: CommandConfiguration = .init(commandName: "build", abstract: "build swift packages")
 
         @OptionGroup()
-        var options: Command.Options
+        var options: Manager.Options
+
+        static let depofileKeyPath: KeyPath<Depofile, [SwiftPackage]> = \.swiftPackages
     }
 
     static let configuration: CommandConfiguration = .init(abstract: "SPM wrapper",

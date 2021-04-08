@@ -6,7 +6,10 @@ import Foundation
 import DepoCore
 import ArgumentParser
 
-extension AllPackagesManager: HasDepofileInit {
+extension AllPackagesManager: HasOptionsInit {
+
+    public typealias Packages = Depofile
+
     public struct Options: HasDepofileExtension, ParsableArguments {
         @Option(name: [.customLong("depofile-extension"), .customShort(Character("e"))],
                 completion: .list(DataCoder.Kind.allFlagsHelp))
