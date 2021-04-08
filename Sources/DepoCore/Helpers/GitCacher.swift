@@ -41,14 +41,14 @@ public struct GitCacher: Cacher {
 
     private let gitRepoURL: URL
     private let git: Git = .init()
-    private let fmg: FileManager = .default
+    private let fileManager: FileManager = .default
 
     public init(gitRepoURL: URL) {
         self.gitRepoURL = gitRepoURL
     }
 
     public func setupRepository(at localURL: URL, remoteURL: URL?) throws {
-        try fmg.perform(atPath: localURL.path) {
+        try fileManager.perform(atPath: localURL.path) {
             try git.initialize()
             try Folder.current.createFile(named: ".gitkeep")
             try git.add(".")
@@ -63,7 +63,7 @@ public struct GitCacher: Cacher {
             try? deleteFolder(name: uuid)
         }
         try git.clone(url: gitRepoURL, to: uuid, branchName: Git.masterBranchName)
-        return try fmg.perform(atPath: uuid) { () -> [String] in
+        return try fileManager.perform(atPath: uuid) { () -> [String] in
             try git.remoteBranches()
         }.map { remoteBranch -> PackageID in
             PackageID(stringLiteral: remoteBranch)
@@ -74,7 +74,7 @@ public struct GitCacher: Cacher {
         let id = packageID.description
         try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: packageID.description, branchName: packageID.description)
-        return try fmg.perform(atPath: "./\(packageID.description)") {
+        return try fileManager.perform(atPath: "./\(packageID.description)") {
             Folder.current.url
         }
     }
@@ -86,7 +86,7 @@ public struct GitCacher: Cacher {
         }
         try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: id, branchName: Git.masterBranchName)
-        try fmg.perform(atPath: id) {
+        try fileManager.perform(atPath: id) {
             try git.createBranch(name: id)
             try git.checkout(id)
             try Folder.current.deleteContents()
@@ -105,7 +105,7 @@ public struct GitCacher: Cacher {
         }
         try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: id, branchName: id)
-        try fmg.perform(atPath: id) {
+        try fileManager.perform(atPath: id) {
             try Folder.current.deleteContents()
             try copyToCurrent(urls: buildURLs)
             try throwIfNoChanges(packageID: packageID)
@@ -122,7 +122,7 @@ public struct GitCacher: Cacher {
         }
         try? deleteFolder(name: id)
         try git.clone(url: gitRepoURL, to: id, branchName: id)
-        try fmg.perform(atPath: id) {
+        try fileManager.perform(atPath: id) {
             try git.delete(remoteBranch: id)
         }
     }
@@ -162,7 +162,7 @@ public struct GitCacher: Cacher {
         let remotes = try git.remote()
         guard let remote = remotes.first,
               remotes.count == 1 else {
-            throw Error.multipleRemotes(path: fmg.currentDirectoryPath)
+            throw Error.multipleRemotes(path: fileManager.currentDirectoryPath)
         }
         try git.push(remote: remote, branch: packageID.description)
     }
