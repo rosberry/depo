@@ -7,9 +7,15 @@ import Foundation
 public class Lipo: ShellCommand, ArgumentedShellCommand {
 
     public struct Settings: ShellCommandArguments {
-        let actionType: ActionType = .create
+        let actionType: ActionType
         let outputPath: String
         let executablePaths: [String]
+
+        init(actionType: ActionType = .create, outputPath: String, executablePaths: [String]) {
+            self.actionType = actionType
+            self.outputPath = outputPath
+            self.executablePaths = executablePaths
+        }
     }
 
     public enum ActionType: String {
@@ -31,5 +37,10 @@ public class Lipo: ShellCommand, ArgumentedShellCommand {
 
     public required init(from decoder: Decoder) throws {
         try super.init(from: decoder)
+    }
+
+    public func callAsFunction(_ actionType: ActionType, _ outputPath: String, _ executablePaths: [String]) throws -> String {
+        let settings = Settings(actionType: actionType, outputPath: outputPath, executablePaths: executablePaths)
+        return try self.callAsFunction(settings: settings)
     }
 }

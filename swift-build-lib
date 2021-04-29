@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+scheme=$1
+
+# building 
+xcodebuild archive -scheme $scheme -sdk iphoneos -derivedDataPath iphoneos -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+
+xcodebuild archive -scheme $scheme -sdk iphonesimulator -derivedDataPath iphonesimulator -configuration Release -arch x86_64 CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+
+function make_static_lib {
+  path=$1
+  name=$2
+  objects=$path/*.o
+  output=$path/lib$name.a
+  ar -rcs $output $objects
+}
+
+simulator_build=iphonesimulator/Build/Intermediates.noindex/ArchiveIntermediates/$scheme/BuildProductsPath/Release-iphonesimulator
+device_build=iphoneos/Build/Intermediates.noindex/ArchiveIntermediates/$scheme/BuildProductsPath/Release-iphoneos
+
+# making libs
+make_static_lib $simulator_build $scheme
+make_static_lib $device_build $scheme
+
+output_dir=$scheme.lib
+mkdir $output_dir
+
+# making fat lib
+lipo -create $simulator_build/lib$scheme.a $device_build/lib$scheme.a -output $output_dir/lib$scheme.a
+
+# merging swiftmodules
+swiftmodules=`ls -1 $device_build | grep ".swiftmodule"`
+
+for module in $swiftmodules
+do
+  mkdir $output_dir/$module
+  cp -r $simulator_build/$module/* $output_dir/$module
+  cp -r $device_build/$module/*    $output_dir/$module
+done
+
+# merging modulemaps
+cat iphoneos/Build/Intermediates.noindex/ArchiveIntermediates/$scheme/IntermediateBuildFilesPath/GeneratedModuleMaps-iphoneos/*.modulemap > $output_dir/module.modulemap
