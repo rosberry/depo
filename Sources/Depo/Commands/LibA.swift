@@ -93,14 +93,3 @@ final class LibA: ParsableCommand {
         }
     }
 }
-
-extension Path {
-    var folder: Path? {
-        guard !isDirectory else {
-            return nil
-        }
-        var output = description
-        output.removeLast(lastComponent.count)
-        return Path(output)
-    }
-}
