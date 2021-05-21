@@ -28,9 +28,16 @@ final class LibA: ParsableCommand {
         let libs = try productPaths.map { productPath in
             try makeStaticLibrary(productPath: productPath, name: "lib\(scheme).a")
         }
-        let fatLib = try makeFatStaticLibrary(smallLibs: libs, name: "\(scheme).lib")
-        try collectSwiftModules(productPaths: productPaths, output: fatLib)
-        print(fatLib)
+        let outputLibPath = Path("\(scheme).lib")
+        let tmpLibPath = Path("\(derivedDataPath)/\(scheme).lib")
+
+        try tmpLibPath.deleteIfExists()
+
+        try makeFatStaticLibrary(smallLibs: libs, at: tmpLibPath)
+        try collectSwiftModules(productPaths: productPaths, output: tmpLibPath)
+
+        try tmpLibPath.overwrite(outputLibPath)
+        print(outputLibPath)
     }
 
     private func build(scheme: String, derivedDataPath: String) throws {
@@ -55,16 +62,17 @@ final class LibA: ParsableCommand {
         case emptySmallLibs
     }
 
-    private func makeFatStaticLibrary(smallLibs: [Path], name: String) throws -> Path {
+    private func makeFatStaticLibrary(smallLibs: [Path], at libPath: Path) throws {
         guard let firstSmallLib = smallLibs.first else {
             throw FatStaticLibError.emptySmallLibs
         }
-        let libPath = Path("./\(name)")
         try libPath.mkdir()
         let outputPath = "\(libPath)/\(firstSmallLib.lastComponent)"
         let executables = smallLibs.map(by: \.description)
         try lipo(.create, outputPath, executables)
-        return libPath
+        for smallLib in smallLibs {
+            try? smallLib.delete()
+        }
     }
 
     private enum CollectingSwiftModulesError: Error {
