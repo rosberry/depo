@@ -13,7 +13,7 @@ final class LibA: ParsableCommand {
     var scheme: String
 
     @Option
-    var derivedDataPath: String
+    var derivedDataPath: String?
 
     private let shell: Shell = Shell().subscribe { state in
         print(state)
@@ -22,7 +22,8 @@ final class LibA: ParsableCommand {
     private lazy var lipo: Lipo = .init(shell: shell)
 
     func run() throws {
-        try build(scheme: scheme)
+        let derivedDataPath = self.derivedDataPath ?? "\(scheme).derivedData"
+        try build(scheme: scheme, derivedDataPath: derivedDataPath)
         let productPaths = Path.glob("\(derivedDataPath)/Build/Products/*")
         let libs = try productPaths.map { productPath in
             try makeStaticLibrary(productPath: productPath, name: "lib\(scheme).a")
@@ -32,15 +33,15 @@ final class LibA: ParsableCommand {
         print(fatLib)
     }
 
-    private func build(scheme: String) throws {
+    private func build(scheme: String, derivedDataPath: String) throws {
         let simSettings = XcodeBuild.Settings.simulator(scheme: scheme,
                                                         derivedDataPath: derivedDataPath,
                                                         isSigning: false)
         let devSettings = XcodeBuild.Settings.device(scheme: scheme,
                                                      derivedDataPath: derivedDataPath,
                                                      isSigning: false)
-        _ = try xcodebuild.buildForDistribution(settings: simSettings)
-        _ = try xcodebuild.buildForDistribution(settings: devSettings)
+        _ = try xcodebuild(settings: simSettings)
+        _ = try xcodebuild(settings: devSettings)
     }
 
     private func makeStaticLibrary(productPath: Path, name: String) throws -> Path {
@@ -66,9 +67,16 @@ final class LibA: ParsableCommand {
         return libPath
     }
 
+    private enum CollectingSwiftModulesError: Error {
+        case noSwiftModules
+    }
+
     private func collectSwiftModules(productPaths: [Path], output: Path) throws {
         for productPath in productPaths {
             let swiftModules = productPath.glob("*.swiftmodule")
+            guard !swiftModules.isEmpty else {
+                throw CollectingSwiftModulesError.noSwiftModules
+            }
             for swiftModule in swiftModules {
                 let description = swiftModule.description
                 let swiftModulePathWithoutDashAtTheEnd = description[..<description.index(before: description.endIndex)]
@@ -76,10 +84,6 @@ final class LibA: ParsableCommand {
             }
         }
     }
-}
-
-class Builder {
-
 }
 
 extension Path {
