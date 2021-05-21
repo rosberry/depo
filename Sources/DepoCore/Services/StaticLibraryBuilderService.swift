@@ -30,6 +30,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
     }
 
     public func build(scheme: String, derivedDataPath: String) throws -> Output {
+        try deleteXcprojectAndXcworskpaces()
         try buildSmallLibs(scheme: scheme, derivedDataPath: derivedDataPath)
 
         let sdkBuildOutputs = Path.glob("\(derivedDataPath)/Build/Products/*")
@@ -51,6 +52,14 @@ public final class StaticLibraryBuilderService: ProgressObservable {
     public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
         self.observer = observer
         return self
+    }
+
+    private func deleteXcprojectAndXcworskpaces() throws {
+        let projects = Path.glob("*.xcproject")
+        let workspaces = Path.glob("*.xcworkspace")
+        for item in (projects + workspaces) {
+            try item.delete()
+        }
     }
 
     private func buildSmallLibs(scheme: String, derivedDataPath: String) throws {
