@@ -10,7 +10,10 @@ import PathKit
 final class LibA: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(commandName: "liba",
-                                                               abstract: "build static library fro swift project")
+                                                           abstract: "build static library fro swift project")
+
+    @Option(completion: .file())
+    var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
 
     @Option
     var scheme: String
@@ -23,7 +26,7 @@ final class LibA: ParsableCommand {
     }
 
     func run() throws {
-        let service = StaticLibraryBuilderService()
+        let service = StaticLibraryBuilderService(swiftCommandPath: swiftCommandPath)
         service.subscribe { state in
             print(state)
         }

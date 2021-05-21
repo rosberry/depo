@@ -17,20 +17,22 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         case collectingSwiftModules
     }
 
+    private let swiftCommandPath: String
     private var observer: ((State) -> Void)?
     private lazy var xcodebuild: XcodeBuild = .init(shell: shell)
     private lazy var lipo: Lipo = .init(shell: shell)
+    private lazy var swiftPackage: SwiftPackageShellCommand = .init(commandPath: swiftCommandPath, shell: shell)
 
     private lazy var shell: Shell = Shell().subscribe { [weak self] state in
         self?.observer?(.shell(state: state))
     }
 
-    public init() {
-
+    public init(swiftCommandPath: String) {
+        self.swiftCommandPath = swiftCommandPath
     }
 
     public func build(scheme: String, derivedDataPath: String) throws -> Output {
-        try deleteXcprojectAndXcworskpaces()
+        try prepareDirectoryToBuild()
         try buildSmallLibs(scheme: scheme, derivedDataPath: derivedDataPath)
 
         let sdkBuildOutputs = Path.glob("\(derivedDataPath)/Build/Products/*")
@@ -52,6 +54,25 @@ public final class StaticLibraryBuilderService: ProgressObservable {
     public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
         self.observer = observer
         return self
+    }
+
+    private func prepareDirectoryToBuild() throws {
+        let packageSwiftFile = try swiftPackage.swiftPackageDump(at: ".")
+        let testTargetPaths = packageSwiftFile.targets.filter(by: .test, at: \.type).map { testTarget in
+            testTarget.path ?? defaultTestPath(for: testTarget.name)
+        }
+        for testTargetPath in testTargetPaths {
+            let swiftFiles = Path.glob("\(testTargetPath)/*.swift") +
+              Path.glob("\(testTargetPath)/**/*.swift")
+            for swiftFile in swiftFiles {
+                try swiftFile.delete()
+            }
+        }
+        try deleteXcprojectAndXcworskpaces()
+    }
+
+    private func defaultTestPath(for targetName: String) -> String {
+        "Tests/\(targetName)"
     }
 
     private func deleteXcprojectAndXcworskpaces() throws {
