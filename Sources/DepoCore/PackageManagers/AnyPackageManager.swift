@@ -6,7 +6,7 @@ import Foundation
 
 public struct AnyPackageManager<Package>: PackageManager {
     static public var keyPath: KeyPath<Depofile, [Package]> {
-        fatalError()
+        fatalError("AnyPackageManager.keyPath is not implemented")
     }
     static public var outputPath: String {
         ""

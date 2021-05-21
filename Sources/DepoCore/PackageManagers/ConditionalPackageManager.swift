@@ -15,7 +15,7 @@ struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
         PM.outputPath
     }
     static var keyPath: KeyPath<Depofile, [PM.Package]> {
-        fatalError()
+        fatalError("ConditionalPackageManager.keyPath is not implemented")
     }
     let packages: [Package]
     let packageManagerFactory: ([PM.Package]) -> PM
@@ -50,4 +50,3 @@ struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
         }
     }
 }
-

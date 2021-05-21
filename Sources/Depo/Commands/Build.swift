@@ -18,7 +18,7 @@ extension Build {
         let packages: [Manager.Package] = depofile[keyPath: Manager.keyPath]
         let manager = try wrapper.wrap(packages: packages,
                                        cacheBuilds: options.cacheBuilds,
-                                       cacheURL: depofile.cacheURL) { packages in
+                                       cacheURL: depofile.cacheURL) { _ in
             Manager(depofile: depofile, options: options).subscribe { state in
                 print(state)
             }
