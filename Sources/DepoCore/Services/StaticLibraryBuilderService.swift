@@ -31,7 +31,8 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         self.swiftCommandPath = swiftCommandPath
     }
 
-    public func build(scheme: String, derivedDataPath: String) throws -> Output {
+    public func build(scheme: String, derivedDataPath: String?) throws -> Output {
+        let derivedDataPath = derivedDataPath ?? "\(scheme).derivedData"
         try prepareDirectoryToBuild()
         try buildSmallLibs(scheme: scheme, derivedDataPath: derivedDataPath)
 
@@ -62,8 +63,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
             testTarget.path ?? defaultTestPath(for: testTarget.name)
         }
         for testTargetPath in testTargetPaths {
-            let swiftFiles = Path.glob("\(testTargetPath)/*.swift") +
-              Path.glob("\(testTargetPath)/**/*.swift")
+            let swiftFiles = Path.glob("\(testTargetPath)/*")
             for swiftFile in swiftFiles {
                 try swiftFile.delete()
             }
@@ -131,6 +131,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         enum CollectingSwiftModulesError: Error {
             case noSwiftModules
         }
+
         observer?(.collectingSwiftModules)
         for productPath in productPaths {
             let swiftModules = productPath.glob("*.swiftmodule")

@@ -54,6 +54,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
     private let swiftPackageCommand: SwiftPackageShellCommand
     private lazy var mergePackage: MergePackage = MergePackage(shell: shell)
     private lazy var buildSwiftPackageScript: BuildSwiftPackageScript = .init(swiftPackageCommand: swiftPackageCommand, shell: shell)
+    private let swiftCommandPath: String
 
     private let packageSwiftFileName = AppConfiguration.Name.packageSwift
     private let packageSwiftDirName = AppConfiguration.Path.Relative.packageSwiftDirectory
@@ -64,6 +65,13 @@ public final class SPMManager: ProgressObservable, PackageManager {
     private let swiftBuildArguments: String?
     private var observer: ((State) -> Void)?
     private let productExtensions: [String] = ["framework", "xcframework"]
+    private lazy var staticLibraryBuildService: StaticLibraryBuilderService = {
+        let service = StaticLibraryBuilderService(swiftCommandPath: swiftCommandPath)
+        service.subscribe { state in
+            print(state)
+        }
+        return service
+    }()
 
     private var buildsOutputDirectoryPath: String {
         "\(fmg.currentDirectoryPath)/\(packageSwiftBuildsDirName)"
@@ -80,6 +88,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
+        self.swiftCommandPath = swiftCommandPath
         self.swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
         self.buildKind = buildKind
         self.swiftBuildArguments = swiftBuildArguments
@@ -156,7 +165,14 @@ public final class SPMManager: ProgressObservable, PackageManager {
                                             frameworkKind: .fatFramework)
                 }
             case .staticLib:
-                fatalError("liba in spm isn't implemented")
+                return { package in
+                    let path = "./\(packagesSourcesPath)/\(package.name)"
+                    let scheme = package.name
+                    return try self.fmg.perform(atPath: path) {
+                        let result = try self.staticLibraryBuildService.build(scheme: scheme, derivedDataPath: nil)
+                        return .success((package, [result]))
+                    }
+                }
             }
         }()
         return packages.map { package -> BuildResult in

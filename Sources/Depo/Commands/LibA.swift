@@ -30,7 +30,6 @@ final class LibA: ParsableCommand {
         service.subscribe { state in
             print(state)
         }
-        let derivedDataPath = self.derivedDataPath ?? "\(scheme).derivedData"
         let libPath = try service.build(scheme: scheme, derivedDataPath: derivedDataPath)
         print("Done building \(string(libPath, color: .green))")
     }
