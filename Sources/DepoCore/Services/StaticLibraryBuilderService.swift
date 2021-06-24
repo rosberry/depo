@@ -31,7 +31,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         self.swiftCommandPath = swiftCommandPath
     }
 
-    public func build(scheme: String, derivedDataPath: String?) throws -> Output {
+    public func build(scheme: String, derivedDataPath: String?, outputDirectory: String? = nil) throws -> Output {
         let derivedDataPath = derivedDataPath ?? "\(scheme).derivedData"
         try prepareDirectoryToBuild()
         try buildSmallLibs(scheme: scheme, derivedDataPath: derivedDataPath)
@@ -39,7 +39,8 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         let sdkBuildOutputs = Path.glob("\(derivedDataPath)/Build/Products/*")
 
         let staticLibsPerSDK = try makeStaticLibForEachSDK(sdkBuildOutputs: sdkBuildOutputs, scheme: scheme)
-        let outputLibPath = Path("\(scheme).lib")
+        let outputDirectory = Path(outputDirectory ?? ".")
+        let outputLibPath = outputDirectory + Path("\(scheme).lib")
         let tmpLibPath = Path("\(derivedDataPath)/\(scheme).lib")
 
         try tmpLibPath.deleteIfExists()
@@ -47,6 +48,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         try makeFatStaticLibrary(smallLibs: staticLibsPerSDK, at: tmpLibPath)
         try collectSwiftModules(productPaths: sdkBuildOutputs, output: tmpLibPath)
 
+        try? outputDirectory.mkpath()
         try tmpLibPath.overwrite(outputLibPath)
         return outputLibPath.description
     }

@@ -156,20 +156,24 @@ public final class SPMManager: ProgressObservable, PackageManager {
                 return { package in
                     try self.buildFramework(package: package,
                                             packagesSourcesPath: packagesSourcesPath,
-                                            frameworkKind: .xcframework)
+                                            frameworkKind: .xcframework,
+                                            mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
                 }
             case .fat:
                 return { package in
                     try self.buildFramework(package: package,
                                             packagesSourcesPath: packagesSourcesPath,
-                                            frameworkKind: .fatFramework)
+                                            frameworkKind: .fatFramework,
+                                            mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
                 }
             case .staticLib:
                 return { package in
                     let path = "./\(packagesSourcesPath)/\(package.name)"
                     let scheme = package.name
                     return try self.fmg.perform(atPath: path) {
-                        let result = try self.staticLibraryBuildService.build(scheme: scheme, derivedDataPath: nil)
+                        let result = try self.staticLibraryBuildService.build(scheme: scheme,
+                                                                              derivedDataPath: nil,
+                                                                              outputDirectory: mergedBuildsOutputDirectoryPath)
                         return .success((package, [result]))
                     }
                 }
@@ -187,7 +191,8 @@ public final class SPMManager: ProgressObservable, PackageManager {
 
     private func buildFramework(package: SwiftPackage,
                                 packagesSourcesPath: String,
-                                frameworkKind: MergePackage.FrameworkKind) throws -> BuildResult {
+                                frameworkKind: MergePackage.FrameworkKind,
+                                mergedBuildsOutputDirectoryPath: String) throws -> BuildResult {
         try build(package: package,
                   packagesSourcesDirectoryRelativePath: packagesSourcesPath,
                   packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
