@@ -10,7 +10,7 @@ import PathKit
 final class LibA: ParsableCommand {
 
     static let configuration: CommandConfiguration = .init(commandName: "liba",
-                                                           abstract: "build static library fro swift project")
+                                                           abstract: "build static library from swift project")
 
     @Option(completion: .file())
     var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath

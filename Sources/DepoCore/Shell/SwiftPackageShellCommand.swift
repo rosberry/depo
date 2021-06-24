@@ -210,7 +210,7 @@ public extension SwiftPackageShellCommand.SPOutputWrapper {
         public let  requirement: Requirement
     }
 
-    public struct Target: Codable {
+    struct Target: Codable {
 
         public enum TypeEnum: String, Codable {
             case regular
@@ -222,7 +222,7 @@ public extension SwiftPackageShellCommand.SPOutputWrapper {
         public let path: String?
     }
 
-    public struct Product: Codable {
+    struct Product: Codable {
         public let name: String
         public let targets: [String]
     }

@@ -76,7 +76,7 @@ public final class StaticLibraryBuilderService: ProgressObservable {
     }
 
     private func deleteXcprojectAndXcworskpaces() throws {
-        let projects = Path.glob("*.xcproject")
+        let projects = Path.glob("*.xcodeproj")
         let workspaces = Path.glob("*.xcworkspace")
         for item in (projects + workspaces) {
             try item.delete()
@@ -109,11 +109,11 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         return Path(libPath)
     }
 
-    private enum FatStaticLibError: Error {
-        case emptySmallLibs
-    }
-
     private func makeFatStaticLibrary(smallLibs: [Path], at libPath: Path) throws {
+        enum FatStaticLibError: Error {
+            case emptySmallLibs
+        }
+
         observer?(.makeFatStaticLibrary)
         guard let firstSmallLib = smallLibs.first else {
             throw FatStaticLibError.emptySmallLibs
@@ -127,11 +127,10 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         }
     }
 
-    private enum CollectingSwiftModulesError: Error {
-        case noSwiftModules
-    }
-
     private func collectSwiftModules(productPaths: [Path], output: Path) throws {
+        enum CollectingSwiftModulesError: Error {
+            case noSwiftModules
+        }
         observer?(.collectingSwiftModules)
         for productPath in productPaths {
             let swiftModules = productPath.glob("*.swiftmodule")
