@@ -37,6 +37,12 @@ public final class SPMManager: ProgressObservable, PackageManager {
         case packages
     }
 
+    public enum BuildKind: CaseIterable {
+        case xcframework
+        case fat
+        case staticLib
+    }
+
     public static let keyPath: KeyPath<Depofile, [Package]> = \.swiftPackages
     public static let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
@@ -54,7 +60,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
     private let packageSwiftBuildsDirName = AppConfiguration.Path.Relative.packageSwiftBuildsDirectory
     private let outputDirName = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
-    private let frameworkKind: MergePackage.FrameworkKind
+    private let buildKind: BuildKind
     private let swiftBuildArguments: String?
     private var observer: ((State) -> Void)?
     private let productExtensions: [String] = ["framework", "xcframework"]
@@ -68,18 +74,28 @@ public final class SPMManager: ProgressObservable, PackageManager {
 
     public init(packages: [Package],
                 swiftCommandPath: String,
-                frameworkKind: MergePackage.FrameworkKind,
+                buildKind: BuildKind,
                 swiftBuildArguments: String?) {
         self.packages = packages
         let shell = Shell()
         self.shell = shell
         self.xcodebuild = XcodeBuild(shell: shell)
         self.swiftPackageCommand = .init(commandPath: swiftCommandPath, shell: shell)
-        self.frameworkKind = frameworkKind
+        self.buildKind = buildKind
         self.swiftBuildArguments = swiftBuildArguments
         self.shell.subscribe { [weak self] state in
             self?.observer?(.shell(state: state))
         }
+    }
+
+    public convenience init(packages: [Package],
+                            swiftCommandPath: String,
+                            frameworkKind: MergePackage.FrameworkKind,
+                            swiftBuildArguments: String?) {
+        self.init(packages: packages,
+                  swiftCommandPath: swiftCommandPath,
+                  buildKind: frameworkKind == .fatFramework ? .fat : .xcframework,
+                  swiftBuildArguments: swiftBuildArguments)
     }
 
     public func subscribe(_ observer: @escaping (State) -> Void) -> SPMManager {
@@ -102,7 +118,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
     public func build() throws -> [BuildResult] {
         observer?(.building)
         return build(packages: packages,
-                     like: frameworkKind,
+                     like: buildKind,
                      at: packageSwiftDirName,
                      buildsOutputDirectoryPath: buildsOutputDirectoryPath,
                      mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
@@ -121,26 +137,51 @@ public final class SPMManager: ProgressObservable, PackageManager {
 
     // swiftlint:disable:next function_parameter_count
     private func build(packages: [SwiftPackage],
-                       like frameworkKind: MergePackage.FrameworkKind,
+                       like buildKind: BuildKind,
                        at packagesSourcesPath: String,
                        buildsOutputDirectoryPath: String,
                        mergedBuildsOutputDirectoryPath: String) -> [BuildResult] {
-        packages.map { package -> BuildResult in
+        let build: (SwiftPackage) throws -> BuildResult = {
+            switch buildKind {
+            case .xcframework:
+                return { package in
+                    try self.buildFramework(package: package,
+                                            packagesSourcesPath: packagesSourcesPath,
+                                            frameworkKind: .xcframework)
+                }
+            case .fat:
+                return { package in
+                    try self.buildFramework(package: package,
+                                            packagesSourcesPath: packagesSourcesPath,
+                                            frameworkKind: .fatFramework)
+                }
+            case .staticLib:
+                fatalError("liba in spm isn't implemented")
+            }
+        }()
+        return packages.map { package -> BuildResult in
             do {
-                try build(package: package,
-                          packagesSourcesDirectoryRelativePath: packagesSourcesPath,
-                          packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
-                          frameworkKind: frameworkKind)
-                let mergeOutputs = try merge(package: package,
-                                             packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
-                                             mergedFrameworksDirectoryPath: mergedBuildsOutputDirectoryPath)
-                observer?(.done(package))
-                return .success((package, mergeOutputs.map(by: \.mergedFrameworkPath)))
+                return try build(package)
             }
             catch {
                 return .failure(.init(error: error, value: package))
             }
         }
+    }
+
+    private func buildFramework(package: SwiftPackage,
+                                packagesSourcesPath: String,
+                                frameworkKind: MergePackage.FrameworkKind) throws -> BuildResult {
+        try build(package: package,
+                  packagesSourcesDirectoryRelativePath: packagesSourcesPath,
+                  packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
+                  frameworkKind: frameworkKind)
+        let mergeOutputs = try merge(package: package,
+                                     packagesBuildsDirectoryRelativePath: buildsOutputDirectoryPath,
+                                     mergedFrameworksDirectoryPath: mergedBuildsOutputDirectoryPath,
+                                     frameworkKind: frameworkKind)
+        observer?(.done(package))
+        return .success((package, mergeOutputs.map(by: \.mergedFrameworkPath)))
     }
 
     private func build(package: SwiftPackage,
@@ -184,7 +225,8 @@ public final class SPMManager: ProgressObservable, PackageManager {
 
     private func merge(package: SwiftPackage,
                        packagesBuildsDirectoryRelativePath: String,
-                       mergedFrameworksDirectoryPath: String) throws -> [MergePackage.Output] {
+                       mergedFrameworksDirectoryPath: String,
+                       frameworkKind: MergePackage.FrameworkKind) throws -> [MergePackage.Output] {
         let path = "\(packagesBuildsDirectoryRelativePath)/\(package.name)"
         let deviceBuildDir = "\(path)/Release-iphoneos"
         #warning("proceeding all swift packages seems redundant")

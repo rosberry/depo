@@ -18,7 +18,7 @@ extension SPMManager: HasOptionsInit {
         public var swiftCommandPath: String = AppConfiguration.Path.Absolute.swiftCommandPath
 
         @Flag()
-        public var frameworkKind: MergePackage.FrameworkKind = .fatFramework
+        public var buildKind: SPMManager.BuildKind = .staticLib
 
         @Flag()
         public var cacheBuilds: Bool = false
@@ -26,13 +26,27 @@ extension SPMManager: HasOptionsInit {
         @Option(name: [.customLong("swift-build-args"), .customShort(Character("s"))])
         public var swiftBuildArguments: String?
 
-        public init() {}
+        public init() {
+        }
     }
 
     public convenience init(depofile: Depofile, options: Options) {
         self.init(packages: depofile.swiftPackages,
                   swiftCommandPath: options.swiftCommandPath,
-                  frameworkKind: options.frameworkKind,
+                  buildKind: options.buildKind,
                   swiftBuildArguments: options.swiftBuildArguments)
+    }
+}
+
+extension SPMManager.BuildKind: CustomStringConvertible, EnumerableFlag {
+    public var description: String {
+        switch self {
+        case .fat:
+            return "fat-framework"
+        case .xcframework:
+            return "xcframework"
+        case .staticLib:
+            return "static-lib"
+        }
     }
 }
