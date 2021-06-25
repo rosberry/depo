@@ -9,10 +9,10 @@ public final class SwiftPackageShellCommand: ShellCommand {
 
     typealias SPVersionConstraint = VersionConstraint<SwiftPackage.Operator>
 
-    fileprivate struct SPOutputWrapper: Codable {
-        let products: [Product]
-        let targets: [Target]
-        let dependencies: [Dependency]
+    public struct SPOutputWrapper: Codable {
+        public let products: [Product]
+        public let targets: [Target]
+        public let dependencies: [Dependency]
     }
 
     private struct Version {
@@ -68,6 +68,10 @@ public final class SwiftPackageShellCommand: ShellCommand {
             return ""
         }
         return String(output[valueRange])
+    }
+
+    public func swiftPackageDump(at path: String) throws -> SPOutputWrapper {
+        try jsonerOutput(at: path)
     }
 
     private func swiftPackageByJsoner(packageSwiftFilePath: String) throws -> [SwiftPackage] {
@@ -199,34 +203,35 @@ public final class SwiftPackageShellCommand: ShellCommand {
     }
 }
 
-extension SwiftPackageShellCommand.SPOutputWrapper {
-    fileprivate struct Dependency: Codable {
-        let name: String?
-        let url: URL
-        let requirement: Requirement
+public extension SwiftPackageShellCommand.SPOutputWrapper {
+    public struct Dependency: Codable {
+        public let  name: String?
+        public let  url: URL
+        public let  requirement: Requirement
     }
 
-    fileprivate struct Target: Codable {
+    struct Target: Codable {
 
-        enum TypeEnum: String, Codable {
+        public enum TypeEnum: String, Codable {
             case regular
             case test
         }
 
-        let name: String
-        let type: TypeEnum
+        public let name: String
+        public let type: TypeEnum
+        public let path: String?
     }
 
-    fileprivate struct Product: Codable {
-        let name: String
-        let targets: [String]
+    struct Product: Codable {
+        public let name: String
+        public let targets: [String]
     }
 }
 
-extension SwiftPackageShellCommand.SPOutputWrapper.Dependency {
-    fileprivate struct Requirement: Codable {
+public extension SwiftPackageShellCommand.SPOutputWrapper.Dependency {
+    public struct Requirement: Codable {
 
-        enum Kind: String, Codable {
+        public enum Kind: String, Codable {
             case range
             case exact
             case branch
@@ -234,19 +239,19 @@ extension SwiftPackageShellCommand.SPOutputWrapper.Dependency {
             case localPackage
         }
 
-        private enum CodingKeys: String, CodingKey {
+        public enum CodingKeys: String, CodingKey {
             case type
             case identifier
             case lowerBound
             case upperBound
         }
 
-        private struct RangeModel: Codable {
+        public struct RangeModel: Codable {
             let lowerBound: String
             let upperBound: String
         }
 
-        init(from decoder: Decoder) throws {
+        public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             if let wrapper = try? container.decode([String: [RangeModel]].self),
                let range = wrapper.first?.value.first {
@@ -269,9 +274,9 @@ extension SwiftPackageShellCommand.SPOutputWrapper.Dependency {
             }
         }
 
-        let type: Kind
-        let identifier: String?
-        let lowerBound: String?
-        let upperBound: String?
+        public let type: Kind
+        public let identifier: String?
+        public let lowerBound: String?
+        public let upperBound: String?
     }
 }

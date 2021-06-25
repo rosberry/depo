@@ -20,6 +20,7 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
         let isQuiet: Bool
         let derivedDataPath: String?
         let actionType: ActionType?
+        let isSigning: Bool
     }
 
     public enum Configuration: String, CustomStringConvertible {
@@ -65,7 +66,11 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
              .init(optionalKeyPath: \.isOnlyActiveArch, "only-active-arch=", { $0.yesOrNo }),
              .init(\.isQuiet, "-quiet", { _ in "" }),
              .init(optionalKeyPath: \.derivedDataPath, "-derivedDataPath "),
-             .init(optionalKeyPath: \.actionType, "")]
+             .init(optionalKeyPath: \.actionType, ""),
+             .init(\.isSigning, "", { $0 ? "" : noSigningString })]
+    private static var noSigningString: String {
+        #"CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO""#
+    }
 
     public override init(commandPath: String = AppConfiguration.Path.Absolute.xcodebuild, shell: Shell) {
         super.init(commandPath: commandPath, shell: shell)
@@ -195,7 +200,9 @@ public class XcodeBuild: ShellCommand, ArgumentedShellCommand {
 
 extension XcodeBuild.Settings {
 
-    static func simulator(target: String, configuration: XcodeBuild.Configuration = .release) -> Self {
+    public static func simulator(target: String,
+                                 configuration: XcodeBuild.Configuration = .release,
+                                 isSigning: Bool = true) -> Self {
         XcodeBuild.Settings(target: target,
                             scheme: nil,
                             configuration: configuration,
@@ -205,10 +212,13 @@ extension XcodeBuild.Settings {
                             isOnlyActiveArch: false,
                             isQuiet: true,
                             derivedDataPath: nil,
-                            actionType: .archive)
+                            actionType: .archive,
+                            isSigning: isSigning)
     }
 
-    static func device(target: String, configuration: XcodeBuild.Configuration = .release) -> Self {
+    public static func device(target: String,
+                              configuration: XcodeBuild.Configuration = .release,
+                              isSigning: Bool = true) -> Self {
         XcodeBuild.Settings(target: target,
                             scheme: nil,
                             configuration: configuration,
@@ -218,39 +228,46 @@ extension XcodeBuild.Settings {
                             isOnlyActiveArch: nil,
                             isQuiet: true,
                             derivedDataPath: nil,
-                            actionType: .archive)
+                            actionType: .archive,
+                            isSigning: isSigning)
     }
 
-    static func simulator(scheme: String,
-                          configuration: XcodeBuild.Configuration = .release,
-                          derivedDataPath: String? = nil,
-                          actionType: XcodeBuild.ActionType? = nil) -> Self {
+    public static func simulator(scheme: String,
+                                 configuration: XcodeBuild.Configuration = .release,
+                                 isOnlyActiveArch: Bool? = false,
+                                 derivedDataPath: String? = nil,
+                                 actionType: XcodeBuild.ActionType? = nil,
+                                 isSigning: Bool = true) -> Self {
         XcodeBuild.Settings(target: nil,
                             scheme: scheme,
                             configuration: configuration,
                             isDefineModules: true,
                             sdk: .iphonesimulator,
                             arch: .x86_64,
-                            isOnlyActiveArch: false,
+                            isOnlyActiveArch: isOnlyActiveArch,
                             isQuiet: true,
                             derivedDataPath: derivedDataPath,
-                            actionType: actionType)
+                            actionType: actionType,
+                            isSigning: isSigning)
     }
 
-    static func device(scheme: String,
-                       configuration: XcodeBuild.Configuration = .release,
-                       derivedDataPath: String? = nil,
-                       actionType: XcodeBuild.ActionType? = nil) -> Self {
+    public static func device(scheme: String,
+                              configuration: XcodeBuild.Configuration = .release,
+                              isOnlyActiveArch: Bool? = nil,
+                              derivedDataPath: String? = nil,
+                              actionType: XcodeBuild.ActionType? = nil,
+                              isSigning: Bool = true) -> Self {
         XcodeBuild.Settings(target: nil,
                             scheme: scheme,
                             configuration: configuration,
                             isDefineModules: true,
                             sdk: .iphoneos,
                             arch: nil,
-                            isOnlyActiveArch: nil,
+                            isOnlyActiveArch: isOnlyActiveArch,
                             isQuiet: true,
                             derivedDataPath: derivedDataPath,
-                            actionType: actionType)
+                            actionType: actionType,
+                            isSigning: isSigning)
     }
 }
 

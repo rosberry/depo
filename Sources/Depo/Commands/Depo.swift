@@ -51,6 +51,7 @@ final class Depo: ParsableCommand {
                                                                          Carthage.self,
                                                                          SPM.self,
                                                                          Cacher.self,
+                                                                         LibA.self,
                                                                          Example.self],
                                                            defaultSubcommand: AllInstall.self)
 }
