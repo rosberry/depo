@@ -53,11 +53,20 @@ public struct GitCachablePackageManager<PM: PackageManager>: PackageManager wher
             return
         }
         let (successBuilds, _) = separate(builds)
+        var errors: [Error] = []
         for (package, paths) in successBuilds {
-            let urls = try paths.map { path in
-                try URL.throwingInit(string: path)
+            do {
+                let urls = try paths.map { path in
+                    try URL.throwingInit(string: path)
+                }
+                try cacher.save(buildURLs: urls, packageID: package.packageID(xcodeVersion: xcodeVersion))
             }
-            try cacher.save(buildURLs: urls, packageID: package.packageID(xcodeVersion: xcodeVersion))
+            catch {
+                errors.append(error)
+            }
+        }
+        if errors.isEmpty == false {
+            throw CompositeError(errors: errors)
         }
     }
 
