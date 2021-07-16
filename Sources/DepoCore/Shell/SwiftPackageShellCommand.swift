@@ -82,8 +82,8 @@ public final class SwiftPackageShellCommand: ShellCommand {
         }
     }
 
-    private func jsonerOutput(at path: String, fmg: FileManager = .default) throws -> SPOutputWrapper {
-        let output: String = try fmg.perform(atPath: path) {
+    private func jsonerOutput(at path: String, fileManager: FileManager = .default) throws -> SPOutputWrapper {
+        let output: String = try fileManager.perform(atPath: path) {
             try shell(silent: "\(commandPath) package dump-package")
         }
         return try JSONDecoder().decode(SPOutputWrapper.self, from: output.data(using: .utf8) ?? Data())

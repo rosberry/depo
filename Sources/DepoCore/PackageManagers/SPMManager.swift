@@ -47,7 +47,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
     public static let outputPath: String = AppConfiguration.Path.Relative.packageSwiftOutputDirectory
 
     public let packages: [Package]
-    private let fmg: FileManager = .default
+    private let fileManager: FileManager = .default
     private let shell: Shell
     private let xcodebuild: XcodeBuild
 
@@ -74,10 +74,10 @@ public final class SPMManager: ProgressObservable, PackageManager {
     }()
 
     private var buildsOutputDirectoryPath: String {
-        "\(fmg.currentDirectoryPath)/\(packageSwiftBuildsDirName)"
+        "\(fileManager.currentDirectoryPath)/\(packageSwiftBuildsDirName)"
     }
     private var mergedBuildsOutputDirectoryPath: String {
-        "\(fmg.currentDirectoryPath)/\(outputDirName)"
+        "\(fileManager.currentDirectoryPath)/\(outputDirName)"
     }
 
     public init(packages: [Package],
@@ -139,7 +139,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
         let content = PackageSwift(projectBuildSettings: buildSettings,
                                    spmVersion: spmVersion,
                                    packages: packages).description.data(using: .utf8)
-        if !fmg.createFile(atPath: filePath, contents: content) {
+        if !fileManager.createFile(atPath: filePath, contents: content) {
             throw Error.badPackageSwiftFile(path: filePath)
         }
     }
@@ -170,7 +170,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
                 return { package in
                     let path = "./\(packagesSourcesPath)/\(package.name)"
                     let scheme = package.name
-                    return try self.fmg.perform(atPath: path) {
+                    return try self.fileManager.perform(atPath: path) {
                         let result = try self.staticLibraryBuildService.build(scheme: scheme,
                                                                               derivedDataPath: nil,
                                                                               outputDirectory: mergedBuildsOutputDirectoryPath)
@@ -211,7 +211,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
                        frameworkKind: MergePackage.FrameworkKind) throws {
         let path = "./\(packagesSourcesDirectoryRelativePath)/\(package.name)"
         observer?(.buildingPackage(package, path: path))
-        try fmg.perform(atPath: path) {
+        try fileManager.perform(atPath: path) {
             do {
                 let xcodeProjectCreationOutput = try buildSwiftPackageScript.generateXcodeprojectIfNeeded()
                 defer {
@@ -255,7 +255,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
             dir.extension == "framework" ? dir.nameExcludingExtension : nil
         }
         do {
-            return try fmg.perform(atPath: path) {
+            return try fileManager.perform(atPath: path) {
                 try frameworks.map { framework -> MergePackage.Output in
                     observer?(.merging(framework: framework, frameworkKind, output: mergedFrameworksDirectoryPath))
                     return try mergePackage.make(frameworkKind,
