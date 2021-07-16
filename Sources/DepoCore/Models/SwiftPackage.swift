@@ -25,9 +25,12 @@ public struct SwiftPackage {
     public let name: String
     public let url: URL
     public let versionConstraint: VersionConstraint<Operator>?
+    public var directoryName: String {
+        url.lastPathComponentWithoutGitExtension
+    }
 
     public init(name: String?, url: URL, versionConstraint: VersionConstraint<Operator>?) {
-        self.name = name ?? url.lastPathComponent.replacingOccurrences(of: ".git", with: "")
+        self.name = name ?? url.lastPathComponentWithoutGitExtension
         self.url = url
         self.versionConstraint = versionConstraint
     }
@@ -43,4 +46,11 @@ extension SwiftPackage: Codable {
     }
 }
 
-extension SwiftPackage: Hashable {}
+extension SwiftPackage: Hashable {
+}
+
+fileprivate extension URL {
+    var lastPathComponentWithoutGitExtension: String {
+        lastPathComponent.replacingOccurrences(of: ".git", with: "")
+    }
+}

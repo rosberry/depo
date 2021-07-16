@@ -167,8 +167,8 @@ public final class SPMManager: ProgressObservable, PackageManager {
                                             mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
                 }
             case .staticLib:
-                return { package in
-                    let path = "./\(packagesSourcesPath)/\(package.name)"
+                return { [unowned self] package in
+                    let path = self.sourcesPath(sourcesDirectoryPath: packagesSourcesPath, package: package)
                     let scheme = package.name
                     return try self.fileManager.perform(atPath: path) {
                         let result = try self.staticLibraryBuildService.build(scheme: scheme,
@@ -187,6 +187,10 @@ public final class SPMManager: ProgressObservable, PackageManager {
                 return .failure(.init(error: error, value: package))
             }
         }
+    }
+
+    private func sourcesPath(sourcesDirectoryPath: String, package: Package) -> String {
+        "./\(sourcesDirectoryPath)/\(package.directoryName)"
     }
 
     private func buildFramework(package: SwiftPackage,
@@ -209,7 +213,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
                        packagesSourcesDirectoryRelativePath: String,
                        packagesBuildsDirectoryRelativePath: String,
                        frameworkKind: MergePackage.FrameworkKind) throws {
-        let path = "./\(packagesSourcesDirectoryRelativePath)/\(package.name)"
+        let path = sourcesPath(sourcesDirectoryPath: packagesSourcesDirectoryRelativePath, package: package)
         observer?(.buildingPackage(package, path: path))
         try fileManager.perform(atPath: path) {
             do {
@@ -248,7 +252,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
                        packagesBuildsDirectoryRelativePath: String,
                        mergedFrameworksDirectoryPath: String,
                        frameworkKind: MergePackage.FrameworkKind) throws -> [MergePackage.Output] {
-        let path = "\(packagesBuildsDirectoryRelativePath)/\(package.name)"
+        let path = sourcesPath(sourcesDirectoryPath: packagesBuildsDirectoryRelativePath, package: package)
         let deviceBuildDir = "\(path)/Release-iphoneos"
         #warning("proceeding all swift packages seems redundant")
         let frameworks: [String] = (try Folder(path: deviceBuildDir)).subfolders.compactMap { dir in
