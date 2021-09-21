@@ -32,6 +32,16 @@ public final class StaticLibraryBuilderService: ProgressObservable {
     }
 
     public func build(scheme: String, derivedDataPath: String?, outputDirectory: String? = nil) throws -> Output {
+        try internalBuild(scheme: scheme, derivedDataPath: derivedDataPath, outputDirectory: outputDirectory)
+    }
+
+    @discardableResult
+    public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
+        self.observer = observer
+        return self
+    }
+    
+    private func internalBuild(scheme: String, derivedDataPath: String?, outputDirectory: String? = nil) throws -> Output {
         let derivedDataPath = derivedDataPath ?? "\(scheme).derivedData"
         try prepareDirectoryToBuild()
         try buildSmallLibs(scheme: scheme, derivedDataPath: derivedDataPath)
@@ -51,12 +61,6 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         try? outputDirectory.mkpath()
         try tmpLibPath.overwrite(outputLibPath)
         return outputLibPath.description
-    }
-
-    @discardableResult
-    public func subscribe(_ observer: @escaping (State) -> Void) -> Self {
-        self.observer = observer
-        return self
     }
 
     private func prepareDirectoryToBuild() throws {
@@ -93,7 +97,15 @@ public final class StaticLibraryBuilderService: ProgressObservable {
         let devSettings = XcodeBuild.Settings.device(scheme: scheme,
                                                      derivedDataPath: derivedDataPath,
                                                      isSigning: false)
-        _ = try xcodebuild(settings: simSettings)
+        // yep this is required due to bug. when you delete xcodeproj/xcworkspace
+        // you cannot build this project right after it from same process
+        // so first build will fail, end next can succeed
+        do {
+            _ = try xcodebuild(settings: simSettings)
+        }
+        catch {
+            _ = try xcodebuild(settings: simSettings)
+        }
         _ = try xcodebuild(settings: devSettings)
     }
 
