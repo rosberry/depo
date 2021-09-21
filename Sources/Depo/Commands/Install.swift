@@ -23,6 +23,7 @@ extension Install {
                 print(state)
             }
         }
-        _ = try manager.install()
+        let result = try manager.install()
+        try throwIfNotNil(FailedPackagesError(buildResult: result))
     }
 }

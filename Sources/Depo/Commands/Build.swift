@@ -23,6 +23,7 @@ extension Build {
                 print(state)
             }
         }
-        _ = try manager.build()
+        let result = try manager.build()
+        try throwIfNotNil(FailedPackagesError(buildResult: result))
     }
 }

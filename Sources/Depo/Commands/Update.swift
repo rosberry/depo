@@ -23,6 +23,38 @@ extension Update {
                 print(state)
             }
         }
-        _ = try manager.update()
+        let result = try manager.update()
+        try throwIfNotNil(FailedPackagesError(buildResult: result))
+    }
+}
+
+struct FailedPackagesError<Package>: LocalizedError {
+    private let errors: [Error]
+    
+    var errorDescription: String? {
+        errors.map { "\($0)" }.newLineJoined
+    }
+
+    init?(buildResult: PackagesOutput<Package>) {
+        let errors = buildResult.compactMap { result -> Error? in
+            switch result {
+            case .success:
+                return nil
+            case let .failure(error):
+                return error
+            }
+        }
+        if errors.isEmpty {
+            return nil
+        }
+        else {
+            self.errors = errors
+        }
+    }
+}
+
+func throwIfNotNil(_ error: Error?) throws {
+    if let error = error {
+        throw error
     }
 }

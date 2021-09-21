@@ -26,6 +26,20 @@ public struct PackageSwift: CustomStringConvertible {
 
                            """
     }
+    
+    public init(spmVersion: String, packages: [SwiftPackage]) {
+        self.packages = packages
+        let dependencies = packages.map(Self.package).joined(separator: ",\n\(Self.tabs(9)) ")
+        self.description = """
+                           // swift-tools-version:\(spmVersion)
+
+                           import PackageDescription
+
+                           let package = Package(name: "",
+                                                 dependencies: [\(dependencies)])
+
+                           """
+    }
 
     private static func package(_ package: SwiftPackage) -> String {
         let version = package.versionConstraint.map { self.version($0) } ?? ""

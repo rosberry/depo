@@ -118,8 +118,7 @@ public final class SPMManager: ProgressObservable, PackageManager {
 
     public func update() throws -> [BuildResult] {
         observer?(.updating)
-        let buildSettings = try BuildSettings(xcodebuild: xcodebuild)
-        try createPackageSwiftFile(at: packageSwiftFileName, with: packages, buildSettings: buildSettings)
+        try createPackageSwiftFile(at: packageSwiftFileName, with: packages)
         try swiftPackageCommand.update(args: swiftBuildArguments.mapOrEmpty(keyPath: \.words))
         return try build()
     }
@@ -133,11 +132,10 @@ public final class SPMManager: ProgressObservable, PackageManager {
                      mergedBuildsOutputDirectoryPath: mergedBuildsOutputDirectoryPath)
     }
 
-    private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage], buildSettings: BuildSettings) throws {
+    private func createPackageSwiftFile(at filePath: String, with packages: [SwiftPackage]) throws {
         observer?(.creatingPackageSwiftFile(path: filePath))
         let spmVersion = try swiftPackageCommand.spmVersion()
-        let content = PackageSwift(projectBuildSettings: buildSettings,
-                                   spmVersion: spmVersion,
+        let content = PackageSwift(spmVersion: spmVersion,
                                    packages: packages).description.data(using: .utf8)
         if !fileManager.createFile(atPath: filePath, contents: content) {
             throw Error.badPackageSwiftFile(path: filePath)

@@ -44,7 +44,8 @@ extension PackageManagerFileTest {
               productType: .framework,
               codesigningFolderPath: nil,
               platform: .tvos,
-              deploymentTarget: "test-deployment-target")
+              deploymentTarget: "test-deployment-target",
+              supportedPlatforms: [.ios])
     }
 
     var spmVersion: String {
