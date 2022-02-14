@@ -11,6 +11,8 @@ SOURCES := $(shell find Sources -name "*.swift")
 
 install: $(executable_path)
 
+build: $(binary)
+
 $(executable_path): $(release_binary)
 	cp $(release_binary) $(executable_path)
 
