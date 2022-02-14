@@ -14,6 +14,7 @@ public final class CarthageShellCommand: ShellCommand {
         case cacheBuilds
         case custom(args: String)
         case ssh
+        case xcframeworks
 
         public var strings: [String] {
             switch self {
@@ -25,6 +26,8 @@ public final class CarthageShellCommand: ShellCommand {
                 return args.words
             case .ssh:
                 return ["--use-ssh"]
+            case .xcframeworks:
+                return ["--use-xcframeworks"]
             }
         }
 
@@ -62,7 +65,7 @@ public final class CarthageShellCommand: ShellCommand {
     }
 
     private func carthage(_ command: String, arguments: [BuildArgument]) throws -> Int32 {
-        let argumentsString = (arguments + [.ssh]).map(\.strings.spaceJoined).joined(separator: " ")
+        let argumentsString = (arguments + [.ssh, .xcframeworks]).map(\.strings.spaceJoined).joined(separator: " ")
         return try shell(loud: "\(commandPath) \(command) \(argumentsString)")
     }
 
