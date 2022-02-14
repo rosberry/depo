@@ -2,10 +2,19 @@
 // Copyright © 2020 Rosberry. All rights reserved.
 //
 
+import Foundation
+
 struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
 
-    public enum Error: Swift.Error {
-        case noPackages
+    public enum Error: Swift.Error, LocalizedError {
+        case noPackages(String)
+
+        public var errorDescription: String? {
+            switch self {
+            case let .noPackages(path):
+                return "No packages to build for \(path)"
+            }
+        }
     }
 
     typealias Package = PM.Package
@@ -27,7 +36,7 @@ struct ConditionalPackageManager<PM: PackageManager>: PackageManager {
 
     private func doIfNeeded<T>(action: () throws -> T) throws -> T {
         guard packages[keyPath: conditionKeyPath] else {
-            throw Error.noPackages
+            throw Error.noPackages(Self.outputPath)
         }
         return try action()
     }
