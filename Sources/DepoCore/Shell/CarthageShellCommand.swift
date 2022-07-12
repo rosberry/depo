@@ -15,6 +15,7 @@ public final class CarthageShellCommand: ShellCommand {
         case custom(args: String)
         case ssh
         case xcframeworks
+        case newResolver
 
         public var strings: [String] {
             switch self {
@@ -28,6 +29,8 @@ public final class CarthageShellCommand: ShellCommand {
                 return ["--use-ssh"]
             case .xcframeworks:
                 return ["--use-xcframeworks"]
+            case .newResolver:
+                return ["--new-resolver"]
             }
         }
 
@@ -43,12 +46,12 @@ public final class CarthageShellCommand: ShellCommand {
 
     @discardableResult
     public func update(arguments: [BuildArgument]) throws -> Int32 {
-        try carthage("update", arguments: arguments)
+        try carthage("update", arguments: arguments + [.newResolver])
     }
 
     @discardableResult
     public func bootstrap(arguments: [BuildArgument]) throws -> Int32 {
-        try carthage("bootstrap", arguments: arguments)
+        try carthage("bootstrap", arguments: arguments + [.newResolver])
     }
 
     @discardableResult
